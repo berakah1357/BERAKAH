@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BERAKAH - Create Account</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 450px;
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 25px;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #111827;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .login {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .login a {
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="logo">BERAKAH</div>
+
+    <h1>Create Your Account</h1>
+
+    <form>
+
+      <label>Full Name</label>
+      <input type="text" placeholder="Enter your full name">
+
+      <label>Username</label>
+      <input type="text" placeholder="@username">
+
+      <label>Email</label>
+      <input type="email" placeholder="Enter your email">
+
+      <label>Password</label>
+      <input type="password" placeholder="Create a password">
+
+      <label>Preferred Language</label>
+      <select>
+        <option>Haitian Creole</option>
+        <option>English</option>
+        <option>French</option>
+        <option>Spanish</option>
+      </select>
+
+      <button type="submit">CREATE ACCOUNT</button>
+
+    </form>
+
+    <div class="login">
+      Already have an account?
+      <a href="login.html">Log In</a>
+    </div>
+
+  </div>
+
+</body>
+</html>
