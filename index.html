@@ -1,21 +1,222 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BERAKAH</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+    }
+
+    header {
+      background: white;
+      padding: 20px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .logo {
+      font-size: 30px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    nav a {
+      margin-left: 25px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 90px 20px;
+      background: white;
+    }
+
+    .hero h1 {
+      font-size: 64px;
+      letter-spacing: 5px;
+      margin-bottom: 15px;
+    }
+
+    .hero h2 {
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: auto;
+      font-size: 18px;
+      line-height: 1.6;
+      color: #6b7280;
+    }
+
+    .buttons {
+      margin-top: 35px;
+    }
+
+    button {
+      padding: 14px 25px;
+      margin: 8px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: #111827;
+      color: white;
+    }
+
+    .secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .languages {
+      margin-top: 30px;
+      font-weight: bold;
+    }
+
+    .features {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 30px 20px;
+      text-align: center;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+
+    .card h3 {
+      margin: 15px 0 10px;
+    }
+
+    .card p {
+      color: #6b7280;
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      padding: 35px;
+      background: white;
+      border-top: 1px solid #e5e7eb;
+      color: #6b7280;
+    }
+
+    @media (max-width: 800px) {
+      .features {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 45px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-  <h1>BERAKAH</h1>
+  <header>
+    <div class="logo">BERAKAH</div>
 
-  <h2>Connect. Share. Build. Grow.</h2>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Discover</a>
+      <a href="#">Business</a>
+      <a href="#">Market</a>
+    </nav>
+  </header>
 
-  <p>A social and business platform connecting people, communities, and businesses.</p>
+  <section class="hero">
 
-  <button>CREATE ACCOUNT</button>
-  <button>LOG IN</button>
+    <h1>BERAKAH</h1>
 
-  <p>Haitian Creole • English • French • Spanish</p>
+    <h2>Connect. Share. Grow Together.</h2>
+
+    <p>
+      A social and business platform where people,
+      communities, and businesses connect, communicate,
+      and create opportunities.
+    </p>
+
+    <div class="buttons">
+      <button class="primary">CREATE ACCOUNT</button>
+      <button class="secondary">LOG IN</button>
+    </div>
+
+    <div class="languages">
+      Haitian Creole • English • French • Spanish
+    </div>
+
+  </section>
+
+  <section class="features">
+
+    <div class="card">
+      <div>👥</div>
+      <h3>Social</h3>
+      <p>Connect with people and share your world.</p>
+    </div>
+
+    <div class="card">
+      <div>💬</div>
+      <h3>Community</h3>
+      <p>Join groups and build meaningful communities.</p>
+    </div>
+
+    <div class="card">
+      <div>🏪</div>
+      <h3>Business</h3>
+      <p>Build your business and reach new customers.</p>
+    </div>
+
+    <div class="card">
+      <div>🛍️</div>
+      <h3>Market</h3>
+      <p>Buy and sell products and services.</p>
+    </div>
+
+  </section>
+
+  <footer>
+    © 2026 BERAKAH — Connect. Share. Grow Together.
+  </footer>
 
 </body>
 </html>
