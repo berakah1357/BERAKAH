@@ -40,17 +40,21 @@ if (languageSelect) {
   }
 };
 
-const languageSelect = document.getElementById("language");
+<script>
+document.getElementById("language").addEventListener("change", function () {
+  const welcome = document.querySelector(".welcome-text");
 
-if (languageSelect) {
-  languageSelect.addEventListener("change", function () {
-    const selected = this.value;
-    const welcomeText = document.querySelector(".welcome-text");
-
-    if (welcomeText && translations[selected]) {
-      welcomeText.textContent = translations[selected].welcome;
-    }
-  });
+  if (this.value === "Haitian Creole") {
+    welcome.textContent = "Konekte. Pataje. Grandi Ansanm.";
+  } else if (this.value === "English") {
+    welcome.textContent = "Connect. Share. Grow Together.";
+  } else if (this.value === "French") {
+    welcome.textContent = "Connectez-vous. Partagez. Grandissez ensemble.";
+  } else if (this.value === "Spanish") {
+    welcome.textContent = "Conecta. Comparte. Crece Juntos.";
+  }
+});
+</script>
 }
 </script>
     body {
