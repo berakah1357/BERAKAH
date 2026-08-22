@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>BERAKAH Image Upload</title>
+
+<style>
+
+body{
+font-family:Arial;
+padding:30px;
+background:#f5f5f5;
+}
+
+.box{
+background:white;
+padding:25px;
+max-width:400px;
+margin:auto;
+border-radius:10px;
+}
+
+img{
+width:100%;
+margin-top:20px;
+}
+
+button{
+width:100%;
+padding:15px;
+margin-top:15px;
+background:#111827;
+color:white;
+border:none;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="box">
+
+<h1>📷 Upload Product Image</h1>
+
+<input 
+type="file"
+id="image"
+accept="image/*">
+
+
+<img id="preview">
+
+
+<button onclick="saveImage()">
+SAVE IMAGE
+</button>
+
+
+</div>
+
+
+<script>
+
+let imageData="";
+
+
+document
+.getElementById("image")
+.onchange=function(e){
+
+let reader=new FileReader();
+
+
+reader.onload=function(){
+
+imageData=reader.result;
+
+document
+.getElementById("preview")
+.src=imageData;
+
+}
+
+
+reader.readAsDataURL(e.target.files[0]);
+
+}
+
+
+
+function saveImage(){
+
+localStorage.setItem(
+"berakahImage",
+imageData
+);
+
+
+alert("IMAGE SAVED 📷");
+
+}
+
+</script>
+
+
+</body>
+
+</html>
