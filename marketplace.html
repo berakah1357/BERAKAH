@@ -151,8 +151,9 @@ function viewProduct(){
       alert("Product added to cart! 🛒");
     }
 
-    function createProductCard(product) {
-      const card = document.createElement("article");
+    <button type="button" onclick="addToCart(product.name, product.price)">
+ADD TO CART 🛒
+</button>
 
       card.className = "product";
 
