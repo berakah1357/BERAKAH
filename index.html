@@ -194,7 +194,23 @@ document.getElementById("language").addEventListener("change", function () {
     }
   </style>
 </head>
+<script>
+function changeLanguage(language) {
+  const welcome = document.querySelector(".welcome-text");
 
+  if (!welcome) return;
+
+  if (language === "Haitian Creole") {
+    welcome.textContent = "Konekte. Pataje. Grandi Ansanm.";
+  } else if (language === "English") {
+    welcome.textContent = "Connect. Share. Grow Together.";
+  } else if (language === "French") {
+    welcome.textContent = "Connectez-vous. Partagez. Grandissez ensemble.";
+  } else if (language === "Spanish") {
+    welcome.textContent = "Conecta. Comparte. Crece Juntos.";
+  }
+}
+</script>
 <body>
 
   <header>
@@ -209,7 +225,7 @@ document.getElementById("language").addEventListener("change", function () {
   </header>
   <div style="margin: 10px 0;">
   <label for="language">🌎 Language:</label>
-  <select id="language">
+ <select id="language" onchange="changeLanguage(this.value)">
     <option>Haitian Creole</option>
     <option>English</option>
     <option>French</option>
