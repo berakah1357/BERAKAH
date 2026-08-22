@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BERAKAH - Products</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+    }
+
+    header {
+      background: white;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+
+    header a {
+      text-decoration: none;
+      color: #111827;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 35px auto;
+      padding: 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      margin-bottom: 20px;
+    }
+
+    .product {
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 15px;
+    }
+
+    .product h2 {
+      margin-top: 0;
+    }
+
+    .price {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .empty {
+      color: #6b7280;
+      padding: 20px 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 8px;
+      background: #111827;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">BERAKAH</div>
+    <a href="business.html">BUSINESS</a>
+  </header>
+
+  <main class="container">
+
+    <section class="card">
+
+      <h1>🛍️ My Products</h1>
+
+      <p>
+        Products created by this business will appear here.
+      </p>
+
+      <div id="productList">
+        <div class="empty">Loading products...</div>
+      </div>
+
+      <a href="add-product.html" style="text-decoration: none;">
+        <button type="button">➕ ADD PRODUCT</button>
+      </a>
+
+    </section>
+
+  </main>
+
+  <script>
+    const products = JSON.parse(
+      localStorage.getItem("berakahProducts") || "[]"
+    );
+
+    const productList = document.getElementById("productList");
+
+    if (products.length === 0) {
+      productList.innerHTML =
+        '<div class="empty">No products added yet.</div>';
+    } else {
+      productList.innerHTML = "";
+
+      products.forEach(function(product) {
+        const item = document.createElement("div");
+
+        item.className = "product";
+
+        item.innerHTML = `
+          <h2>${product.name}</h2>
+          <p><strong>Business:</strong> ${product.business}</p>
+          <p><strong>Category:</strong> ${product.category}</p>
+          <p>${product.description}</p>
+          <div class="price">$${product.price}</div>
+          <button type="button">VIEW PRODUCT</button>
+        `;
+
+        productList.appendChild(item);
+      });
+    }
+  </script>
+
+</body>
+</html>
