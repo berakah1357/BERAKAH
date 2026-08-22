@@ -2,17 +2,51 @@
 <html>
 <body>
 
-<h1>TEST PAGE</h1>
+<h1>➕ Add Product</h1>
 
-<button onclick="test()">
-CLICK ME
+<label>Product Name</label>
+<input id="productName" type="text">
+
+<br><br>
+
+<label>Price</label>
+<input id="productPrice" type="number">
+
+<br><br>
+
+<label>Description</label>
+<textarea id="productDescription"></textarea>
+
+<br><br>
+
+<button onclick="addProduct()">
+ADD PRODUCT
 </button>
 
+
 <script>
-function test(){
-alert("WORKING");
+
+function addProduct(){
+
+let product = {
+name: document.getElementById("productName").value,
+price: document.getElementById("productPrice").value,
+description: document.getElementById("productDescription").value
+};
+
+
+localStorage.setItem(
+"berakahProduct",
+JSON.stringify(product)
+);
+
+
+alert("PRODUCT SAVED");
+
 }
+
 </script>
+
 
 </body>
 </html>
