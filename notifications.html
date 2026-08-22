@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BERAKAH - Notifications</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+    }
+
+    header {
+      background: white;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+
+    header a {
+      text-decoration: none;
+      color: #111827;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 35px auto;
+      padding: 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+    }
+
+    .notification {
+      padding: 18px;
+      border-bottom: 1px solid #e5e7eb;
+      line-height: 1.5;
+    }
+
+    .notification:last-child {
+      border-bottom: none;
+    }
+
+    .time {
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    .language {
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">BERAKAH</div>
+    <a href="profile.html">PROFILE</a>
+  </header>
+
+  <main class="container">
+
+    <section class="card">
+
+      <h1>🔔 Notifications</h1>
+
+      <p class="language">
+        Stay updated with activity on BERAKAH.
+      </p>
+
+      <div class="notification">
+        ❤️ <strong>BERAKAH Community</strong> liked your post.
+        <div class="time">Just now</div>
+      </div>
+
+      <div class="notification">
+        💬 <strong>BERAKAH User</strong> commented on your post.
+        <div class="time">5 minutes ago</div>
+      </div>
+
+      <div class="notification">
+        👤 <strong>BERAKAH Community</strong> started following you.
+        <div class="time">10 minutes ago</div>
+      </div>
+
+      <div class="notification">
+        🏪 <strong>BERAKAH Business</strong> posted a new product.
+        <div class="time">Today</div>
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>
