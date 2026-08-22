@@ -11,7 +11,35 @@
       margin: 0;
       padding: 0;
     }
+<script>
+const translations = {
+  English: 
+    {<p class="welcome-text">Connect. Share. Grow Together.</p>
+  },
+  "Haitian Creole": {
+    welcome: "Konekte. Pataje. Grandi Ansanm."
+  },
+  French: {
+    welcome: "Connectez-vous. Partagez. Grandissez ensemble."
+  },
+  Spanish: {
+    welcome: "Conecta. Comparte. Crece Juntos."
+  }
+};
 
+const languageSelect = document.getElementById("language");
+
+if (languageSelect) {
+  languageSelect.addEventListener("change", function () {
+    const selected = this.value;
+    const welcomeText = document.querySelector(".welcome-text");
+
+    if (welcomeText && translations[selected]) {
+      welcomeText.textContent = translations[selected].welcome;
+    }
+  });
+}
+</script>
     body {
       font-family: Arial, sans-serif;
       background: #f5f7fb;
