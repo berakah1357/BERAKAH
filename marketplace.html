@@ -65,7 +65,12 @@ if (products.length === 0) {
 
     card.innerHTML = `
 
-      <h2>${product.name}</h2>
+      ${localStorage.getItem("berakahImage") ?
+`<img src="${localStorage.getItem("berakahImage")}"
+style="width:100%;height:250px;object-fit:cover;border-radius:10px;">`
+:
+`<div style="font-size:60px;text-align:center;">🛍️</div>`
+}<h2>${product.name}</h2>
 
       <div class="price">
         $${product.price}
