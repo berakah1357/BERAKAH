@@ -84,9 +84,9 @@ style="width:100%;height:250px;object-fit:cover;border-radius:10px;">`
 VIEW PRODUCT 👁️
 </button>
 
-      <button onclick="alert('ADDED TO CART 🛒')">
-        ADD TO CART
-      </button>
+      <button onclick='addToCart(${JSON.stringify(product)})'>
+ADD TO CART 🛒
+</button>
 
     `;
 
@@ -104,6 +104,22 @@ JSON.stringify(product)
 );
 
 window.location.href = "product.html";
+
+}
+  function addToCart(product){
+
+  let cart = JSON.parse(
+    localStorage.getItem("berakahCart") || "[]"
+  );
+
+  cart.push(product);
+
+  localStorage.setItem(
+    "berakahCart",
+    JSON.stringify(cart)
+  );
+
+  alert("PRODUCT ADDED TO CART 🛒");
 
 }
 </script>
