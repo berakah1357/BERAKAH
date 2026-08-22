@@ -1,12 +1,75 @@
+<script>
+
+let productsContainer = document.getElementById("products");
+
+let savedProducts = JSON.parse(
+  localStorage.getItem("berakahProducts") || "[]"
+);
+
+
+if(savedProducts.length === 0){
+
+  productsContainer.innerHTML = `
+    <h2>No products yet.</h2>
+  `;
+
+} else {
+
+
+savedProducts.forEach(function(product){
+
+
+let card = document.createElement("div");
+
+card.className = "product";
+
+
+card.innerHTML = `
+
+${product.image ? 
+`<img src="${product.image}" style="width:100%;height:250px;object-fit:cover;border-radius:10px;">`
+:
+`<div style="font-size:60px;text-align:center;">🛍️</div>`
+}
+
+
+<h2>${product.name}</h2>
+
+<div class="price">
+$${product.price}
+</div>
+
+<p>${product.description || ""}</p>
+
+<p>🏪 BERAKAH</p>
+
+
+<button onclick="openProduct()">
+VIEW PRODUCT 👁️
+</button>
+
+
+<button onclick="alert('ADDED TO CART 🛒')">
+ADD TO CART
+</button>
+
+`;
+
+
+productsContainer.appendChild(card);
+
+
+});
+
+
+}
+
+
 function openProduct(){
 
-window.location.href = "product.html";
+window.location.href="product.html";
 
 }
 
-}
 
 </script>
-
-</body>
-</html>
