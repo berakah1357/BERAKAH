@@ -9,7 +9,37 @@
     * {
       box-sizing: border-box;
     }
+<script>
+const savedProducts = JSON.parse(
+  localStorage.getItem("berakahProducts") || "[]"
+);
 
+if (savedProducts.length > 0) {
+  const marketplace = document.body;
+
+  savedProducts.forEach(function(product) {
+    const card = document.createElement("div");
+
+    card.style.background = "white";
+    card.style.padding = "20px";
+    card.style.margin = "20px";
+    card.style.borderRadius = "15px";
+
+    card.innerHTML = `
+      <h2>${product.name}</h2>
+      <p><strong>Business:</strong> ${product.business}</p>
+      <p><strong>Category:</strong> ${product.category}</p>
+      <p>${product.description}</p>
+      <h3>$${product.price}</h3>
+      <a href="cart.html">
+        <button>ADD TO CART 🛒</button>
+      </a>
+    `;
+
+    marketplace.appendChild(card);
+  });
+}
+</script>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
