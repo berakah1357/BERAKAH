@@ -68,7 +68,19 @@ localStorage.getItem("berakahProduct")
 if(product){
 
 document.getElementById("name").innerHTML = product.name;
-let image = localStorage.getItem("berakahImage");
+     let image = localStorage.getItem("berakahImage");
+
+console.log("IMAGE FOUND:", image);
+
+if(image){
+
+let imageBox = document.getElementById("productImage");
+
+imageBox.src = image;
+
+imageBox.style.display = "block";
+
+}
 
 if(image){
 
