@@ -6,6 +6,12 @@
 
 <label>Product Name</label>
 <input id="productName" type="text">
+  <label>Product Image</label>
+
+<input 
+type="file" 
+id="productImage"
+accept="image/*">
 
 <br><br>
 
@@ -30,7 +36,17 @@ VIEW PRODUCT
 
 function addProduct(){
 
+let file = document.getElementById("productImage").files[0];
+
 let product = {
+name: document.getElementById("productName").value,
+
+price: document.getElementById("productPrice").value,
+
+description: document.getElementById("productDescription").value,
+
+image: file ? URL.createObjectURL(file) : ""
+};
 name: document.getElementById("productName").value,
 price: document.getElementById("productPrice").value,
 description: document.getElementById("productDescription").value
