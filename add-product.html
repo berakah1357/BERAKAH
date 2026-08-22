@@ -39,64 +39,69 @@ VIEW PRODUCT
 
 <script>
 
-function addProduct(){
+function addProduct() {
 
-let file = document.getElementById("productImage").files[0];
+  let file = document.getElementById("productImage").files[0];
 
-if(file){
+  if (file) {
 
-let reader = new FileReader();
+    let reader = new FileReader();
 
-reader.onload = function(e){
+    reader.onload = function(e) {
+      saveProduct(e.target.result);
+    };
 
-saveProduct(e.target.result);
+    reader.readAsDataURL(file);
 
-};
+  } else {
 
-reader.readAsDataURL(file);
+    saveProduct("");
 
-
-}else{
-
-saveProduct("");
-
-}
+  }
 
 }
 
 
-function saveProduct(image){
+function saveProduct(image) {
 
-let product = {
+  let product = {
 
-name: document.getElementById("productName").value,
+    name: document.getElementById("productName").value,
 
-price: document.getElementById("productPrice").value,
+    price: document.getElementById("productPrice").value,
 
-description: document.getElementById("productDescription").value,
+    description: document.getElementById("productDescription").value,
 
-image: image
+    image: image
 
-};
-
-
-let products = JSON.parse(
-localStorage.getItem("berakahProducts") || "[]"
-);
+  };
 
 
-products.push(product);
+  let products = JSON.parse(
+    localStorage.getItem("berakahProducts") || "[]"
+  );
 
 
-localStorage.setItem(
-"berakahProducts",
-JSON.stringify(products)
-);
+  products.push(product);
 
 
-alert("PRODUCT SAVED");
+  localStorage.setItem(
+    "berakahProducts",
+    JSON.stringify(products)
+  );
 
-window.location.href = "marketplace.html";
+
+  alert("PRODUCT SAVED");
+
+
+  window.location.href = "marketplace.html";
+
+}
+
+
+function viewProduct() {
+
+  alert("PRODUCT PAGE COMING SOON 🚀");
 
 }
 
