@@ -27,7 +27,8 @@
 
 <label>Description</label>
 <textarea id="productDescription"></textarea>
-
+<label>Product Image</label>
+<input type="file" id="productImage" accept="image/*">
 <button onclick="addProduct()">
 ADD PRODUCT
 </button>
@@ -37,13 +38,58 @@ ADD PRODUCT
 
 function addProduct(){
 
-const product = {
-name: document.getElementById("productName").value,
-price: document.getElementById("productPrice").value,
-category: document.getElementById("productCategory").value,
-description: document.getElementById("productDescription").value,
-business: "BERAKAH"
-};
+  const file = document.getElementById("productImage").files[0];
+
+  if (!file) {
+    saveProduct("");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(event){
+
+    saveProduct(event.target.result);
+
+  };
+
+  reader.readAsDataURL(file);
+
+}
+
+
+function saveProduct(imageData){
+
+  const product = {
+    name: document.getElementById("productName").value,
+    price: document.getElementById("productPrice").value,
+    category: document.getElementById("productCategory").value,
+    description: document.getElementById("productDescription").value,
+    business: "BERAKAH",
+    image: imageData
+  };
+
+
+  let products = JSON.parse(
+    localStorage.getItem("berakahProducts") || "[]"
+  );
+
+
+  products.push(product);
+
+
+  localStorage.setItem(
+    "berakahProducts",
+    JSON.stringify(products)
+  );
+
+
+  alert("Product saved with image! 🛍️");
+
+
+  window.location.href="marketplace.html";
+
+}
 
 
 let products = JSON.parse(
