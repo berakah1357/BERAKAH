@@ -139,13 +139,19 @@
       <label>Product Image</label>
       <input type="file" accept="image/*">
 
-      <button type="button">
-        ADD PRODUCT
+     <button type="button" onclick="addProduct()">
+  ADD PRODUCT
+</button>
       </button>
 
     </section>
 
   </main>
-
+<script>
+function addProduct() {
+  alert("Product added successfully! 🛍️");
+  window.location.href = "marketplace.html";
+}
+</script>
 </body>
 </html>
