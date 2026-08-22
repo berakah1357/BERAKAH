@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BERAKAH - Messages</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+    }
+
+    header {
+      background: white;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+
+    header a {
+      text-decoration: none;
+      color: #111827;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 35px auto;
+      padding: 15px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+    }
+
+    .contact {
+      padding: 18px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .contact strong {
+      font-size: 18px;
+    }
+
+    .chat {
+      margin-top: 25px;
+      background: #f5f7fb;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .message {
+      background: white;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+
+    .message.me {
+      text-align: right;
+      background: #e5e7eb;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 80px;
+      margin-top: 15px;
+      padding: 13px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 15px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #111827;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .language {
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">BERAKAH</div>
+    <a href="index.html">HOME</a>
+  </header>
+
+  <main class="container">
+
+    <section class="card">
+
+      <h1>💬 Messages</h1>
+
+      <p class="language">
+        Connect and communicate across Haitian Creole, English, French, and Spanish.
+      </p>
+
+      <div class="contact">
+        <strong>👤 BERAKAH Community</strong>
+      </div>
+
+      <div class="contact">
+        <strong>🏪 BERAKAH Business</strong>
+      </div>
+
+      <div class="chat">
+
+        <h2>BERAKAH Community</h2>
+
+        <div class="message">
+          Welcome to BERAKAH! 👋
+        </div>
+
+        <div class="message me">
+          Hello! I'm happy to be here. 🚀
+        </div>
+
+        <textarea id="messageText" placeholder="Write a message..."></textarea>
+
+        <button onclick="sendMessage()">SEND MESSAGE</button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    function sendMessage() {
+      const text = document.getElementById("messageText").value.trim();
+
+      if (text === "") {
+        alert("Please write a message first.");
+        return;
+      }
+
+      const message = document.createElement("div");
+      message.className = "message me";
+      message.textContent = text;
+
+      document.querySelector(".chat").insertBefore(
+        message,
+        document.getElementById("messageText")
+      );
+
+      document.getElementById("messageText").value = "";
+    }
+  </script>
+
+</body>
+</html>
