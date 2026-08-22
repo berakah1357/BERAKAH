@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BERAKAH - Cart</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+    }
+
+    header {
+      background: white;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+
+    header a {
+      text-decoration: none;
+      color: #111827;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 18px;
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .item-name {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .price {
+      font-weight: bold;
+    }
+
+    .total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: 25px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 25px;
+      border: none;
+      border-radius: 8px;
+      background: #111827;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .empty {
+      text-align: center;
+      color: #6b7280;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">BERAKAH</div>
+    <a href="marketplace.html">← MARKETPLACE</a>
+  </header>
+
+  <main class="container">
+
+    <section class="card">
+
+      <h1>🛒 Your Cart</h1>
+
+      <div class="item">
+
+        <div>
+          <div class="item-name">📱 Smartphone</div>
+          <div>BERAKAH Tech</div>
+        </div>
+
+        <div class="price">$299</div>
+
+      </div>
+
+      <div class="total">
+        <span>Total</span>
+        <span>$299</span>
+      </div>
+
+      <button type="button">
+        CHECKOUT
+      </button>
+
+    </section>
+
+  </main>
+
+</body>
+</html>
