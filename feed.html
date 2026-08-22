@@ -184,7 +184,7 @@
       </div>
 
       <div class="actions">
-        <button>❤️ Like</button>
+        <button onclick="likePost(this)">❤️ Like</button>
         <button>💬 Comment</button>
         <button>↗ Share</button>
       </div>
@@ -192,6 +192,16 @@
     </article>
 
   </main>
-
+<script>
+function likePost(button) {
+  if (button.dataset.liked === "true") {
+    button.textContent = "❤️ Like";
+    button.dataset.liked = "false";
+  } else {
+    button.textContent = "❤️ Liked!";
+    button.dataset.liked = "true";
+  }
+}
+</script>
 </body>
 </html>
