@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BERAKAH - Add Product</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+    }
+
+    header {
+      background: white;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+
+    header a {
+      text-decoration: none;
+      color: #111827;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 35px auto;
+      padding: 15px;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 18px;
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      margin-bottom: 7px;
+      font-weight: bold;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 22px;
+      border: none;
+      border-radius: 8px;
+      background: #111827;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .note {
+      color: #6b7280;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">BERAKAH</div>
+    <a href="marketplace.html">MARKETPLACE</a>
+  </header>
+
+  <main class="container">
+
+    <section class="card">
+
+      <h1>➕ Add Product</h1>
+
+      <p class="note">
+        Add a product or service to your BERAKAH business.
+      </p>
+
+      <label>Product Name</label>
+      <input type="text" placeholder="Enter product name">
+
+      <label>Price</label>
+      <input type="number" placeholder="Enter price">
+
+      <label>Category</label>
+      <select>
+        <option>Electronics</option>
+        <option>Fashion</option>
+        <option>Food</option>
+        <option>Beauty</option>
+        <option>Home</option>
+        <option>Services</option>
+        <option>Other</option>
+      </select>
+
+      <label>Description</label>
+      <textarea placeholder="Describe your product or service"></textarea>
+
+      <label>Business Name</label>
+      <input type="text" placeholder="Enter your business name">
+
+      <label>Product Image</label>
+      <input type="file" accept="image/*">
+
+      <button type="button">
+        ADD PRODUCT
+      </button>
+
+    </section>
+
+  </main>
+
+</body>
+</html>
