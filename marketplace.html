@@ -102,7 +102,13 @@
 </head>
 
 <body>
+<script>
 
+function viewProduct(){
+  alert("PRODUCT PAGE COMING SOON 🚀");
+}
+
+</script>
   <header>
     <div class="logo">BERAKAH</div>
 
@@ -163,10 +169,13 @@
 
         <p>${product.description || ""}</p>
 
-        <button type="button">
-          ADD TO CART 🛒
-        </button>
-      `;
+        <button type="button" onclick="viewProduct()">
+  VIEW PRODUCT 👁️
+</button>
+
+<button type="button">
+  ADD TO CART 🛒
+</button>
 
       const button = card.querySelector("button");
 
