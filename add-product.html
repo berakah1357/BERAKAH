@@ -148,10 +148,32 @@
 
   </main>
 <script>
+<script>
 function addProduct() {
-  alert("Product added successfully! 🛍️");
+  const product = {
+    name: document.getElementById("productName").value.trim(),
+    price: document.getElementById("productPrice").value.trim(),
+    category: document.getElementById("productCategory").value,
+    description: document.getElementById("productDescription").value.trim(),
+    business: document.getElementById("businessName").value.trim()
+  };
+
+  if (!product.name || !product.price || !product.business) {
+    alert("Please enter the product name, price, and business name.");
+    return;
+  }
+
+  const products = JSON.parse(localStorage.getItem("berakahProducts") || "[]");
+
+  products.push(product);
+
+  localStorage.setItem("berakahProducts", JSON.stringify(products));
+
+  alert("Product saved successfully! 🛍️");
+
   window.location.href = "marketplace.html";
 }
+</script>
 </script>
 </body>
 </html>
