@@ -133,21 +133,10 @@
       <label>Description</label>
    <textarea id="productDescription" placeholder="Describe your product or service"></textarea>
 
-      <label>Business Name</label>
-     <input type="text" id="businessName" placeholder="Enter your business name">
-
-      <label>Product Image</label>
-      <input type="file" accept="image/*">
-
-     <button type="button" onclick="addProduct()">
+      <button type="button" onclick="addProduct()">
   ADD PRODUCT
 </button>
-      </button>
 
-    </section>
-
-  </main>
-<script>
 <script>
 function addProduct() {
   const product = {
@@ -163,17 +152,20 @@ function addProduct() {
     return;
   }
 
-  const products = JSON.parse(localStorage.getItem("berakahProducts") || "[]");
+  const products = JSON.parse(
+    localStorage.getItem("berakahProducts") || "[]"
+  );
 
   products.push(product);
 
-  localStorage.setItem("berakahProducts", JSON.stringify(products));
+  localStorage.setItem(
+    "berakahProducts",
+    JSON.stringify(products)
+  );
 
   alert("Product saved successfully! 🛍️");
 
   window.location.href = "marketplace.html";
 }
 </script>
-</script>
-</body>
 </html>
