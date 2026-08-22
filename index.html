@@ -12,18 +12,31 @@
       padding: 0;
     }
 <script>
-const translations = {
-  English: 
-    {<p class="welcome-text">Connect. Share. Grow Together.</p>
-  },
-  "Haitian Creole": {
-    welcome: "Konekte. Pataje. Grandi Ansanm."
-  },
-  French: {
-    welcome: "Connectez-vous. Partagez. Grandissez ensemble."
-  },
-  Spanish: {
-    welcome: "Conecta. Comparte. Crece Juntos."
+<script>
+const languageSelect = document.getElementById("language");
+
+if (languageSelect) {
+  languageSelect.addEventListener("change", function () {
+    const welcomeText = document.querySelector(".welcome-text");
+
+    if (this.value === "Haitian Creole") {
+      welcomeText.textContent = "Konekte. Pataje. Grandi Ansanm.";
+    }
+
+    if (this.value === "English") {
+      welcomeText.textContent = "Connect. Share. Grow Together.";
+    }
+
+    if (this.value === "French") {
+      welcomeText.textContent = "Connectez-vous. Partagez. Grandissez ensemble.";
+    }
+
+    if (this.value === "Spanish") {
+      welcomeText.textContent = "Conecta. Comparte. Crece Juntos.";
+    }
+  });
+}
+</script>
   }
 };
 
