@@ -25,14 +25,31 @@ if (savedProducts.length > 0) {
   card.style.margin = "20px";
   card.style.borderRadius = "15px";
 
-  card.innerHTML = `
+  card.innerHTML = 
+    const cartButton = card.querySelector(".add-cart-button");
+
+cartButton.addEventListener("click", function() {
+  const cart = JSON.parse(
+    localStorage.getItem("berakahCart") || "[]"
+  );
+
+  cart.push({
+    name: product.name,
+    price: product.price
+  });
+
+  localStorage.setItem("berakahCart", JSON.stringify(cart));
+
+  alert("Product added to cart! 🛒");
+});`
     <h2>${product.name}</h2>
     <p><strong>Business:</strong> ${product.business}</p>
     <p><strong>Category:</strong> ${product.category}</p>
     <p>${product.description}</p>
     <h3>$${product.price}</h3>
     <button type="button" onclick="addToCart('${product.name}', '${product.price}')">
-      ADD TO CART 🛒
+  ADD TO CART 🛒
+</button>
     </button>
   `;
 
