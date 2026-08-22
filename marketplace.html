@@ -1,215 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BERAKAH - Marketplace</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<title>BERAKAH Marketplace</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #1f2937;
-    }
+<style>
 
-    header {
-      background: white;
-      padding: 20px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #e5e7eb;
-    }
+body{
+font-family:Arial;
+background:#f5f5f5;
+padding:30px;
+}
 
-    .logo {
-      font-size: 28px;
-      font-weight: bold;
-      letter-spacing: 3px;
-    }
+.product{
+background:white;
+padding:20px;
+margin:20px auto;
+max-width:400px;
+border-radius:10px;
+}
 
-    nav a {
-      margin-left: 15px;
-      text-decoration: none;
-      color: #111827;
-      font-weight: bold;
-    }
+.price{
+font-size:24px;
+font-weight:bold;
+}
 
-    .container {
-      max-width: 1100px;
-      margin: 35px auto;
-      padding: 20px;
-    }
+button{
+padding:12px;
+width:100%;
+background:#111827;
+color:white;
+border:none;
+margin-top:10px;
+cursor:pointer;
+}
 
-    h1 {
-      text-align: center;
-    }
+</style>
 
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
-    }
-
-    .product {
-      background: white;
-      padding: 20px;
-      border-radius: 18px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-    }
-
-    .product-image {
-      font-size: 60px;
-      text-align: center;
-      padding: 20px;
-    }
-
-    .price {
-      font-size: 24px;
-      font-weight: bold;
-      margin: 10px 0;
-    }
-
-    .seller {
-      color: #6b7280;
-      margin-bottom: 15px;
-    }
-
-    button {
-      width: 100%;
-      padding: 13px;
-      border: none;
-      border-radius: 8px;
-      background: #111827;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .empty {
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      text-align: center;
-      grid-column: 1 / -1;
-    }
-  </style>
 </head>
 
 <body>
+
+<h1>🛍️ BERAKAH Marketplace</h1>
+
+<div id="products"></div>
+
+
 <script>
 
-function viewProduct(){
-  alert("PRODUCT PAGE COMING SOON 🚀");
+let productsContainer =
+document.getElementById("products");
+
+
+let products = JSON.parse(
+localStorage.getItem("berakahProducts") || "[]"
+);
+
+
+if(products.length === 0){
+
+productsContainer.innerHTML =
+"<h2>No products yet.</h2>";
+
 }
 
-</script>
-  <header>
-    <div class="logo">BERAKAH</div>
+else{
 
-    <nav>
-      <a href="business.html">BUSINESS</a>
-      <a href="products.html">MY PRODUCTS</a>
-    </nav>
-  </header>
 
-  <main class="container">
+products.forEach(function(product){
 
-    <h1>🛍️ BERAKAH Marketplace</h1>
 
-    <div id="products" class="products"></div>
+let card = document.createElement("div");
 
-  </main>
+card.className="product";
 
-  <script>
-    const productsContainer = document.getElementById("products");
 
-    const savedProducts = JSON.parse(
-      localStorage.getItem("berakahProducts") || "[]"
-    );
+card.innerHTML = `
 
-    function addToCart(name, price) {
-      const cart = JSON.parse(
-        localStorage.getItem("berakahCart") || "[]"
-      );
+<h2>${product.name}</h2>
 
-      cart.push({
-        name: name,
-        price: price
-      });
+<div class="price">
+$${product.price}
+</div>
 
-      localStorage.setItem(
-        "berakahCart",
-        JSON.stringify(cart)
-      );
+<p>${product.description || ""}</p>
 
-      alert("Product added to cart! 🛒");
-    }
+<p>🏪 BERAKAH</p>
 
-    <button type="button" onclick="addToCart(product.name, product.price)">
-ADD TO CART 🛒
+
+<button onclick="alert('VIEW PRODUCT COMING SOON')">
+VIEW PRODUCT 👁️
 </button>
 
-      card.className = "product";
 
-      card.innerHTML = `
-        <div class="product-image">🛍️</div>
-
-        <h2>${product.name}</h2>
-
-        <div class="price">$${product.price}</div>
-
-        <div class="seller">
-          🏪 ${product.business}
-        </div>
-
-        <p>${product.description || ""}</p>
-
-        <button type="button" onclick="viewProduct()">
-  VIEW PRODUCT 👁️
-</button>
-
-<button type="button">
-  ADD TO CART 🛒
+<button onclick="alert('ADDED TO CART 🛒')">
+ADD TO CART
 </button>
 
 `;
 
-      const button = card.querySelector("button");
 
-      const button = card.querySelector("button");
+productsContainer.appendChild(card);
 
-      button.addEventListener("click", function() {
-        addToCart(product.name, product.price);
-      });
 
-      return card;
-    }
+});
 
-    if (savedProducts.length === 0) {
 
-      productsContainer.innerHTML = `
-        <div class="empty">
-          <h2>No products yet.</h2>
-          <p>Businesses can add products to the marketplace.</p>
-        </div>
-      `;
+}
 
-    } else {
 
-      savedProducts.forEach(function(product) {
-        productsContainer.appendChild(
-          createProductCard(product)
-        );
-      });
+</script>
 
-    }
-  </script>
 
 </body>
 </html>
