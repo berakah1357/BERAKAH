@@ -38,6 +38,66 @@ function addProduct(){
 
 let file = document.getElementById("productImage").files[0];
 
+if(file){
+
+let reader = new FileReader();
+
+reader.onload = function(e){
+
+saveProduct(e.target.result);
+
+};
+
+reader.readAsDataURL(file);
+
+
+}else{
+
+saveProduct("");
+
+}
+
+}
+
+
+function saveProduct(image){
+
+let product = {
+
+name: document.getElementById("productName").value,
+
+price: document.getElementById("productPrice").value,
+
+description: document.getElementById("productDescription").value,
+
+image: image
+
+};
+
+
+let products = JSON.parse(
+localStorage.getItem("berakahProducts") || "[]"
+);
+
+
+products.push(product);
+
+
+localStorage.setItem(
+"berakahProducts",
+JSON.stringify(products)
+);
+
+
+alert("PRODUCT SAVED");
+
+
+window.location.href="marketplace.html";
+
+}
+
+let file = document.getElementById("productImage").files[0];
+
 let product = {
 name: document.getElementById("productName").value,
 
