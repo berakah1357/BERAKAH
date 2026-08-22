@@ -113,7 +113,16 @@
     }
   </style>
 </head>
+<script>
+function commentPost(button) {
+  const comment = prompt("Write your comment:");
 
+  if (comment && comment.trim() !== "") {
+    button.textContent = "💬 Commented!";
+    button.dataset.comment = comment.trim();
+  }
+}
+</script>
 <body>
 
   <header>
@@ -185,7 +194,7 @@
 
       <div class="actions">
         <button onclick="likePost(this)">❤️ Like</button>
-        <button>💬 Comment</button>
+        <button onclick="commentPost(this)">💬 Comment</button>
         <button>↗ Share</button>
       </div>
 
