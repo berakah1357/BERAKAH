@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>BERAKAH Orders</title>
+
+<style>
+
+body{
+  font-family:Arial;
+  background:#f5f5f5;
+  padding:20px;
+}
+
+.order{
+  background:white;
+  max-width:600px;
+  margin:20px auto;
+  padding:20px;
+  border-radius:12px;
+}
+
+.order img{
+  width:100%;
+  max-height:250px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.status{
+  font-weight:bold;
+  margin-top:10px;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>📦 BERAKAH ORDERS</h1>
+
+<div id="orders"></div>
+
+<script>
+
+let orders = JSON.parse(
+  localStorage.getItem("berakahOrders") || "[]"
+);
+
+let container = document.getElementById("orders");
+
+if(orders.length === 0){
+
+  container.innerHTML = `
+    <div class="order">
+      <h2>No orders yet.</h2>
+    </div>
+  `;
+
+}else{
+
+  orders.forEach(function(order){
+
+    let box = document.createElement("div");
+
+    box.className = "order";
+
+    let productsHTML = "";
+
+    order.products.forEach(function(product){
+
+      productsHTML += `
+
+        <div>
+
+          ${
+            product.image
+            ? `<img src="${product.image}">`
+            : ""
+          }
+
+          <h2>${product.name}</h2>
+
+          <p>Price: $${product.price}</p>
+
+        </div>
+
+      `;
+
+    });
+
+    box.innerHTML = `
+
+      <h2>ORDER #${order.id}</h2>
+
+      <p>
+        <strong>Customer:</strong>
+        ${order.customerName}
+      </p>
+
+      <p>
+        <strong>Email:</strong>
+        ${order.customerEmail}
+      </p>
+
+      <p>
+        <strong>Address:</strong>
+        ${order.customerAddress}
+      </p>
+
+      ${productsHTML}
+
+      <h2>TOTAL: $${order.total}</h2>
+
+      <p class="status">
+        STATUS: ${order.status}
+      </p>
+
+      <button onclick="markComplete(${order.id})">
+        MARK AS COMPLETED
+      </button>
+
+    `;
+
+    container.appendChild(box);
+
+  });
+
+}
+
+
+function markComplete(orderId){
+
+  let orders = JSON.parse(
+    localStorage.getItem("berakahOrders") || "[]"
+  );
+
+  let order = orders.find(
+    function(order){
+      return order.id === orderId;
+    }
+  );
+
+  if(order){
+
+    order.status = "COMPLETED";
+
+    localStorage.setItem(
+      "berakahOrders",
+      JSON.stringify(orders)
+    );
+
+    location.reload();
+
+  }
+
+}
+
+</script>
+
+</body>
+
+</html>
