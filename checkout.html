@@ -85,7 +85,6 @@ function placeOrder(){
   let address =
     document.getElementById("customerAddress").value;
 
-
   if(!name || !email || !address){
 
     alert("PLEASE COMPLETE ALL INFORMATION");
@@ -93,40 +92,6 @@ function placeOrder(){
     return;
 
   }
-let order = {
-
-  id: Date.now(),
-
-  customerName: name,
-
-  customerEmail: email,
-
-  customerAddress: address,
-
-  products: cart,
-
-  total: total,
-
-  status: "NEW"
-
-};
-
-
-let orders = JSON.parse(
-  localStorage.getItem("berakahOrders") || "[]"
-);
-
-
-orders.push(order);
-
-
-localStorage.setItem(
-  "berakahOrders",
-  JSON.stringify(orders)
-);
-
-
-alert("ORDER SAVED! 🚀");
 
   let order = {
 
@@ -146,20 +111,16 @@ alert("ORDER SAVED! 🚀");
 
   };
 
-
   let orders = JSON.parse(
     localStorage.getItem("berakahOrders") || "[]"
   );
 
-
   orders.push(order);
-
 
   localStorage.setItem(
     "berakahOrders",
     JSON.stringify(orders)
   );
-
 
   alert("ORDER SAVED! 🚀");
 
