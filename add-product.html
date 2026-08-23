@@ -64,17 +64,19 @@ function addProduct() {
 
 function saveProduct(image) {
 
-  let product = {
+ let product = {
 
-    name: document.getElementById("productName").value,
+  name: document.getElementById("productName").value,
 
-    price: document.getElementById("productPrice").value,
+  price: document.getElementById("productPrice").value,
 
-    description: document.getElementById("productDescription").value,
+  description: document.getElementById("productDescription").value,
 
-    image: image
+  image: image,
 
-  };
+  seller: "BERAKAH"
+
+};
 
 
   let products = JSON.parse(
