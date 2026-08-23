@@ -54,7 +54,9 @@ button{
 <div class="card">
 
 <h2>💰 Sales</h2>
-
+<div id="sales">
+$0
+</div>
 <div id="sales">
 $0
 </div>
@@ -64,7 +66,10 @@ $0
 <div class="card">
 
 <h2>📋 Orders</h2>
-
+<p>
+  Total Orders:
+  <strong id="ordersCount">0</strong>
+</p>
 <div id="orders"></div>
 
 </div>
@@ -119,7 +124,10 @@ if(products.length === 0){
 let ordersBox =
   document.getElementById("orders");
 
+let totalOrders = orders.length;
 
+document.getElementById("ordersCount").innerHTML =
+  totalOrders;
 let sales = 0;
 
 
