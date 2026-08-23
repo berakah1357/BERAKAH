@@ -96,29 +96,35 @@ if(products.length === 0){
 
 }else{
 
-  products.forEach(function(product){
+ products.forEach(function(product){
 
-    productsBox.innerHTML += `
+  productsBox.innerHTML += `
 
-      <div>
+    <div>
 
-        <h3>${product.name}</h3>
+      <h3>${product.name}</h3>
 
-        <p>$${product.price}</p>
+      <p>Price: $${product.price}</p>
 
-        <p>${product.seller || "BERAKAH"}</p>
+      <p>Stock: ${product.stock ?? 0}</p>
 
-      </div>
+      <p>Seller: ${product.seller || "BERAKAH"}</p>
 
-      <hr>
+      <button onclick="editProduct(${product.id})">
+        ✏️ EDIT
+      </button>
 
-    `;
+      <button onclick="deleteProduct(${product.id})">
+        🗑️ DELETE
+      </button>
 
-  });
+    </div>
 
-}
+    <hr>
 
+  `;
 
+});
 let ordersBox =
   document.getElementById("orders");
 
