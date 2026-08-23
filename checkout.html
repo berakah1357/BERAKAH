@@ -72,6 +72,23 @@ button{
 </div>
 
 <script>
+
+let cart = JSON.parse(
+  localStorage.getItem("berakahCart") || "[]"
+);
+
+let total = 0;
+
+cart.forEach(function(product){
+
+  total += Number(product.price) || 0;
+
+});
+
+document.getElementById("total").innerHTML =
+  "TOTAL: $" + total;
+
+
 function placeOrder(){
 
   let name =
@@ -123,6 +140,7 @@ function placeOrder(){
   alert("ORDER SAVED! 🚀");
 
 }
+
 </script>
 
 </body>
