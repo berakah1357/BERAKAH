@@ -149,8 +149,33 @@ if(orders.length === 0){
         </p>
 
         <p>
-          Status: ${order.status}
-        </p>
+  Status:
+
+  <select onchange="updateOrderStatus(${order.id}, this.value)">
+
+    <option value="NEW"
+      ${order.status === "NEW" ? "selected" : ""}>
+      NEW
+    </option>
+
+    <option value="PROCESSING"
+      ${order.status === "PROCESSING" ? "selected" : ""}>
+      PROCESSING
+    </option>
+
+    <option value="SHIPPED"
+      ${order.status === "SHIPPED" ? "selected" : ""}>
+      SHIPPED
+    </option>
+
+    <option value="COMPLETED"
+      ${order.status === "COMPLETED" ? "selected" : ""}>
+      COMPLETED
+    </option>
+
+  </select>
+
+</p>
 
       </div>
 
