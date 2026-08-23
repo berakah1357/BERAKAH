@@ -1,180 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BERAKAH - Checkout</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<title>BERAKAH Checkout</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #1f2937;
-    }
+<style>
 
-    header {
-      background: white;
-      padding: 18px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #e5e7eb;
-    }
+body{
+  font-family:Arial;
+  background:#f5f5f5;
+  padding:30px;
+}
 
-    .logo {
-      font-size: 28px;
-      font-weight: bold;
-      letter-spacing: 3px;
-    }
+.checkout{
+  background:white;
+  max-width:500px;
+  margin:auto;
+  padding:25px;
+  border-radius:12px;
+}
 
-    header a {
-      text-decoration: none;
-      color: #111827;
-      font-weight: bold;
-    }
+input{
+  width:100%;
+  padding:12px;
+  margin:8px 0 15px;
+  box-sizing:border-box;
+}
 
-    .container {
-      max-width: 850px;
-      margin: 40px auto;
-      padding: 15px;
-    }
+.total{
+  font-size:26px;
+  font-weight:bold;
+  margin:20px 0;
+}
 
-    .card {
-      background: white;
-      padding: 30px;
-      border-radius: 18px;
-      margin-bottom: 20px;
-    }
+button{
+  width:100%;
+  padding:14px;
+  background:#111827;
+  color:white;
+  border:none;
+  cursor:pointer;
+  font-size:16px;
+}
 
-    h1 {
-      margin-top: 0;
-    }
+</style>
 
-    label {
-      display: block;
-      margin-top: 18px;
-      margin-bottom: 7px;
-      font-weight: bold;
-    }
-
-    input {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 15px;
-    }
-
-    .order {
-      padding: 20px;
-      background: #f5f7fb;
-      border-radius: 12px;
-    }
-
-    .row {
-      display: flex;
-      justify-content: space-between;
-      margin: 12px 0;
-    }
-
-    .total {
-      border-top: 1px solid #d1d5db;
-      padding-top: 15px;
-      margin-top: 15px;
-      font-size: 21px;
-      font-weight: bold;
-    }
-
-    button {
-      width: 100%;
-      padding: 15px;
-      margin-top: 20px;
-      border: none;
-      border-radius: 8px;
-      background: #111827;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .notice {
-      color: #6b7280;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-  </style>
 </head>
 
 <body>
 
-  <header>
-    <div class="logo">BERAKAH</div>
-    <a href="cart.html">← CART</a>
-  </header>
+<div class="checkout">
 
-  <main class="container">
+<h1>🛒 BERAKAH CHECKOUT</h1>
 
-    <section class="card">
+<h2>Customer Information</h2>
 
-      <h1>Checkout</h1>
+<label>Full Name</label>
+<input id="customerName" type="text" placeholder="Your name">
 
-      <label>Full Name</label>
-      <input type="text" placeholder="Enter your full name">
+<label>Email</label>
+<input id="customerEmail" type="email" placeholder="Your email">
 
-      <label>Email</label>
-      <input type="email" placeholder="Enter your email">
+<label>Address</label>
+<input id="customerAddress" type="text" placeholder="Your address">
 
-      <label>Shipping Address</label>
-      <input type="text" placeholder="Street address">
+<div id="total" class="total"></div>
 
-      <label>City</label>
-      <input type="text" placeholder="City">
+<button onclick="placeOrder()">
+PLACE ORDER
+</button>
 
-      <label>State</label>
-      <input type="text" placeholder="State">
+</div>
 
-      <label>ZIP Code</label>
-      <input type="text" placeholder="ZIP code">
+<script>
 
-    </section>
+let cart = JSON.parse(
+  localStorage.getItem("berakahCart") || "[]"
+);
 
-    <section class="card">
+let total = 0;
 
-      <h2>Order Summary</h2>
+cart.forEach(function(product){
 
-      <div class="order">
+  total += Number(product.price) || 0;
 
-        <div class="row">
-          <span>📱 Smartphone</span>
-          <strong>$299</strong>
-        </div>
+});
 
-        <div class="row total">
-          <span>Total</span>
-          <span>$299</span>
-        </div>
+document.getElementById("total").innerHTML =
+"TOTAL: $" + total;
 
-      </div>
 
-      <p class="notice">
-        Your payment will be processed securely through a
-        payment provider when BERAKAH's real checkout system
-        is connected.
-      </p>
+function placeOrder(){
 
-      <button type="button">
-        PLACE ORDER
-      </button>
+  let name =
+    document.getElementById("customerName").value;
 
-    </section>
+  let email =
+    document.getElementById("customerEmail").value;
 
-  </main>
+  let address =
+    document.getElementById("customerAddress").value;
+
+
+  if(!name || !email || !address){
+
+    alert("PLEASE COMPLETE ALL INFORMATION");
+
+    return;
+
+  }
+
+
+  alert("ORDER RECEIVED! 🚀");
+
+}
+
+</script>
 
 </body>
+
 </html>
