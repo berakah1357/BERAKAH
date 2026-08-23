@@ -202,7 +202,93 @@ if(orders.length === 0){
 
 document.getElementById("sales").innerHTML =
 "$" + sales;
+function editProduct(productId){
 
+  let products = JSON.parse(
+    localStorage.getItem("berakahProducts") || "[]"
+  );
+
+  let product = products.find(function(p){
+    return Number(p.id) === Number(productId);
+  });
+
+  if(!product){
+    alert("PRODUCT NOT FOUND");
+    return;
+  }
+
+  let newName = prompt(
+    "Product name:",
+    product.name
+  );
+
+  if(newName === null) return;
+
+  let newPrice = prompt(
+    "Price:",
+    product.price
+  );
+
+  if(newPrice === null) return;
+
+  let newStock = prompt(
+    "Stock:",
+    product.stock ?? 0
+  );
+
+  if(newStock === null) return;
+
+  product.name = newName.trim();
+  product.price = Number(newPrice);
+  product.stock = Number(newStock);
+
+  localStorage.setItem(
+    "berakahProducts",
+    JSON.stringify(products)
+  );
+
+  alert("PRODUCT UPDATED 🚀");
+
+  location.reload();
+
+}
+
+
+function deleteProduct(productId){
+
+  let products = JSON.parse(
+    localStorage.getItem("berakahProducts") || "[]"
+  );
+
+  let product = products.find(function(p){
+    return Number(p.id) === Number(productId);
+  });
+
+  if(!product){
+    alert("PRODUCT NOT FOUND");
+    return;
+  }
+
+  let confirmed = confirm(
+    "DELETE " + product.name + "?"
+  );
+
+  if(!confirmed) return;
+
+  products = products.filter(function(p){
+    return Number(p.id) !== Number(productId);
+  });
+
+  localStorage.setItem(
+    "berakahProducts",
+    JSON.stringify(products)
+  );
+
+  alert("PRODUCT DELETED 🗑️");
+
+  location.reload();
+
+}
 </script>
 
 </body>
