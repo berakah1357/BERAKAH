@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>BERAKAH Seller Dashboard</title>
+
+<style>
+
+body{
+  font-family:Arial;
+  background:#f5f5f5;
+  padding:20px;
+}
+
+.dashboard{
+  max-width:700px;
+  margin:auto;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  margin:15px 0;
+  border-radius:12px;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<h1>🏪 BERAKAH SELLER DASHBOARD</h1>
+
+<div class="card">
+
+<h2>📦 My Products</h2>
+
+<div id="products"></div>
+
+</div>
+
+<div class="card">
+
+<h2>💰 Sales</h2>
+
+<div id="sales">
+$0
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>📋 Orders</h2>
+
+<div id="orders"></div>
+
+</div>
+
+</div>
+
+<script>
+
+let products = JSON.parse(
+  localStorage.getItem("berakahProducts") || "[]"
+);
+
+let orders = JSON.parse(
+  localStorage.getItem("berakahOrders") || "[]"
+);
+
+
+let productsBox =
+  document.getElementById("products");
+
+
+if(products.length === 0){
+
+  productsBox.innerHTML =
+    "<p>No products yet.</p>";
+
+}else{
+
+  products.forEach(function(product){
+
+    productsBox.innerHTML += `
+
+      <div>
+
+        <h3>${product.name}</h3>
+
+        <p>$${product.price}</p>
+
+        <p>${product.seller || "BERAKAH"}</p>
+
+      </div>
+
+      <hr>
+
+    `;
+
+  });
+
+}
+
+
+let ordersBox =
+  document.getElementById("orders");
+
+
+let sales = 0;
+
+
+if(orders.length === 0){
+
+  ordersBox.innerHTML =
+    "<p>No orders yet.</p>";
+
+}else{
+
+  orders.forEach(function(order){
+
+    sales += Number(order.total) || 0;
+
+    ordersBox.innerHTML += `
+
+      <div>
+
+        <h3>Order #${order.id}</h3>
+
+        <p>
+          Customer: ${order.customerName}
+        </p>
+
+        <p>
+          Total: $${order.total}
+        </p>
+
+        <p>
+          Status: ${order.status}
+        </p>
+
+      </div>
+
+      <hr>
+
+    `;
+
+  });
+
+}
+
+
+document.getElementById("sales").innerHTML =
+"$" + sales;
+
+</script>
+
+</body>
+
+</html>
