@@ -74,23 +74,6 @@ PLACE ORDER
 </div>
 
 <script>
-
-let cart = JSON.parse(
-  localStorage.getItem("berakahCart") || "[]"
-);
-
-let total = 0;
-
-cart.forEach(function(product){
-
-  total += Number(product.price) || 0;
-
-});
-
-document.getElementById("total").innerHTML =
-"TOTAL: $" + total;
-
-
 function placeOrder(){
 
   let name =
@@ -112,10 +95,42 @@ function placeOrder(){
   }
 
 
-  alert("ORDER RECEIVED! 🚀");
+  let order = {
+
+    id: Date.now(),
+
+    customerName: name,
+
+    customerEmail: email,
+
+    customerAddress: address,
+
+    products: cart,
+
+    total: total,
+
+    status: "NEW"
+
+  };
+
+
+  let orders = JSON.parse(
+    localStorage.getItem("berakahOrders") || "[]"
+  );
+
+
+  orders.push(order);
+
+
+  localStorage.setItem(
+    "berakahOrders",
+    JSON.stringify(orders)
+  );
+
+
+  alert("ORDER SAVED! 🚀");
 
 }
-
 </script>
 
 </body>
