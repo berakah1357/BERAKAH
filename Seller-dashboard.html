@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html>
 
@@ -31,6 +32,14 @@ button{
   margin-top:10px;
   border:none;
   cursor:pointer;
+  background:#111827;
+  color:white;
+  border-radius:6px;
+}
+
+select{
+  padding:8px;
+  margin-top:5px;
 }
 
 </style>
@@ -51,28 +60,31 @@ button{
 
 </div>
 
+
 <div class="card">
 
 <h2>💰 Sales</h2>
-<div id="sales"></div>
-<div id="sales">
-$0
-</div>
+
+<div id="sales">$0</div>
 
 </div>
+
 
 <div class="card">
 
 <h2>📋 Orders</h2>
+
 <p>
-  Total Orders:
-  <strong id="ordersCount">0</strong>
+Total Orders:
+<strong id="ordersCount">0</strong>
 </p>
+
 <div id="orders"></div>
 
 </div>
 
 </div>
+
 
 <script>
 
@@ -89,6 +101,8 @@ let productsBox =
   document.getElementById("products");
 
 
+/* PRODUCTS */
+
 if(products.length === 0){
 
   productsBox.innerHTML =
@@ -96,46 +110,51 @@ if(products.length === 0){
 
 }else{
 
- products.forEach(function(product){
+  products.forEach(function(product){
 
-  productsBox.innerHTML += `
+    productsBox.innerHTML += `
 
-    <div>
+      <div>
 
-      <h3>${product.name}</h3>
+        <h3>${product.name}</h3>
 
-      <p>Price: $${product.price}</p>
+        <p>Price: $${product.price}</p>
 
-      <p>Stock: ${product.stock ?? 0}</p>
+        <p>Stock: ${product.stock ?? 0}</p>
 
-      <p>Seller: ${product.seller || "BERAKAH"}</p>
+        <p>Seller: ${product.seller || "BERAKAH"}</p>
 
-      <button onclick="editProduct(${product.id})">
-        ✏️ EDIT
-      </button>
+        <button onclick="editProduct(${product.id})">
+          ✏️ EDIT
+        </button>
 
-      <button onclick="deleteProduct(${product.id})">
-        🗑️ DELETE
-      </button>
+        <button onclick="deleteProduct(${product.id})">
+          🗑️ DELETE
+        </button>
 
-    </div>
+      </div>
 
-    <hr>
+      <hr>
 
-  `;
+    `;
 
-});
   });
 
 }
 
+
+/* ORDERS */
+
 let ordersBox =
   document.getElementById("orders");
 
-let totalOrders = orders.length;
+let totalOrders =
+  orders.length;
 
 document.getElementById("ordersCount").innerHTML =
   totalOrders;
+
+
 let sales = 0;
 
 
@@ -165,33 +184,34 @@ if(orders.length === 0){
         </p>
 
         <p>
-  Status:
+          Status:
+        </p>
 
-  <select onchange="updateOrderStatus(${order.id}, this.value)">
+        <select
+          onchange="updateOrderStatus(${order.id}, this.value)"
+        >
 
-    <option value="NEW"
-      ${order.status === "NEW" ? "selected" : ""}>
-      NEW
-    </option>
+          <option value="NEW"
+            ${order.status === "NEW" ? "selected" : ""}>
+            NEW
+          </option>
 
-    <option value="PROCESSING"
-      ${order.status === "PROCESSING" ? "selected" : ""}>
-      PROCESSING
-    </option>
+          <option value="PROCESSING"
+            ${order.status === "PROCESSING" ? "selected" : ""}>
+            PROCESSING
+          </option>
 
-    <option value="SHIPPED"
-      ${order.status === "SHIPPED" ? "selected" : ""}>
-      SHIPPED
-    </option>
+          <option value="SHIPPED"
+            ${order.status === "SHIPPED" ? "selected" : ""}>
+            SHIPPED
+          </option>
 
-    <option value="COMPLETED"
-      ${order.status === "COMPLETED" ? "selected" : ""}>
-      COMPLETED
-    </option>
+          <option value="COMPLETED"
+            ${order.status === "COMPLETED" ? "selected" : ""}>
+            COMPLETED
+          </option>
 
-  </select>
-
-</p>
+        </select>
 
       </div>
 
@@ -205,7 +225,11 @@ if(orders.length === 0){
 
 
 document.getElementById("sales").innerHTML =
-"$" + sales;
+  "$" + sales;
+
+
+/* EDIT PRODUCT */
+
 function editProduct(productId){
 
   let products = JSON.parse(
@@ -213,43 +237,63 @@ function editProduct(productId){
   );
 
   let product = products.find(function(p){
+
     return Number(p.id) === Number(productId);
+
   });
 
+
   if(!product){
+
     alert("PRODUCT NOT FOUND");
+
     return;
+
   }
+
 
   let newName = prompt(
     "Product name:",
     product.name
   );
 
+
   if(newName === null) return;
+
 
   let newPrice = prompt(
     "Price:",
     product.price
   );
 
+
   if(newPrice === null) return;
+
 
   let newStock = prompt(
     "Stock:",
     product.stock ?? 0
   );
 
+
   if(newStock === null) return;
 
-  product.name = newName.trim();
-  product.price = Number(newPrice);
-  product.stock = Number(newStock);
+
+  product.name =
+    newName.trim();
+
+  product.price =
+    Number(newPrice);
+
+  product.stock =
+    Number(newStock);
+
 
   localStorage.setItem(
     "berakahProducts",
     JSON.stringify(products)
   );
+
 
   alert("PRODUCT UPDATED 🚀");
 
@@ -258,43 +302,101 @@ function editProduct(productId){
 }
 
 
+/* DELETE PRODUCT */
+
 function deleteProduct(productId){
 
   let products = JSON.parse(
     localStorage.getItem("berakahProducts") || "[]"
   );
 
+
   let product = products.find(function(p){
+
     return Number(p.id) === Number(productId);
+
   });
 
+
   if(!product){
+
     alert("PRODUCT NOT FOUND");
+
     return;
+
   }
+
 
   let confirmed = confirm(
     "DELETE " + product.name + "?"
   );
 
+
   if(!confirmed) return;
 
+
   products = products.filter(function(p){
+
     return Number(p.id) !== Number(productId);
+
   });
+
 
   localStorage.setItem(
     "berakahProducts",
     JSON.stringify(products)
   );
 
+
   alert("PRODUCT DELETED 🗑️");
 
   location.reload();
 
 }
+
+
+/* UPDATE ORDER STATUS */
+
+function updateOrderStatus(orderId, newStatus){
+
+  let orders = JSON.parse(
+    localStorage.getItem("berakahOrders") || "[]"
+  );
+
+
+  let order = orders.find(function(o){
+
+    return Number(o.id) === Number(orderId);
+
+  });
+
+
+  if(!order){
+
+    alert("ORDER NOT FOUND");
+
+    return;
+
+  }
+
+
+  order.status =
+    newStatus;
+
+
+  localStorage.setItem(
+    "berakahOrders",
+    JSON.stringify(orders)
+  );
+
+
+  alert("ORDER STATUS UPDATED 🚀");
+
+}
+
 </script>
 
 </body>
 
 </html>
+```
