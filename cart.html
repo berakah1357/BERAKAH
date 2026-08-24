@@ -1,268 +1,147 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BERAKAH - Cart</title>
 
-<meta charset="UTF-8">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+    }
 
-<title>BERAKAH - Cart</title>
+    header {
+      background: white;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e7eb;
+    }
 
-<style>
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
 
-*{
-  box-sizing:border-box;
-}
+    header a {
+      text-decoration: none;
+      color: #111827;
+      font-weight: bold;
+    }
 
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f5f7fb;
-  color:#1f2937;
-}
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 15px;
+    }
 
-header{
-  background:white;
-  padding:18px 7%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid #e5e7eb;
-}
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 18px;
+    }
 
-.logo{
-  font-size:28px;
-  font-weight:bold;
-  letter-spacing:3px;
-}
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
 
-header a{
-  text-decoration:none;
-  color:#111827;
-  font-weight:bold;
-}
+    .item-name {
+      font-weight: bold;
+      font-size: 18px;
+    }
 
-.container{
-  max-width:800px;
-  margin:40px auto;
-  padding:15px;
-}
+    .price {
+      font-weight: bold;
+    }
 
-.card{
-  background:white;
-  padding:30px;
-  border-radius:18px;
-}
+    .total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: 25px;
+    }
 
-.item{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 0;
-  border-bottom:1px solid #e5e7eb;
-}
+    .button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 8px;
+      background: #111827;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
 
-.item-name{
-  font-weight:bold;
-  font-size:18px;
-}
-
-.price{
-  font-weight:bold;
-}
-
-.total{
-  display:flex;
-  justify-content:space-between;
-  font-size:22px;
-  font-weight:bold;
-  margin-top:25px;
-}
-
-button{
-  width:100%;
-  padding:15px;
-  margin-top:25px;
-  border:none;
-  border-radius:8px;
-  background:#111827;
-  color:white;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.empty{
-  text-align:center;
-  color:#6b7280;
-  padding:30px;
-}
-
-.remove{
-  width:auto;
-  padding:8px 15px;
-  margin:10px 0 0 0;
-  background:#dc2626;
-  font-size:14px;
-}
-
-</style>
-
+    .stripe-button {
+      background: #635bff;
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-
-<div class="logo">
-BERAKAH
-</div>
-
-<a href="marketplace.html">
-← MARKETPLACE
-</a>
-
+  <div class="logo">BERAKAH</div>
+  <a href="marketplace.html">← MARKETPLACE</a>
 </header>
-
 
 <main class="container">
 
-<section class="card">
+  <section class="card">
 
-<h1>🛒 Your Cart</h1>
+    <h1>🛒 Your Cart</h1>
 
-<div id="cartItems"></div>
+    <div class="item">
+      <div>
+        <div class="item-name">📱 SMARTPHONE</div>
+        <div>🏪 BERAKAH</div>
+      </div>
 
-<div class="total">
+      <div class="price">$250</div>
+    </div>
 
-<span>Total</span>
+    <div class="total">
+      <span>Total</span>
+      <span>$250</span>
+    </div>
 
-<span id="cartTotal">
-$0
-</span>
+    <!-- CHECKOUT BUTTON -->
+    <a href="checkout.html" class="button">
+      CHECKOUT
+    </a>
 
-</div>
+    <!-- STRIPE BUTTON -->
+    <a
+      href="https://buy.stripe.com/test_dRm4gAd7Nanvf579FPdEs00"
+      target="_blank"
+      class="button stripe-button">
+      PAY $250 WITH STRIPE
+    </a>
 
-
-<a href="checkout.html"
-style="text-decoration:none;">
-
-<button type="button">
-CHECKOUT
-</button>
-
-</a>
-
-</section>
+  </section>
 
 </main>
 
-
-<script>
-
-let cart = JSON.parse(
-  localStorage.getItem("berakahCart") || "[]"
-);
-
-let cartItems =
-  document.getElementById("cartItems");
-
-let cartTotal =
-  document.getElementById("cartTotal");
-
-
-function displayCart(){
-
-  cartItems.innerHTML = "";
-
-  if(cart.length === 0){
-
-    cartItems.innerHTML = `
-      <div class="empty">
-        <h2>Your cart is empty.</h2>
-
-        <p>
-          Go to the Marketplace and add a product.
-        </p>
-      </div>
-    `;
-
-    cartTotal.innerText = "$0";
-
-    return;
-  }
-
-
-  let total = 0;
-
-
-  cart.forEach(function(product,index){
-
-    let price =
-      Number(product.price) || 0;
-
-    total += price;
-
-
-    cartItems.innerHTML += `
-
-      <div class="item">
-
-        <div>
-
-          <div class="item-name">
-            📱 ${product.name}
-          </div>
-
-          <div>
-            🏪 ${product.seller || "BERAKAH"}
-          </div>
-
-          <button
-            class="remove"
-            onclick="removeProduct(${index})">
-            REMOVE
-          </button>
-
-        </div>
-
-        <div class="price">
-          $${price}
-        </div>
-
-      </div>
-
-    `;
-
-  });
-
-
-  cartTotal.innerText =
-    "$" + total;
-
-}
-
-
-function removeProduct(index){
-
-  cart.splice(index,1);
-
-  localStorage.setItem(
-    "berakahCart",
-    JSON.stringify(cart)
-  );
-
-  displayCart();
-
-}
-
-
-displayCart();
-
-</script>
-
 </body>
-
 </html>
+```
