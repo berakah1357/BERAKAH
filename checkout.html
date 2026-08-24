@@ -151,7 +151,32 @@ function placeOrder(){
     "berakahOrders",
     JSON.stringify(orders)
   );
+cart.forEach(function(cartProduct){
 
+  let products = JSON.parse(
+    localStorage.getItem("berakahProducts") || "[]"
+  );
+
+  let product = products.find(function(p){
+    return Number(p.id) === Number(cartProduct.id);
+  });
+
+  if(product){
+
+    product.stock =
+      Math.max(
+        0,
+        Number(product.stock || 0) - 1
+      );
+
+  }
+
+  localStorage.setItem(
+    "berakahProducts",
+    JSON.stringify(products)
+  );
+
+});
 
   // CLEAR CART AFTER ORDER
 
