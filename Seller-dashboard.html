@@ -393,7 +393,32 @@ function updateOrderStatus(orderId, newStatus){
   alert("ORDER STATUS UPDATED 🚀");
 
 }
+function updateOrderStatus(orderId, newStatus){
 
+  let orders = JSON.parse(
+    localStorage.getItem("berakahOrders") || "[]"
+  );
+
+  let order = orders.find(function(order){
+    return Number(order.id) === Number(orderId);
+  });
+
+  if(!order){
+    alert("ORDER NOT FOUND");
+    return;
+  }
+
+  order.status = newStatus;
+
+  localStorage.setItem(
+    "berakahOrders",
+    JSON.stringify(orders)
+  );
+
+  alert("ORDER STATUS UPDATED: " + newStatus);
+
+  location.reload();
+}
 </script>
 
 </body>
