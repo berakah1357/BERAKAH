@@ -71,6 +71,7 @@ button{
 
 </div>
 
+
 <script>
 
 let cart = JSON.parse(
@@ -92,13 +93,14 @@ document.getElementById("total").innerHTML =
 function placeOrder(){
 
   let name =
-    document.getElementById("customerName").value;
+    document.getElementById("customerName").value.trim();
 
   let email =
-    document.getElementById("customerEmail").value;
+    document.getElementById("customerEmail").value.trim();
 
   let address =
-    document.getElementById("customerAddress").value;
+    document.getElementById("customerAddress").value.trim();
+
 
   if(!name || !email || !address){
 
@@ -107,6 +109,16 @@ function placeOrder(){
     return;
 
   }
+
+
+  if(cart.length === 0){
+
+    alert("YOUR CART IS EMPTY");
+
+    return;
+
+  }
+
 
   let order = {
 
@@ -126,20 +138,36 @@ function placeOrder(){
 
   };
 
+
   let orders = JSON.parse(
     localStorage.getItem("berakahOrders") || "[]"
   );
 
+
   orders.push(order);
+
 
   localStorage.setItem(
     "berakahOrders",
     JSON.stringify(orders)
   );
 
+
+  // CLEAR CART AFTER ORDER
+
+  localStorage.removeItem("berakahCart");
+
+
   alert("ORDER SAVED! 🚀");
 
+
+  // GO BACK TO MARKETPLACE
+
+  window.location.href =
+    "marketplace.html";
+
 }
+
 
 </script>
 
