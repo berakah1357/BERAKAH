@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BERAKAH - Feed</title>
+
+  <title>BERAKAH - Social Feed</title>
 
   <style>
     * {
@@ -14,203 +15,632 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f5f7fb;
-      color: #1f2937;
+      color: #111827;
     }
 
     header {
       background: white;
-      padding: 18px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       border-bottom: 1px solid #e5e7eb;
+      padding: 15px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav {
+      max-width: 900px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
     }
 
     .logo {
-      font-size: 28px;
+      font-size: 25px;
       font-weight: bold;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
     }
 
-    nav a {
-      margin-left: 20px;
-      text-decoration: none;
-      color: #111827;
-      font-weight: bold;
+    .nav-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
-    .feed {
-      max-width: 700px;
-      margin: 35px auto;
+    .nav-buttons button {
+      border: 1px solid #d1d5db;
+      background: white;
+      padding: 8px 12px;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    .logout {
+      background: #111827 !important;
+      color: white;
+    }
+
+    main {
+      width: 100%;
+      max-width: 650px;
+      margin: 25px auto;
       padding: 0 15px;
     }
 
-    .welcome {
+    .composer,
+    .post {
       background: white;
-      padding: 25px;
-      border-radius: 15px;
-      margin-bottom: 20px;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.06);
     }
 
-    .welcome h1 {
+    .composer h2 {
       margin-top: 0;
+      font-size: 20px;
     }
 
-    .create-post {
-      background: white;
-      padding: 20px;
-      border-radius: 15px;
-      margin-bottom: 20px;
-    }
-
-    <textarea id="postText" placeholder="What's on your mind?"></textarea>
+    textarea {
       width: 100%;
-      min-height: 90px;
-      padding: 15px;
-      border: 1px solid #d1d5db;
-      border-radius: 10px;
+      min-height: 100px;
       resize: vertical;
+      padding: 13px;
+      border: 1px solid #d1d5db;
+      border-radius: 9px;
       font-size: 15px;
+      font-family: inherit;
     }
 
-    button {
+    .image-input {
+      width: 100%;
+      margin-top: 10px;
+      padding: 11px;
+      border: 1px solid #d1d5db;
+      border-radius: 9px;
+    }
+
+    .post-button {
+      width: 100%;
       margin-top: 12px;
-      padding: 12px 20px;
+      padding: 13px;
       border: none;
-      border-radius: 8px;
+      border-radius: 9px;
       background: #111827;
       color: white;
       font-weight: bold;
       cursor: pointer;
     }
 
-    .post {
-      background: white;
-      padding: 22px;
-      border-radius: 15px;
-      margin-bottom: 20px;
+    .post-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .post-user {
+    .user {
       font-weight: bold;
-      margin-bottom: 12px;
     }
 
-    .post-text {
-      line-height: 1.6;
-      margin-bottom: 18px;
+    .time {
+      color: #6b7280;
+      font-size: 12px;
+    }
+
+    .post-content {
+      margin: 15px 0;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    .post-image {
+      width: 100%;
+      max-height: 450px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-top: 8px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      border-top: 1px solid #eee;
+      padding-top: 12px;
     }
 
     .actions button {
-      background: #e5e7eb;
-      color: #111827;
-      margin-right: 8px;
+      border: none;
+      background: #f3f4f6;
+      padding: 9px 15px;
+      border-radius: 8px;
+      cursor: pointer;
     }
 
-    .language {
-      color: #6b7280;
-      font-size: 14px;
+    .delete {
+      margin-left: auto;
+      color: #b91c1c;
+    }
+
+    #message {
+      text-align: center;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    #loading {
+      text-align: center;
+      padding: 20px;
     }
   </style>
 </head>
-<script>
-function commentPost(button) {
-  const comment = prompt("Write your comment:");
 
-  if (comment && comment.trim() !== "") {
-    button.textContent = "💬 Commented!";
-    button.dataset.comment = comment.trim();
-  }
-}
-</script>
 <body>
 
-  <header>
+<header>
+  <div class="nav">
 
-    <div class="logo">BERAKAH</div>
+    <div class="logo">
+      BERAKAH
+    </div>
 
-    <nav>
-      <a href="index.html">HOME</a>
-      <a href="profile.html">PROFILE</a>
-    </nav>
+    <div class="nav-buttons">
+      <button onclick="window.location.href='index.html'">
+        Home
+      </button>
 
-  </header>
+      <button onclick="window.location.href='marketplace.html'">
+        Market
+      </button>
 
-  <main class="feed">
+      <button class="logout" id="logoutButton">
+        Logout
+      </button>
+    </div>
 
-    <section class="welcome">
+  </div>
+</header>
 
-      <h1>Welcome to BERAKAH 👋</h1>
 
-      <p>
-        Connect. Share. Grow Together.
-      </p>
+<main>
 
-      <p class="language">
-        Haitian Creole • English • French • Spanish
-      </p>
+  <div class="composer">
 
-    </section>
+    <h2>Create a Post</h2>
 
-    <section class="create-post">
+    <textarea
+      id="postText"
+      placeholder="What's on your mind?"
+    ></textarea>
 
-      <h2>Create a Post</h2>
+    <input
+      id="imageUrl"
+      class="image-input"
+      type="url"
+      placeholder="Optional image URL"
+    >
 
-      <textarea placeholder="What's on your mind?"></textarea>
+    <button
+      class="post-button"
+      id="postButton"
+    >
+      POST
+    </button>
 
-    <button onclick="createPost()">POST</button>
+  </div>
 
-    </section>
+  <div id="message"></div>
 
-    <article class="post">
+  <div id="loading">
+    Loading posts...
+  </div>
 
-      <div class="post-user">
-        👤 BERAKAH User
-      </div>
+  <div id="feed"></div>
 
-      <div class="post-text">
-        Welcome to BERAKAH! This is our first community post.
-        Let's connect, share ideas, and grow together.
-      </div>
+</main>
 
-      <div class="actions">
-        <button>❤️ Like</button>
-        <button>💬 Comment</button>
-        <button>↗ Share</button>
-      </div>
 
-    </article>
-
-    <article class="post">
-
-      <div class="post-user">
-        👤 BERAKAH Community
-      </div>
-
-      <div class="post-text">
-        BERAKAH brings people, communities, and businesses together
-        in one platform.
-      </div>
-
-      <div class="actions">
-        <button onclick="likePost(this)">❤️ Like</button>
-        <button onclick="commentPost(this)">💬 Comment</button>
-        <button>↗ Share</button>
-      </div>
-
-    </article>
-
-  </main>
 <script>
-function likePost(button) {
-  if (button.dataset.liked === "true") {
-    button.textContent = "❤️ Like";
-    button.dataset.liked = "false";
-  } else {
-    button.textContent = "❤️ Liked!";
-    button.dataset.liked = "true";
-  }
+
+const SUPABASE_URL =
+  "https://utoyoglycqjmqznczfxa.supabase.co";
+
+const SUPABASE_ANON_KEY =
+  "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+
+
+let accessToken =
+  localStorage.getItem("berakah_access_token");
+
+let currentUser = null;
+
+
+/* CHECK LOGIN */
+
+if (!accessToken) {
+
+  window.location.href = "login.html";
+
 }
+
+
+/* GET CURRENT USER */
+
+async function getCurrentUser() {
+
+  try {
+
+    const response = await fetch(
+      SUPABASE_URL + "/auth/v1/user",
+      {
+        headers: {
+          "apikey": SUPABASE_ANON_KEY,
+          "Authorization": "Bearer " + accessToken
+        }
+      }
+    );
+
+    if (!response.ok) {
+
+      throw new Error("Session expired");
+
+    }
+
+    currentUser = await response.json();
+
+  } catch (error) {
+
+    localStorage.clear();
+
+    window.location.href = "login.html";
+
+  }
+
+}
+
+
+/* LOAD POSTS */
+
+async function loadPosts() {
+
+  const feed =
+    document.getElementById("feed");
+
+  const loading =
+    document.getElementById("loading");
+
+  try {
+
+    const response = await fetch(
+      SUPABASE_URL +
+      "/rest/v1/posts?select=*&order=created_at.desc",
+      {
+        headers: {
+          "apikey": SUPABASE_ANON_KEY,
+          "Authorization": "Bearer " + accessToken
+        }
+      }
+    );
+
+    const data = await response.json();
+
+    loading.style.display = "none";
+
+    if (!response.ok) {
+
+      throw new Error(
+        data.message || "Could not load posts"
+      );
+
+    }
+
+    feed.innerHTML = "";
+
+    if (data.length === 0) {
+
+      feed.innerHTML =
+        "<div class='post'>No posts yet. Be the first to post!</div>";
+
+      return;
+
+    }
+
+    data.forEach(function(post) {
+
+      const article =
+        document.createElement("div");
+
+      article.className = "post";
+
+      const date =
+        new Date(post.created_at);
+
+      const username =
+        post.username ||
+        "BERAKAH User";
+
+      article.innerHTML = `
+
+        <div class="post-header">
+
+          <div class="user">
+            ${escapeHtml(username)}
+          </div>
+
+          <div class="time">
+            ${date.toLocaleString()}
+          </div>
+
+        </div>
+
+        <div class="post-content">
+          ${escapeHtml(post.content || "")}
+        </div>
+
+        ${
+          post.image_url
+          ?
+          `<img
+            class="post-image"
+            src="${escapeHtml(post.image_url)}"
+            alt="Post image"
+          >`
+          :
+          ""
+        }
+
+        <div class="actions">
+
+          <button
+            onclick="likePost('${post.id}')">
+            ❤️ Like
+          </button>
+
+          ${
+            post.user_id === currentUser.id
+            ?
+            `<button
+              class="delete"
+              onclick="deletePost('${post.id}')">
+              Delete
+            </button>`
+            :
+            ""
+          }
+
+        </div>
+
+      `;
+
+      feed.appendChild(article);
+
+    });
+
+  } catch (error) {
+
+    loading.style.display = "none";
+
+    document.getElementById("message").textContent =
+      error.message;
+
+  }
+
+}
+
+
+/* CREATE POST */
+
+document
+  .getElementById("postButton")
+  .addEventListener("click", async function() {
+
+    const text =
+      document.getElementById("postText")
+        .value.trim();
+
+    const imageUrl =
+      document.getElementById("imageUrl")
+        .value.trim();
+
+    const message =
+      document.getElementById("message");
+
+    if (!text) {
+
+      message.textContent =
+        "Please write something first.";
+
+      return;
+
+    }
+
+    this.disabled = true;
+    this.textContent = "POSTING...";
+
+    try {
+
+      const response = await fetch(
+        SUPABASE_URL + "/rest/v1/posts",
+        {
+          method: "POST",
+
+          headers: {
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization":
+              "Bearer " + accessToken,
+
+            "Content-Type":
+              "application/json",
+
+            "Prefer":
+              "return=minimal"
+          },
+
+          body: JSON.stringify({
+
+            user_id: currentUser.id,
+
+            username:
+              currentUser.user_metadata?.username ||
+              currentUser.email?.split("@")[0] ||
+              "BERAKAH User",
+
+            content: text,
+
+            image_url:
+              imageUrl || null
+
+          })
+        }
+      );
+
+      const data =
+        await response.json();
+
+      if (!response.ok) {
+
+        throw new Error(
+          data.message ||
+          data.hint ||
+          "Could not create post."
+        );
+
+      }
+
+      document.getElementById("postText")
+        .value = "";
+
+      document.getElementById("imageUrl")
+        .value = "";
+
+      message.textContent =
+        "Post published!";
+
+      await loadPosts();
+
+    } catch (error) {
+
+      message.textContent =
+        error.message;
+
+    }
+
+    this.disabled = false;
+    this.textContent = "POST";
+
+  });
+
+
+/* DELETE POST */
+
+async function deletePost(id) {
+
+  if (!confirm("Delete this post?")) {
+    return;
+  }
+
+  try {
+
+    const response = await fetch(
+      SUPABASE_URL +
+      "/rest/v1/posts?id=eq." +
+      encodeURIComponent(id),
+      {
+        method: "DELETE",
+
+        headers: {
+          "apikey": SUPABASE_ANON_KEY,
+          "Authorization":
+            "Bearer " + accessToken
+        }
+      }
+    );
+
+    if (!response.ok) {
+
+      const data =
+        await response.json();
+
+      throw new Error(
+        data.message ||
+        "Could not delete post."
+      );
+
+    }
+
+    await loadPosts();
+
+  } catch (error) {
+
+    alert(error.message);
+
+  }
+
+}
+
+
+/* LIKE */
+
+async function likePost(id) {
+
+  alert(
+    "Like system will be connected next."
+  );
+
+}
+
+
+/* HTML SAFETY */
+
+function escapeHtml(value) {
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+/* LOGOUT */
+
+document
+  .getElementById("logoutButton")
+  .addEventListener("click", function() {
+
+    localStorage.removeItem(
+      "berakah_access_token"
+    );
+
+    localStorage.removeItem(
+      "berakah_refresh_token"
+    );
+
+    localStorage.removeItem(
+      "berakah_user"
+    );
+
+    window.location.href =
+      "login.html";
+
+  });
+
+
+/* START */
+
+(async function() {
+
+  await getCurrentUser();
+
+  if (currentUser) {
+    await loadPosts();
+  }
+
+})();
+
 </script>
+
 </body>
 </html>
