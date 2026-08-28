@@ -71,7 +71,6 @@
 
     button:disabled {
       opacity: 0.6;
-      cursor: not-allowed;
     }
 
     #message {
@@ -102,19 +101,19 @@
 
   <form id="signupForm">
 
-    <label for="fullName">Full Name</label>
+    <label>Full Name</label>
     <input id="fullName" type="text" required>
 
-    <label for="username">Username</label>
+    <label>Username</label>
     <input id="username" type="text" required>
 
-    <label for="email">Email</label>
+    <label>Email</label>
     <input id="email" type="email" required>
 
-    <label for="password">Password</label>
+    <label>Password</label>
     <input id="password" type="password" minlength="6" required>
 
-    <label for="language">Preferred Language</label>
+    <label>Preferred Language</label>
     <select id="language">
       <option value="ht">Haitian Creole</option>
       <option value="en">English</option>
@@ -138,72 +137,72 @@
 </div>
 
 <script>
-  const SUPABASE_URL = "https://utoyoglycqjmqznczfxa.supabase.co";
-const SUPABASE_ANON_KEY ="PASTE_THE_FULL_CHERY_MARKET_PUBLISHABLE_KEY_HERE";
-  const form = document.getElementById("signupForm");
-  const button = document.getElementById("signupButton");
-  const message = document.getElementById("message");
+const SUPABASE_URL = "https://utoyoglycqjmqznczfxa.supabase.co";
 
-  form.addEventListener("submit", async function(event) {
-    event.preventDefault();
+const SUPABASE_ANON_KEY = "PASTE_YOUR_ANON_KEY_HERE";
 
-    button.disabled = true;
-    button.textContent = "CREATING ACCOUNT...";
-    message.textContent = "";
+const form = document.getElementById("signupForm");
+const button = document.getElementById("signupButton");
+const message = document.getElementById("message");
 
-    const fullName = document.getElementById("fullName").value.trim();
-    const username = document.getElementById("username").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-    const language = document.getElementById("language").value;
+form.addEventListener("submit", async function(event) {
+  event.preventDefault();
 
-    try {
-      const response = await fetch(
-        SUPABASE_URL + "/auth/v1/signup",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_ANON_KEY
-          },
-          body: JSON.stringify({
-            email: email,
-            password: password,
-            data: {
-              full_name: fullName,
-              username: username,
-              language: language
-            }
-          })
-        }
-      );
+  button.disabled = true;
+  button.textContent = "CREATING ACCOUNT...";
+  message.textContent = "";
 
-      const data = await response.json();
+  const fullName = document.getElementById("fullName").value.trim();
+  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const language = document.getElementById("language").value;
 
-      if (!response.ok) {
-        throw new Error(
-          data.error_description ||
-          data.msg ||
-          data.message ||
-          "Account creation failed."
-        );
+  try {
+    const response = await fetch(
+      SUPABASE_URL + "/auth/v1/signup",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_ANON_KEY,
+          "Authorization": "Bearer " + SUPABASE_ANON_KEY
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          data: {
+            full_name: fullName,
+            username: username,
+            language: language
+          }
+        })
       }
+    );
 
-      message.textContent =
-        "Account created successfully!";
+    const data = await response.json();
 
-      setTimeout(function() {
-        window.location.href = "login.html";
-      }, 1500);
-
-    } catch (error) {
-
-      message.textContent = error.message;
-
-      button.disabled = false;
-      button.textContent = "CREATE ACCOUNT";
+    if (!response.ok) {
+      throw new Error(
+        data.error_description ||
+        data.msg ||
+        data.message ||
+        "Account creation failed."
+      );
     }
-  });
+
+    message.textContent = "Account created successfully!";
+
+    setTimeout(function() {
+      window.location.href = "login.html";
+    }, 1500);
+
+  } catch (error) {
+    message.textContent = error.message;
+    button.disabled = false;
+    button.textContent = "CREATE ACCOUNT";
+  }
+});
 </script>
 
 </body>
