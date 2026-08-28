@@ -321,8 +321,27 @@ async function loadPosts() {
         }
       }
     );
+const responseText = await response.text();
 
-    const data = await response.json();
+let data = {};
+
+if (responseText.trim()) {
+  try {
+    data = JSON.parse(responseText);
+  } catch (e) {
+    data = { raw: responseText };
+  }
+}
+
+if (!response.ok) {
+  throw new Error(
+    data.error_description ||
+    data.message ||
+    data.msg ||
+    data.raw ||
+    `Post failed (${response.status})`
+  );
+}
 
     loading.style.display = "none";
 
