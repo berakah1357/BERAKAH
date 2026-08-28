@@ -45,6 +45,7 @@ header {
 .nav-buttons {
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .nav-buttons button {
@@ -78,6 +79,7 @@ main {
 
 .composer h2 {
   margin-top: 0;
+  font-size: 20px;
 }
 
 textarea {
@@ -119,6 +121,7 @@ textarea {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
 }
 
 .user {
@@ -184,68 +187,66 @@ textarea {
 <body>
 
 <header>
+  <div class="nav">
 
-<div class="nav">
+    <div class="logo">
+      BERAKAH
+    </div>
 
-<div class="logo">
-BERAKAH
-</div>
+    <div class="nav-buttons">
 
-<div class="nav-buttons">
+      <button onclick="window.location.href='index.html'">
+        Home
+      </button>
 
-<button onclick="window.location.href='index.html'">
-Home
-</button>
+      <button onclick="window.location.href='marketplace.html'">
+        Market
+      </button>
 
-<button onclick="window.location.href='marketplace.html'">
-Market
-</button>
+      <button class="logout" id="logoutButton">
+        Logout
+      </button>
 
-<button class="logout" id="logoutButton">
-Logout
-</button>
+    </div>
 
-</div>
-
-</div>
-
+  </div>
 </header>
 
 
 <main>
 
-<div class="composer">
+  <div class="composer">
 
-<h2>Create a Post</h2>
+    <h2>Create a Post</h2>
 
-<textarea
-id="postText"
-placeholder="What's on your mind?"
-></textarea>
+    <textarea
+      id="postText"
+      placeholder="What's on your mind?"
+    ></textarea>
 
-<input
-id="imageUrl"
-class="image-input"
-type="url"
-placeholder="Optional image URL"
->
+    <input
+      id="imageUrl"
+      class="image-input"
+      type="url"
+      placeholder="Optional image URL"
+    >
 
-<button
-class="post-button"
-id="postButton"
->
-POST
-</button>
+    <button
+      class="post-button"
+      id="postButton"
+    >
+      POST
+    </button>
 
-</div>
+  </div>
 
-<div id="message"></div>
+  <div id="message"></div>
 
-<div id="loading">
-Loading posts...
-</div>
+  <div id="loading">
+    Loading posts...
+  </div>
 
-<div id="feed"></div>
+  <div id="feed"></div>
 
 </main>
 
@@ -258,6 +259,7 @@ const SUPABASE_URL =
 const SUPABASE_ANON_KEY =
 "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
+
 let accessToken =
 localStorage.getItem("berakah_access_token");
 
@@ -267,7 +269,9 @@ let currentUser = null;
 /* CHECK LOGIN */
 
 if (!accessToken) {
-window.location.href = "login.html";
+
+  window.location.href = "login.html";
+
 }
 
 
@@ -275,12 +279,12 @@ window.location.href = "login.html";
 
 function escapeHtml(value) {
 
-return String(value)
-.replaceAll("&", "&amp;")
-.replaceAll("<", "&lt;")
-.replaceAll(">", "&gt;")
-.replaceAll('"', "&quot;")
-.replaceAll("'", "&#039;");
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 
 }
 
@@ -289,31 +293,34 @@ return String(value)
 
 async function getCurrentUser() {
 
-try {
+  try {
 
-const response = await fetch(
-SUPABASE_URL + "/auth/v1/user",
-{
-headers: {
-"apikey": SUPABASE_ANON_KEY,
-"Authorization": "Bearer " + accessToken
-}
-}
-);
+    const response = await fetch(
+      SUPABASE_URL + "/auth/v1/user",
+      {
+        headers: {
+          "apikey": SUPABASE_ANON_KEY,
+          "Authorization":
+            "Bearer " + accessToken
+        }
+      }
+    );
 
-if (!response.ok) {
-throw new Error("Session expired");
-}
+    if (!response.ok) {
 
-currentUser = await response.json();
+      throw new Error("Session expired");
 
-} catch (error) {
+    }
 
-localStorage.clear();
+    currentUser = await response.json();
 
-window.location.href = "login.html";
+  } catch (error) {
 
-}
+    localStorage.clear();
+
+    window.location.href = "login.html";
+
+  }
 
 }
 
@@ -322,205 +329,239 @@ window.location.href = "login.html";
 
 async function loadPosts() {
 
-const feed =
-document.getElementById("feed");
+  const feed =
+    document.getElementById("feed");
 
-const loading =
-document.getElementById("loading");
+  const loading =
+    document.getElementById("loading");
 
-try {
+  try {
 
-const response = await fetch(
-SUPABASE_URL +
-"/rest/v1/posts?select=*&order=created_at.desc",
-{
-headers: {
-"apikey": SUPABASE_ANON_KEY,
-"Authorization":
-"Bearer " + accessToken
-}
-}
-);
+    const response = await fetch(
+      SUPABASE_URL +
+      "/rest/v1/posts?select=*&order=created_at.desc",
+      {
+        headers: {
+          "apikey": SUPABASE_ANON_KEY,
+          "Authorization":
+            "Bearer " + accessToken
+        }
+      }
+    );
 
-const responseText =
-await response.text();
 
-let data = [];
+    const responseText =
+      await response.text();
 
-if (responseText.trim()) {
 
-try {
-data = JSON.parse(responseText);
-}
-catch (e) {
-throw new Error(responseText);
-}
+    let data = [];
 
-}
 
-if (!response.ok) {
+    if (responseText.trim()) {
 
-throw new Error(
-data.message ||
-data.error_description ||
-data.msg ||
-"Could not load posts."
-);
+      try {
 
-}
+        data = JSON.parse(responseText);
 
-loading.style.display = "none";
+      } catch (e) {
 
-feed.innerHTML = "";
+        throw new Error(
+          "Could not read posts."
+        );
 
-if (!data.length) {
+      }
 
-feed.innerHTML =
-"<div class='post'>No posts yet. Be the first to post!</div>";
+    }
 
-return;
 
-}
+    if (!response.ok) {
 
+      throw new Error(
+        data.message ||
+        data.error_description ||
+        data.msg ||
+        "Could not load posts."
+      );
 
-/* GET LIKES */
+    }
 
-const likesResponse = await fetch(
-SUPABASE_URL +
-"/rest/v1/post_likes?select=post_id,user_id",
-{
-headers: {
-"apikey": SUPABASE_ANON_KEY,
-"Authorization":
-"Bearer " + accessToken
-}
-}
-);
 
-let likes = [];
+    loading.style.display = "none";
 
-if (likesResponse.ok) {
-likes = await likesResponse.json();
-}
 
+    feed.innerHTML = "";
 
-/* DISPLAY POSTS */
 
-data.forEach(function(post) {
+    if (!data.length) {
 
-const article =
-document.createElement("div");
+      feed.innerHTML =
+        "<div class='post'>No posts yet. Be the first to post!</div>";
 
-article.className = "post";
+      return;
 
+    }
 
-const postLikes =
-likes.filter(function(like) {
 
-return like.post_id === post.id;
+    /* GET LIKES */
 
-});
+    const likesResponse =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/post_likes?select=post_id,user_id",
+        {
+          headers: {
+            "apikey":
+              SUPABASE_ANON_KEY,
 
+            "Authorization":
+              "Bearer " + accessToken
+          }
+        }
+      );
 
-const likedByMe =
-postLikes.some(function(like) {
 
-return like.user_id === currentUser.id;
+    let likes = [];
 
-});
 
+    if (likesResponse.ok) {
 
-const username =
-post.username ||
-"BERAKAH User";
+      const likesText =
+        await likesResponse.text();
 
+      if (likesText.trim()) {
 
-const date =
-new Date(post.created_at);
+        try {
 
+          likes = JSON.parse(likesText);
 
-article.innerHTML = `
+        } catch (e) {
 
-<div class="post-header">
+          likes = [];
 
-<div class="user">
-${escapeHtml(username)}
-</div>
+        }
 
-<div class="time">
-${date.toLocaleString()}
-</div>
+      }
 
-</div>
+    }
 
 
-<div class="post-content">
-${escapeHtml(post.content || "")}
-</div>
+    /* DISPLAY POSTS */
 
+    data.forEach(function(post) {
 
-${
-post.image_url
-?
-`
-<img
-class="post-image"
-src="${escapeHtml(post.image_url)}"
-alt="Post image"
->
-`
-:
-""
-}
+      const article =
+        document.createElement("div");
 
 
-<div class="actions">
+      article.className = "post";
 
-<button
-class="like-button ${likedByMe ? "liked" : ""}"
-onclick="likePost('${post.id}')">
 
-${likedByMe ? "❤️ Unlike" : "❤️ Like"}
+      const postLikes =
+        likes.filter(function(like) {
 
-(${postLikes.length})
+          return like.post_id === post.id;
 
-</button>
+        });
 
 
-${
-post.user_id === currentUser.id
-?
-`
-<button
-class="delete"
-onclick="deletePost('${post.id}')">
+      const likedByMe =
+        postLikes.some(function(like) {
 
-Delete
+          return like.user_id === currentUser.id;
 
-</button>
-`
-:
-""
-}
+        });
 
-</div>
 
-`;
+      const username =
+        post.username ||
+        "BERAKAH User";
 
 
-feed.appendChild(article);
+      const date =
+        new Date(post.created_at);
 
-});
 
-}
-catch (error) {
+      article.innerHTML = `
 
-loading.style.display = "none";
+        <div class="post-header">
 
-document.getElementById("message")
-.textContent = error.message;
+          <div class="user">
+            ${escapeHtml(username)}
+          </div>
 
-}
+          <div class="time">
+            ${date.toLocaleString()}
+          </div>
+
+        </div>
+
+
+        <div class="post-content">
+          ${escapeHtml(post.content || "")}
+        </div>
+
+
+        ${
+          post.image_url
+          ?
+          `
+          <img
+            class="post-image"
+            src="${escapeHtml(post.image_url)}"
+            alt="Post image"
+          >
+          `
+          :
+          ""
+        }
+
+
+        <div class="actions">
+
+          <button
+            class="like-button ${likedByMe ? "liked" : ""}"
+            onclick="likePost('${post.id}')"
+          >
+
+            ${likedByMe ? "❤️ Unlike" : "❤️ Like"}
+            (${postLikes.length})
+
+          </button>
+
+
+          ${
+            post.user_id === currentUser.id
+            ?
+            `
+            <button
+              class="delete"
+              onclick="deletePost('${post.id}')"
+            >
+              Delete
+            </button>
+            `
+            :
+            ""
+          }
+
+        </div>
+
+      `;
+
+
+      feed.appendChild(article);
+
+    });
+
+
+  } catch (error) {
+
+    loading.style.display = "none";
+
+    document.getElementById("message")
+      .textContent = error.message;
+
+  }
 
 }
 
@@ -528,261 +569,281 @@ document.getElementById("message")
 /* CREATE POST */
 
 document
-.getElementById("postButton")
-.addEventListener("click", async function() {
-
-const text =
-document.getElementById("postText")
-.value.trim();
-
-const imageUrl =
-document.getElementById("imageUrl")
-.value.trim();
-
-const message =
-document.getElementById("message");
+  .getElementById("postButton")
+  .addEventListener("click", async function() {
 
 
-if (!text) {
-
-message.textContent =
-"Please write something first.";
-
-return;
-
-}
+    const text =
+      document.getElementById("postText")
+        .value.trim();
 
 
-this.disabled = true;
-
-this.textContent = "POSTING...";
-
-
-try {
-
-const response = await fetch(
-SUPABASE_URL + "/rest/v1/posts",
-{
-method: "POST",
-
-headers: {
-
-"apikey":
-SUPABASE_ANON_KEY,
-
-"Authorization":
-"Bearer " + accessToken,
-
-"Content-Type":
-"application/json",
-
-"Prefer":
-"return=minimal"
-
-},
-
-body: JSON.stringify({
-
-user_id:
-currentUser.id,
-
-username:
-currentUser.user_metadata?.username ||
-currentUser.email?.split("@")[0] ||
-"BERAKAH User",
-
-content:
-text,
-
-image_url:
-imageUrl || null
-
-})
-
-}
-);
+    const imageUrl =
+      document.getElementById("imageUrl")
+        .value.trim();
 
 
-if (!response.ok) {
-
-const errorText =
-await response.text();
-
-throw new Error(
-errorText ||
-"Could not create post."
-);
-
-}
+    const message =
+      document.getElementById("message");
 
 
-document.getElementById("postText")
-.value = "";
+    if (!text) {
 
-document.getElementById("imageUrl")
-.value = "";
+      message.textContent =
+        "Please write something first.";
 
+      return;
 
-message.textContent =
-"Post published successfully!";
-
-
-await loadPosts();
+    }
 
 
-}
-catch (error) {
+    this.disabled = true;
 
-message.textContent =
-error.message;
-
-}
+    this.textContent = "POSTING...";
 
 
-this.disabled = false;
+    try {
 
-this.textContent = "POST";
+      const response =
+        await fetch(
+          SUPABASE_URL + "/rest/v1/posts",
+          {
+            method: "POST",
 
-});
+            headers: {
+
+              "apikey":
+                SUPABASE_ANON_KEY,
+
+              "Authorization":
+                "Bearer " + accessToken,
+
+              "Content-Type":
+                "application/json",
+
+              "Prefer":
+                "return=minimal"
+
+            },
+
+            body: JSON.stringify({
+
+              user_id:
+                currentUser.id,
+
+              username:
+                currentUser.user_metadata?.username ||
+                currentUser.email?.split("@")[0] ||
+                "BERAKAH User",
+
+              content:
+                text,
+
+              image_url:
+                imageUrl || null
+
+            })
+
+          }
+        );
+
+
+      if (!response.ok) {
+
+        const errorText =
+          await response.text();
+
+        throw new Error(
+          errorText ||
+          "Could not create post."
+        );
+
+      }
+
+
+      document.getElementById("postText")
+        .value = "";
+
+
+      document.getElementById("imageUrl")
+        .value = "";
+
+
+      message.textContent =
+        "Post published successfully!";
+
+
+      await loadPosts();
+
+
+    } catch (error) {
+
+      message.textContent =
+        error.message;
+
+    }
+
+
+    this.disabled = false;
+
+    this.textContent = "POST";
+
+  });
 
 
 /* LIKE / UNLIKE */
 
 async function likePost(postId) {
 
-try {
-
-/* CHECK IF ALREADY LIKED */
-
-const checkResponse =
-await fetch(
-SUPABASE_URL +
-"/rest/v1/post_likes?post_id=eq." +
-encodeURIComponent(postId) +
-"&user_id=eq." +
-encodeURIComponent(currentUser.id),
-{
-headers: {
-
-"apikey":
-SUPABASE_ANON_KEY,
-
-"Authorization":
-"Bearer " + accessToken
-
-}
-}
-);
+  try {
 
 
-const existingLikes =
-await checkResponse.json();
+    /* CHECK IF ALREADY LIKED */
+
+    const checkResponse =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/post_likes?post_id=eq." +
+        encodeURIComponent(postId) +
+        "&user_id=eq." +
+        encodeURIComponent(currentUser.id),
+        {
+          headers: {
+
+            "apikey":
+              SUPABASE_ANON_KEY,
+
+            "Authorization":
+              "Bearer " + accessToken
+
+          }
+        }
+      );
 
 
-/* UNLIKE */
-
-if (existingLikes.length > 0) {
-
-const deleteResponse =
-await fetch(
-SUPABASE_URL +
-"/rest/v1/post_likes?post_id=eq." +
-encodeURIComponent(postId) +
-"&user_id=eq." +
-encodeURIComponent(currentUser.id),
-{
-method: "DELETE",
-
-headers: {
-
-"apikey":
-SUPABASE_ANON_KEY,
-
-"Authorization":
-"Bearer " + accessToken
-
-}
-}
-);
+    const checkText =
+      await checkResponse.text();
 
 
-if (!deleteResponse.ok) {
-
-throw new Error(
-"Could not unlike post."
-);
-
-}
-
-}
+    let existingLikes = [];
 
 
-/* LIKE */
+    if (checkText.trim()) {
 
-else {
+      existingLikes =
+        JSON.parse(checkText);
 
-const likeResponse =
-await fetch(
-SUPABASE_URL +
-"/rest/v1/post_likes",
-{
-method: "POST",
-
-headers: {
-
-"apikey":
-SUPABASE_ANON_KEY,
-
-"Authorization":
-"Bearer " + accessToken,
-
-"Content-Type":
-"application/json",
-
-"Prefer":
-"return=minimal"
-
-},
-
-body: JSON.stringify({
-
-post_id:
-postId,
-
-user_id:
-currentUser.id
-
-})
-
-}
-);
+    }
 
 
-if (!likeResponse.ok) {
+    /* UNLIKE */
 
-const errorText =
-await likeResponse.text();
-
-throw new Error(
-errorText ||
-"Could not like post."
-);
-
-}
-
-}
+    if (existingLikes.length > 0) {
 
 
-/* REFRESH FEED */
+      const deleteResponse =
+        await fetch(
+          SUPABASE_URL +
+          "/rest/v1/post_likes?post_id=eq." +
+          encodeURIComponent(postId) +
+          "&user_id=eq." +
+          encodeURIComponent(currentUser.id),
+          {
+            method: "DELETE",
 
-await loadPosts();
+            headers: {
 
-}
-catch (error) {
+              "apikey":
+                SUPABASE_ANON_KEY,
 
-alert(error.message);
+              "Authorization":
+                "Bearer " + accessToken
 
-}
+            }
+          }
+        );
+
+
+      if (!deleteResponse.ok) {
+
+        const errorText =
+          await deleteResponse.text();
+
+        throw new Error(
+          errorText ||
+          "Could not unlike post."
+        );
+
+      }
+
+    }
+
+
+    /* LIKE */
+
+    else {
+
+
+      const likeResponse =
+        await fetch(
+          SUPABASE_URL +
+          "/rest/v1/post_likes",
+          {
+            method: "POST",
+
+            headers: {
+
+              "apikey":
+                SUPABASE_ANON_KEY,
+
+              "Authorization":
+                "Bearer " + accessToken,
+
+              "Content-Type":
+                "application/json",
+
+              "Prefer":
+                "return=minimal"
+
+            },
+
+            body: JSON.stringify({
+
+              post_id:
+                postId,
+
+              user_id:
+                currentUser.id
+
+            })
+
+          }
+        );
+
+
+      if (!likeResponse.ok) {
+
+        const errorText =
+          await likeResponse.text();
+
+        throw new Error(
+          errorText ||
+          "Could not like post."
+        );
+
+      }
+
+    }
+
+
+    await loadPosts();
+
+
+  } catch (error) {
+
+    alert(error.message);
+
+  }
 
 }
 
@@ -791,55 +852,60 @@ alert(error.message);
 
 async function deletePost(id) {
 
-if (!confirm("Delete this post?")) {
-return;
-}
+
+  if (!confirm("Delete this post?")) {
+
+    return;
+
+  }
 
 
-try {
-
-const response =
-await fetch(
-SUPABASE_URL +
-"/rest/v1/posts?id=eq." +
-encodeURIComponent(id),
-{
-method: "DELETE",
-
-headers: {
-
-"apikey":
-SUPABASE_ANON_KEY,
-
-"Authorization":
-"Bearer " + accessToken
-
-}
-}
-);
+  try {
 
 
-if (!response.ok) {
+    const response =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/posts?id=eq." +
+        encodeURIComponent(id),
+        {
+          method: "DELETE",
 
-const errorText =
-await response.text();
+          headers: {
 
-throw new Error(
-errorText ||
-"Could not delete post."
-);
+            "apikey":
+              SUPABASE_ANON_KEY,
 
-}
+            "Authorization":
+              "Bearer " + accessToken
+
+          }
+
+        }
+      );
 
 
-await loadPosts();
+    if (!response.ok) {
 
-}
-catch (error) {
+      const errorText =
+        await response.text();
 
-alert(error.message);
+      throw new Error(
+        errorText ||
+        "Could not delete post."
+      );
 
-}
+    }
+
+
+    await loadPosts();
+
+
+  } catch (error) {
+
+    alert(error.message);
+
+  }
 
 }
 
@@ -847,38 +913,43 @@ alert(error.message);
 /* LOGOUT */
 
 document
-.getElementById("logoutButton")
-.addEventListener("click", function() {
+  .getElementById("logoutButton")
+  .addEventListener("click", function() {
 
-localStorage.removeItem(
-"berakah_access_token"
-);
 
-localStorage.removeItem(
-"berakah_refresh_token"
-);
+    localStorage.removeItem(
+      "berakah_access_token"
+    );
 
-localStorage.removeItem(
-"berakah_user"
-);
 
-window.location.href =
-"login.html";
+    localStorage.removeItem(
+      "berakah_refresh_token"
+    );
 
-});
+
+    localStorage.removeItem(
+      "berakah_user"
+    );
+
+
+    window.location.href =
+      "login.html";
+
+  });
 
 
 /* START */
 
 (async function() {
 
-await getCurrentUser();
+  await getCurrentUser();
 
-if (currentUser) {
 
-await loadPosts();
+  if (currentUser) {
 
-}
+    await loadPosts();
+
+  }
 
 })();
 
