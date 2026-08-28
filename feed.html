@@ -54,6 +54,7 @@
       padding: 8px 12px;
       border-radius: 7px;
       cursor: pointer;
+      font-size: 14px;
     }
 
     .logout {
@@ -99,6 +100,7 @@
       padding: 11px;
       border: 1px solid #d1d5db;
       border-radius: 9px;
+      font-size: 15px;
     }
 
     .post-button {
@@ -113,25 +115,34 @@
       cursor: pointer;
     }
 
+    .post-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
     .post-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 10px;
     }
 
     .user {
       font-weight: bold;
+      word-break: break-word;
     }
 
     .time {
       color: #6b7280;
       font-size: 12px;
+      text-align: right;
     }
 
     .post-content {
       margin: 15px 0;
       line-height: 1.5;
       white-space: pre-wrap;
+      word-break: break-word;
     }
 
     .post-image {
@@ -157,6 +168,10 @@
       cursor: pointer;
     }
 
+    .actions button:hover {
+      background: #e5e7eb;
+    }
+
     .delete {
       margin-left: auto;
       color: #b91c1c;
@@ -172,12 +187,55 @@
       text-align: center;
       padding: 20px;
     }
+
+    .empty {
+      text-align: center;
+      color: #6b7280;
+    }
+
+    @media (max-width: 600px) {
+
+      header {
+        padding: 12px;
+      }
+
+      .nav {
+        align-items: flex-start;
+      }
+
+      .logo {
+        font-size: 21px;
+      }
+
+      .nav-buttons button {
+        padding: 7px 9px;
+      }
+
+      main {
+        margin-top: 18px;
+      }
+
+      .composer,
+      .post {
+        padding: 15px;
+      }
+
+      .post-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .time {
+        text-align: left;
+      }
+    }
   </style>
 </head>
 
 <body>
 
 <header>
+
   <div class="nav">
 
     <div class="logo">
@@ -185,24 +243,33 @@
     </div>
 
     <div class="nav-buttons">
-      <button onclick="window.location.href='index.html'">
+
+      <button
+        onclick="window.location.href='index.html'">
         Home
       </button>
 
-      <button onclick="window.location.href='marketplace.html'">
+      <button
+        onclick="window.location.href='marketplace.html'">
         Market
       </button>
 
-      <button class="logout" id="logoutButton">
+      <button
+        class="logout"
+        id="logoutButton">
         Logout
       </button>
+
     </div>
 
   </div>
+
 </header>
 
 
 <main>
+
+  <!-- CREATE POST -->
 
   <div class="composer">
 
@@ -222,18 +289,26 @@
 
     <button
       class="post-button"
-      id="postButton"
-    >
+      id="postButton">
       POST
     </button>
 
   </div>
 
+
+  <!-- MESSAGE -->
+
   <div id="message"></div>
+
+
+  <!-- LOADING -->
 
   <div id="loading">
     Loading posts...
   </div>
+
+
+  <!-- FEED -->
 
   <div id="feed"></div>
 
@@ -242,6 +317,10 @@
 
 <script>
 
+/* =====================================================
+   SUPABASE SETTINGS
+   ===================================================== */
+
 const SUPABASE_URL =
   "https://utoyoglycqjmqznczfxa.supabase.co";
 
@@ -249,13 +328,35 @@ const SUPABASE_ANON_KEY =
   "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
 
+/* =====================================================
+   VARIABLES
+   ===================================================== */
+
 let accessToken =
   localStorage.getItem("berakah_access_token");
 
 let currentUser = null;
 
 
-/* CHECK LOGIN */
+/* =====================================================
+   HTML SAFETY FUNCTION
+   ===================================================== */
+
+function escapeHtml(value) {
+
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+/* =====================================================
+   CHECK LOGIN
+   ===================================================== */
 
 if (!accessToken) {
 
@@ -264,7 +365,9 @@ if (!accessToken) {
 }
 
 
-/* GET CURRENT USER */
+/* =====================================================
+   GET CURRENT USER
+   ===================================================== */
 
 async function getCurrentUser() {
 
@@ -273,12 +376,16 @@ async function getCurrentUser() {
     const response = await fetch(
       SUPABASE_URL + "/auth/v1/user",
       {
+        method: "GET",
+
         headers: {
           "apikey": SUPABASE_ANON_KEY,
-          "Authorization": "Bearer " + accessToken
+          "Authorization":
+            "Bearer " + accessToken
         }
       }
     );
+
 
     if (!response.ok) {
 
@@ -286,20 +393,42 @@ async function getCurrentUser() {
 
     }
 
-    currentUser = await response.json();
 
-  } catch (error) {
+    currentUser =
+      await response.json();
 
-    localStorage.clear();
 
-    window.location.href = "login.html";
+    return true;
+
+  }
+
+  catch (error) {
+
+    localStorage.removeItem(
+      "berakah_access_token"
+    );
+
+    localStorage.removeItem(
+      "berakah_refresh_token"
+    );
+
+    localStorage.removeItem(
+      "berakah_user"
+    );
+
+    window.location.href =
+      "login.html";
+
+    return false;
 
   }
 
 }
 
 
-/* LOAD POSTS */
+/* =====================================================
+   LOAD POSTS
+   ===================================================== */
 
 async function loadPosts() {
 
@@ -309,74 +438,143 @@ async function loadPosts() {
   const loading =
     document.getElementById("loading");
 
+  const message =
+    document.getElementById("message");
+
+
   try {
 
     const response = await fetch(
       SUPABASE_URL +
       "/rest/v1/posts?select=*&order=created_at.desc",
       {
+        method: "GET",
+
         headers: {
           "apikey": SUPABASE_ANON_KEY,
-          "Authorization": "Bearer " + accessToken
+
+          "Authorization":
+            "Bearer " + accessToken
         }
       }
     );
-const responseText = await response.text();
 
-let data = {};
 
-if (responseText.trim()) {
-  try {
-    data = JSON.parse(responseText);
-  } catch (e) {
-    data = { raw: responseText };
-  }
-}
+    const responseText =
+      await response.text();
 
-if (!response.ok) {
-  throw new Error(
-    data.error_description ||
-    data.message ||
-    data.msg ||
-    data.raw ||
-    `Post failed (${response.status})`
-  );
-}
 
-    loading.style.display = "none";
+    let data = [];
+
+
+    if (responseText.trim()) {
+
+      try {
+
+        data =
+          JSON.parse(responseText);
+
+      }
+
+      catch (error) {
+
+        throw new Error(
+          "Invalid response from Supabase."
+        );
+
+      }
+
+    }
+
 
     if (!response.ok) {
 
       throw new Error(
-        data.message || "Could not load posts"
+        data?.message ||
+        data?.error_description ||
+        data?.msg ||
+        `Could not load posts (${response.status})`
       );
 
     }
 
+
+    loading.style.display =
+      "none";
+
+
     feed.innerHTML = "";
 
-    if (data.length === 0) {
 
-      feed.innerHTML =
-        "<div class='post'>No posts yet. Be the first to post!</div>";
+    if (!Array.isArray(data) ||
+        data.length === 0) {
+
+      feed.innerHTML = `
+        <div class="post empty">
+          No posts yet. Be the first to post!
+        </div>
+      `;
 
       return;
 
     }
+
 
     data.forEach(function(post) {
 
       const article =
         document.createElement("div");
 
-      article.className = "post";
+      article.className =
+        "post";
+
 
       const date =
-        new Date(post.created_at);
+        post.created_at
+          ? new Date(post.created_at)
+          : new Date();
+
 
       const username =
         post.username ||
         "BERAKAH User";
+
+
+      let imageHTML = "";
+
+
+      if (post.image_url) {
+
+        imageHTML = `
+          <img
+            class="post-image"
+            src="${escapeHtml(post.image_url)}"
+            alt="Post image"
+            onerror="this.style.display='none';"
+          >
+        `;
+
+      }
+
+
+      let deleteHTML = "";
+
+
+      if (
+        currentUser &&
+        post.user_id === currentUser.id
+      ) {
+
+        deleteHTML = `
+          <button
+            class="delete"
+            onclick="deletePost('${escapeHtml(post.id)}')">
+            Delete
+          </button>
+        `;
+
+      }
+
 
       article.innerHTML = `
 
@@ -392,163 +590,439 @@ if (!response.ok) {
 
         </div>
 
+
         <div class="post-content">
           ${escapeHtml(post.content || "")}
         </div>
 
-        ${
-          post.image_url
-          ?
-          `<img
-            class="post-image"
-            src="${escapeHtml(post.image_url)}"
-            alt="Post image"
-          >`
-          :
-          ""
-        }
+
+        ${imageHTML}
+
 
         <div class="actions">
 
           <button
-            onclick="likePost('${post.id}')">
+            onclick="likePost('${escapeHtml(post.id)}')">
             ❤️ Like
           </button>
 
-          ${
-            post.user_id === currentUser.id
-            ?
-            `<button
-              class="delete"
-              onclick="deletePost('${post.id}')">
-              Delete
-            </button>`
-            :
-            ""
-          }
+          ${deleteHTML}
 
         </div>
 
       `;
 
+
       feed.appendChild(article);
 
     });
 
-  } catch (error) {
+  }
 
-    loading.style.display = "none";
 
-    document.getElementById("message").textContent =
+  catch (error) {
+
+    loading.style.display =
+      "none";
+
+    message.textContent =
       error.message;
+
+    console.error(
+      "LOAD POSTS ERROR:",
+      error
+    );
 
   }
 
 }
 
 
-/* CREATE POST */
+/* =====================================================
+   CREATE POST
+   ===================================================== */
 
 document
   .getElementById("postButton")
-  .addEventListener("click", async function() {
+  .addEventListener(
+    "click",
+    async function() {
 
-    const text =
-      document.getElementById("postText")
-        .value.trim();
+      const button = this;
 
-    const imageUrl =
-      document.getElementById("imageUrl")
-        .value.trim();
 
-    const message =
-      document.getElementById("message");
+      const text =
+        document
+          .getElementById("postText")
+          .value
+          .trim();
 
-    if (!text) {
+
+      const imageUrl =
+        document
+          .getElementById("imageUrl")
+          .value
+          .trim();
+
+
+      const message =
+        document.getElementById("message");
+
+
+      /* CHECK TEXT */
+
+      if (!text) {
+
+        message.textContent =
+          "Please write something first.";
+
+        return;
+
+      }
+
+
+      /* CHECK USER */
+
+      if (!currentUser) {
+
+        message.textContent =
+          "You must be logged in.";
+
+        return;
+
+      }
+
+
+      button.disabled =
+        true;
+
+      button.textContent =
+        "POSTING...";
 
       message.textContent =
-        "Please write something first.";
+        "";
 
-      return;
 
-    }
+      try {
 
-    this.disabled = true;
-    this.textContent = "POSTING...";
+        const response =
+          await fetch(
+            SUPABASE_URL +
+            "/rest/v1/posts",
+            {
 
-    try {
+              method: "POST",
 
-      const response = await fetch(
-        SUPABASE_URL + "/rest/v1/posts",
-        {
-          method: "POST",
+              headers: {
 
-          headers: {
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization":
-              "Bearer " + accessToken,
+                "apikey":
+                  SUPABASE_ANON_KEY,
 
-            "Content-Type":
-              "application/json",
+                "Authorization":
+                  "Bearer " + accessToken,
 
-            "Prefer":
-              "return=minimal"
-          },
+                "Content-Type":
+                  "application/json",
 
-          body: JSON.stringify({
+                "Prefer":
+                  "return=minimal"
 
-            user_id: currentUser.id,
+              },
 
-            username:
-              currentUser.user_metadata?.username ||
-              currentUser.email?.split("@")[0] ||
-              "BERAKAH User",
+              body: JSON.stringify({
 
-            content: text,
+                user_id:
+                  currentUser.id,
 
-            image_url:
-              imageUrl || null
+                username:
+                  currentUser.user_metadata?.username ||
+                  currentUser.email?.split("@")[0] ||
+                  "BERAKAH User",
 
-          })
+                content:
+                  text,
+
+                image_url:
+                  imageUrl || null
+
+              })
+
+            }
+          );
+
+
+        /*
+          IMPORTANT:
+
+          We DO NOT call response.json()
+          here because "return=minimal"
+          can give an empty response.
+        */
+
+        const responseText =
+          await response.text();
+
+
+        if (!response.ok) {
+
+          let errorData = {};
+
+
+          if (responseText.trim()) {
+
+            try {
+
+              errorData =
+                JSON.parse(responseText);
+
+            }
+
+            catch (error) {
+
+              errorData = {
+                message:
+                  responseText
+              };
+
+            }
+
+          }
+
+
+          throw new Error(
+            errorData.message ||
+            errorData.error_description ||
+            errorData.hint ||
+            errorData.msg ||
+            `Could not create post (${response.status})`
+          );
+
         }
-      );
 
-      const data =
-        await response.json();
 
-      if (!response.ok) {
+        /* SUCCESS */
 
-        throw new Error(
-          data.message ||
-          data.hint ||
-          "Could not create post."
+        document
+          .getElementById("postText")
+          .value = "";
+
+
+        document
+          .getElementById("imageUrl")
+          .value = "";
+
+
+        message.textContent =
+          "Post published successfully!";
+
+
+        await loadPosts();
+
+
+        /*
+          Remove success message
+          after a few seconds.
+        */
+
+        setTimeout(function() {
+
+          if (
+            message.textContent ===
+            "Post published successfully!"
+          ) {
+
+            message.textContent = "";
+
+          }
+
+        }, 3000);
+
+      }
+
+
+      catch (error) {
+
+        message.textContent =
+          error.message;
+
+        console.error(
+          "CREATE POST ERROR:",
+          error
         );
 
       }
 
-      document.getElementById("postText")
-        .value = "";
 
-      document.getElementById("imageUrl")
-        .value = "";
+      finally {
 
-      message.textContent =
-        "Post published!";
+        button.disabled =
+          false;
 
-      await loadPosts();
+        button.textContent =
+          "POST";
 
-    } catch (error) {
+      }
 
-      message.textContent =
-        error.message;
+    }
+  );
+
+
+/* =====================================================
+   DELETE POST
+   ===================================================== */
+
+async function deletePost(id) {
+
+  if (!confirm("Delete this post?")) {
+
+    return;
+
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/posts?id=eq." +
+        encodeURIComponent(id),
+        {
+
+          method: "DELETE",
+
+          headers: {
+
+            "apikey":
+              SUPABASE_ANON_KEY,
+
+            "Authorization":
+              "Bearer " + accessToken
+
+          }
+
+        }
+      );
+
+
+    const responseText =
+      await response.text();
+
+
+    if (!response.ok) {
+
+      let data = {};
+
+
+      if (responseText.trim()) {
+
+        try {
+
+          data =
+            JSON.parse(responseText);
+
+        }
+
+        catch (error) {
+
+          data = {
+            message:
+              responseText
+          };
+
+        }
+
+      }
+
+
+      throw new Error(
+        data.message ||
+        data.error_description ||
+        data.hint ||
+        "Could not delete post."
+      );
 
     }
 
 
-  await getCurrentUser();
-
-  if (currentUser) {
     await loadPosts();
+
+  }
+
+
+  catch (error) {
+
+    alert(
+      error.message
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   LIKE
+   ===================================================== */
+
+async function likePost(id) {
+
+  /*
+    Likes will be connected to Supabase
+    in the next step.
+  */
+
+  alert(
+    "Like system will be connected next."
+  );
+
+}
+
+
+/* =====================================================
+   LOGOUT
+   ===================================================== */
+
+document
+  .getElementById("logoutButton")
+  .addEventListener(
+    "click",
+    function() {
+
+      localStorage.removeItem(
+        "berakah_access_token"
+      );
+
+      localStorage.removeItem(
+        "berakah_refresh_token"
+      );
+
+      localStorage.removeItem(
+        "berakah_user"
+      );
+
+
+      window.location.href =
+        "login.html";
+
+    }
+  );
+
+
+/* =====================================================
+   START APPLICATION
+   ===================================================== */
+
+(async function() {
+
+  const loggedIn =
+    await getCurrentUser();
+
+
+  if (loggedIn && currentUser) {
+
+    await loadPosts();
+
   }
 
 })();
