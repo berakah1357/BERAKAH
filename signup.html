@@ -6,9 +6,7 @@
   <title>BERAKAH - Create Account</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -50,8 +48,7 @@
       font-weight: bold;
     }
 
-    input,
-    select {
+    input, select {
       width: 100%;
       padding: 13px;
       border: 1px solid #d1d5db;
@@ -72,6 +69,17 @@
       cursor: pointer;
     }
 
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #message {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+
     .login {
       text-align: center;
       margin-top: 20px;
@@ -86,44 +94,119 @@
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <div class="logo">BERAKAH</div>
+  <div class="logo">BERAKAH</div>
 
-    <h1>Create Your Account</h1>
+  <h1>Create Your Account</h1>
 
-    <form>
+  <form id="signupForm">
 
-      <label>Full Name</label>
-      <input type="text" placeholder="Enter your full name">
+    <label for="fullName">Full Name</label>
+    <input id="fullName" type="text" required>
 
-      <label>Username</label>
-      <input type="text" placeholder="@username">
+    <label for="username">Username</label>
+    <input id="username" type="text" required>
 
-      <label>Email</label>
-      <input type="email" placeholder="Enter your email">
+    <label for="email">Email</label>
+    <input id="email" type="email" required>
 
-      <label>Password</label>
-      <input type="password" placeholder="Create a password">
+    <label for="password">Password</label>
+    <input id="password" type="password" minlength="6" required>
 
-      <label>Preferred Language</label>
-      <select>
-        <option>Haitian Creole</option>
-        <option>English</option>
-        <option>French</option>
-        <option>Spanish</option>
-      </select>
+    <label for="language">Preferred Language</label>
+    <select id="language">
+      <option value="ht">Haitian Creole</option>
+      <option value="en">English</option>
+      <option value="fr">French</option>
+      <option value="es">Spanish</option>
+    </select>
 
-      <button type="submit">CREATE ACCOUNT</button>
+    <button id="signupButton" type="submit">
+      CREATE ACCOUNT
+    </button>
 
-    </form>
+    <div id="message"></div>
 
-    <div class="login">
-      Already have an account?
-      <a href="login.html">Log In</a>
-    </div>
+  </form>
 
+  <div class="login">
+    Already have an account?
+    <a href="login.html">Log In</a>
   </div>
+
+</div>
+
+<script>
+  const SUPABASE_URL = "https://utoyoglycqjmqznczfxa.supabase.co";
+
+  const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+  const form = document.getElementById("signupForm");
+  const button = document.getElementById("signupButton");
+  const message = document.getElementById("message");
+
+  form.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    button.disabled = true;
+    button.textContent = "CREATING ACCOUNT...";
+    message.textContent = "";
+
+    const fullName = document.getElementById("fullName").value.trim();
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const language = document.getElementById("language").value;
+
+    try {
+      const response = await fetch(
+        SUPABASE_URL + "/auth/v1/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_ANON_KEY
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+            data: {
+              full_name: fullName,
+              username: username,
+              language: language
+            }
+          })
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.error_description ||
+          data.msg ||
+          data.message ||
+          "Account creation failed."
+        );
+      }
+
+      message.textContent =
+        "Account created successfully!";
+
+      setTimeout(function() {
+        window.location.href = "login.html";
+      }, 1500);
+
+    } catch (error) {
+
+      message.textContent = error.message;
+
+      button.disabled = false;
+      button.textContent = "CREATE ACCOUNT";
+    }
+  });
+</script>
 
 </body>
 </html>
