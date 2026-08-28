@@ -71,7 +71,6 @@
 
     button:disabled {
       opacity: 0.6;
-      cursor: not-allowed;
     }
 
     #message {
@@ -112,6 +111,7 @@
       id="email"
       type="email"
       placeholder="Enter your email"
+      autocomplete="email"
       required
     >
 
@@ -120,6 +120,7 @@
       id="password"
       type="password"
       placeholder="Enter your password"
+      autocomplete="current-password"
       required
     >
 
@@ -143,10 +144,11 @@
 </div>
 
 <script>
-const SUPABASE_URL = "https://utoyoglycqjmqznczfxa.supabase.co";
+const SUPABASE_URL =
+  "https://utoyoglycqjmqznczfxa.supabase.co";
 
 const SUPABASE_ANON_KEY =
-"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+  "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
 const form = document.getElementById("loginForm");
 const button = document.getElementById("loginButton");
@@ -169,15 +171,14 @@ form.addEventListener("submit", async function(event) {
   try {
 
     const response = await fetch(
-      SUPABASE_URL + "/auth/v1/token?grant_type=password",
+      SUPABASE_URL +
+      "/auth/v1/token?grant_type=password",
       {
         method: "POST",
 
         headers: {
           "Content-Type": "application/json",
-          "apikey": SUPABASE_ANON_KEY,
-          "Authorization":
-            "Bearer " + SUPABASE_ANON_KEY
+          "apikey": SUPABASE_ANON_KEY
         },
 
         body: JSON.stringify({
@@ -213,8 +214,7 @@ form.addEventListener("submit", async function(event) {
       JSON.stringify(data.user)
     );
 
-    message.textContent =
-      "Login successful!";
+    message.textContent = "Login successful!";
 
     setTimeout(function() {
       window.location.href = "feed.html";
