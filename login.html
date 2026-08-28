@@ -6,9 +6,7 @@
   <title>BERAKAH - Log In</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -71,13 +69,20 @@
       cursor: pointer;
     }
 
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #message {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+
     .forgot {
       text-align: right;
       margin-top: 12px;
-    }
-
-    .forgot a {
-      text-decoration: none;
     }
 
     .signup {
@@ -85,7 +90,7 @@
       margin-top: 20px;
     }
 
-    .signup a {
+    a {
       text-decoration: none;
       font-weight: bold;
     }
@@ -94,34 +99,137 @@
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <div class="logo">BERAKAH</div>
+  <div class="logo">BERAKAH</div>
 
-    <h1>Welcome Back</h1>
+  <h1>Welcome Back</h1>
 
-    <form>
+  <form id="loginForm">
 
-      <label>Email</label>
-      <input type="email" placeholder="Enter your email">
+    <label for="email">Email</label>
+    <input
+      id="email"
+      type="email"
+      placeholder="Enter your email"
+      required
+    >
 
-      <label>Password</label>
-      <input type="password" placeholder="Enter your password">
+    <label for="password">Password</label>
+    <input
+      id="password"
+      type="password"
+      placeholder="Enter your password"
+      required
+    >
 
-      <div class="forgot">
-        <a href="#">Forgot password?</a>
-      </div>
-
-      <button type="submit">LOG IN</button>
-
-    </form>
-
-    <div class="signup">
-      Don't have an account?
-      <a href="signup.html">Create an account</a>
+    <div class="forgot">
+      <a href="#">Forgot password?</a>
     </div>
 
+    <button id="loginButton" type="submit">
+      LOG IN
+    </button>
+
+    <div id="message"></div>
+
+  </form>
+
+  <div class="signup">
+    Don't have an account?
+    <a href="signup.html">Create an account</a>
   </div>
+
+</div>
+
+<script>
+const SUPABASE_URL = "https://utoyoglycqjmqznczfxa.supabase.co";
+
+const SUPABASE_ANON_KEY =
+"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+
+const form = document.getElementById("loginForm");
+const button = document.getElementById("loginButton");
+const message = document.getElementById("message");
+
+form.addEventListener("submit", async function(event) {
+
+  event.preventDefault();
+
+  button.disabled = true;
+  button.textContent = "LOGGING IN...";
+  message.textContent = "";
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  try {
+
+    const response = await fetch(
+      SUPABASE_URL + "/auth/v1/token?grant_type=password",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_ANON_KEY,
+          "Authorization":
+            "Bearer " + SUPABASE_ANON_KEY
+        },
+
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.error_description ||
+        data.msg ||
+        data.message ||
+        "Login failed."
+      );
+    }
+
+    localStorage.setItem(
+      "berakah_access_token",
+      data.access_token
+    );
+
+    localStorage.setItem(
+      "berakah_refresh_token",
+      data.refresh_token
+    );
+
+    localStorage.setItem(
+      "berakah_user",
+      JSON.stringify(data.user)
+    );
+
+    message.textContent =
+      "Login successful!";
+
+    setTimeout(function() {
+      window.location.href = "feed.html";
+    }, 1000);
+
+  } catch (error) {
+
+    message.textContent = error.message;
+
+    button.disabled = false;
+    button.textContent = "LOG IN";
+  }
+
+});
+</script>
 
 </body>
 </html>
