@@ -1,1029 +1,884 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>BERAKAH - Social Feed</title>
+<title>BERAKAH - Social Feed</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #111827;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #111827;
+}
 
-    header {
-      background: white;
-      border-bottom: 1px solid #e5e7eb;
-      padding: 15px 20px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
+header {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 15px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
 
-    .nav {
-      max-width: 900px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-    }
+.nav {
+  max-width: 900px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
 
-    .logo {
-      font-size: 25px;
-      font-weight: bold;
-      letter-spacing: 2px;
-    }
+.logo {
+  font-size: 25px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
 
-    .nav-buttons {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
+.nav-buttons {
+  display: flex;
+  gap: 8px;
+}
 
-    .nav-buttons button {
-      border: 1px solid #d1d5db;
-      background: white;
-      padding: 8px 12px;
-      border-radius: 7px;
-      cursor: pointer;
-      font-size: 14px;
-    }
+.nav-buttons button {
+  border: 1px solid #d1d5db;
+  background: white;
+  padding: 8px 12px;
+  border-radius: 7px;
+  cursor: pointer;
+}
 
-    .logout {
-      background: #111827 !important;
-      color: white;
-    }
+.logout {
+  background: #111827 !important;
+  color: white;
+}
 
-    main {
-      width: 100%;
-      max-width: 650px;
-      margin: 25px auto;
-      padding: 0 15px;
-    }
+main {
+  width: 100%;
+  max-width: 650px;
+  margin: 25px auto;
+  padding: 0 15px;
+}
 
-    .composer,
-    .post {
-      background: white;
-      border-radius: 14px;
-      padding: 18px;
-      margin-bottom: 18px;
-      box-shadow: 0 3px 15px rgba(0,0,0,0.06);
-    }
+.composer,
+.post {
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+}
 
-    .composer h2 {
-      margin-top: 0;
-      font-size: 20px;
-    }
+.composer h2 {
+  margin-top: 0;
+}
 
-    textarea {
-      width: 100%;
-      min-height: 100px;
-      resize: vertical;
-      padding: 13px;
-      border: 1px solid #d1d5db;
-      border-radius: 9px;
-      font-size: 15px;
-      font-family: inherit;
-    }
+textarea {
+  width: 100%;
+  min-height: 100px;
+  resize: vertical;
+  padding: 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  font-size: 15px;
+  font-family: inherit;
+}
 
-    .image-input {
-      width: 100%;
-      margin-top: 10px;
-      padding: 11px;
-      border: 1px solid #d1d5db;
-      border-radius: 9px;
-      font-size: 15px;
-    }
+.image-input {
+  width: 100%;
+  margin-top: 10px;
+  padding: 11px;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+}
 
-    .post-button {
-      width: 100%;
-      margin-top: 12px;
-      padding: 13px;
-      border: none;
-      border-radius: 9px;
-      background: #111827;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.post-button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 13px;
+  border: none;
+  border-radius: 9px;
+  background: #111827;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    .post-button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+.post-button:disabled {
+  opacity: 0.6;
+}
 
-    .post-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    .user {
-      font-weight: bold;
-      word-break: break-word;
-    }
+.user {
+  font-weight: bold;
+}
 
-    .time {
-      color: #6b7280;
-      font-size: 12px;
-      text-align: right;
-    }
+.time {
+  color: #6b7280;
+  font-size: 12px;
+}
 
-    .post-content {
-      margin: 15px 0;
-      line-height: 1.5;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
+.post-content {
+  margin: 15px 0;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
 
-    .post-image {
-      width: 100%;
-      max-height: 450px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin-top: 8px;
-    }
+.post-image {
+  width: 100%;
+  max-height: 450px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: 8px;
+}
 
-    .actions {
-      display: flex;
-      gap: 10px;
-      border-top: 1px solid #eee;
-      padding-top: 12px;
-    }
+.actions {
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid #eee;
+  padding-top: 12px;
+}
 
-    .actions button {
-      border: none;
-      background: #f3f4f6;
-      padding: 9px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+.actions button {
+  border: none;
+  background: #f3f4f6;
+  padding: 9px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
-    .actions button:hover {
-      background: #e5e7eb;
-    }
+.like-button.liked {
+  background: #fee2e2;
+}
 
-    .delete {
-      margin-left: auto;
-      color: #b91c1c;
-    }
+.delete {
+  margin-left: auto;
+  color: #b91c1c;
+}
 
-    #message {
-      text-align: center;
-      margin-bottom: 15px;
-      font-weight: bold;
-    }
+#message {
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
 
-    #loading {
-      text-align: center;
-      padding: 20px;
-    }
-
-    .empty {
-      text-align: center;
-      color: #6b7280;
-    }
-
-    @media (max-width: 600px) {
-
-      header {
-        padding: 12px;
-      }
-
-      .nav {
-        align-items: flex-start;
-      }
-
-      .logo {
-        font-size: 21px;
-      }
-
-      .nav-buttons button {
-        padding: 7px 9px;
-      }
-
-      main {
-        margin-top: 18px;
-      }
-
-      .composer,
-      .post {
-        padding: 15px;
-      }
-
-      .post-header {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .time {
-        text-align: left;
-      }
-    }
-  </style>
+#loading {
+  text-align: center;
+  padding: 20px;
+}
+</style>
 </head>
 
 <body>
 
 <header>
 
-  <div class="nav">
+<div class="nav">
 
-    <div class="logo">
-      BERAKAH
-    </div>
+<div class="logo">
+BERAKAH
+</div>
 
-    <div class="nav-buttons">
+<div class="nav-buttons">
 
-      <button
-        onclick="window.location.href='index.html'">
-        Home
-      </button>
+<button onclick="window.location.href='index.html'">
+Home
+</button>
 
-      <button
-        onclick="window.location.href='marketplace.html'">
-        Market
-      </button>
+<button onclick="window.location.href='marketplace.html'">
+Market
+</button>
 
-      <button
-        class="logout"
-        id="logoutButton">
-        Logout
-      </button>
+<button class="logout" id="logoutButton">
+Logout
+</button>
 
-    </div>
+</div>
 
-  </div>
+</div>
 
 </header>
 
 
 <main>
 
-  <!-- CREATE POST -->
+<div class="composer">
 
-  <div class="composer">
+<h2>Create a Post</h2>
 
-    <h2>Create a Post</h2>
+<textarea
+id="postText"
+placeholder="What's on your mind?"
+></textarea>
 
-    <textarea
-      id="postText"
-      placeholder="What's on your mind?"
-    ></textarea>
+<input
+id="imageUrl"
+class="image-input"
+type="url"
+placeholder="Optional image URL"
+>
 
-    <input
-      id="imageUrl"
-      class="image-input"
-      type="url"
-      placeholder="Optional image URL"
-    >
+<button
+class="post-button"
+id="postButton"
+>
+POST
+</button>
 
-    <button
-      class="post-button"
-      id="postButton">
-      POST
-    </button>
+</div>
 
-  </div>
+<div id="message"></div>
 
+<div id="loading">
+Loading posts...
+</div>
 
-  <!-- MESSAGE -->
-
-  <div id="message"></div>
-
-
-  <!-- LOADING -->
-
-  <div id="loading">
-    Loading posts...
-  </div>
-
-
-  <!-- FEED -->
-
-  <div id="feed"></div>
+<div id="feed"></div>
 
 </main>
 
 
 <script>
 
-/* =====================================================
-   SUPABASE SETTINGS
-   ===================================================== */
-
 const SUPABASE_URL =
-  "https://utoyoglycqjmqznczfxa.supabase.co";
+"https://utoyoglycqjmqznczfxa.supabase.co";
 
 const SUPABASE_ANON_KEY =
-  "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
-
-
-/* =====================================================
-   VARIABLES
-   ===================================================== */
+"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
 let accessToken =
-  localStorage.getItem("berakah_access_token");
+localStorage.getItem("berakah_access_token");
 
 let currentUser = null;
 
 
-/* =====================================================
-   HTML SAFETY FUNCTION
-   ===================================================== */
+/* CHECK LOGIN */
+
+if (!accessToken) {
+window.location.href = "login.html";
+}
+
+
+/* HTML SAFETY */
 
 function escapeHtml(value) {
 
-  return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+return String(value)
+.replaceAll("&", "&amp;")
+.replaceAll("<", "&lt;")
+.replaceAll(">", "&gt;")
+.replaceAll('"', "&quot;")
+.replaceAll("'", "&#039;");
 
 }
 
 
-/* =====================================================
-   CHECK LOGIN
-   ===================================================== */
-
-if (!accessToken) {
-
-  window.location.href = "login.html";
-
-}
-
-
-/* =====================================================
-   GET CURRENT USER
-   ===================================================== */
+/* GET CURRENT USER */
 
 async function getCurrentUser() {
 
-  try {
+try {
 
-    const response = await fetch(
-      SUPABASE_URL + "/auth/v1/user",
-      {
-        method: "GET",
+const response = await fetch(
+SUPABASE_URL + "/auth/v1/user",
+{
+headers: {
+"apikey": SUPABASE_ANON_KEY,
+"Authorization": "Bearer " + accessToken
+}
+}
+);
 
-        headers: {
-          "apikey": SUPABASE_ANON_KEY,
-          "Authorization":
-            "Bearer " + accessToken
-        }
-      }
-    );
+if (!response.ok) {
+throw new Error("Session expired");
+}
 
+currentUser = await response.json();
 
-    if (!response.ok) {
+} catch (error) {
 
-      throw new Error("Session expired");
+localStorage.clear();
 
-    }
+window.location.href = "login.html";
 
-
-    currentUser =
-      await response.json();
-
-
-    return true;
-
-  }
-
-  catch (error) {
-
-    localStorage.removeItem(
-      "berakah_access_token"
-    );
-
-    localStorage.removeItem(
-      "berakah_refresh_token"
-    );
-
-    localStorage.removeItem(
-      "berakah_user"
-    );
-
-    window.location.href =
-      "login.html";
-
-    return false;
-
-  }
+}
 
 }
 
 
-/* =====================================================
-   LOAD POSTS
-   ===================================================== */
+/* LOAD POSTS */
 
 async function loadPosts() {
 
-  const feed =
-    document.getElementById("feed");
+const feed =
+document.getElementById("feed");
 
-  const loading =
-    document.getElementById("loading");
+const loading =
+document.getElementById("loading");
 
-  const message =
-    document.getElementById("message");
+try {
 
+const response = await fetch(
+SUPABASE_URL +
+"/rest/v1/posts?select=*&order=created_at.desc",
+{
+headers: {
+"apikey": SUPABASE_ANON_KEY,
+"Authorization":
+"Bearer " + accessToken
+}
+}
+);
 
-  try {
+const responseText =
+await response.text();
 
-    const response = await fetch(
-      SUPABASE_URL +
-      "/rest/v1/posts?select=*&order=created_at.desc",
-      {
-        method: "GET",
+let data = [];
 
-        headers: {
-          "apikey": SUPABASE_ANON_KEY,
+if (responseText.trim()) {
 
-          "Authorization":
-            "Bearer " + accessToken
-        }
-      }
-    );
+try {
+data = JSON.parse(responseText);
+}
+catch (e) {
+throw new Error(responseText);
+}
 
+}
 
-    const responseText =
-      await response.text();
+if (!response.ok) {
 
+throw new Error(
+data.message ||
+data.error_description ||
+data.msg ||
+"Could not load posts."
+);
 
-    let data = [];
+}
 
+loading.style.display = "none";
 
-    if (responseText.trim()) {
+feed.innerHTML = "";
 
-      try {
+if (!data.length) {
 
-        data =
-          JSON.parse(responseText);
+feed.innerHTML =
+"<div class='post'>No posts yet. Be the first to post!</div>";
 
-      }
-
-      catch (error) {
-
-        throw new Error(
-          "Invalid response from Supabase."
-        );
-
-      }
-
-    }
-
-
-    if (!response.ok) {
-
-      throw new Error(
-        data?.message ||
-        data?.error_description ||
-        data?.msg ||
-        `Could not load posts (${response.status})`
-      );
-
-    }
-
-
-    loading.style.display =
-      "none";
-
-
-    feed.innerHTML = "";
-
-
-    if (!Array.isArray(data) ||
-        data.length === 0) {
-
-      feed.innerHTML = `
-        <div class="post empty">
-          No posts yet. Be the first to post!
-        </div>
-      `;
-
-      return;
-
-    }
-
-
-    data.forEach(function(post) {
-
-      const article =
-        document.createElement("div");
-
-      article.className =
-        "post";
-
-
-      const date =
-        post.created_at
-          ? new Date(post.created_at)
-          : new Date();
-
-
-      const username =
-        post.username ||
-        "BERAKAH User";
-
-
-      let imageHTML = "";
-
-
-      if (post.image_url) {
-
-        imageHTML = `
-          <img
-            class="post-image"
-            src="${escapeHtml(post.image_url)}"
-            alt="Post image"
-            onerror="this.style.display='none';"
-          >
-        `;
-
-      }
-
-
-      let deleteHTML = "";
-
-
-      if (
-        currentUser &&
-        post.user_id === currentUser.id
-      ) {
-
-        deleteHTML = `
-          <button
-            class="delete"
-            onclick="deletePost('${escapeHtml(post.id)}')">
-            Delete
-          </button>
-        `;
-
-      }
-
-
-      article.innerHTML = `
-
-        <div class="post-header">
-
-          <div class="user">
-            ${escapeHtml(username)}
-          </div>
-
-          <div class="time">
-            ${date.toLocaleString()}
-          </div>
-
-        </div>
-
-
-        <div class="post-content">
-          ${escapeHtml(post.content || "")}
-        </div>
-
-
-        ${imageHTML}
-
-
-        <div class="actions">
-
-          <button
-            onclick="likePost('${escapeHtml(post.id)}')">
-            ❤️ Like
-          </button>
-
-          ${deleteHTML}
-
-        </div>
-
-      `;
-
-
-      feed.appendChild(article);
-
-    });
-
-  }
-
-
-  catch (error) {
-
-    loading.style.display =
-      "none";
-
-    message.textContent =
-      error.message;
-
-    console.error(
-      "LOAD POSTS ERROR:",
-      error
-    );
-
-  }
+return;
 
 }
 
 
-/* =====================================================
-   CREATE POST
-   ===================================================== */
+/* GET LIKES */
+
+const likesResponse = await fetch(
+SUPABASE_URL +
+"/rest/v1/post_likes?select=post_id,user_id",
+{
+headers: {
+"apikey": SUPABASE_ANON_KEY,
+"Authorization":
+"Bearer " + accessToken
+}
+}
+);
+
+let likes = [];
+
+if (likesResponse.ok) {
+likes = await likesResponse.json();
+}
+
+
+/* DISPLAY POSTS */
+
+data.forEach(function(post) {
+
+const article =
+document.createElement("div");
+
+article.className = "post";
+
+
+const postLikes =
+likes.filter(function(like) {
+
+return like.post_id === post.id;
+
+});
+
+
+const likedByMe =
+postLikes.some(function(like) {
+
+return like.user_id === currentUser.id;
+
+});
+
+
+const username =
+post.username ||
+"BERAKAH User";
+
+
+const date =
+new Date(post.created_at);
+
+
+article.innerHTML = `
+
+<div class="post-header">
+
+<div class="user">
+${escapeHtml(username)}
+</div>
+
+<div class="time">
+${date.toLocaleString()}
+</div>
+
+</div>
+
+
+<div class="post-content">
+${escapeHtml(post.content || "")}
+</div>
+
+
+${
+post.image_url
+?
+`
+<img
+class="post-image"
+src="${escapeHtml(post.image_url)}"
+alt="Post image"
+>
+`
+:
+""
+}
+
+
+<div class="actions">
+
+<button
+class="like-button ${likedByMe ? "liked" : ""}"
+onclick="likePost('${post.id}')">
+
+${likedByMe ? "❤️ Unlike" : "❤️ Like"}
+
+(${postLikes.length})
+
+</button>
+
+
+${
+post.user_id === currentUser.id
+?
+`
+<button
+class="delete"
+onclick="deletePost('${post.id}')">
+
+Delete
+
+</button>
+`
+:
+""
+}
+
+</div>
+
+`;
+
+
+feed.appendChild(article);
+
+});
+
+}
+catch (error) {
+
+loading.style.display = "none";
+
+document.getElementById("message")
+.textContent = error.message;
+
+}
+
+}
+
+
+/* CREATE POST */
 
 document
-  .getElementById("postButton")
-  .addEventListener(
-    "click",
-    async function() {
+.getElementById("postButton")
+.addEventListener("click", async function() {
 
-      const button = this;
+const text =
+document.getElementById("postText")
+.value.trim();
 
+const imageUrl =
+document.getElementById("imageUrl")
+.value.trim();
 
-      const text =
-        document
-          .getElementById("postText")
-          .value
-          .trim();
+const message =
+document.getElementById("message");
 
 
-      const imageUrl =
-        document
-          .getElementById("imageUrl")
-          .value
-          .trim();
+if (!text) {
 
+message.textContent =
+"Please write something first.";
 
-      const message =
-        document.getElementById("message");
+return;
 
+}
 
-      /* CHECK TEXT */
 
-      if (!text) {
+this.disabled = true;
 
-        message.textContent =
-          "Please write something first.";
+this.textContent = "POSTING...";
 
-        return;
 
-      }
+try {
 
+const response = await fetch(
+SUPABASE_URL + "/rest/v1/posts",
+{
+method: "POST",
 
-      /* CHECK USER */
+headers: {
 
-      if (!currentUser) {
+"apikey":
+SUPABASE_ANON_KEY,
 
-        message.textContent =
-          "You must be logged in.";
+"Authorization":
+"Bearer " + accessToken,
 
-        return;
+"Content-Type":
+"application/json",
 
-      }
+"Prefer":
+"return=minimal"
 
+},
 
-      button.disabled =
-        true;
+body: JSON.stringify({
 
-      button.textContent =
-        "POSTING...";
+user_id:
+currentUser.id,
 
-      message.textContent =
-        "";
+username:
+currentUser.user_metadata?.username ||
+currentUser.email?.split("@")[0] ||
+"BERAKAH User",
 
+content:
+text,
 
-      try {
+image_url:
+imageUrl || null
 
-        const response =
-          await fetch(
-            SUPABASE_URL +
-            "/rest/v1/posts",
-            {
+})
 
-              method: "POST",
+}
+);
 
-              headers: {
 
-                "apikey":
-                  SUPABASE_ANON_KEY,
+if (!response.ok) {
 
-                "Authorization":
-                  "Bearer " + accessToken,
+const errorText =
+await response.text();
 
-                "Content-Type":
-                  "application/json",
+throw new Error(
+errorText ||
+"Could not create post."
+);
 
-                "Prefer":
-                  "return=minimal"
+}
 
-              },
 
-              body: JSON.stringify({
+document.getElementById("postText")
+.value = "";
 
-                user_id:
-                  currentUser.id,
+document.getElementById("imageUrl")
+.value = "";
 
-                username:
-                  currentUser.user_metadata?.username ||
-                  currentUser.email?.split("@")[0] ||
-                  "BERAKAH User",
 
-                content:
-                  text,
+message.textContent =
+"Post published successfully!";
 
-                image_url:
-                  imageUrl || null
 
-              })
+await loadPosts();
 
-            }
-          );
 
+}
+catch (error) {
 
-        /*
-          IMPORTANT:
+message.textContent =
+error.message;
 
-          We DO NOT call response.json()
-          here because "return=minimal"
-          can give an empty response.
-        */
+}
 
-        const responseText =
-          await response.text();
 
+this.disabled = false;
 
-        if (!response.ok) {
+this.textContent = "POST";
 
-          let errorData = {};
+});
 
 
-          if (responseText.trim()) {
+/* LIKE / UNLIKE */
 
-            try {
+async function likePost(postId) {
 
-              errorData =
-                JSON.parse(responseText);
+try {
 
-            }
+/* CHECK IF ALREADY LIKED */
 
-            catch (error) {
+const checkResponse =
+await fetch(
+SUPABASE_URL +
+"/rest/v1/post_likes?post_id=eq." +
+encodeURIComponent(postId) +
+"&user_id=eq." +
+encodeURIComponent(currentUser.id),
+{
+headers: {
 
-              errorData = {
-                message:
-                  responseText
-              };
+"apikey":
+SUPABASE_ANON_KEY,
 
-            }
+"Authorization":
+"Bearer " + accessToken
 
-          }
+}
+}
+);
 
 
-          throw new Error(
-            errorData.message ||
-            errorData.error_description ||
-            errorData.hint ||
-            errorData.msg ||
-            `Could not create post (${response.status})`
-          );
+const existingLikes =
+await checkResponse.json();
 
-        }
 
+/* UNLIKE */
 
-        /* SUCCESS */
+if (existingLikes.length > 0) {
 
-        document
-          .getElementById("postText")
-          .value = "";
+const deleteResponse =
+await fetch(
+SUPABASE_URL +
+"/rest/v1/post_likes?post_id=eq." +
+encodeURIComponent(postId) +
+"&user_id=eq." +
+encodeURIComponent(currentUser.id),
+{
+method: "DELETE",
 
+headers: {
 
-        document
-          .getElementById("imageUrl")
-          .value = "";
+"apikey":
+SUPABASE_ANON_KEY,
 
+"Authorization":
+"Bearer " + accessToken
 
-        message.textContent =
-          "Post published successfully!";
+}
+}
+);
 
 
-        await loadPosts();
+if (!deleteResponse.ok) {
 
+throw new Error(
+"Could not unlike post."
+);
 
-        /*
-          Remove success message
-          after a few seconds.
-        */
+}
 
-        setTimeout(function() {
+}
 
-          if (
-            message.textContent ===
-            "Post published successfully!"
-          ) {
 
-            message.textContent = "";
+/* LIKE */
 
-          }
+else {
 
-        }, 3000);
+const likeResponse =
+await fetch(
+SUPABASE_URL +
+"/rest/v1/post_likes",
+{
+method: "POST",
 
-      }
+headers: {
 
+"apikey":
+SUPABASE_ANON_KEY,
 
-      catch (error) {
+"Authorization":
+"Bearer " + accessToken,
 
-        message.textContent =
-          error.message;
+"Content-Type":
+"application/json",
 
-        console.error(
-          "CREATE POST ERROR:",
-          error
-        );
+"Prefer":
+"return=minimal"
 
-      }
+},
 
+body: JSON.stringify({
 
-      finally {
+post_id:
+postId,
 
-        button.disabled =
-          false;
+user_id:
+currentUser.id
 
-        button.textContent =
-          "POST";
+})
 
-      }
+}
+);
 
-    }
-  );
 
+if (!likeResponse.ok) {
 
-/* =====================================================
-   DELETE POST
-   ===================================================== */
+const errorText =
+await likeResponse.text();
+
+throw new Error(
+errorText ||
+"Could not like post."
+);
+
+}
+
+}
+
+
+/* REFRESH FEED */
+
+await loadPosts();
+
+}
+catch (error) {
+
+alert(error.message);
+
+}
+
+}
+
+
+/* DELETE POST */
 
 async function deletePost(id) {
 
-  if (!confirm("Delete this post?")) {
-
-    return;
-
-  }
+if (!confirm("Delete this post?")) {
+return;
+}
 
 
-  try {
+try {
 
-    const response =
-      await fetch(
-        SUPABASE_URL +
-        "/rest/v1/posts?id=eq." +
-        encodeURIComponent(id),
-        {
+const response =
+await fetch(
+SUPABASE_URL +
+"/rest/v1/posts?id=eq." +
+encodeURIComponent(id),
+{
+method: "DELETE",
 
-          method: "DELETE",
+headers: {
 
-          headers: {
+"apikey":
+SUPABASE_ANON_KEY,
 
-            "apikey":
-              SUPABASE_ANON_KEY,
+"Authorization":
+"Bearer " + accessToken
 
-            "Authorization":
-              "Bearer " + accessToken
-
-          }
-
-        }
-      );
+}
+}
+);
 
 
-    const responseText =
-      await response.text();
+if (!response.ok) {
 
+const errorText =
+await response.text();
 
-    if (!response.ok) {
-
-      let data = {};
-
-
-      if (responseText.trim()) {
-
-        try {
-
-          data =
-            JSON.parse(responseText);
-
-        }
-
-        catch (error) {
-
-          data = {
-            message:
-              responseText
-          };
-
-        }
-
-      }
-
-
-      throw new Error(
-        data.message ||
-        data.error_description ||
-        data.hint ||
-        "Could not delete post."
-      );
-
-    }
-
-
-    await loadPosts();
-
-  }
-
-
-  catch (error) {
-
-    alert(
-      error.message
-    );
-
-  }
+throw new Error(
+errorText ||
+"Could not delete post."
+);
 
 }
 
 
-/* =====================================================
-   LIKE
-   ===================================================== */
+await loadPosts();
 
-async function likePost(id) {
+}
+catch (error) {
 
-  /*
-    Likes will be connected to Supabase
-    in the next step.
-  */
+alert(error.message);
 
-  alert(
-    "Like system will be connected next."
-  );
+}
 
 }
 
 
-/* =====================================================
-   LOGOUT
-   ===================================================== */
+/* LOGOUT */
 
 document
-  .getElementById("logoutButton")
-  .addEventListener(
-    "click",
-    function() {
+.getElementById("logoutButton")
+.addEventListener("click", function() {
 
-      localStorage.removeItem(
-        "berakah_access_token"
-      );
+localStorage.removeItem(
+"berakah_access_token"
+);
 
-      localStorage.removeItem(
-        "berakah_refresh_token"
-      );
+localStorage.removeItem(
+"berakah_refresh_token"
+);
 
-      localStorage.removeItem(
-        "berakah_user"
-      );
+localStorage.removeItem(
+"berakah_user"
+);
 
+window.location.href =
+"login.html";
 
-      window.location.href =
-        "login.html";
-
-    }
-  );
+});
 
 
-/* =====================================================
-   START APPLICATION
-   ===================================================== */
+/* START */
 
 (async function() {
 
-  const loggedIn =
-    await getCurrentUser();
+await getCurrentUser();
 
+if (currentUser) {
 
-  if (loggedIn && currentUser) {
+await loadPosts();
 
-    await loadPosts();
-
-  }
+}
 
 })();
 
