@@ -93,11 +93,6 @@ textarea {
   font-family: inherit;
 }
 
-.comment-input {
-  min-height: 55px;
-  margin-top: 12px;
-}
-
 .image-input {
   width: 100%;
   margin-top: 10px;
@@ -178,10 +173,10 @@ textarea {
 }
 
 .comments-section {
+  display: none;
   margin-top: 15px;
   padding-top: 15px;
   border-top: 1px solid #eee;
-  display: none;
 }
 
 .comments-section.open {
@@ -190,7 +185,7 @@ textarea {
 
 .comments-title {
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .comment {
@@ -232,20 +227,28 @@ textarea {
   margin-top: 6px;
 }
 
-.comment-form {
-  margin-top: 12px;
+.comment-input {
+  width: 100%;
+  min-height: 60px;
+  margin-top: 10px;
 }
 
 .comment-submit {
   width: 100%;
   margin-top: 8px;
-  padding: 10px;
+  padding: 11px;
   border: none;
   border-radius: 8px;
   background: #111827;
   color: white;
-  cursor: pointer;
   font-weight: bold;
+  cursor: pointer;
+}
+
+.no-comments {
+  color: #6b7280;
+  font-size: 13px;
+  margin-bottom: 10px;
 }
 
 #message {
@@ -278,6 +281,10 @@ textarea {
 
       <button onclick="window.location.href='marketplace.html'">
         Market
+      </button>
+
+      <button onclick="window.location.href='notifications.html'">
+        🔔
       </button>
 
       <button class="logout" id="logoutButton">
@@ -339,6 +346,9 @@ localStorage.getItem("berakah_access_token");
 
 let currentUser = null;
 
+
+/* LOGIN CHECK */
+
 if (!accessToken) {
   window.location.href = "login.html";
 }
@@ -358,7 +368,7 @@ function escapeHtml(value) {
 }
 
 
-/* SUPABASE HEADERS */
+/* HEADERS */
 
 function getHeaders(extra = {}) {
 
@@ -377,25 +387,31 @@ async function getCurrentUser() {
 
   try {
 
-    const response = await fetch(
-      SUPABASE_URL + "/auth/v1/user",
-      {
-        headers: getHeaders()
-      }
-    );
+    const response =
+      await fetch(
+        SUPABASE_URL + "/auth/v1/user",
+        {
+          headers: getHeaders()
+        }
+      );
 
     if (!response.ok) {
       throw new Error("Session expired");
     }
 
-    currentUser = await response.json();
+    currentUser =
+      await response.json();
+
+    return true;
 
   } catch (error) {
 
     localStorage.clear();
 
-    window.location.href = "login.html";
+    window.location.href =
+      "login.html";
 
+    return false;
   }
 
 }
@@ -413,55 +429,34 @@ async function loadPosts() {
 
   try {
 
-    const response = await fetch(
-      SUPABASE_URL +
-      "/rest/v1/posts?select=*&order=created_at.desc",
-      {
-        headers: getHeaders()
-      }
-    );
+    /* POSTS */
 
-    const responseText =
-      await response.text();
-
-    let data = [];
-
-    if (responseText.trim()) {
-
-      try {
-        data = JSON.parse(responseText);
-      } catch (e) {
-        throw new Error("Could not read posts.");
-      }
-
-    }
-
-    if (!response.ok) {
-
-      throw new Error(
-        data.message ||
-        data.error_description ||
-        data.msg ||
-        "Could not load posts."
+    const postsResponse =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/posts?select=*&order=created_at.desc",
+        {
+          headers: getHeaders()
+        }
       );
 
+    const postsText =
+      await postsResponse.text();
+
+    let posts = [];
+
+    if (postsText.trim()) {
+      posts = JSON.parse(postsText);
     }
 
-    loading.style.display = "none";
-
-    feed.innerHTML = "";
-
-    if (!data.length) {
-
-      feed.innerHTML =
-        "<div class='post'>No posts yet. Be the first to post!</div>";
-
-      return;
-
+    if (!postsResponse.ok) {
+      throw new Error(
+        "Could not load posts."
+      );
     }
 
 
-    /* LOAD LIKES */
+    /* LIKES */
 
     let likes = [];
 
@@ -480,19 +475,13 @@ async function loadPosts() {
         await likesResponse.text();
 
       if (likesText.trim()) {
-
-        try {
-          likes = JSON.parse(likesText);
-        } catch (e) {
-          likes = [];
-        }
-
+        likes = JSON.parse(likesText);
       }
 
     }
 
 
-    /* LOAD COMMENTS */
+    /* COMMENTS */
 
     let comments = [];
 
@@ -512,67 +501,90 @@ async function loadPosts() {
         await commentsResponse.text();
 
       if (commentsText.trim()) {
-
-        try {
-          comments = JSON.parse(commentsText);
-        } catch (e) {
-          comments = [];
-        }
-
+        comments = JSON.parse(commentsText);
       }
 
     }
 
 
-    /* DISPLAY POSTS */
+    loading.style.display = "none";
 
-    data.forEach(function(post) {
+    feed.innerHTML = "";
+
+
+    if (!posts.length) {
+
+      feed.innerHTML =
+        "<div class='post'>No posts yet. Be the first to post!</div>";
+
+      return;
+
+    }
+
+
+    /* DISPLAY */
+
+    posts.forEach(function(post) {
 
       const article =
         document.createElement("div");
 
       article.className = "post";
 
+
       const postLikes =
         likes.filter(function(like) {
+
           return like.post_id === post.id;
+
         });
+
 
       const likedByMe =
         postLikes.some(function(like) {
+
           return like.user_id === currentUser.id;
+
         });
+
 
       const postComments =
         comments.filter(function(comment) {
+
           return comment.post_id === post.id;
+
         });
+
 
       const username =
         post.username ||
         "BERAKAH User";
 
+
       const date =
         new Date(post.created_at);
 
+
       let commentsHtml = "";
+
 
       if (postComments.length === 0) {
 
         commentsHtml =
-          "<div style='color:#6b7280;font-size:13px;'>No comments yet.</div>";
+          "<div class='no-comments'>No comments yet.</div>";
 
       } else {
 
         commentsHtml =
           postComments.map(function(comment) {
 
-            const commentUser =
+            const commentUsername =
               comment.username ||
               "BERAKAH User";
 
             const commentDate =
               new Date(comment.created_at);
+
 
             const deleteButton =
               comment.user_id === currentUser.id
@@ -588,6 +600,7 @@ async function loadPosts() {
               :
               "";
 
+
             return `
 
               <div class="comment">
@@ -595,7 +608,7 @@ async function loadPosts() {
                 <div class="comment-header">
 
                   <div class="comment-user">
-                    ${escapeHtml(commentUser)}
+                    ${escapeHtml(commentUsername)}
                   </div>
 
                   <div class="comment-time">
@@ -703,27 +716,23 @@ async function loadPosts() {
             ${commentsHtml}
           </div>
 
+          <textarea
+            id="comment-input-${post.id}"
+            class="comment-input"
+            placeholder="Write a comment..."
+          ></textarea>
 
-          <div class="comment-form">
-
-            <textarea
-              id="comment-input-${post.id}"
-              class="comment-input"
-              placeholder="Write a comment..."
-            ></textarea>
-
-            <button
-              class="comment-submit"
-              onclick="addComment('${post.id}')"
-            >
-              POST COMMENT
-            </button>
-
-          </div>
+          <button
+            class="comment-submit"
+            onclick="addComment('${post.id}')"
+          >
+            POST COMMENT
+          </button>
 
         </div>
 
       `;
+
 
       feed.appendChild(article);
 
@@ -735,7 +744,8 @@ async function loadPosts() {
     loading.style.display = "none";
 
     document.getElementById("message")
-      .textContent = error.message;
+      .textContent =
+      error.message;
 
   }
 
@@ -746,99 +756,115 @@ async function loadPosts() {
 
 document
   .getElementById("postButton")
-  .addEventListener("click", async function() {
+  .addEventListener(
+    "click",
+    async function() {
 
-    const text =
-      document.getElementById("postText")
-        .value.trim();
+      const text =
+        document.getElementById("postText")
+          .value.trim();
 
-    const imageUrl =
-      document.getElementById("imageUrl")
-        .value.trim();
+      const imageUrl =
+        document.getElementById("imageUrl")
+          .value.trim();
 
-    const message =
-      document.getElementById("message");
+      const message =
+        document.getElementById("message");
 
-    if (!text) {
 
-      message.textContent =
-        "Please write something first.";
+      if (!text) {
 
-      return;
+        message.textContent =
+          "Please write something first.";
 
-    }
-
-    this.disabled = true;
-    this.textContent = "POSTING...";
-
-    try {
-
-      const response =
-        await fetch(
-          SUPABASE_URL + "/rest/v1/posts",
-          {
-            method: "POST",
-
-            headers: getHeaders({
-              "Content-Type": "application/json",
-              "Prefer": "return=minimal"
-            }),
-
-            body: JSON.stringify({
-
-              user_id:
-                currentUser.id,
-
-              username:
-                currentUser.user_metadata?.username ||
-                currentUser.email?.split("@")[0] ||
-                "BERAKAH User",
-
-              content:
-                text,
-
-              image_url:
-                imageUrl || null
-
-            })
-
-          }
-        );
-
-      if (!response.ok) {
-
-        const errorText =
-          await response.text();
-
-        throw new Error(
-          errorText ||
-          "Could not create post."
-        );
+        return;
 
       }
 
-      document.getElementById("postText")
-        .value = "";
 
-      document.getElementById("imageUrl")
-        .value = "";
+      this.disabled = true;
+      this.textContent = "POSTING...";
 
-      message.textContent =
-        "Post published successfully!";
 
-      await loadPosts();
+      try {
 
-    } catch (error) {
+        const response =
+          await fetch(
+            SUPABASE_URL +
+            "/rest/v1/posts",
+            {
+              method: "POST",
 
-      message.textContent =
-        error.message;
+              headers: getHeaders({
+                "Content-Type":
+                  "application/json",
+
+                "Prefer":
+                  "return=minimal"
+              }),
+
+              body: JSON.stringify({
+
+                user_id:
+                  currentUser.id,
+
+                username:
+                  currentUser.user_metadata?.username ||
+                  currentUser.email?.split("@")[0] ||
+                  "BERAKAH User",
+
+                content:
+                  text,
+
+                image_url:
+                  imageUrl || null
+
+              })
+
+            }
+          );
+
+
+        if (!response.ok) {
+
+          const errorText =
+            await response.text();
+
+          throw new Error(
+            errorText ||
+            "Could not create post."
+          );
+
+        }
+
+
+        document.getElementById("postText")
+          .value = "";
+
+        document.getElementById("imageUrl")
+          .value = "";
+
+
+        message.textContent =
+          "Post published successfully!";
+
+
+        await loadPosts();
+
+
+      } catch (error) {
+
+        message.textContent =
+          error.message;
+
+      }
+
+
+      this.disabled = false;
+      this.textContent = "POST";
 
     }
-
-    this.disabled = false;
-    this.textContent = "POST";
-
-  });
+  );
 
 
 /* LIKE / UNLIKE */
@@ -850,7 +876,8 @@ async function likePost(postId) {
     const checkResponse =
       await fetch(
         SUPABASE_URL +
-        "/rest/v1/post_likes?post_id=eq." +
+        "/rest/v1/post_likes" +
+        "?post_id=eq." +
         encodeURIComponent(postId) +
         "&user_id=eq." +
         encodeURIComponent(currentUser.id),
@@ -859,13 +886,17 @@ async function likePost(postId) {
         }
       );
 
+
     const checkText =
       await checkResponse.text();
 
+
     let existingLikes = [];
 
+
     if (checkText.trim()) {
-      existingLikes = JSON.parse(checkText);
+      existingLikes =
+        JSON.parse(checkText);
     }
 
 
@@ -873,10 +904,11 @@ async function likePost(postId) {
 
     if (existingLikes.length > 0) {
 
-      const deleteResponse =
+      const response =
         await fetch(
           SUPABASE_URL +
-          "/rest/v1/post_likes?post_id=eq." +
+          "/rest/v1/post_likes" +
+          "?post_id=eq." +
           encodeURIComponent(postId) +
           "&user_id=eq." +
           encodeURIComponent(currentUser.id),
@@ -886,13 +918,10 @@ async function likePost(postId) {
           }
         );
 
-      if (!deleteResponse.ok) {
 
-        const errorText =
-          await deleteResponse.text();
+      if (!response.ok) {
 
         throw new Error(
-          errorText ||
           "Could not unlike post."
         );
 
@@ -905,7 +934,7 @@ async function likePost(postId) {
 
     else {
 
-      const likeResponse =
+      const response =
         await fetch(
           SUPABASE_URL +
           "/rest/v1/post_likes",
@@ -913,280 +942,11 @@ async function likePost(postId) {
             method: "POST",
 
             headers: getHeaders({
-              "Content-Type": "application/json",
-              "Prefer": "return=minimal"
+              "Content-Type":
+                "application/json",
+
+              "Prefer":
+                "return=minimal"
             }),
 
-            body: JSON.stringify({
-
-              post_id:
-                postId,
-
-              user_id:
-                currentUser.id
-
-            })
-
-          }
-        );
-
-      if (!likeResponse.ok) {
-
-        const errorText =
-          await likeResponse.text();
-
-        throw new Error(
-          errorText ||
-          "Could not like post."
-        );
-
-      }
-
-    }
-
-    await loadPosts();
-
-  } catch (error) {
-
-    alert(error.message);
-
-  }
-
-}
-
-
-/* TOGGLE COMMENTS */
-
-function toggleComments(postId) {
-
-  const section =
-    document.getElementById(
-      "comments-" + postId
-    );
-
-  if (!section) {
-    return;
-  }
-
-  section.classList.toggle("open");
-
-}
-
-
-/* ADD COMMENT */
-
-async function addComment(postId) {
-
-  const input =
-    document.getElementById(
-      "comment-input-" + postId
-    );
-
-  const content =
-    input.value.trim();
-
-  if (!content) {
-
-    alert("Please write a comment.");
-
-    return;
-
-  }
-
-  try {
-
-    const response =
-      await fetch(
-        SUPABASE_URL +
-        "/rest/v1/post_comments",
-        {
-          method: "POST",
-
-          headers: getHeaders({
-            "Content-Type": "application/json",
-            "Prefer": "return=minimal"
-          }),
-
-          body: JSON.stringify({
-
-            post_id:
-              postId,
-
-            user_id:
-              currentUser.id,
-
-            username:
-              currentUser.user_metadata?.username ||
-              currentUser.email?.split("@")[0] ||
-              "BERAKAH User",
-
-            content:
-              content
-
-          })
-
-        }
-      );
-
-    if (!response.ok) {
-
-      const errorText =
-        await response.text();
-
-      throw new Error(
-        errorText ||
-        "Could not add comment."
-      );
-
-    }
-
-    input.value = "";
-
-    await loadPosts();
-
-    const section =
-      document.getElementById(
-        "comments-" + postId
-      );
-
-    if (section) {
-      section.classList.add("open");
-    }
-
-  } catch (error) {
-
-    alert(error.message);
-
-  }
-
-}
-
-
-/* DELETE COMMENT */
-
-async function deleteComment(commentId) {
-
-  if (!confirm("Delete this comment?")) {
-    return;
-  }
-
-  try {
-
-    const response =
-      await fetch(
-        SUPABASE_URL +
-        "/rest/v1/post_comments?id=eq." +
-        encodeURIComponent(commentId),
-        {
-          method: "DELETE",
-          headers: getHeaders()
-        }
-      );
-
-    if (!response.ok) {
-
-      const errorText =
-        await response.text();
-
-      throw new Error(
-        errorText ||
-        "Could not delete comment."
-      );
-
-    }
-
-    await loadPosts();
-
-  } catch (error) {
-
-    alert(error.message);
-
-  }
-
-}
-
-
-/* DELETE POST */
-
-async function deletePost(id) {
-
-  if (!confirm("Delete this post?")) {
-    return;
-  }
-
-  try {
-
-    const response =
-      await fetch(
-        SUPABASE_URL +
-        "/rest/v1/posts?id=eq." +
-        encodeURIComponent(id),
-        {
-          method: "DELETE",
-          headers: getHeaders()
-        }
-      );
-
-    if (!response.ok) {
-
-      const errorText =
-        await response.text();
-
-      throw new Error(
-        errorText ||
-        "Could not delete post."
-      );
-
-    }
-
-    await loadPosts();
-
-  } catch (error) {
-
-    alert(error.message);
-
-  }
-
-}
-
-
-/* LOGOUT */
-
-document
-  .getElementById("logoutButton")
-  .addEventListener("click", function() {
-
-    localStorage.removeItem(
-      "berakah_access_token"
-    );
-
-    localStorage.removeItem(
-      "berakah_refresh_token"
-    );
-
-    localStorage.removeItem(
-      "berakah_user"
-    );
-
-    window.location.href =
-      "login.html";
-
-  });
-
-
-/* START */
-
-(async function() {
-
-  await getCurrentUser();
-
-  if (currentUser) {
-    await loadPosts();
-  }
-
-})();
-
-</script>
-
-</body>
-</html>
+            body
