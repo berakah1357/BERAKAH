@@ -103,6 +103,12 @@ h1 {
   color: #6b7280;
 }
 
+.language {
+  color: #6b7280;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
 .bio {
   line-height: 1.6;
   margin-top: 20px;
@@ -157,6 +163,11 @@ h1 {
 .action-button:disabled {
   opacity: 0.6;
   cursor: wait;
+}
+
+#status {
+  margin-top: 10px;
+  font-weight: bold;
 }
 
 .posts {
@@ -219,9 +230,17 @@ h1 {
   white-space: pre-wrap;
 }
 
-#status {
-  margin-top: 10px;
-  font-weight: bold;
+@media (max-width: 600px) {
+
+  .nav {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .stats {
+    gap: 20px;
+  }
+
 }
 
 </style>
@@ -296,7 +315,9 @@ style="display:none;"
 <section class="profile-card">
 
 
-<div class="avatar">
+<div
+class="avatar"
+id="avatar">
 👤
 </div>
 
@@ -313,6 +334,12 @@ id="profileUsername">
 </div>
 
 
+<div
+class="language"
+id="profileLanguage">
+</div>
+
+
 <p
 class="bio"
 id="profileBio">
@@ -324,24 +351,35 @@ Connect, share, build, and grow together.
 <div class="stats">
 
 <div>
+
 <strong id="followersCount">
 0
 </strong>
+
 Followers
+
 </div>
 
+
 <div>
+
 <strong id="followingCount">
 0
 </strong>
+
 Following
+
 </div>
 
+
 <div>
+
 <strong id="postsCount">
 0
 </strong>
+
 Posts
+
 </div>
 
 </div>
@@ -425,6 +463,8 @@ let currentUser = null;
 
 let profileUserId = null;
 
+let profileData = null;
+
 
 /* =================================
    HEADERS
@@ -462,6 +502,22 @@ function safe(value) {
 
 
 /* =================================
+   GET PROFILE ID FROM URL
+================================= */
+
+function getProfileId() {
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  return params.get("id");
+
+}
+
+
+/* =================================
    GET CURRENT USER
 ================================= */
 
@@ -478,51 +534,55 @@ async function getCurrentUser() {
     );
 
 
+  const text =
+    await response.text();
+
+
   if (!response.ok) {
 
     throw new Error(
-      "Your login session has expired."
+      "Your login session has expired.\n\n" +
+      text
     );
 
   }
 
 
-  return await response.json();
+  if (!text.trim()) {
 
-}
-
-
-/* =================================
-   GET PROFILE USERNAME
-================================= */
-
-function getProfileUsername() {
-
-  const params =
-    new URLSearchParams(
-      window.location.search
+    throw new Error(
+      "Supabase returned no user."
     );
 
+  }
 
-  return params.get("username");
+
+  return JSON.parse(text);
 
 }
 
 
 /* =================================
-   FIND PROFILE
+   FIND PROFILE BY ID
 ================================= */
 
 async function findProfile() {
 
-  const username =
-    getProfileUsername();
+  const requestedId =
+    getProfileId();
 
 
-  /* If no username is supplied,
-     show current user */
+  /*
+    No ID means show my own profile.
+  */
 
-  if (!username) {
+  if (!requestedId) {
+
+    const username =
+      currentUser.user_metadata?.username ||
+      currentUser.email?.split("@")[0] ||
+      "BERAKAH User";
+
 
     return {
 
@@ -530,25 +590,35 @@ async function findProfile() {
         currentUser.id,
 
       username:
-        currentUser.user_metadata?.username ||
-        currentUser.email?.split("@")[0] ||
-        "BERAKAH User"
+        username,
+
+      full_name:
+        currentUser.user_metadata?.full_name ||
+        username,
+
+      language:
+        currentUser.user_metadata?.language ||
+        ""
 
     };
 
   }
 
 
-  /* Search posts for this username */
+  /*
+    Load profile from Supabase.
+  */
 
   const response =
     await fetch(
 
       SUPABASE_URL +
-      "/rest/v1/posts" +
-      "?select=user_id,username" +
-      "&username=eq." +
-      encodeURIComponent(username) +
+      "/rest/v1/profiles" +
+      "?select=*" +
+      "&id=eq." +
+      encodeURIComponent(
+        requestedId
+      ) +
       "&limit=1",
 
       {
@@ -566,65 +636,36 @@ async function findProfile() {
   if (!response.ok) {
 
     throw new Error(
-      text ||
-      "Could not find profile."
+      "Could not load profile:\n\n" +
+      text
     );
 
   }
 
 
-  if (text.trim()) {
+  if (!text.trim()) {
 
-    const rows =
-      JSON.parse(text);
-
-
-    if (rows.length) {
-
-      return {
-
-        id:
-          rows[0].user_id,
-
-        username:
-          rows[0].username ||
-          username
-
-      };
-
-    }
+    throw new Error(
+      "Profile not found."
+    );
 
   }
 
 
-  /* If viewing own profile */
-
-  const myUsername =
-    currentUser.user_metadata?.username ||
-    currentUser.email?.split("@")[0];
+  const rows =
+    JSON.parse(text);
 
 
-  if (
-    username.toLowerCase() ===
-    String(myUsername).toLowerCase()
-  ) {
+  if (!rows.length) {
 
-    return {
-
-      id:
-        currentUser.id,
-
-      username:
-        myUsername
-
-    };
+    throw new Error(
+      "Profile not found."
+    );
 
   }
 
 
-  throw new Error(
-    "Profile not found."
-  );
+  return rows[0];
 
 }
 
@@ -648,844 +689,3 @@ async function loadPosts() {
       "&order=created_at.desc",
 
       {
-        headers:
-          headers()
-      }
-
-    );
-
-
-  const text =
-    await response.text();
-
-
-  if (!response.ok) {
-
-    throw new Error(
-      text ||
-      "Could not load posts."
-    );
-
-  }
-
-
-  if (!text.trim()) {
-
-    return [];
-
-  }
-
-
-  return JSON.parse(text);
-
-}
-
-
-/* =================================
-   LOAD FOLLOW COUNTS
-================================= */
-
-async function loadFollowCounts() {
-
-
-  /* Followers */
-
-  const followersResponse =
-    await fetch(
-
-      SUPABASE_URL +
-      "/rest/v1/follows" +
-      "?select=id" +
-      "&following_id=eq." +
-      encodeURIComponent(
-        profileUserId
-      ),
-
-      {
-        headers:
-          headers()
-      }
-
-    );
-
-
-  const followersText =
-    await followersResponse.text();
-
-
-  if (!followersResponse.ok) {
-
-    throw new Error(
-      followersText ||
-      "Could not load followers."
-    );
-
-  }
-
-
-  let followers = [];
-
-
-  if (followersText.trim()) {
-
-    followers =
-      JSON.parse(
-        followersText
-      );
-
-  }
-
-
-  /* Following */
-
-  const followingResponse =
-    await fetch(
-
-      SUPABASE_URL +
-      "/rest/v1/follows" +
-      "?select=id" +
-      "&follower_id=eq." +
-      encodeURIComponent(
-        profileUserId
-      ),
-
-      {
-        headers:
-          headers()
-      }
-
-    );
-
-
-  const followingText =
-    await followingResponse.text();
-
-
-  if (!followingResponse.ok) {
-
-    throw new Error(
-      followingText ||
-      "Could not load following."
-    );
-
-  }
-
-
-  let following = [];
-
-
-  if (followingText.trim()) {
-
-    following =
-      JSON.parse(
-        followingText
-      );
-
-  }
-
-
-  document.getElementById(
-    "followersCount"
-  ).textContent =
-    followers.length;
-
-
-  document.getElementById(
-    "followingCount"
-  ).textContent =
-    following.length;
-
-}
-
-
-/* =================================
-   CHECK FOLLOW
-================================= */
-
-async function checkFollowing() {
-
-  if (
-    String(profileUserId) ===
-    String(currentUser.id)
-  ) {
-
-    return false;
-
-  }
-
-
-  const response =
-    await fetch(
-
-      SUPABASE_URL +
-      "/rest/v1/follows" +
-      "?select=id" +
-      "&follower_id=eq." +
-      encodeURIComponent(
-        currentUser.id
-      ) +
-      "&following_id=eq." +
-      encodeURIComponent(
-        profileUserId
-      ),
-
-      {
-        headers:
-          headers()
-      }
-
-    );
-
-
-  const text =
-    await response.text();
-
-
-  if (!response.ok) {
-
-    throw new Error(
-      text ||
-      "Could not check follow status."
-    );
-
-  }
-
-
-  if (!text.trim()) {
-
-    return false;
-
-  }
-
-
-  const rows =
-    JSON.parse(text);
-
-
-  return rows.length > 0;
-
-}
-
-
-/* =================================
-   DISPLAY POSTS
-================================= */
-
-function displayPosts(posts) {
-
-  const postsList =
-    document.getElementById(
-      "postsList"
-    );
-
-
-  postsList.innerHTML = "";
-
-
-  document.getElementById(
-    "postsCount"
-  ).textContent =
-    posts.length;
-
-
-  if (!posts.length) {
-
-    postsList.innerHTML =
-      "<div class='post'>No posts yet.</div>";
-
-    return;
-
-  }
-
-
-  posts.forEach(
-    function(post) {
-
-      const div =
-        document.createElement(
-          "div"
-        );
-
-
-      div.className =
-        "post";
-
-
-      let dateText =
-        "Date unavailable";
-
-
-      if (post.created_at) {
-
-        const date =
-          new Date(
-            post.created_at
-          );
-
-
-        if (
-          !isNaN(
-            date.getTime()
-          )
-        ) {
-
-          dateText =
-            date.toLocaleString();
-
-        }
-
-      }
-
-
-      div.innerHTML = `
-
-        <div class="post-time">
-          ${safe(dateText)}
-        </div>
-
-        <div class="post-content">
-          ${safe(post.content)}
-        </div>
-
-        ${
-          post.image_url
-          ?
-          `
-          <img
-            class="post-image"
-            src="${safe(post.image_url)}"
-            alt="Post image">
-          `
-          :
-          ""
-        }
-
-        <div class="post-actions">
-
-          <button
-            onclick="location.href='feed.html'">
-            ❤️ Like
-          </button>
-
-        </div>
-
-      `;
-
-
-      postsList.appendChild(
-        div
-      );
-
-    }
-  );
-
-}
-
-
-/* =================================
-   UPDATE FOLLOW BUTTON
-================================= */
-
-async function updateFollowButton() {
-
-  const button =
-    document.getElementById(
-      "followButton"
-    );
-
-
-  const editButton =
-    document.getElementById(
-      "editButton"
-    );
-
-
-  if (
-    String(profileUserId) ===
-    String(currentUser.id)
-  ) {
-
-    button.style.display =
-      "none";
-
-    editButton.style.display =
-      "inline-block";
-
-    return;
-
-  }
-
-
-  editButton.style.display =
-    "none";
-
-  button.style.display =
-    "inline-block";
-
-
-  const following =
-    await checkFollowing();
-
-
-  if (following) {
-
-    button.textContent =
-      "Following";
-
-    button.className =
-      "action-button following";
-
-  }
-  else {
-
-    button.textContent =
-      "Follow";
-
-    button.className =
-      "action-button follow";
-
-  }
-
-}
-
-
-/* =================================
-   CREATE FOLLOW NOTIFICATION
-================================= */
-
-async function createFollowNotification() {
-
-  const actorName =
-    currentUser.user_metadata?.username ||
-    currentUser.email?.split("@")[0] ||
-    "BERAKAH User";
-
-
-  const response =
-    await fetch(
-
-      SUPABASE_URL +
-      "/rest/v1/notifications",
-
-      {
-
-        method:
-          "POST",
-
-        headers:
-          headers({
-
-            "Content-Type":
-              "application/json",
-
-            "Prefer":
-              "return=minimal"
-
-          }),
-
-        body:
-          JSON.stringify({
-
-            user_id:
-              profileUserId,
-
-            actor_id:
-              currentUser.id,
-
-            type:
-              "follow",
-
-            message:
-              actorName +
-              " follows you",
-
-            read:
-              false
-
-          })
-
-      }
-
-    );
-
-
-  const text =
-    await response.text();
-
-
-  if (!response.ok) {
-
-    console.error(
-      "Notification creation failed:",
-      text
-    );
-
-    return false;
-
-  }
-
-
-  return true;
-
-}
-
-
-/* =================================
-   FOLLOW / UNFOLLOW
-================================= */
-
-async function toggleFollow() {
-
-  const button =
-    document.getElementById(
-      "followButton"
-    );
-
-
-  const status =
-    document.getElementById(
-      "status"
-    );
-
-
-  button.disabled =
-    true;
-
-
-  status.textContent =
-    "";
-
-
-  try {
-
-    const following =
-      await checkFollowing();
-
-
-    /* =========================
-       UNFOLLOW
-    ========================= */
-
-    if (following) {
-
-      const response =
-        await fetch(
-
-          SUPABASE_URL +
-          "/rest/v1/follows" +
-          "?follower_id=eq." +
-          encodeURIComponent(
-            currentUser.id
-          ) +
-          "&following_id=eq." +
-          encodeURIComponent(
-            profileUserId
-          ),
-
-          {
-
-            method:
-              "DELETE",
-
-            headers:
-              headers()
-
-          }
-
-        );
-
-
-      const text =
-        await response.text();
-
-
-      if (!response.ok) {
-
-        throw new Error(
-          text ||
-          "Could not unfollow."
-        );
-
-      }
-
-
-      status.textContent =
-        "Unfollowed successfully.";
-
-    }
-
-
-    /* =========================
-       FOLLOW
-    ========================= */
-
-    else {
-
-      const response =
-        await fetch(
-
-          SUPABASE_URL +
-          "/rest/v1/follows",
-
-          {
-
-            method:
-              "POST",
-
-            headers:
-              headers({
-
-                "Content-Type":
-                  "application/json",
-
-                "Prefer":
-                  "return=minimal"
-
-              }),
-
-            body:
-              JSON.stringify({
-
-                follower_id:
-                  currentUser.id,
-
-                following_id:
-                  profileUserId
-
-              })
-
-          }
-
-        );
-
-
-      const text =
-        await response.text();
-
-
-      if (!response.ok) {
-
-        throw new Error(
-          text ||
-          "Could not follow."
-        );
-
-      }
-
-
-      /* =========================
-         NOTIFICATION
-      ========================= */
-
-      const notificationCreated =
-        await createFollowNotification();
-
-
-      if (notificationCreated) {
-
-        status.textContent =
-          "Following successfully.";
-
-      }
-      else {
-
-        status.textContent =
-          "Following successfully.";
-
-      }
-
-    }
-
-
-    await loadFollowCounts();
-
-    await updateFollowButton();
-
-  }
-
-
-  catch(error) {
-
-    console.error(
-      error
-    );
-
-    status.textContent =
-      error.message;
-
-  }
-
-
-  button.disabled =
-    false;
-
-}
-
-
-/* =================================
-   FOLLOW BUTTON EVENT
-================================= */
-
-document
-.getElementById(
-  "followButton"
-)
-.addEventListener(
-  "click",
-  toggleFollow
-);
-
-
-/* =================================
-   EDIT PROFILE
-================================= */
-
-document
-.getElementById(
-  "editButton"
-)
-.addEventListener(
-  "click",
-  function() {
-
-    alert(
-      "Profile editing is coming next."
-    );
-
-  }
-);
-
-
-/* =================================
-   LOGOUT
-================================= */
-
-document
-.getElementById(
-  "logoutButton"
-)
-.addEventListener(
-  "click",
-  function() {
-
-    localStorage.removeItem(
-      "berakah_access_token"
-    );
-
-    localStorage.removeItem(
-      "berakah_refresh_token"
-    );
-
-    localStorage.removeItem(
-      "berakah_user"
-    );
-
-    location.href =
-      "login.html";
-
-  }
-);
-
-
-/* =================================
-   START PROFILE
-================================= */
-
-async function start() {
-
-  try {
-
-    if (!accessToken) {
-
-      location.href =
-        "login.html";
-
-      return;
-
-    }
-
-
-    currentUser =
-      await getCurrentUser();
-
-
-    const profile =
-      await findProfile();
-
-
-    profileUserId =
-      profile.id;
-
-
-    document.getElementById(
-      "profileName"
-    ).textContent =
-      profile.username;
-
-
-    document.getElementById(
-      "profileUsername"
-    ).textContent =
-      "@" +
-      profile.username.toLowerCase();
-
-
-    const posts =
-      await loadPosts();
-
-
-    displayPosts(
-      posts
-    );
-
-
-    await loadFollowCounts();
-
-    await updateFollowButton();
-
-
-    document.getElementById(
-      "loading"
-    ).style.display =
-      "none";
-
-
-    document.getElementById(
-      "profileContent"
-    ).style.display =
-      "block";
-
-  }
-
-
-  catch(error) {
-
-    console.error(
-      error
-    );
-
-
-    document.getElementById(
-      "loading"
-    ).style.display =
-      "none";
-
-
-    document.getElementById(
-      "error"
-    ).textContent =
-      "Could not load profile.\n\n" +
-      error.message;
-
-  }
-
-}
-
-
-start();
-
-</script>
-
-</body>
-
-</html>
