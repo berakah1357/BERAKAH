@@ -1,328 +1,191 @@
-<!DOCTYPE html>
-<html lang="en">
+async function toggleFollow() {
 
-<head>
+  const button =
+    document.getElementById("followButton");
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  const status =
+    document.getElementById("status");
 
-<title>BERAKAH - Profile</title>
+  button.disabled = true;
+  status.textContent = "";
 
-<style>
+  try {
 
-* {
-  box-sizing: border-box;
-}
+    const following =
+      await checkFollowing();
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
-  color: #111827;
-}
 
-header {
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 15px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
+    /* =========================
+       UNFOLLOW
+    ========================= */
 
-.nav {
-  max-width: 900px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
+    if (following) {
 
-.logo {
-  font-size: 26px;
-  font-weight: bold;
-  letter-spacing: 3px;
-}
+      const response =
+        await fetch(
+          SUPABASE_URL +
+          "/rest/v1/follows" +
+          "?follower_id=eq." +
+          encodeURIComponent(currentUser.id) +
+          "&following_id=eq." +
+          encodeURIComponent(profileUserId),
+          {
+            method: "DELETE",
+            headers: headers()
+          }
+        );
 
-.nav-buttons {
-  display: flex;
-  gap: 7px;
-  flex-wrap: wrap;
-}
+      const text =
+        await response.text();
 
-.nav-buttons button {
-  border: 1px solid #d1d5db;
-  background: white;
-  padding: 8px 11px;
-  border-radius: 7px;
-  cursor: pointer;
-}
+      if (!response.ok) {
+        throw new Error(
+          text || "Could not unfollow."
+        );
+      }
 
-.logout {
-  background: #111827 !important;
-  color: white !important;
-}
+      status.textContent =
+        "Unfollowed successfully.";
 
-main {
-  max-width: 850px;
-  margin: 30px auto;
-  padding: 0 15px;
-}
+    }
 
-.cover {
-  height: 180px;
-  background: #111827;
-  border-radius: 18px 18px 0 0;
-}
 
-.profile-card {
-  background: white;
-  padding: 25px;
-  border-radius: 0 0 18px 18px;
-}
+    /* =========================
+       FOLLOW
+    ========================= */
 
-.avatar {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  background: #e5e7eb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 45px;
-  margin-top: -70px;
-  border: 5px solid white;
-}
+    else {
 
-h1 {
-  margin: 15px 0 5px;
-}
+      const response =
+        await fetch(
+          SUPABASE_URL +
+          "/rest/v1/follows",
+          {
+            method: "POST",
 
-.username {
-  color: #6b7280;
-}
+            headers: headers({
+              "Content-Type":
+                "application/json",
 
-.bio {
-  line-height: 1.6;
-  margin-top: 20px;
-}
+              "Prefer":
+                "return=minimal"
+            }),
 
-.stats {
-  display: flex;
-  gap: 35px;
-  margin-top: 25px;
-  flex-wrap: wrap;
-}
+            body: JSON.stringify({
 
-.stat {
-  cursor: default;
-}
+              follower_id:
+                currentUser.id,
 
-.stats strong {
-  display: block;
-  font-size: 20px;
-}
+              following_id:
+                profileUserId
 
-.buttons {
-  margin-top: 25px;
-}
+            })
+          }
+        );
 
-.action-button {
-  padding: 11px 18px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-right: 8px;
-  margin-bottom: 8px;
-}
+      const text =
+        await response.text();
 
-.primary {
-  background: #111827;
-  color: white;
-}
+      if (!response.ok) {
+        throw new Error(
+          text || "Could not follow."
+        );
+      }
 
-.secondary {
-  background: #e5e7eb;
-  color: #111827;
-}
 
-.follow {
-  background: #111827;
-  color: white;
-}
+      /* =========================
+         CREATE NOTIFICATION
+      ========================= */
 
-.following {
-  background: #e5e7eb;
-  color: #111827;
-}
+      const actorName =
+        currentUser
+          .user_metadata
+          ?.username ||
 
-.action-button:disabled {
-  opacity: 0.6;
-  cursor: wait;
-}
+        currentUser
+          .email
+          ?.split("@")[0] ||
 
-.posts {
-  margin-top: 25px;
-  background: white;
-  padding: 25px;
-  border-radius: 18px;
-}
+        "BERAKAH User";
 
-.post {
-  padding: 20px 0;
-  border-bottom: 1px solid #e5e7eb;
-}
 
-.post:last-child {
-  border-bottom: none;
-}
+      const notificationResponse =
+        await fetch(
 
-.post-time {
-  color: #6b7280;
-  font-size: 12px;
-  margin-bottom: 10px;
-}
+          SUPABASE_URL +
+          "/rest/v1/notifications",
 
-.post-content {
-  line-height: 1.5;
-  white-space: pre-wrap;
-}
+          {
 
-.post-image {
-  width: 100%;
-  max-height: 450px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-top: 10px;
-}
+            method: "POST",
 
-.post-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 12px;
-  flex-wrap: wrap;
-}
+            headers: headers({
 
-.post-actions button {
-  border: none;
-  background: #f3f4f6;
-  padding: 8px 13px;
-  border-radius: 8px;
-  cursor: pointer;
-}
+              "Content-Type":
+                "application/json",
 
-#loading {
-  text-align: center;
-  padding: 30px;
-}
+              "Prefer":
+                "return=minimal"
 
-#error {
-  text-align: center;
-  color: #b91c1c;
-  font-weight: bold;
-  padding: 20px;
-  white-space: pre-wrap;
-}
+            }),
 
-#status {
-  margin-top: 12px;
-  font-weight: bold;
-}
+            body: JSON.stringify({
 
-@media (max-width: 600px) {
+              user_id:
+                profileUserId,
 
-  .cover {
-    height: 140px;
+              actor_id:
+                currentUser.id,
+
+              type:
+                "follow",
+
+              message:
+                actorName +
+                " follows you",
+
+              read:
+                false
+
+            })
+
+          }
+
+        );
+
+
+      if (!notificationResponse.ok) {
+
+        console.error(
+          "Follow worked, but notification failed:",
+          await notificationResponse.text()
+        );
+
+      }
+
+
+      status.textContent =
+        "Following successfully.";
+
+    }
+
+
+    await loadFollowCounts();
+
+    await updateFollowButton();
+
   }
 
-  .profile-card {
-    padding: 20px;
+  catch(error) {
+
+    console.error(error);
+
+    status.textContent =
+      error.message;
+
   }
 
-  .avatar {
-    width: 90px;
-    height: 90px;
-    font-size: 35px;
-    margin-top: -55px;
-  }
+
+  button.disabled = false;
 
 }
-
-</style>
-
-</head>
-
-
-<body>
-
-
-<header>
-
-<div class="nav">
-
-<div class="logo">
-BERAKAH
-</div>
-
-<div class="nav-buttons">
-
-<button onclick="location.href='index.html'">
-Home
-</button>
-
-<button onclick="location.href='feed.html'">
-Feed
-</button>
-
-<button onclick="location.href='people.html'">
-👥 People
-</button>
-
-<button onclick="location.href='marketplace.html'">
-Market
-</button>
-
-<button onclick="location.href='notifications.html'">
-🔔
-</button>
-
-<button
-class="logout"
-id="logoutButton">
-Logout
-</button>
-
-</div>
-
-</div>
-
-</header>
-
-
-
-<main>
-
-
-<div id="loading">
-Loading profile...
-</div>
-
-
-<div id="error"></div>
-
-
-<div
-id="profileContent"
-style="display:none;"
->
-
-
-<div class="cover"></div>
-
-
-<section class="profile-card">
-
-
-<div class="avatar">
