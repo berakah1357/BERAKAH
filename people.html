@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>BERAKAH - People</title>
 
 <style>
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -15,7 +22,7 @@ body {
 
 header {
   background: white;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #e5e7eb;
   padding: 15px;
 }
 
@@ -25,94 +32,72 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
 }
 
 .logo {
   font-size: 25px;
   font-weight: bold;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
 }
 
-button {
-  padding: 9px 12px;
+.nav a,
+.nav button {
+  padding: 8px 11px;
   margin-left: 5px;
-  border: 1px solid #ddd;
+  border: 1px solid #d1d5db;
   border-radius: 7px;
   background: white;
-  cursor: pointer;
-}
-
-.logout {
-  background: #111827;
-  color: white;
+  color: #111827;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 main {
-  max-width: 650px;
-  margin: 25px auto;
-  padding: 0 15px;
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 15px;
 }
 
-.box {
+.card {
   background: white;
-  padding: 20px;
-  border-radius: 14px;
-  box-shadow: 0 3px 15px rgba(0,0,0,.06);
+  padding: 22px;
+  border-radius: 16px;
 }
 
 .person {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  padding: 15px 0;
-  border-bottom: 1px solid #eee;
+  padding: 16px;
+  margin-top: 12px;
+  background: #f3f4f6;
+  border-radius: 10px;
 }
 
-.avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+.person-name {
+  font-weight: bold;
+}
+
+.person-username {
+  color: #6b7280;
+  margin-top: 5px;
+}
+
+.profile-button {
   background: #111827;
   color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 9px 13px;
+  border-radius: 7px;
+  text-decoration: none;
   font-weight: bold;
 }
 
-.info {
-  flex: 1;
-}
-
-.username {
-  font-weight: bold;
-  font-size: 17px;
-}
-
-.status {
-  color: #777;
-  font-size: 13px;
-  margin-top: 4px;
-}
-
-.follow {
-  background: #111827;
-  color: white;
-  font-weight: bold;
-}
-
-.following {
-  background: #e5e7eb;
-  color: #111827;
-}
-
-#loading {
-  text-align: center;
-  padding: 25px;
-}
-
-#error {
-  color: #b91c1c;
+#status {
+  padding: 15px;
+  margin-top: 15px;
+  background: #f3f4f6;
+  border-radius: 10px;
   white-space: pre-wrap;
 }
 
@@ -131,25 +116,13 @@ BERAKAH
 
 <div>
 
-<button onclick="location.href='index.html'">
-Home
-</button>
+<a href="index.html">Home</a>
 
-<button onclick="location.href='feed.html'">
-Feed
-</button>
+<a href="feed.html">Feed</a>
 
-<button onclick="location.href='marketplace.html'">
-Market
-</button>
+<a href="marketplace.html">Market</a>
 
-<button onclick="location.href='notifications.html'">
-🔔
-</button>
-
-<button class="logout" id="logout">
-Logout
-</button>
+<a href="notifications.html">🔔</a>
 
 </div>
 
@@ -160,15 +133,13 @@ Logout
 
 <main>
 
-<div class="box">
+<div class="card">
 
 <h1>👥 People</h1>
 
-<div id="loading">
-Loading people...
+<div id="status">
+Starting...
 </div>
-
-<div id="error"></div>
 
 <div id="people"></div>
 
@@ -185,7 +156,7 @@ const SUPABASE_URL =
 const SUPABASE_ANON_KEY =
 "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
-const token =
+const accessToken =
 localStorage.getItem(
 "berakah_access_token"
 );
@@ -194,200 +165,23 @@ localStorage.getItem(
 function headers() {
 
 return {
-"apikey": SUPABASE_ANON_KEY,
-"Authorization": "Bearer " + token
+
+"apikey":
+SUPABASE_ANON_KEY,
+
+"Authorization":
+"Bearer " +
+accessToken
+
 };
 
 }
 
 
-function escapeHtml(value) {
+function safe(value) {
 
 return String(value || "")
 .replaceAll("&","&amp;")
 .replaceAll("<","&lt;")
 .replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
-
-}
-
-
-/* GET CURRENT USER */
-
-async function getUser() {
-
-const response =
-await fetch(
-SUPABASE_URL + "/auth/v1/user",
-{
-headers: headers()
-}
-);
-
-if (!response.ok) {
-
-throw new Error(
-"LOGIN ERROR\n\n" +
-await response.text()
-);
-
-}
-
-return await response.json();
-
-}
-
-
-/* GET POSTS */
-
-async function getPosts() {
-
-const response =
-await fetch(
-
-SUPABASE_URL +
-"/rest/v1/posts?select=user_id,username&order=created_at.desc",
-
-{
-headers: headers()
-}
-
-);
-
-if (!response.ok) {
-
-throw new Error(
-"POSTS ERROR\n\n" +
-await response.text()
-);
-
-}
-
-return await response.json();
-
-}
-
-
-/* SHOW PEOPLE */
-
-async function load() {
-
-const loading =
-document.getElementById("loading");
-
-const people =
-document.getElementById("people");
-
-const error =
-document.getElementById("error");
-
-
-try {
-
-if (!token) {
-
-location.href =
-"login.html";
-
-return;
-
-}
-
-
-const user =
-await getUser();
-
-
-const posts =
-await getPosts();
-
-
-const users = [];
-const seen = new Set();
-
-
-for (const post of posts) {
-
-if (!post.user_id) {
-continue;
-}
-
-
-/* DON'T SHOW MYSELF */
-
-if (post.user_id === user.id) {
-continue;
-}
-
-
-/* REMOVE DUPLICATES */
-
-if (seen.has(post.user_id)) {
-continue;
-}
-
-seen.add(post.user_id);
-
-
-users.push({
-
-id: post.user_id,
-
-username:
-post.username ||
-"BERAKAH User"
-
-});
-
-}
-
-
-loading.style.display =
-"none";
-
-
-if (users.length === 0) {
-
-people.innerHTML =
-"<p>No other BERAKAH users found yet.</p>";
-
-return;
-
-}
-
-
-for (const person of users) {
-
-const div =
-document.createElement("div");
-
-div.className =
-"person";
-
-
-const firstLetter =
-person.username
-.charAt(0)
-.toUpperCase();
-
-
-div.innerHTML = `
-
-<div class="avatar">
-${escapeHtml(firstLetter)}
-</div>
-
-<div class="info">
-
-<div class="username">
-${escapeHtml(person.username)}
-</div>
-
-<div class="status">
-BERAKAH member
-</div>
-
-</div>
-
-<button
+.replaceAll
