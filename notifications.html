@@ -1,19 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>BERAKAH - Notifications</title>
 
 <style>
-
-* {
-  box-sizing: border-box;
-}
-
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -23,11 +16,8 @@ body {
 
 header {
   background: white;
-  border-bottom: 1px solid #e5e7eb;
   padding: 15px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  border-bottom: 1px solid #ddd;
 }
 
 .nav {
@@ -36,107 +26,282 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
 }
 
 .logo {
-  font-size: 26px;
+  font-size: 25px;
   font-weight: bold;
   letter-spacing: 3px;
 }
 
-.nav-buttons {
-  display: flex;
-  gap: 7px;
-  flex-wrap: wrap;
-}
-
-.nav-buttons button {
-  border: 1px solid #d1d5db;
-  background: white;
-  padding: 8px 11px;
-  border-radius: 7px;
-  cursor: pointer;
-}
-
-.logout {
-  background: #111827 !important;
-  color: white !important;
+nav a {
+  margin-left: 10px;
+  text-decoration: none;
+  color: #111827;
+  font-weight: bold;
 }
 
 main {
   max-width: 700px;
   margin: 30px auto;
-  padding: 0 15px;
+  padding: 15px;
 }
 
-.notifications-card {
+.card {
   background: white;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 3px 15px rgba(0,0,0,.08);
 }
 
 h1 {
   margin-top: 0;
 }
 
-.notification {
-  padding: 16px 5px;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.notification:last-child {
-  border-bottom: none;
-}
-
-.notification.unread {
+#status {
+  padding: 15px;
   background: #f3f4f6;
   border-radius: 10px;
-  padding: 16px;
+  margin-top: 20px;
 }
 
-.notification-message {
-  font-weight: bold;
-  margin-bottom: 6px;
+.notification {
+  padding: 18px;
+  margin-top: 12px;
+  background: #f3f4f6;
+  border-radius: 10px;
 }
 
-.notification-time {
-  color: #6b7280;
-  font-size: 12px;
-}
-
-.notification-actions {
-  margin-top: 10px;
-}
-
-.notification-actions button {
-  border: none;
+.logout {
+  margin-top: 20px;
+  padding: 10px 18px;
   background: #111827;
   color: white;
-  padding: 8px 12px;
-  border-radius: 7px;
-  cursor: pointer;
+  border: none;
+  border-radius: 8px;
 }
-
-.empty {
-  text-align: center;
-  color: #6b7280;
-  padding: 30px 10px;
-}
-
-#loading {
-  text-align: center;
-  padding: 30px;
-}
-
-#error {
-  color: #b91c1c;
-  white-space: pre-wrap;
-  text-align: center;
-  padding: 20px;
-}
-
 </style>
+</head>
 
-</head
+<body>
+
+<header>
+
+<div class="nav">
+
+<div class="logo">
+BERAKAH
+</div>
+
+<nav>
+
+<a href="index.html">Home</a>
+
+<a href="feed.html">Feed</a>
+
+<a href="people.html">👥 People</a>
+
+<a href="marketplace.html">Market</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<main>
+
+<div class="card">
+
+<h1>🔔 Notifications</h1>
+
+<div id="status">
+Loading notifications...
+</div>
+
+<div id="notifications"></div>
+
+<button
+class="logout"
+onclick="logout()">
+Logout
+</button>
+
+</div>
+
+</main>
+
+
+<script>
+
+const SUPABASE_URL =
+"https://utoyoglycqjmqznczfxa.supabase.co";
+
+const SUPABASE_ANON_KEY =
+"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+
+const accessToken =
+localStorage.getItem(
+"berakah_access_token"
+);
+
+let currentUser = null;
+
+
+function headers() {
+
+return {
+
+"apikey":
+SUPABASE_ANON_KEY,
+
+"Authorization":
+"Bearer " + accessToken
+
+};
+
+}
+
+
+async function start() {
+
+const status =
+document.getElementById("status");
+
+
+try {
+
+if (!accessToken) {
+
+status.textContent =
+"No login session found.";
+
+return;
+
+}
+
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/auth/v1/user",
+
+{
+headers:
+headers()
+}
+
+);
+
+
+const text =
+await response.text();
+
+
+if (!response.ok) {
+
+throw new Error(text);
+
+}
+
+
+currentUser =
+JSON.parse(text);
+
+
+status.textContent =
+"Logged in successfully as: " +
+(
+currentUser.user_metadata?.username ||
+currentUser.email
+);
+
+
+await loadNotifications();
+
+
+}
+
+catch(error) {
+
+console.error(error);
+
+status.textContent =
+"ERROR: " +
+error.message;
+
+}
+
+}
+
+
+async function loadNotifications() {
+
+const container =
+document.getElementById(
+"notifications"
+);
+
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/notifications" +
+"?select=*" +
+"&user_id=eq." +
+encodeURIComponent(
+currentUser.id
+) +
+"&order=created_at.desc",
+
+{
+headers:
+headers()
+}
+
+);
+
+
+const text =
+await response.text();
+
+
+console.log(
+"NOTIFICATION RESPONSE:",
+text
+);
+
+
+if (!response.ok) {
+
+throw new Error(
+text
+);
+
+}
+
+
+let rows = [];
+
+
+if (text.trim()) {
+
+rows =
+JSON.parse(text);
+
+}
+
+
+if (!rows.length) {
+
+container.innerHTML =
+`
+<div class="notification">
+🔔 No notifications yet.
+</div>
+`;
+
+return;
