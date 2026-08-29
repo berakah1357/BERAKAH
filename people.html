@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>BERAKAH - People</title>
 
 <style>
-
 * {
   box-sizing: border-box;
 }
@@ -80,7 +78,7 @@ h1 {
   margin-top: 0;
 }
 
-.user {
+.person {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -88,54 +86,54 @@ h1 {
   border-bottom: 1px solid #eeeeee;
 }
 
-.user:last-child {
+.person:last-child {
   border-bottom: none;
 }
 
 .avatar {
-  width: 48px;
-  height: 48px;
-  min-width: 48px;
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
   border-radius: 50%;
   background: #111827;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
   font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.user-info {
+.person-info {
   flex: 1;
   min-width: 0;
 }
 
-.user-name {
+.username {
   font-weight: bold;
-  font-size: 16px;
+  font-size: 17px;
   cursor: pointer;
 }
 
-.user-name:hover {
+.username:hover {
   text-decoration: underline;
 }
 
-.profile-link {
+.status {
   color: #6b7280;
   font-size: 12px;
-  margin-top: 3px;
+  margin-top: 4px;
 }
 
 .follow-button {
   border: none;
   border-radius: 8px;
-  padding: 9px 15px;
+  padding: 9px 14px;
   background: #111827;
   color: white;
   font-weight: bold;
   cursor: pointer;
-  min-width: 95px;
 }
 
 .follow-button.following {
@@ -163,61 +161,66 @@ h1 {
   color: #6b7280;
   padding: 25px;
 }
-
 </style>
-
 </head>
 
 <body>
 
 <header>
 
-<div class="nav">
+  <div class="nav">
 
-<div class="logo">
-BERAKAH
-</div>
+    <div class="logo">
+      BERAKAH
+    </div>
 
-<div class="nav-buttons">
+    <div class="nav-buttons">
 
-<button onclick="location.href='index.html'">
-Home
-</button>
+      <button onclick="location.href='index.html'">
+        Home
+      </button>
 
-<button onclick="location.href='feed.html'">
-Feed
-</button>
+      <button onclick="location.href='feed.html'">
+        Feed
+      </button>
 
-<button onclick="location.href='notifications.html'">
-🔔
-</button>
+      <button onclick="location.href='marketplace.html'">
+        Market
+      </button>
 
-<button class="logout" id="logoutButton">
-Logout
-</button>
+      <button onclick="location.href='notifications.html'">
+        🔔
+      </button>
 
-</div>
+      <button
+        class="logout"
+        id="logoutButton"
+      >
+        Logout
+      </button>
 
-</div>
+    </div>
+
+  </div>
 
 </header>
 
 
 <main>
 
-<div class="container">
+  <div class="container">
 
-<h1>👥 People</h1>
+    <h1>👥 People</h1>
 
-<div id="message"></div>
+    <div id="message"></div>
 
-<div id="loading">
-Loading people...
-</div>
+    <div id="loading">
+      Loading people...
+    </div>
 
-<div id="people"></div>
+    <div id="people"></div>
 
-</div>
+  </div>
 
 </main>
 
@@ -231,30 +234,57 @@ const SUPABASE_ANON_KEY =
 "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
 let accessToken =
-localStorage.getItem("berakah_access_token");
+localStorage.getItem(
+  "berakah_access_token"
+);
 
 let currentUser = null;
 
 
-/* LOGIN */
+/* LOGIN CHECK */
 
 if (!accessToken) {
-  location.href = "login.html";
+
+  location.href =
+    "login.html";
+
 }
 
 
 /* HEADERS */
 
-function headers(extra) {
+function getHeaders(extra = {}) {
 
-  return Object.assign({
+  return {
 
-    "apikey": SUPABASE_ANON_KEY,
+    "apikey":
+      SUPABASE_ANON_KEY,
 
     "Authorization":
-      "Bearer " + accessToken
+      "Bearer " + accessToken,
 
-  }, extra || {});
+    ...extra
+
+  };
+
+}
+
+
+/* ESCAPE HTML */
+
+function escapeHtml(value) {
+
+  return String(value || "")
+
+    .replaceAll("&", "&amp;")
+
+    .replaceAll("<", "&lt;")
+
+    .replaceAll(">", "&gt;")
+
+    .replaceAll('"', "&quot;")
+
+    .replaceAll("'", "&#039;");
 
 }
 
@@ -267,14 +297,20 @@ async function getCurrentUser() {
 
     const response =
       await fetch(
-        SUPABASE_URL + "/auth/v1/user",
+        SUPABASE_URL +
+        "/auth/v1/user",
         {
-          headers: headers()
+          headers:
+            getHeaders()
         }
       );
 
     if (!response.ok) {
-      throw new Error("Session expired.");
+
+      throw new Error(
+        "Session expired."
+      );
+
     }
 
     currentUser =
@@ -296,464 +332,6 @@ async function getCurrentUser() {
 }
 
 
-/* ESCAPE */
-
-function escapeHtml(value) {
-
-  return String(value || "")
-
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-
-}
-
-
 /* OPEN PROFILE */
 
-function openProfile(userId) {
-
-  location.href =
-    "profile.html?user=" +
-    encodeURIComponent(userId);
-
-}
-
-
-/* LOAD PEOPLE */
-
-async function loadPeople() {
-
-  const loading =
-    document.getElementById("loading");
-
-  const people =
-    document.getElementById("people");
-
-  const message =
-    document.getElementById("message");
-
-
-  try {
-
-    /* PROFILES */
-
-    const profilesResponse =
-      await fetch(
-
-        SUPABASE_URL +
-        "/rest/v1/profiles?select=*",
-
-        {
-          headers: headers()
-        }
-
-      );
-
-
-    const profilesText =
-      await profilesResponse.text();
-
-
-    if (!profilesResponse.ok) {
-
-      throw new Error(
-        profilesText ||
-        "Could not load users."
-      );
-
-    }
-
-
-    let profiles = [];
-
-    if (profilesText.trim()) {
-
-      profiles =
-        JSON.parse(profilesText);
-
-    }
-
-
-    /* FOLLOWS */
-
-    let follows = [];
-
-
-    const followsResponse =
-      await fetch(
-
-        SUPABASE_URL +
-        "/rest/v1/follows" +
-        "?select=follower_id,following_id",
-
-        {
-          headers: headers()
-        }
-
-      );
-
-
-    if (followsResponse.ok) {
-
-      const followsText =
-        await followsResponse.text();
-
-      if (followsText.trim()) {
-
-        follows =
-          JSON.parse(followsText);
-
-      }
-
-    }
-
-
-    /* HIDE CURRENT USER */
-
-    profiles =
-      profiles.filter(function(profile) {
-
-        const id =
-          profile.id ||
-          profile.user_id;
-
-        return id !== currentUser.id;
-
-      });
-
-
-    loading.style.display =
-      "none";
-
-    people.innerHTML = "";
-
-
-    if (!profiles.length) {
-
-      people.innerHTML =
-        "<div class='empty'>" +
-        "No other BERAKAH users found yet." +
-        "</div>";
-
-      return;
-
-    }
-
-
-    /* DISPLAY */
-
-    profiles.forEach(function(profile) {
-
-      const userId =
-        profile.id ||
-        profile.user_id;
-
-      if (!userId) {
-        return;
-      }
-
-
-      const username =
-        profile.username ||
-        profile.display_name ||
-        profile.name ||
-        "BERAKAH User";
-
-
-      const initial =
-        username
-          .charAt(0)
-          .toUpperCase();
-
-
-      const following =
-        follows.some(function(follow) {
-
-          return (
-            follow.follower_id ===
-            currentUser.id
-            &&
-            follow.following_id ===
-            userId
-          );
-
-        });
-
-
-      const row =
-        document.createElement("div");
-
-      row.className =
-        "user";
-
-
-      row.innerHTML = `
-
-        <div
-          class="avatar"
-          onclick="openProfile('${userId}')"
-        >
-          ${escapeHtml(initial)}
-        </div>
-
-        <div class="user-info">
-
-          <div
-            class="user-name"
-            onclick="openProfile('${userId}')"
-          >
-            ${escapeHtml(username)}
-          </div>
-
-          <div class="profile-link">
-            View profile
-          </div>
-
-        </div>
-
-        <button
-          class="follow-button ${
-            following ? "following" : ""
-          }"
-          onclick="toggleFollow(
-            '${userId}',
-            this
-          )"
-        >
-          ${
-            following
-            ? "Following"
-            : "Follow"
-          }
-        </button>
-
-      `;
-
-
-      people.appendChild(row);
-
-    });
-
-
-  } catch (error) {
-
-    loading.style.display =
-      "none";
-
-    message.textContent =
-      error.message;
-
-    console.error(error);
-
-  }
-
-}
-
-
-/* FOLLOW / UNFOLLOW */
-
-async function toggleFollow(
-  userId,
-  button
-) {
-
-  button.disabled = true;
-
-
-  try {
-
-    const checkResponse =
-      await fetch(
-
-        SUPABASE_URL +
-        "/rest/v1/follows" +
-        "?follower_id=eq." +
-        encodeURIComponent(
-          currentUser.id
-        ) +
-        "&following_id=eq." +
-        encodeURIComponent(userId),
-
-        {
-          headers: headers()
-        }
-
-      );
-
-
-    const checkText =
-      await checkResponse.text();
-
-
-    let existing = [];
-
-    if (checkText.trim()) {
-
-      existing =
-        JSON.parse(checkText);
-
-    }
-
-
-    /* UNFOLLOW */
-
-    if (existing.length > 0) {
-
-      const response =
-        await fetch(
-
-          SUPABASE_URL +
-          "/rest/v1/follows" +
-          "?follower_id=eq." +
-          encodeURIComponent(
-            currentUser.id
-          ) +
-          "&following_id=eq." +
-          encodeURIComponent(userId),
-
-          {
-            method: "DELETE",
-            headers: headers()
-          }
-
-        );
-
-
-      if (!response.ok) {
-
-        throw new Error(
-          await response.text()
-        );
-
-      }
-
-
-      button.textContent =
-        "Follow";
-
-      button.classList.remove(
-        "following"
-      );
-
-    }
-
-
-    /* FOLLOW */
-
-    else {
-
-      const response =
-        await fetch(
-
-          SUPABASE_URL +
-          "/rest/v1/follows",
-
-          {
-
-            method: "POST",
-
-            headers: headers({
-
-              "Content-Type":
-                "application/json",
-
-              "Prefer":
-                "return=minimal"
-
-            }),
-
-            body: JSON.stringify({
-
-              follower_id:
-                currentUser.id,
-
-              following_id:
-                userId
-
-            })
-
-          }
-
-        );
-
-
-      if (!response.ok) {
-
-        throw new Error(
-          await response.text()
-        );
-
-      }
-
-
-      button.textContent =
-        "Following";
-
-      button.classList.add(
-        "following"
-      );
-
-    }
-
-
-  } catch (error) {
-
-    alert(error.message);
-
-  }
-
-
-  button.disabled = false;
-
-}
-
-
-/* LOGOUT */
-
-document
-.getElementById("logoutButton")
-.addEventListener(
-  "click",
-  function() {
-
-    localStorage.removeItem(
-      "berakah_access_token"
-    );
-
-    localStorage.removeItem(
-      "berakah_refresh_token"
-    );
-
-    localStorage.removeItem(
-      "berakah_user"
-    );
-
-    location.href =
-      "login.html";
-
-  }
-);
-
-
-/* START */
-
-(async function() {
-
-  const loggedIn =
-    await getCurrentUser();
-
-  if (loggedIn) {
-
-    await loadPeople();
-
-  }
-
-})();
-
-</script>
-
-</body>
-</html>
+function
