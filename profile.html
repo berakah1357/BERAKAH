@@ -34,8 +34,8 @@ header {
   max-width: 900px;
   margin: auto;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   gap: 10px;
 }
 
@@ -113,10 +113,6 @@ h1 {
   gap: 35px;
   margin-top: 25px;
   flex-wrap: wrap;
-}
-
-.stat {
-  cursor: default;
 }
 
 .stats strong {
@@ -199,10 +195,7 @@ h1 {
 }
 
 .post-actions {
-  display: flex;
-  gap: 8px;
   margin-top: 12px;
-  flex-wrap: wrap;
 }
 
 .post-actions button {
@@ -247,7 +240,6 @@ h1 {
 BERAKAH
 </div>
 
-
 <div class="nav-buttons">
 
 <button onclick="location.href='index.html'">
@@ -283,14 +275,11 @@ Logout
 </header>
 
 
-
 <main>
-
 
 <div id="loading">
 Loading profile...
 </div>
-
 
 <div id="error"></div>
 
@@ -334,39 +323,26 @@ Connect, share, build, and grow together.
 
 <div class="stats">
 
-
-<div class="stat">
-
+<div>
 <strong id="followersCount">
 0
 </strong>
-
 Followers
-
 </div>
 
-
-<div class="stat">
-
+<div>
 <strong id="followingCount">
 0
 </strong>
-
 Following
-
 </div>
 
-
-<div class="stat">
-
+<div>
 <strong id="postsCount">
 0
 </strong>
-
 Posts
-
 </div>
-
 
 </div>
 
@@ -412,7 +388,6 @@ onclick="location.href='notifications.html'">
 </section>
 
 
-
 <section class="posts">
 
 <h2>Posts</h2>
@@ -427,9 +402,7 @@ onclick="location.href='notifications.html'">
 </main>
 
 
-
 <script>
-
 
 /* =================================
    SUPABASE
@@ -437,7 +410,6 @@ onclick="location.href='notifications.html'">
 
 const SUPABASE_URL =
 "https://utoyoglycqjmqznczfxa.supabase.co";
-
 
 const SUPABASE_ANON_KEY =
 "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
@@ -490,22 +462,19 @@ function safe(value) {
 
 
 /* =================================
-   CURRENT USER
+   GET CURRENT USER
 ================================= */
 
 async function getCurrentUser() {
 
   const response =
     await fetch(
-
       SUPABASE_URL +
       "/auth/v1/user",
-
       {
         headers:
           headers()
       }
-
     );
 
 
@@ -524,10 +493,10 @@ async function getCurrentUser() {
 
 
 /* =================================
-   GET PROFILE PARAMETER
+   GET PROFILE USERNAME
 ================================= */
 
-function getProfileParameter() {
+function getProfileUsername() {
 
   const params =
     new URLSearchParams(
@@ -535,38 +504,7 @@ function getProfileParameter() {
     );
 
 
-  const id =
-    params.get("id");
-
-
-  if (id) {
-
-    return {
-      type: "id",
-      value: id
-    };
-
-  }
-
-
-  const username =
-    params.get("username");
-
-
-  if (username) {
-
-    return {
-      type: "username",
-      value: username
-    };
-
-  }
-
-
-  return {
-    type: "id",
-    value: currentUser.id
-  };
+  return params.get("username");
 
 }
 
@@ -577,17 +515,14 @@ function getProfileParameter() {
 
 async function findProfile() {
 
-  const parameter =
-    getProfileParameter();
+  const username =
+    getProfileUsername();
 
 
-  /* CURRENT USER */
+  /* If no username is supplied,
+     show current user */
 
-  if (
-    parameter.type === "id" &&
-    String(parameter.value) ===
-    String(currentUser.id)
-  ) {
+  if (!username) {
 
     return {
 
@@ -604,73 +539,7 @@ async function findProfile() {
   }
 
 
-  /* FIND BY ID */
-
-  if (
-    parameter.type === "id"
-  ) {
-
-    const response =
-      await fetch(
-
-        SUPABASE_URL +
-        "/rest/v1/posts" +
-        "?select=user_id,username" +
-        "&user_id=eq." +
-        encodeURIComponent(
-          parameter.value
-        ) +
-        "&limit=1",
-
-        {
-          headers:
-            headers()
-        }
-
-      );
-
-
-    const text =
-      await response.text();
-
-
-    if (!response.ok) {
-
-      throw new Error(
-        text ||
-        "Could not find profile."
-      );
-
-    }
-
-
-    if (text.trim()) {
-
-      const rows =
-        JSON.parse(text);
-
-
-      if (rows.length) {
-
-        return {
-
-          id:
-            rows[0].user_id,
-
-          username:
-            rows[0].username ||
-            "BERAKAH User"
-
-        };
-
-      }
-
-    }
-
-  }
-
-
-  /* FIND BY USERNAME */
+  /* Search posts for this username */
 
   const response =
     await fetch(
@@ -679,9 +548,7 @@ async function findProfile() {
       "/rest/v1/posts" +
       "?select=user_id,username" +
       "&username=eq." +
-      encodeURIComponent(
-        parameter.value
-      ) +
+      encodeURIComponent(username) +
       "&limit=1",
 
       {
@@ -721,11 +588,36 @@ async function findProfile() {
 
         username:
           rows[0].username ||
-          "BERAKAH User"
+          username
 
       };
 
     }
+
+  }
+
+
+  /* If viewing own profile */
+
+  const myUsername =
+    currentUser.user_metadata?.username ||
+    currentUser.email?.split("@")[0];
+
+
+  if (
+    username.toLowerCase() ===
+    String(myUsername).toLowerCase()
+  ) {
+
+    return {
+
+      id:
+        currentUser.id,
+
+      username:
+        myUsername
+
+    };
 
   }
 
@@ -795,7 +687,8 @@ async function loadPosts() {
 
 async function loadFollowCounts() {
 
-  /* FOLLOWERS */
+
+  /* Followers */
 
   const followersResponse =
     await fetch(
@@ -843,7 +736,7 @@ async function loadFollowCounts() {
   }
 
 
-  /* FOLLOWING */
+  /* Following */
 
   const followingResponse =
     await fetch(
@@ -906,7 +799,7 @@ async function loadFollowCounts() {
 
 
 /* =================================
-   CHECK FOLLOWING
+   CHECK FOLLOW
 ================================= */
 
 async function checkFollowing() {
@@ -1018,7 +911,7 @@ function displayPosts(posts) {
         "post";
 
 
-      let formattedDate =
+      let dateText =
         "Date unavailable";
 
 
@@ -1036,7 +929,7 @@ function displayPosts(posts) {
           )
         ) {
 
-          formattedDate =
+          dateText =
             date.toLocaleString();
 
         }
@@ -1047,7 +940,7 @@ function displayPosts(posts) {
       div.innerHTML = `
 
         <div class="post-time">
-          ${safe(formattedDate)}
+          ${safe(dateText)}
         </div>
 
         <div class="post-content">
@@ -1061,8 +954,7 @@ function displayPosts(posts) {
           <img
             class="post-image"
             src="${safe(post.image_url)}"
-            alt="Post image"
-          >
+            alt="Post image">
           `
           :
           ""
@@ -1127,7 +1019,6 @@ async function updateFollowButton() {
   editButton.style.display =
     "none";
 
-
   button.style.display =
     "inline-block";
 
@@ -1159,20 +1050,14 @@ async function updateFollowButton() {
 
 
 /* =================================
-   CREATE NOTIFICATION
+   CREATE FOLLOW NOTIFICATION
 ================================= */
 
 async function createFollowNotification() {
 
   const actorName =
-    currentUser
-      .user_metadata
-      ?.username ||
-
-    currentUser
-      .email
-      ?.split("@")[0] ||
-
+    currentUser.user_metadata?.username ||
+    currentUser.email?.split("@")[0] ||
     "BERAKAH User";
 
 
@@ -1184,17 +1069,19 @@ async function createFollowNotification() {
 
       {
 
-        method: "POST",
+        method:
+          "POST",
 
-        headers: headers({
+        headers:
+          headers({
 
-          "Content-Type":
-            "application/json",
+            "Content-Type":
+              "application/json",
 
-          "Prefer":
-            "return=minimal"
+            "Prefer":
+              "return=minimal"
 
-        }),
+          }),
 
         body:
           JSON.stringify({
@@ -1229,7 +1116,7 @@ async function createFollowNotification() {
   if (!response.ok) {
 
     console.error(
-      "Notification error:",
+      "Notification creation failed:",
       text
     );
 
@@ -1270,7 +1157,6 @@ async function toggleFollow() {
 
 
   try {
-
 
     const following =
       await checkFollowing();
@@ -1387,7 +1273,9 @@ async function toggleFollow() {
       }
 
 
-      /* CREATE NOTIFICATION */
+      /* =========================
+         NOTIFICATION
+      ========================= */
 
       const notificationCreated =
         await createFollowNotification();
@@ -1402,7 +1290,7 @@ async function toggleFollow() {
       else {
 
         status.textContent =
-          "Following successfully. Notification could not be created.";
+          "Following successfully.";
 
       }
 
@@ -1435,7 +1323,7 @@ async function toggleFollow() {
 
 
 /* =================================
-   FOLLOW BUTTON
+   FOLLOW BUTTON EVENT
 ================================= */
 
 document
@@ -1500,13 +1388,12 @@ document
 
 
 /* =================================
-   START
+   START PROFILE
 ================================= */
 
 async function start() {
 
   try {
-
 
     if (!accessToken) {
 
@@ -1543,12 +1430,6 @@ async function start() {
       profile.username.toLowerCase();
 
 
-    document.getElementById(
-      "profileBio"
-    ).textContent =
-      "Welcome to my BERAKAH profile. Connect, share, build, and grow together.";
-
-
     const posts =
       await loadPosts();
 
@@ -1574,8 +1455,8 @@ async function start() {
     ).style.display =
       "block";
 
-
   }
+
 
   catch(error) {
 
@@ -1606,4 +1487,5 @@ start();
 </script>
 
 </body>
+
 </html>
