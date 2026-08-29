@@ -22,17 +22,14 @@ header {
   background: white;
   border-bottom: 1px solid #e5e7eb;
   padding: 15px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
 }
 
 .nav {
   max-width: 900px;
   margin: auto;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   gap: 10px;
 }
 
@@ -83,11 +80,7 @@ h1 {
   align-items: center;
   gap: 12px;
   padding: 15px 5px;
-  border-bottom: 1px solid #eeeeee;
-}
-
-.person:last-child {
-  border-bottom: none;
+  border-bottom: 1px solid #eee;
 }
 
 .avatar {
@@ -100,24 +93,18 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
   font-weight: bold;
   cursor: pointer;
 }
 
 .person-info {
   flex: 1;
-  min-width: 0;
 }
 
 .username {
-  font-weight: bold;
   font-size: 17px;
+  font-weight: bold;
   cursor: pointer;
-}
-
-.username:hover {
-  text-decoration: underline;
 }
 
 .status {
@@ -136,13 +123,9 @@ h1 {
   cursor: pointer;
 }
 
-.follow-button.following {
+.following {
   background: #e5e7eb;
   color: #111827;
-}
-
-.follow-button:disabled {
-  opacity: 0.6;
 }
 
 #loading {
@@ -168,59 +151,56 @@ h1 {
 
 <header>
 
-  <div class="nav">
+<div class="nav">
 
-    <div class="logo">
-      BERAKAH
-    </div>
+<div class="logo">
+BERAKAH
+</div>
 
-    <div class="nav-buttons">
+<div class="nav-buttons">
 
-      <button onclick="location.href='index.html'">
-        Home
-      </button>
+<button onclick="location.href='index.html'">
+Home
+</button>
 
-      <button onclick="location.href='feed.html'">
-        Feed
-      </button>
+<button onclick="location.href='feed.html'">
+Feed
+</button>
 
-      <button onclick="location.href='marketplace.html'">
-        Market
-      </button>
+<button onclick="location.href='marketplace.html'">
+Market
+</button>
 
-      <button onclick="location.href='notifications.html'">
-        🔔
-      </button>
+<button onclick="location.href='notifications.html'">
+🔔
+</button>
 
-      <button
-        class="logout"
-        id="logoutButton"
-      >
-        Logout
-      </button>
+<button class="logout" id="logoutButton">
+Logout
+</button>
 
-    </div>
+</div>
 
-  </div>
+</div>
 
 </header>
 
 
 <main>
 
-  <div class="container">
+<div class="container">
 
-    <h1>👥 People</h1>
+<h1>👥 People</h1>
 
-    <div id="message"></div>
+<div id="message"></div>
 
-    <div id="loading">
-      Loading people...
-    </div>
+<div id="loading">
+Loading people...
+</div>
 
-    <div id="people"></div>
+<div id="people"></div>
 
-  </div>
+</div>
 
 </main>
 
@@ -233,58 +213,51 @@ const SUPABASE_URL =
 const SUPABASE_ANON_KEY =
 "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
-let accessToken =
+const accessToken =
 localStorage.getItem(
-  "berakah_access_token"
+"berakah_access_token"
 );
 
 let currentUser = null;
 
 
-/* LOGIN CHECK */
+/* LOGIN */
 
 if (!accessToken) {
 
-  location.href =
-    "login.html";
+location.href =
+"login.html";
 
 }
 
 
 /* HEADERS */
 
-function getHeaders(extra = {}) {
+function headers() {
 
-  return {
+return {
 
-    "apikey":
-      SUPABASE_ANON_KEY,
+"apikey":
+SUPABASE_ANON_KEY,
 
-    "Authorization":
-      "Bearer " + accessToken,
+"Authorization":
+"Bearer " + accessToken
 
-    ...extra
-
-  };
+};
 
 }
 
 
-/* ESCAPE HTML */
+/* ESCAPE */
 
 function escapeHtml(value) {
 
-  return String(value || "")
-
-    .replaceAll("&", "&amp;")
-
-    .replaceAll("<", "&lt;")
-
-    .replaceAll(">", "&gt;")
-
-    .replaceAll('"', "&quot;")
-
-    .replaceAll("'", "&#039;");
+return String(value || "")
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
 
 }
 
@@ -293,45 +266,503 @@ function escapeHtml(value) {
 
 async function getCurrentUser() {
 
-  try {
+const response =
+await fetch(
+SUPABASE_URL +
+"/auth/v1/user",
+{
+headers: headers()
+}
+);
 
-    const response =
-      await fetch(
-        SUPABASE_URL +
-        "/auth/v1/user",
-        {
-          headers:
-            getHeaders()
-        }
-      );
+if (!response.ok) {
 
-    if (!response.ok) {
+throw new Error(
+"Your login session has expired."
+);
 
-      throw new Error(
-        "Session expired."
-      );
+}
 
-    }
+return await response.json();
 
-    currentUser =
-      await response.json();
+}
 
-    return true;
 
-  } catch (error) {
+/* LOAD PEOPLE */
 
-    localStorage.clear();
+async function loadPeople() {
 
-    location.href =
-      "login.html";
+const loading =
+document.getElementById(
+"loading"
+);
 
-    return false;
+const people =
+document.getElementById(
+"people"
+);
 
-  }
+const message =
+document.getElementById(
+"message"
+);
+
+try {
+
+/*
+GET POSTS
+
+The posts table contains:
+
+user_id
+username
+
+We already know this
+works because your Feed
+is showing both users.
+*/
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/posts" +
+"?select=user_id,username" +
+"&order=created_at.desc",
+
+{
+headers: headers()
+}
+
+);
+
+
+if (!response.ok) {
+
+const errorText =
+await response.text();
+
+throw new Error(
+"Posts request failed: " +
+errorText
+);
+
+}
+
+
+const posts =
+await response.json();
+
+
+/*
+CREATE UNIQUE USER LIST
+*/
+
+const users = [];
+const seen = new Set();
+
+
+for (
+const post of posts
+) {
+
+if (!post.user_id) {
+continue;
+}
+
+if (
+post.user_id ===
+currentUser.id
+) {
+continue;
+}
+
+if (
+seen.has(post.user_id)
+) {
+continue;
+}
+
+seen.add(post.user_id);
+
+users.push({
+
+id:
+post.user_id,
+
+username:
+post.username ||
+"BERAKAH User"
+
+});
+
+}
+
+
+/*
+STOP LOADING
+*/
+
+loading.style.display =
+"none";
+
+
+/*
+NO OTHER USERS
+*/
+
+if (!users.length) {
+
+people.innerHTML =
+
+"<div class='empty'>" +
+
+"No other BERAKAH users found yet." +
+
+"</div>";
+
+return;
+
+}
+
+
+/*
+DISPLAY USERS
+
+We intentionally do NOT
+request follows yet.
+*/
+
+for (
+const user of users
+) {
+
+const row =
+document.createElement(
+"div"
+);
+
+row.className =
+"person";
+
+
+const username =
+user.username;
+
+
+const initial =
+username
+.charAt(0)
+.toUpperCase();
+
+
+row.innerHTML = `
+
+<div
+class="avatar"
+onclick="
+openProfile('${user.id}')
+"
+>
+${escapeHtml(initial)}
+</div>
+
+<div class="person-info">
+
+<div
+class="username"
+onclick="
+openProfile('${user.id}')
+"
+>
+${escapeHtml(username)}
+</div>
+
+<div class="status">
+View profile
+</div>
+
+</div>
+
+<button
+class="follow-button"
+onclick="
+toggleFollow(
+'${user.id}',
+this
+)
+"
+>
+Follow
+</button>
+
+`;
+
+
+people.appendChild(row);
+
+}
+
+} catch(error) {
+
+loading.style.display =
+"none";
+
+message.textContent =
+error.message;
+
+}
 
 }
 
 
 /* OPEN PROFILE */
 
-function
+function openProfile(userId) {
+
+location.href =
+"profile.html?user=" +
+encodeURIComponent(userId);
+
+}
+
+
+/* FOLLOW */
+
+async function toggleFollow(
+userId,
+button
+) {
+
+button.disabled =
+true;
+
+try {
+
+/*
+CHECK FOLLOW
+*/
+
+const check =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/follows" +
+"?follower_id=eq." +
+encodeURIComponent(
+currentUser.id
+) +
+"&following_id=eq." +
+encodeURIComponent(
+userId
+),
+
+{
+headers:
+headers()
+}
+
+);
+
+
+const existing =
+await check.json();
+
+
+/*
+UNFOLLOW
+*/
+
+if (
+Array.isArray(existing) &&
+existing.length > 0
+) {
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/follows" +
+"?follower_id=eq." +
+encodeURIComponent(
+currentUser.id
+) +
+"&following_id=eq." +
+encodeURIComponent(
+userId
+),
+
+{
+method:
+"DELETE",
+
+headers:
+headers()
+}
+
+);
+
+if (!response.ok) {
+
+throw new Error(
+"Could not unfollow."
+);
+
+}
+
+button.textContent =
+"Follow";
+
+button.classList.remove(
+"following"
+);
+
+}
+
+
+/*
+FOLLOW
+*/
+
+else {
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/follows",
+
+{
+
+method:
+"POST",
+
+headers: {
+
+"apikey":
+SUPABASE_ANON_KEY,
+
+"Authorization":
+"Bearer " +
+accessToken,
+
+"Content-Type":
+"application/json",
+
+"Prefer":
+"return=minimal"
+
+},
+
+body:
+JSON.stringify({
+
+follower_id:
+currentUser.id,
+
+following_id:
+userId
+
+})
+
+}
+
+);
+
+
+if (!response.ok) {
+
+const errorText =
+await response.text();
+
+throw new Error(
+errorText ||
+"Could not follow user."
+);
+
+}
+
+
+button.textContent =
+"Following";
+
+button.classList.add(
+"following"
+);
+
+}
+
+} catch(error) {
+
+alert(
+error.message
+);
+
+}
+
+button.disabled =
+false;
+
+}
+
+
+/* LOGOUT */
+
+document
+.getElementById(
+"logoutButton"
+)
+.addEventListener(
+"click",
+function() {
+
+localStorage.removeItem(
+"berakah_access_token"
+);
+
+localStorage.removeItem(
+"berakah_refresh_token"
+);
+
+localStorage.removeItem(
+"berakah_user"
+);
+
+location.href =
+"login.html";
+
+}
+);
+
+
+/* START */
+
+(async function() {
+
+try {
+
+currentUser =
+await getCurrentUser();
+
+await loadPeople();
+
+} catch(error) {
+
+document.getElementById(
+"loading"
+).style.display =
+"none";
+
+document.getElementById(
+"message"
+).textContent =
+error.message;
+
+}
+
+})();
+
+</script>
+
+</body>
+</html>
