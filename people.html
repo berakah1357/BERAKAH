@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BERAKAH - People</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #111827;
+}
+
+header {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.nav {
+  max-width: 900px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.nav-buttons button {
+  border: 1px solid #d1d5db;
+  background: white;
+  padding: 8px 11px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.logout {
+  background: #111827 !important;
+  color: white !important;
+}
+
+main {
+  max-width: 650px;
+  margin: 25px auto;
+  padding: 0 15px;
+}
+
+.container {
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+}
+
+h1 {
+  margin-top: 0;
+}
+
+.user {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 5px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.user:last-child {
+  border-bottom: none;
+}
+
+.user-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.follow-button {
+  border: none;
+  border-radius: 8px;
+  padding: 9px 15px;
+  background: #111827;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  min-width: 95px;
+}
+
+.follow-button.following {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.follow-button:disabled {
+  opacity: 0.6;
+}
+
+#loading {
+  text-align: center;
+  padding: 25px;
+}
+
+#message {
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.empty {
+  text-align: center;
+  color: #6b7280;
+  padding: 25px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="nav">
+
+<div class="logo">
+BERAKAH
+</div>
+
+<div class="nav-buttons">
+
+<button onclick="location.href='index.html'">
+Home
+</button>
+
+<button onclick="location.href='feed.html'">
+Feed
+</button>
+
+<button onclick="location.href='notifications.html'">
+🔔
+</button>
+
+<button class="logout" id="logoutButton">
+Logout
+</button>
+
+</div>
+
+</div>
+
+</header>
+
+
+<main>
+
+<div class="container">
+
+<h1>👥 People</h1>
+
+<div id="message"></div>
+
+<div id="loading">
+Loading people...
+</div>
+
+<div id="people"></div>
+
+</div>
+
+</main>
+
+
+<script>
+
+const SUPABASE_URL =
+"https://utoyoglycqjmqznczfxa.supabase.co";
+
+const SUPABASE_ANON_KEY =
+"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+
+let accessToken =
+localStorage.getItem("berakah_access_token");
+
+let currentUser = null;
+
+
+/* LOGIN */
+
+if (!accessToken) {
+
+  location.href = "login.html";
+
+}
+
+
+/* HEADERS */
+
+function headers(extra) {
+
+  return Object.assign({
+
+    "apikey": SUPABASE_ANON_KEY,
+
+    "Authorization":
+      "Bearer " + accessToken
+
+  }, extra || {});
+
+}
+
+
+/* USER */
+
+async function getCurrentUser() {
+
+  try {
+
+    const response =
+      await fetch(
+        SUPABASE_URL + "/auth/v1/user",
+        {
+          headers: headers()
+        }
+      );
+
+    if (!response.ok) {
+
+      throw new Error(
+        "Session expired."
+      );
+
+    }
+
+    currentUser =
+      await response.json();
+
+    return true;
+
+  } catch (error) {
+
+    localStorage.clear();
+
+    location.href =
+      "login.html";
+
+    return false;
+
+  }
+
+}
+
+
+/* LOAD PEOPLE */
+
+async function loadPeople() {
+
+  const loading =
+    document.getElementById("loading");
+
+  const people =
+    document.getElementById("people");
+
+  const message =
+    document.getElementById("message");
+
+  try {
+
+
+    /* GET PROFILES */
+
+    const profilesResponse =
+      await fetch(
+
+        SUPABASE_URL +
+        "/rest/v1/profiles?select=*",
+
+        {
+          headers: headers()
+        }
+
+      );
+
+
+    const profilesText =
+      await profilesResponse.text();
+
+
+    if (!profilesResponse.ok) {
+
+      throw new Error(
+        profilesText ||
+        "Could not load users."
+      );
+
+    }
+
+
+    let profiles = [];
+
+    if (profilesText.trim()) {
+
+      profiles =
+        JSON.parse(profilesText);
+
+    }
+
+
+    /* GET FOLLOWS */
+
+    let follows = [];
+
+
+    const followsResponse =
+      await fetch(
+
+        SUPABASE_URL +
+        "/rest/v1/follows?select=follower_id,following_id",
+
+        {
+          headers: headers()
+        }
+
+      );
+
+
+    if (followsResponse.ok) {
+
+      const followsText =
+        await followsResponse.text();
+
+      if (followsText.trim()) {
+
+        follows =
+          JSON.parse(followsText);
+
+      }
+
+    }
+
+
+    loading.style.display =
+      "none";
+
+    people.innerHTML = "";
+
+
+    /* REMOVE CURRENT USER */
+
+    profiles =
+      profiles.filter(function(profile) {
+
+        const profileId =
+          profile.id ||
+          profile.user_id;
+
+        return profileId !==
+          currentUser.id;
+
+      });
+
+
+    if (!profiles.length) {
+
+      people.innerHTML =
+        "<div class='empty'>" +
+        "No other BERAKAH users found yet." +
+        "</div>";
+
+      return;
+
+    }
+
+
+    /* DISPLAY USERS */
+
+    profiles.forEach(function(profile) {
+
+
+      const profileId =
+        profile.id ||
+        profile.user_id;
+
+
+      if (!profileId) {
+        return;
+      }
+
+
+      const username =
+        profile.username ||
+        profile.display_name ||
+        profile.name ||
+        "BERAKAH User";
+
+
+      const alreadyFollowing =
+        follows.some(function(follow) {
+
+          return (
+            follow.follower_id ===
+              currentUser.id
+            &&
+            follow.following_id ===
+              profileId
+          );
+
+        });
+
+
+      const row =
+        document.createElement("div");
+
+
+      row.className =
+        "user";
+
+
+      row.innerHTML = `
+
+        <div class="user-name">
+          ${escapeHtml(username)}
+        </div>
+
+        <button
+          class="follow-button ${
+            alreadyFollowing
+            ? "following"
+            : ""
+          }"
+          onclick="toggleFollow(
+            '${profileId}',
+            this
+          )"
+        >
+
+          ${
+            alreadyFollowing
+            ? "Following"
+            : "Follow"
+          }
+
+        </button>
+
+      `;
+
+
+      people.appendChild(row);
+
+    });
+
+
+  } catch (error) {
+
+    loading.style.display =
+      "none";
+
+    message.textContent =
+      error.message;
+
+    console.error(error);
+
+  }
+
+}
+
+
+/* SAFETY */
+
+function escapeHtml(value) {
+
+  return String(value || "")
+
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* FOLLOW / UNFOLLOW */
+
+async function toggleFollow(
+  userId,
+  button
+) {
+
+
+  button.disabled = true;
+
+
+  try {
+
+
+    /* CHECK FOLLOW */
+
+    const checkResponse =
+      await fetch(
+
+        SUPABASE_URL +
+        "/rest/v1/follows" +
+        "?follower_id=eq." +
+        encodeURIComponent(
+          currentUser.id
+        ) +
+        "&following_id=eq." +
+        encodeURIComponent(
+          userId
+        ),
+
+        {
+          headers: headers()
+        }
+
+      );
+
+
+    const checkText =
+      await checkResponse.text();
+
+
+    let existing = [];
+
+
+    if (checkText.trim()) {
+
+      existing =
+        JSON.parse(checkText);
+
+    }
+
+
+    /* UNFOLLOW */
+
+    if (existing.length) {
+
+
+      const deleteResponse =
+        await fetch(
+
+          SUPABASE_URL +
+          "/rest/v1/follows" +
+          "?follower_id=eq." +
+          encodeURIComponent(
+            currentUser.id
+          ) +
+          "&following_id=eq." +
+          encodeURIComponent(
+            userId
+          ),
+
+          {
+
+            method: "DELETE",
+
+            headers:
+              headers()
+
+          }
+
+        );
+
+
+      if (!deleteResponse.ok) {
+
+        throw new Error(
+          await deleteResponse.text()
+        );
+
+      }
+
+
+      button.textContent =
+        "Follow";
+
+      button.classList.remove(
+        "following"
+      );
+
+
+    }
+
+
+    /* FOLLOW */
+
+    else {
+
+
+      const followResponse =
+        await fetch(
+
+          SUPABASE_URL +
+          "/rest/v1/follows",
+
+          {
+
+            method: "POST",
+
+            headers: headers({
+
+              "Content-Type":
+                "application/json",
+
+              "Prefer":
+                "return=minimal"
+
+            }),
+
+            body: JSON.stringify({
+
+              follower_id:
+                currentUser.id,
+
+              following_id:
+                userId
+
+            })
+
+          }
+
+        );
+
+
+      if (!followResponse.ok) {
+
+        throw new Error(
+          await followResponse.text()
+        );
+
+      }
+
+
+      button.textContent =
+        "Following";
+
+      button.classList.add(
+        "following"
+      );
+
+    }
+
+
+  } catch (error) {
+
+    alert(error.message);
+
+  }
+
+
+  button.disabled = false;
+
+}
+
+
+/* LOGOUT */
+
+document
+.getElementById("logoutButton")
+.addEventListener(
+  "click",
+  function() {
+
+    localStorage.removeItem(
+      "berakah_access_token"
+    );
+
+    localStorage.removeItem(
+      "berakah_refresh_token"
+    );
+
+    localStorage.removeItem(
+      "berakah_user"
+    );
+
+    location.href =
+      "login.html";
+
+  }
+);
+
+
+/* START */
+
+(async function() {
+
+  const loggedIn =
+    await getCurrentUser();
+
+  if (loggedIn) {
+
+    await loadPeople();
+
+  }
+
+})();
+
+</script>
+
+</body>
+</html>
