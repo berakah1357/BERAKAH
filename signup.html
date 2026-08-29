@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>BERAKAH - Create Account</title>
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -48,7 +52,8 @@
       font-weight: bold;
     }
 
-    input, select {
+    input,
+    select {
       width: 100%;
       padding: 13px;
       border: 1px solid #d1d5db;
@@ -77,6 +82,7 @@
       margin-top: 15px;
       text-align: center;
       font-weight: bold;
+      white-space: pre-wrap;
     }
 
     .login {
@@ -114,11 +120,14 @@
     <input id="password" type="password" minlength="6" required>
 
     <label>Preferred Language</label>
+
     <select id="language">
+
       <option value="ht">Haitian Creole</option>
       <option value="en">English</option>
       <option value="fr">French</option>
       <option value="es">Spanish</option>
+
     </select>
 
     <button id="signupButton" type="submit">
@@ -130,79 +139,350 @@
   </form>
 
   <div class="login">
+
     Already have an account?
-    <a href="login.html">Log In</a>
+
+    <a href="login.html">
+      Log In
+    </a>
+
   </div>
 
 </div>
 
+
 <script>
-const SUPABASE_URL = "https://utoyoglycqjmqznczfxa.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
-const form = document.getElementById("signupForm");
-const button = document.getElementById("signupButton");
-const message = document.getElementById("message");
+const SUPABASE_URL =
+  "https://utoyoglycqjmqznczfxa.supabase.co";
 
-form.addEventListener("submit", async function(event) {
-  event.preventDefault();
+const SUPABASE_ANON_KEY =
+  "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
-  button.disabled = true;
-  button.textContent = "CREATING ACCOUNT...";
-  message.textContent = "";
 
-  const fullName = document.getElementById("fullName").value.trim();
-  const username = document.getElementById("username").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-  const language = document.getElementById("language").value;
+const form =
+  document.getElementById("signupForm");
 
-  try {
-    const response = await fetch(
-      SUPABASE_URL + "/auth/v1/signup",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "apikey": SUPABASE_ANON_KEY,
-          "Authorization": "Bearer " + SUPABASE_ANON_KEY
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-          data: {
-            full_name: fullName,
-            username: username,
-            language: language
+const button =
+  document.getElementById("signupButton");
+
+const message =
+  document.getElementById("message");
+
+
+function showMessage(text) {
+
+  message.textContent = text;
+
+}
+
+
+form.addEventListener(
+  "submit",
+  async function(event) {
+
+    event.preventDefault();
+
+    button.disabled = true;
+
+    button.textContent =
+      "CREATING ACCOUNT...";
+
+    showMessage("");
+
+
+    const fullName =
+      document
+        .getElementById("fullName")
+        .value
+        .trim();
+
+
+    const username =
+      document
+        .getElementById("username")
+        .value
+        .trim();
+
+
+    const email =
+      document
+        .getElementById("email")
+        .value
+        .trim();
+
+
+    const password =
+      document
+        .getElementById("password")
+        .value;
+
+
+    const language =
+      document
+        .getElementById("language")
+        .value;
+
+
+    try {
+
+      /*
+        STEP 1
+        CREATE SUPABASE AUTH USER
+      */
+
+      const authResponse =
+        await fetch(
+
+          SUPABASE_URL +
+          "/auth/v1/signup",
+
+          {
+
+            method: "POST",
+
+            headers: {
+
+              "Content-Type":
+                "application/json",
+
+              "apikey":
+                SUPABASE_ANON_KEY,
+
+              "Authorization":
+                "Bearer " +
+                SUPABASE_ANON_KEY
+
+            },
+
+            body: JSON.stringify({
+
+              email: email,
+
+              password: password,
+
+              data: {
+
+                full_name:
+                  fullName,
+
+                username:
+                  username,
+
+                language:
+                  language
+
+              }
+
+            })
+
           }
-        })
+
+        );
+
+
+      const authText =
+        await authResponse.text();
+
+
+      let authData = {};
+
+      if (authText.trim()) {
+
+        authData =
+          JSON.parse(authText);
+
       }
-    );
 
-    const data = await response.json();
 
-    if (!response.ok) {
-      throw new Error(
-        data.error_description ||
-        data.msg ||
-        data.message ||
-        "Account creation failed."
+      if (!authResponse.ok) {
+
+        throw new Error(
+
+          authData.error_description ||
+          authData.msg ||
+          authData.message ||
+          "Account creation failed."
+
+        );
+
+      }
+
+
+      /*
+        SUPABASE MAY REQUIRE EMAIL
+        CONFIRMATION.
+
+        If there is no session,
+        the user ID may still be
+        returned as authData.user.id.
+      */
+
+      const user =
+        authData.user;
+
+
+      if (!user || !user.id) {
+
+        showMessage(
+
+          "Account created!\n\n" +
+          "Please check your email " +
+          "to confirm your account, " +
+          "then log in."
+
+        );
+
+        setTimeout(
+
+          function() {
+
+            window.location.href =
+              "login.html";
+
+          },
+
+          2500
+
+        );
+
+        return;
+
+      }
+
+
+      /*
+        STEP 2
+        CREATE PROFILE
+      */
+
+      const profileResponse =
+        await fetch(
+
+          SUPABASE_URL +
+          "/rest/v1/profiles",
+
+          {
+
+            method: "POST",
+
+            headers: {
+
+              "Content-Type":
+                "application/json",
+
+              "apikey":
+                SUPABASE_ANON_KEY,
+
+              "Authorization":
+                "Bearer " +
+                SUPABASE_ANON_KEY,
+
+              "Prefer":
+                "return=representation"
+
+            },
+
+            body: JSON.stringify({
+
+              id:
+                user.id,
+
+              "Full name":
+                fullName,
+
+              username:
+                username,
+
+              language:
+                language,
+
+              user:
+                user.id
+
+            })
+
+          }
+
+        );
+
+
+      const profileText =
+        await profileResponse.text();
+
+
+      if (!profileResponse.ok) {
+
+        console.error(
+          "PROFILE ERROR:",
+          profileText
+        );
+
+        throw new Error(
+
+          "Account was created, " +
+          "but the profile could not be saved.\n\n" +
+          profileText
+
+        );
+
+      }
+
+
+      /*
+        SUCCESS
+      */
+
+      showMessage(
+
+        "BERAKAH account created successfully! 🎉\n\n" +
+        "Your profile has been created."
+
       );
+
+
+      setTimeout(
+
+        function() {
+
+          window.location.href =
+            "login.html";
+
+        },
+
+        2000
+
+      );
+
+
     }
 
-    message.textContent = "Account created successfully!";
+    catch(error) {
 
-    setTimeout(function() {
-      window.location.href = "login.html";
-    }, 1500);
+      console.error(
+        "BERAKAH SIGNUP ERROR:",
+        error
+      );
 
-  } catch (error) {
-    message.textContent = error.message;
-    button.disabled = false;
-    button.textContent = "CREATE ACCOUNT";
+
+      showMessage(
+        error.message
+      );
+
+
+      button.disabled = false;
+
+      button.textContent =
+        "CREATE ACCOUNT";
+
+    }
+
   }
-});
+
+);
+
 </script>
 
 </body>
+
 </html>
