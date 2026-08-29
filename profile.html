@@ -1,203 +1,935 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BERAKAH - Profile</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #1f2937;
-    }
+<title>BERAKAH - Profile</title>
 
-    header {
-      background: white;
-      padding: 18px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #e5e7eb;
-    }
+<style>
 
-    .logo {
-      font-size: 28px;
-      font-weight: bold;
-      letter-spacing: 3px;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    header a {
-      text-decoration: none;
-      color: #111827;
-      font-weight: bold;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #1f2937;
+}
 
-    .profile {
-      max-width: 850px;
-      margin: 40px auto;
-      padding: 20px;
-    }
+/* HEADER */
 
-    .cover {
-      height: 180px;
-      background: #111827;
-      border-radius: 18px 18px 0 0;
-    }
+header {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 15px;
+}
 
-    .profile-card {
-      background: white;
-      padding: 25px;
-      border-radius: 0 0 18px 18px;
-    }
+.nav {
+  max-width: 900px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
 
-    .avatar {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      background: #e5e7eb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 45px;
-      margin-top: -70px;
-      border: 5px solid white;
-    }
+.logo {
+  font-size: 26px;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
 
-    h1 {
-      margin: 15px 0 5px;
-    }
+.nav-buttons {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
 
-    .username {
-      color: #6b7280;
-    }
+.nav-buttons button {
+  border: 1px solid #d1d5db;
+  background: white;
+  padding: 8px 11px;
+  border-radius: 7px;
+  cursor: pointer;
+}
 
-    .bio {
-      margin-top: 20px;
-      line-height: 1.6;
-    }
+.logout {
+  background: #111827 !important;
+  color: white !important;
+}
 
-    .stats {
-      display: flex;
-      gap: 35px;
-      margin-top: 25px;
-    }
+/* MAIN */
 
-    .stats strong {
-      display: block;
-      font-size: 20px;
-    }
+.profile {
+  max-width: 850px;
+  margin: 30px auto;
+  padding: 0 15px;
+}
 
-    .buttons {
-      margin-top: 25px;
-    }
+/* COVER */
 
-    button {
-      padding: 12px 22px;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-right: 10px;
-    }
+.cover {
+  height: 180px;
+  background: #111827;
+  border-radius: 18px 18px 0 0;
+}
 
-    .primary {
-      background: #111827;
-      color: white;
-    }
+/* PROFILE CARD */
 
-    .secondary {
-      background: #e5e7eb;
-      color: #111827;
-    }
+.profile-card {
+  background: white;
+  padding: 25px;
+  border-radius: 0 0 18px 18px;
+}
 
-    .posts {
-      margin-top: 25px;
-      background: white;
-      padding: 25px;
-      border-radius: 18px;
-    }
+/* AVATAR */
 
-    .post {
-      padding: 20px 0;
-      border-bottom: 1px solid #e5e7eb;
-    }
+.avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 45px;
+  margin-top: -70px;
+  border: 5px solid white;
+}
 
-    .post:last-child {
-      border-bottom: none;
-    }
-  </style>
+/* NAME */
+
+h1 {
+  margin: 15px 0 5px;
+}
+
+.username {
+  color: #6b7280;
+}
+
+/* BIO */
+
+.bio {
+  margin-top: 20px;
+  line-height: 1.6;
+}
+
+/* STATS */
+
+.stats {
+  display: flex;
+  gap: 35px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+.stats strong {
+  display: block;
+  font-size: 20px;
+}
+
+/* BUTTONS */
+
+.buttons {
+  margin-top: 25px;
+}
+
+.action-button {
+  padding: 11px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.primary {
+  background: #111827;
+  color: white;
+}
+
+.secondary {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+/* FOLLOW */
+
+.follow-button {
+  background: #111827;
+  color: white;
+}
+
+.follow-button.following {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+/* POSTS */
+
+.posts {
+  margin-top: 25px;
+  background: white;
+  padding: 25px;
+  border-radius: 18px;
+}
+
+.post {
+  padding: 20px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.post:last-child {
+  border-bottom: none;
+}
+
+.post-time {
+  color: #6b7280;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.post-content {
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+.post-image {
+  width: 100%;
+  max-height: 450px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+#loading {
+  text-align: center;
+  padding: 25px;
+}
+
+#error {
+  color: #b91c1c;
+  font-weight: bold;
+  white-space: pre-wrap;
+  text-align: center;
+  padding: 15px;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  .cover {
+    height: 140px;
+  }
+
+  .profile-card {
+    padding: 20px;
+  }
+
+  .avatar {
+    width: 90px;
+    height: 90px;
+    font-size: 35px;
+    margin-top: -55px;
+  }
+
+}
+
+</style>
+
 </head>
+
 
 <body>
 
-  <header>
-    <div class="logo">BERAKAH</div>
-    <a href="index.html">HOME</a>
-  </header>
 
-  <main class="profile">
+<!-- HEADER -->
 
-    <div class="cover"></div>
+<header>
 
-    <section class="profile-card">
+<div class="nav">
 
-      <div class="avatar">👤</div>
+<div class="logo">
+BERAKAH
+</div>
 
-      <h1>BERAKAH User</h1>
 
-      <div class="username">@berakahuser</div>
+<div class="nav-buttons">
 
-      <p class="bio">
-        Welcome to my BERAKAH profile.
-        Connect, share, build, and grow together.
-      </p>
+<button onclick="location.href='index.html'">
+Home
+</button>
 
-      <div class="stats">
-        <div>
-          <strong>0</strong>
-          Followers
-        </div>
+<button onclick="location.href='feed.html'">
+Feed
+</button>
 
-        <div>
-          <strong>0</strong>
-          Following
-        </div>
+<button onclick="location.href='people.html'">
+👥 People
+</button>
 
-        <div>
-          <strong>0</strong>
-          Posts
-        </div>
-      </div>
+<button onclick="location.href='marketplace.html'">
+Market
+</button>
 
-      <div class="buttons">
-        <button class="primary">EDIT PROFILE</button>
-        <a href="messages.html" style="text-decoration: none;">
-  <button class="secondary">💬 MESSAGES</button>
-          <a href="notifications.html" style="text-decoration: none;">
-  <button class="secondary">🔔 NOTIFICATIONS</button>
-</a>
-</a>
-      </div>
+<button onclick="location.href='notifications.html'">
+🔔
+</button>
 
-    </section>
+<button
+class="logout"
+id="logoutButton">
+Logout
+</button>
 
-    <section class="posts">
+</div>
 
-      <h2>Posts</h2>
+</div>
 
-      <div class="post">
-        Your BERAKAH posts will appear here.
-      </div>
+</header>
 
-    </section>
 
-  </main>
+
+<!-- PROFILE -->
+
+<main class="profile">
+
+
+<div id="loading">
+Loading profile...
+</div>
+
+
+<div id="error"></div>
+
+
+<div id="profileContent"
+style="display:none;">
+
+
+<div class="cover"></div>
+
+
+<section class="profile-card">
+
+
+<div class="avatar">
+👤
+</div>
+
+
+<h1 id="profileName">
+BERAKAH User
+</h1>
+
+
+<div
+class="username"
+id="profileUsername">
+@berakahuser
+</div>
+
+
+<p
+class="bio"
+id="profileBio">
+Welcome to my BERAKAH profile.
+Connect, share, build, and grow together.
+</p>
+
+
+<div class="stats">
+
+<div>
+<strong id="followersCount">
+0
+</strong>
+Followers
+</div>
+
+
+<div>
+<strong id="followingCount">
+0
+</strong>
+Following
+</div>
+
+
+<div>
+<strong id="postsCount">
+0
+</strong>
+Posts
+</div>
+
+</div>
+
+
+<div class="buttons">
+
+<button
+id="followButton"
+class="action-button follow-button"
+style="display:none;">
+Follow
+</button>
+
+
+<button
+class="action-button primary"
+id="editButton"
+style="display:none;">
+EDIT PROFILE
+</button>
+
+
+<button
+class="action-button secondary"
+onclick="location.href='messages.html'">
+💬 MESSAGES
+</button>
+
+
+<button
+class="action-button secondary"
+onclick="location.href='notifications.html'">
+🔔 NOTIFICATIONS
+</button>
+
+</div>
+
+
+</section>
+
+
+
+<section class="posts">
+
+<h2>Posts</h2>
+
+<div id="postsList">
+
+</div>
+
+</section>
+
+
+</div>
+
+</main>
+
+
+
+<script>
+
+
+/* =========================
+   SUPABASE
+========================= */
+
+const SUPABASE_URL =
+"https://utoyoglycqjmqznczfxa.supabase.co";
+
+
+const SUPABASE_ANON_KEY =
+"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+
+
+const accessToken =
+localStorage.getItem(
+"berakah_access_token"
+);
+
+
+let currentUser = null;
+
+let profileUserId = null;
+
+
+
+/* =========================
+   HEADERS
+========================= */
+
+function headers(extra) {
+
+return Object.assign({
+
+"apikey":
+SUPABASE_ANON_KEY,
+
+"Authorization":
+"Bearer " + accessToken
+
+}, extra || {});
+
+}
+
+
+
+/* =========================
+   SAFE HTML
+========================= */
+
+function safe(value) {
+
+return String(value || "")
+
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+
+
+/* =========================
+   GET CURRENT USER
+========================= */
+
+async function getCurrentUser() {
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/auth/v1/user",
+
+{
+headers:
+headers()
+}
+
+);
+
+
+if (!response.ok) {
+
+throw new Error(
+"Your login session has expired."
+);
+
+}
+
+
+return await response.json();
+
+}
+
+
+
+/* =========================
+   GET PROFILE ID
+========================= */
+
+function getProfileId() {
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+
+/*
+People page sends ?id=
+*/
+
+const id =
+params.get("id");
+
+
+/*
+If no ID is supplied,
+show my own profile.
+*/
+
+if (id) {
+
+return id;
+
+}
+
+
+return currentUser.id;
+
+}
+
+
+
+/* =========================
+   LOAD PROFILE
+========================= */
+
+async function loadProfile() {
+
+
+try {
+
+
+currentUser =
+await getCurrentUser();
+
+
+profileUserId =
+getProfileId();
+
+
+
+/* =========================
+   FIND USER FROM POSTS
+========================= */
+
+const userResponse =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/posts" +
+"?select=user_id,username" +
+"&user_id=eq." +
+encodeURIComponent(
+profileUserId
+) +
+"&order=created_at.desc",
+
+{
+headers:
+headers()
+}
+
+);
+
+
+const userText =
+await userResponse.text();
+
+
+if (!userResponse.ok) {
+
+throw new Error(
+userText
+);
+
+}
+
+
+let userPosts = [];
+
+
+if (userText.trim()) {
+
+userPosts =
+JSON.parse(userText);
+
+}
+
+
+
+/* =========================
+   USERNAME
+========================= */
+
+let username =
+"BERAKAH User";
+
+
+if (userPosts.length) {
+
+username =
+userPosts[0].username ||
+"BERAKAH User";
+
+}
+
+
+/* =========================
+   DISPLAY USER
+========================= */
+
+document.getElementById(
+"profileName"
+).textContent =
+username;
+
+
+document.getElementById(
+"profileUsername"
+).textContent =
+"@" + username
+.toLowerCase();
+
+
+document.getElementById(
+"profileBio"
+).textContent =
+"Welcome to my BERAKAH profile. Connect, share, build, and grow together.";
+
+
+
+/* =========================
+   POSTS
+========================= */
+
+const postsList =
+document.getElementById(
+"postsList"
+);
+
+
+postsList.innerHTML = "";
+
+
+document.getElementById(
+"postsCount"
+).textContent =
+userPosts.length;
+
+
+if (!userPosts.length) {
+
+postsList.innerHTML =
+
+"<div class='post'>" +
+"No posts yet." +
+"</div>";
+
+}
+else {
+
+
+userPosts.forEach(
+function(post) {
+
+
+const div =
+document.createElement(
+"div"
+);
+
+
+div.className =
+"post";
+
+
+div.innerHTML = `
+
+<div class="post-time">
+
+${new Date(
+post.created_at
+).toLocaleString()}
+
+</div>
+
+
+<div class="post-content">
+
+${safe(post.content)}
+
+</div>
+
+
+${
+post.image_url
+
+?
+
+`
+<img
+class="post-image"
+src="${safe(post.image_url)}"
+alt="Post image">
+`
+
+:
+
+""
+
+}
+
+`;
+
+
+postsList.appendChild(
+div
+);
+
+});
+
+}
+
+
+
+/* =========================
+   OWN PROFILE
+========================= */
+
+if (
+profileUserId ===
+currentUser.id
+) {
+
+document.getElementById(
+"editButton"
+).style.display =
+"inline-block";
+
+document.getElementById(
+"followButton"
+).style.display =
+"none";
+
+}
+
+
+/* =========================
+   OTHER PROFILE
+========================= */
+
+else {
+
+document.getElementById(
+"followButton"
+).style.display =
+"inline-block";
+
+
+/*
+For now we display Follow.
+We will connect the actual
+follow system after profiles
+are confirmed working.
+*/
+
+}
+
+
+
+/* =========================
+   SHOW PAGE
+========================= */
+
+document.getElementById(
+"loading"
+).style.display =
+"none";
+
+
+document.getElementById(
+"profileContent"
+).style.display =
+"block";
+
+
+}
+catch(error) {
+
+
+document.getElementById(
+"loading"
+).style.display =
+"none";
+
+
+document.getElementById(
+"error"
+).textContent =
+"Could not load profile.\n\n" +
+error.message;
+
+
+console.error(
+error
+);
+
+}
+
+}
+
+
+
+/* =========================
+   EDIT PROFILE
+========================= */
+
+document
+.getElementById(
+"editButton"
+)
+.addEventListener(
+"click",
+function() {
+
+alert(
+"Profile editing is the next step."
+);
+
+});
+
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+document
+.getElementById(
+"logoutButton"
+)
+.addEventListener(
+"click",
+function() {
+
+
+localStorage.removeItem(
+"berakah_access_token"
+);
+
+
+localStorage.removeItem(
+"berakah_refresh_token"
+);
+
+
+localStorage.removeItem(
+"berakah_user"
+);
+
+
+location.href =
+"login.html";
+
+});
+
+
+
+/* =========================
+   START
+========================= */
+
+if (!accessToken) {
+
+location.href =
+"login.html";
+
+}
+else {
+
+loadProfile();
+
+}
+
+</script>
 
 </body>
+
 </html>
