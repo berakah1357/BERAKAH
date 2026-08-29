@@ -33,8 +33,8 @@ header {
   max-width: 900px;
   margin: auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
 }
 
@@ -82,9 +82,8 @@ h1 {
 
 .user {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
   padding: 15px 5px;
   border-bottom: 1px solid #eeeeee;
 }
@@ -93,9 +92,39 @@ h1 {
   border-bottom: none;
 }
 
+.avatar {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  background: #111827;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.user-info {
+  flex: 1;
+  min-width: 0;
+}
+
 .user-name {
   font-weight: bold;
   font-size: 16px;
+  cursor: pointer;
+}
+
+.user-name:hover {
+  text-decoration: underline;
+}
+
+.profile-link {
+  color: #6b7280;
+  font-size: 12px;
+  margin-top: 3px;
 }
 
 .follow-button {
@@ -210,9 +239,7 @@ let currentUser = null;
 /* LOGIN */
 
 if (!accessToken) {
-
   location.href = "login.html";
-
 }
 
 
@@ -232,7 +259,7 @@ function headers(extra) {
 }
 
 
-/* USER */
+/* CURRENT USER */
 
 async function getCurrentUser() {
 
@@ -247,11 +274,7 @@ async function getCurrentUser() {
       );
 
     if (!response.ok) {
-
-      throw new Error(
-        "Session expired."
-      );
-
+      throw new Error("Session expired.");
     }
 
     currentUser =
@@ -273,6 +296,32 @@ async function getCurrentUser() {
 }
 
 
+/* ESCAPE */
+
+function escapeHtml(value) {
+
+  return String(value || "")
+
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+/* OPEN PROFILE */
+
+function openProfile(userId) {
+
+  location.href =
+    "profile.html?user=" +
+    encodeURIComponent(userId);
+
+}
+
+
 /* LOAD PEOPLE */
 
 async function loadPeople() {
@@ -286,10 +335,10 @@ async function loadPeople() {
   const message =
     document.getElementById("message");
 
+
   try {
 
-
-    /* GET PROFILES */
+    /* PROFILES */
 
     const profilesResponse =
       await fetch(
@@ -328,7 +377,7 @@ async function loadPeople() {
     }
 
 
-    /* GET FOLLOWS */
+    /* FOLLOWS */
 
     let follows = [];
 
@@ -337,7 +386,8 @@ async function loadPeople() {
       await fetch(
 
         SUPABASE_URL +
-        "/rest/v1/follows?select=follower_id,following_id",
+        "/rest/v1/follows" +
+        "?select=follower_id,following_id",
 
         {
           headers: headers()
@@ -361,25 +411,24 @@ async function loadPeople() {
     }
 
 
-    loading.style.display =
-      "none";
-
-    people.innerHTML = "";
-
-
-    /* REMOVE CURRENT USER */
+    /* HIDE CURRENT USER */
 
     profiles =
       profiles.filter(function(profile) {
 
-        const profileId =
+        const id =
           profile.id ||
           profile.user_id;
 
-        return profileId !==
-          currentUser.id;
+        return id !== currentUser.id;
 
       });
+
+
+    loading.style.display =
+      "none";
+
+    people.innerHTML = "";
 
 
     if (!profiles.length) {
@@ -394,17 +443,15 @@ async function loadPeople() {
     }
 
 
-    /* DISPLAY USERS */
+    /* DISPLAY */
 
     profiles.forEach(function(profile) {
 
-
-      const profileId =
+      const userId =
         profile.id ||
         profile.user_id;
 
-
-      if (!profileId) {
+      if (!userId) {
         return;
       }
 
@@ -416,15 +463,21 @@ async function loadPeople() {
         "BERAKAH User";
 
 
-      const alreadyFollowing =
+      const initial =
+        username
+          .charAt(0)
+          .toUpperCase();
+
+
+      const following =
         follows.some(function(follow) {
 
           return (
             follow.follower_id ===
-              currentUser.id
+            currentUser.id
             &&
             follow.following_id ===
-              profileId
+            userId
           );
 
         });
@@ -433,35 +486,48 @@ async function loadPeople() {
       const row =
         document.createElement("div");
 
-
       row.className =
         "user";
 
 
       row.innerHTML = `
 
-        <div class="user-name">
-          ${escapeHtml(username)}
+        <div
+          class="avatar"
+          onclick="openProfile('${userId}')"
+        >
+          ${escapeHtml(initial)}
+        </div>
+
+        <div class="user-info">
+
+          <div
+            class="user-name"
+            onclick="openProfile('${userId}')"
+          >
+            ${escapeHtml(username)}
+          </div>
+
+          <div class="profile-link">
+            View profile
+          </div>
+
         </div>
 
         <button
           class="follow-button ${
-            alreadyFollowing
-            ? "following"
-            : ""
+            following ? "following" : ""
           }"
           onclick="toggleFollow(
-            '${profileId}',
+            '${userId}',
             this
           )"
         >
-
           ${
-            alreadyFollowing
+            following
             ? "Following"
             : "Follow"
           }
-
         </button>
 
       `;
@@ -487,21 +553,6 @@ async function loadPeople() {
 }
 
 
-/* SAFETY */
-
-function escapeHtml(value) {
-
-  return String(value || "")
-
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
-
-
 /* FOLLOW / UNFOLLOW */
 
 async function toggleFollow(
@@ -509,14 +560,10 @@ async function toggleFollow(
   button
 ) {
 
-
   button.disabled = true;
 
 
   try {
-
-
-    /* CHECK FOLLOW */
 
     const checkResponse =
       await fetch(
@@ -528,9 +575,7 @@ async function toggleFollow(
           currentUser.id
         ) +
         "&following_id=eq." +
-        encodeURIComponent(
-          userId
-        ),
+        encodeURIComponent(userId),
 
         {
           headers: headers()
@@ -545,7 +590,6 @@ async function toggleFollow(
 
     let existing = [];
 
-
     if (checkText.trim()) {
 
       existing =
@@ -556,10 +600,9 @@ async function toggleFollow(
 
     /* UNFOLLOW */
 
-    if (existing.length) {
+    if (existing.length > 0) {
 
-
-      const deleteResponse =
+      const response =
         await fetch(
 
           SUPABASE_URL +
@@ -569,26 +612,20 @@ async function toggleFollow(
             currentUser.id
           ) +
           "&following_id=eq." +
-          encodeURIComponent(
-            userId
-          ),
+          encodeURIComponent(userId),
 
           {
-
             method: "DELETE",
-
-            headers:
-              headers()
-
+            headers: headers()
           }
 
         );
 
 
-      if (!deleteResponse.ok) {
+      if (!response.ok) {
 
         throw new Error(
-          await deleteResponse.text()
+          await response.text()
         );
 
       }
@@ -601,7 +638,6 @@ async function toggleFollow(
         "following"
       );
 
-
     }
 
 
@@ -609,8 +645,7 @@ async function toggleFollow(
 
     else {
 
-
-      const followResponse =
+      const response =
         await fetch(
 
           SUPABASE_URL +
@@ -645,10 +680,10 @@ async function toggleFollow(
         );
 
 
-      if (!followResponse.ok) {
+      if (!response.ok) {
 
         throw new Error(
-          await followResponse.text()
+          await response.text()
         );
 
       }
