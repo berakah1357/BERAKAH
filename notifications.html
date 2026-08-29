@@ -1,19 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>BERAKAH - Notifications</title>
+<title>BERAKAH Notifications</title>
 
 <style>
-
-* {
-  box-sizing: border-box;
-}
-
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -23,20 +15,8 @@ body {
 
 header {
   background: white;
-  border-bottom: 1px solid #e5e7eb;
   padding: 15px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.nav {
-  max-width: 900px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
+  border-bottom: 1px solid #ddd;
 }
 
 .logo {
@@ -45,520 +25,76 @@ header {
   letter-spacing: 3px;
 }
 
-.nav-buttons {
-  display: flex;
-  gap: 7px;
-  flex-wrap: wrap;
+nav {
+  margin-top: 12px;
 }
 
-.nav-buttons a,
-.nav-buttons button {
-  padding: 8px 11px;
-  border-radius: 7px;
-  border: 1px solid #d1d5db;
-  background: white;
-  color: #111827;
+nav a {
+  margin-right: 12px;
   text-decoration: none;
+  color: #111827;
   font-weight: bold;
-  cursor: pointer;
-}
-
-.logout {
-  background: #111827 !important;
-  color: white !important;
 }
 
 main {
   max-width: 700px;
   margin: 30px auto;
-  padding: 0 15px;
+  padding: 15px;
 }
 
 .card {
   background: white;
-  padding: 22px;
-  border-radius: 16px;
-  box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+  padding: 25px;
+  border-radius: 15px;
 }
 
-h1 {
-  margin-top: 0;
-}
-
-#status {
-  margin: 15px 0;
-  padding: 12px;
+#result {
+  margin-top: 20px;
+  padding: 20px;
   background: #f3f4f6;
   border-radius: 10px;
-  white-space: pre-wrap;
-  line-height: 1.5;
-}
-
-.notification {
-  padding: 16px;
-  margin-top: 12px;
-  background: #f3f4f6;
-  border-radius: 10px;
-}
-
-.notification.unread {
-  border-left: 5px solid #111827;
-}
-
-.notification-message {
   font-weight: bold;
-  font-size: 16px;
 }
-
-.notification-time {
-  color: #6b7280;
-  font-size: 12px;
-  margin-top: 7px;
-}
-
-.empty {
-  text-align: center;
-  color: #6b7280;
-  padding: 30px;
-}
-
 </style>
-
 </head>
-
 
 <body>
 
-
 <header>
-
-<div class="nav">
 
 <div class="logo">
 BERAKAH
 </div>
 
-<div class="nav-buttons">
-
-<a href="index.html">
-Home
-</a>
-
-<a href="feed.html">
-Feed
-</a>
-
-<a href="people.html">
-👥 People
-</a>
-
-<a href="marketplace.html">
-Market
-</a>
-
-<button id="logoutButton">
-Logout
-</button>
-
-</div>
-
-</div>
+<nav>
+<a href="index.html">Home</a>
+<a href="feed.html">Feed</a>
+<a href="people.html">👥 People</a>
+<a href="marketplace.html">Market</a>
+</nav>
 
 </header>
-
 
 <main>
 
 <div class="card">
 
-<h1>
-🔔 Notifications
-</h1>
+<h1>🔔 Notifications</h1>
 
-<div id="status">
-Starting...
+<div id="result">
+Loading test...
 </div>
-
-<div id="notifications"></div>
 
 </div>
 
 </main>
 
-
 <script>
 
-/* =========================================
-   SUPABASE CONFIGURATION
-========================================= */
+document.getElementById("result").innerHTML =
+"BERAKAH NOTIFICATIONS JAVASCRIPT WORKS ✅";
 
-const SUPABASE_URL =
-"https://utoyoglycqjmqznczfxa.supabase.co";
+</script>
 
-const SUPABASE_ANON_KEY =
-"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
-
-
-/* =========================================
-   LOGIN
-========================================= */
-
-const accessToken =
-localStorage.getItem(
-"berakah_access_token"
-);
-
-let currentUser = null;
-
-
-/* =========================================
-   HEADERS
-========================================= */
-
-function headers(extra) {
-
-  return Object.assign(
-
-    {
-      "apikey":
-        SUPABASE_ANON_KEY,
-
-      "Authorization":
-        "Bearer " + accessToken
-    },
-
-    extra || {}
-
-  );
-
-}
-
-
-/* =========================================
-   SAFE HTML
-========================================= */
-
-function safe(value) {
-
-  return String(value || "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-
-}
-
-
-/* =========================================
-   STATUS MESSAGE
-========================================= */
-
-function setStatus(message) {
-
-  document.getElementById(
-    "status"
-  ).textContent = message;
-
-}
-
-
-/* =========================================
-   GET LOGGED-IN USER
-========================================= */
-
-async function getCurrentUser() {
-
-  setStatus(
-    "Step 1: Checking login..."
-  );
-
-
-  if (!accessToken) {
-
-    throw new Error(
-      "No login session found. Please log in again."
-    );
-
-  }
-
-
-  setStatus(
-    "Step 2: Connecting to Supabase..."
-  );
-
-
-  const response =
-    await fetch(
-
-      SUPABASE_URL +
-      "/auth/v1/user",
-
-      {
-        method: "GET",
-        headers: headers()
-      }
-
-    );
-
-
-  const text =
-    await response.text();
-
-
-  console.log(
-    "AUTH RESPONSE:",
-    text
-  );
-
-
-  if (!response.ok) {
-
-    throw new Error(
-      "AUTH ERROR:\n" +
-      text
-    );
-
-  }
-
-
-  if (!text.trim()) {
-
-    throw new Error(
-      "Supabase returned an empty user."
-    );
-
-  }
-
-
-  return JSON.parse(text);
-
-}
-
-
-/* =========================================
-   LOAD NOTIFICATIONS
-========================================= */
-
-async function loadNotifications() {
-
-  setStatus(
-    "Step 3: Loading notifications..."
-  );
-
-
-  console.log(
-    "CURRENT USER ID:",
-    currentUser.id
-  );
-
-
-  const url =
-    SUPABASE_URL +
-    "/rest/v1/notifications" +
-    "?select=*" +
-    "&user_id=eq." +
-    encodeURIComponent(
-      currentUser.id
-    ) +
-    "&order=created_at.desc";
-
-
-  console.log(
-    "NOTIFICATION URL:",
-    url
-  );
-
-
-  const response =
-    await fetch(
-
-      url,
-
-      {
-        method: "GET",
-        headers: headers()
-      }
-
-    );
-
-
-  const text =
-    await response.text();
-
-
-  console.log(
-    "NOTIFICATIONS RESPONSE:",
-    text
-  );
-
-
-  if (!response.ok) {
-
-    throw new Error(
-      "NOTIFICATIONS ERROR:\n" +
-      text
-    );
-
-  }
-
-
-  let notifications = [];
-
-
-  if (text.trim()) {
-
-    notifications =
-      JSON.parse(text);
-
-  }
-
-
-  const container =
-    document.getElementById(
-      "notifications"
-    );
-
-
-  container.innerHTML =
-    "";
-
-
-  /* =====================================
-     NO NOTIFICATIONS
-  ===================================== */
-
-  if (!notifications.length) {
-
-    container.innerHTML = `
-
-      <div class="empty">
-
-        🔔
-
-        <br><br>
-
-        No notifications yet.
-
-      </div>
-
-    `;
-
-
-    setStatus(
-      "Step 4: Notifications loaded.\n\n" +
-      "No notifications found for this account."
-    );
-
-
-    return;
-
-  }
-
-
-  /* =====================================
-     DISPLAY NOTIFICATIONS
-  ===================================== */
-
-  notifications.forEach(
-    function(notification) {
-
-      const div =
-        document.createElement(
-          "div"
-        );
-
-
-      div.className =
-        "notification";
-
-
-      if (
-        notification.read === false
-      ) {
-
-        div.classList.add(
-          "unread"
-        );
-
-      }
-
-
-      let dateText =
-        "Date unavailable";
-
-
-      if (
-        notification.created_at
-      ) {
-
-        const date =
-          new Date(
-            notification.created_at
-          );
-
-
-        if (
-          !isNaN(
-            date.getTime()
-          )
-        ) {
-
-          dateText =
-            date.toLocaleString();
-
-        }
-
-      }
-
-
-      let message =
-        notification.message ||
-        "New notification";
-
-
-      /*
-       * FOLLOW NOTIFICATION
-       */
-
-      if (
-        notification.type === "follow"
-        &&
-        !notification.message
-      ) {
-
-        message =
-          "Someone followed you";
-
-      }
-
-
-      div.innerHTML = `
-
-        <div class="notification-message">
-
-          🔔
-          ${safe(message)}
-
-        </div>
-
-        <div class="notification-time">
-
-          ${safe(dateText)}
-
-        </div>
-
-      `;
-
-
-      container.appendChild(
-        div
-      );
-
-    }
-  );
-
-
-  setStatus(
-    "Step 4: Notifications loaded successfully.\n\n" +
-   
+</body>
+</html>
