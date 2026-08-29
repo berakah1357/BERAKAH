@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BERAKAH - Social Feed</title>
+<title>BERAKAH - Feed</title>
 
 <style>
+
 * {
   box-sizing: border-box;
 }
@@ -21,7 +23,7 @@ body {
 header {
   background: white;
   border-bottom: 1px solid #e5e7eb;
-  padding: 15px 20px;
+  padding: 15px;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -31,9 +33,9 @@ header {
   max-width: 900px;
   margin: auto;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 15px;
+  align-items: center;
+  gap: 10px;
 }
 
 .logo {
@@ -44,21 +46,21 @@ header {
 
 .nav-buttons {
   display: flex;
-  gap: 8px;
+  gap: 7px;
   flex-wrap: wrap;
 }
 
 .nav-buttons button {
   border: 1px solid #d1d5db;
   background: white;
-  padding: 8px 12px;
+  padding: 8px 11px;
   border-radius: 7px;
   cursor: pointer;
 }
 
 .logout {
   background: #111827 !important;
-  color: white;
+  color: white !important;
 }
 
 main {
@@ -79,18 +81,17 @@ main {
 
 .composer h2 {
   margin-top: 0;
-  font-size: 20px;
 }
 
 textarea {
   width: 100%;
-  min-height: 100px;
+  min-height: 90px;
   resize: vertical;
-  padding: 13px;
+  padding: 12px;
   border: 1px solid #d1d5db;
   border-radius: 9px;
   font-size: 15px;
-  font-family: inherit;
+  font-family: Arial, sans-serif;
 }
 
 .image-input {
@@ -101,10 +102,11 @@ textarea {
   border-radius: 9px;
 }
 
-.post-button {
+.post-button,
+.comment-button {
   width: 100%;
-  margin-top: 12px;
-  padding: 13px;
+  margin-top: 10px;
+  padding: 12px;
   border: none;
   border-radius: 9px;
   background: #111827;
@@ -113,18 +115,18 @@ textarea {
   cursor: pointer;
 }
 
-.post-button:disabled {
+.post-button:disabled,
+.comment-button:disabled {
   opacity: 0.6;
 }
 
 .post-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   gap: 10px;
 }
 
-.user {
+.username {
   font-weight: bold;
 }
 
@@ -144,61 +146,50 @@ textarea {
   max-height: 450px;
   object-fit: cover;
   border-radius: 10px;
-  margin-top: 8px;
+  margin-bottom: 10px;
 }
 
 .actions {
-  display: flex;
-  gap: 10px;
   border-top: 1px solid #eee;
   padding-top: 12px;
+  display: flex;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .actions button {
   border: none;
   background: #f3f4f6;
-  padding: 9px 15px;
+  padding: 9px 13px;
   border-radius: 8px;
   cursor: pointer;
 }
 
-.like-button.liked {
-  background: #fee2e2;
+.liked {
+  background: #fee2e2 !important;
 }
 
 .delete {
-  margin-left: auto;
   color: #b91c1c !important;
+  margin-left: auto;
 }
 
-.comments-section {
+.comments {
   display: none;
-  margin-top: 15px;
-  padding-top: 15px;
   border-top: 1px solid #eee;
+  margin-top: 12px;
+  padding-top: 12px;
 }
 
-.comments-section.open {
+.comments.show {
   display: block;
-}
-
-.comments-title {
-  font-weight: bold;
-  margin-bottom: 12px;
 }
 
 .comment {
   background: #f9fafb;
-  border-radius: 9px;
   padding: 10px;
+  border-radius: 9px;
   margin-bottom: 8px;
-}
-
-.comment-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
 }
 
 .comment-user {
@@ -212,37 +203,27 @@ textarea {
 }
 
 .comment-text {
-  margin-top: 6px;
+  margin-top: 5px;
   white-space: pre-wrap;
-  line-height: 1.4;
 }
 
 .comment-delete {
   border: none;
   background: transparent;
   color: #b91c1c;
+  padding: 5px 0;
   cursor: pointer;
-  font-size: 12px;
-  padding: 0;
-  margin-top: 6px;
 }
 
-.comment-input {
-  width: 100%;
-  min-height: 60px;
-  margin-top: 10px;
-}
-
-.comment-submit {
-  width: 100%;
-  margin-top: 8px;
-  padding: 11px;
-  border: none;
-  border-radius: 8px;
-  background: #111827;
-  color: white;
+#message {
+  text-align: center;
   font-weight: bold;
-  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+#loading {
+  text-align: center;
+  padding: 20px;
 }
 
 .no-comments {
@@ -251,702 +232,1208 @@ textarea {
   margin-bottom: 10px;
 }
 
-#message {
-  text-align: center;
-  margin-bottom: 15px;
-  font-weight: bold;
-}
-
-#loading {
-  text-align: center;
-  padding: 20px;
-}
 </style>
+
 </head>
 
 <body>
 
 <header>
-  <div class="nav">
 
-    <div class="logo">
-      BERAKAH
-    </div>
+<div class="nav">
 
-    <div class="nav-buttons">
+<div class="logo">
+BERAKAH
+</div>
 
-      <button onclick="window.location.href='index.html'">
-        Home
-      </button>
+<div class="nav-buttons">
 
-      <button onclick="window.location.href='marketplace.html'">
-        Market
-      </button>
+<button onclick="location.href='index.html'">
+Home
+</button>
 
-      <button onclick="window.location.href='notifications.html'">
-        🔔
-      </button>
+<button onclick="location.href='marketplace.html'">
+Market
+</button>
 
-      <button class="logout" id="logoutButton">
-        Logout
-      </button>
+<button onclick="location.href='notifications.html'">
+🔔
+</button>
 
-    </div>
+<button class="logout" id="logoutButton">
+Logout
+</button>
 
-  </div>
+</div>
+
+</div>
+
 </header>
+
 
 <main>
 
-  <div class="composer">
 
-    <h2>Create a Post</h2>
+<div class="composer">
 
-    <textarea
-      id="postText"
-      placeholder="What's on your mind?"
-    ></textarea>
+<h2>Create a Post</h2>
 
-    <input
-      id="imageUrl"
-      class="image-input"
-      type="url"
-      placeholder="Optional image URL"
-    >
+<textarea
+id="postText"
+placeholder="What's on your mind?"
+></textarea>
 
-    <button
-      class="post-button"
-      id="postButton"
-    >
-      POST
-    </button>
+<input
+id="imageUrl"
+class="image-input"
+type="url"
+placeholder="Optional image URL"
+>
 
-  </div>
+<button
+id="postButton"
+class="post-button"
+>
+POST
+</button>
 
-  <div id="message"></div>
+</div>
 
-  <div id="loading">
-    Loading posts...
-  </div>
 
-  <div id="feed"></div>
+<div id="message"></div>
+
+<div id="loading">
+Loading posts...
+</div>
+
+<div id="feed"></div>
+
 
 </main>
 
+
 <script>
+
 
 const SUPABASE_URL =
 "https://utoyoglycqjmqznczfxa.supabase.co";
 
+
 const SUPABASE_ANON_KEY =
 "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+
 
 let accessToken =
 localStorage.getItem("berakah_access_token");
 
+
 let currentUser = null;
 
 
-/* LOGIN CHECK */
-
 if (!accessToken) {
-  window.location.href = "login.html";
-}
 
-
-/* HTML SAFETY */
-
-function escapeHtml(value) {
-
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+location.href = "login.html";
 
 }
 
 
-/* HEADERS */
+/* -------------------------
+   HEADERS
+------------------------- */
 
-function getHeaders(extra = {}) {
+function headers(extra) {
 
-  return {
-    "apikey": SUPABASE_ANON_KEY,
-    "Authorization": "Bearer " + accessToken,
-    ...extra
-  };
+return Object.assign({
+
+"apikey": SUPABASE_ANON_KEY,
+
+"Authorization":
+"Bearer " + accessToken
+
+}, extra || {});
 
 }
 
 
-/* CURRENT USER */
+/* -------------------------
+   HTML SAFETY
+------------------------- */
+
+function safe(value) {
+
+return String(value || "")
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+
+/* -------------------------
+   CURRENT USER
+------------------------- */
 
 async function getCurrentUser() {
 
-  try {
+try {
 
-    const response =
-      await fetch(
-        SUPABASE_URL + "/auth/v1/user",
-        {
-          headers: getHeaders()
-        }
-      );
+const response =
+await fetch(
 
-    if (!response.ok) {
-      throw new Error("Session expired");
-    }
+SUPABASE_URL +
+"/auth/v1/user",
 
-    currentUser =
-      await response.json();
+{
+headers: headers()
+}
 
-    return true;
+);
 
-  } catch (error) {
 
-    localStorage.clear();
+if (!response.ok) {
 
-    window.location.href =
-      "login.html";
-
-    return false;
-  }
+throw new Error(
+"Session expired."
+);
 
 }
 
 
-/* LOAD POSTS */
+currentUser =
+await response.json();
+
+
+return true;
+
+
+} catch(error) {
+
+localStorage.clear();
+
+location.href =
+"login.html";
+
+return false;
+
+}
+
+}
+
+
+/* -------------------------
+   LOAD POSTS
+------------------------- */
 
 async function loadPosts() {
 
-  const feed =
-    document.getElementById("feed");
+const loading =
+document.getElementById("loading");
 
-  const loading =
-    document.getElementById("loading");
+const feed =
+document.getElementById("feed");
 
-  try {
+const message =
+document.getElementById("message");
 
-    /* POSTS */
 
-    const postsResponse =
-      await fetch(
-        SUPABASE_URL +
-        "/rest/v1/posts?select=*&order=created_at.desc",
-        {
-          headers: getHeaders()
-        }
-      );
+try {
 
-    const postsText =
-      await postsResponse.text();
 
-    let posts = [];
+/* GET POSTS */
 
-    if (postsText.trim()) {
-      posts = JSON.parse(postsText);
-    }
+const postsResponse =
+await fetch(
 
-    if (!postsResponse.ok) {
-      throw new Error(
-        "Could not load posts."
-      );
-    }
+SUPABASE_URL +
+"/rest/v1/posts?select=*&order=created_at.desc",
 
+{
+headers: headers()
+}
 
-    /* LIKES */
+);
 
-    let likes = [];
 
-    const likesResponse =
-      await fetch(
-        SUPABASE_URL +
-        "/rest/v1/post_likes?select=post_id,user_id",
-        {
-          headers: getHeaders()
-        }
-      );
+const postsText =
+await postsResponse.text();
 
-    if (likesResponse.ok) {
 
-      const likesText =
-        await likesResponse.text();
+if (!postsResponse.ok) {
 
-      if (likesText.trim()) {
-        likes = JSON.parse(likesText);
-      }
-
-    }
-
-
-    /* COMMENTS */
-
-    let comments = [];
-
-    const commentsResponse =
-      await fetch(
-        SUPABASE_URL +
-        "/rest/v1/post_comments?select=*"+
-        "&order=created_at.asc",
-        {
-          headers: getHeaders()
-        }
-      );
-
-    if (commentsResponse.ok) {
-
-      const commentsText =
-        await commentsResponse.text();
-
-      if (commentsText.trim()) {
-        comments = JSON.parse(commentsText);
-      }
-
-    }
-
-
-    loading.style.display = "none";
-
-    feed.innerHTML = "";
-
-
-    if (!posts.length) {
-
-      feed.innerHTML =
-        "<div class='post'>No posts yet. Be the first to post!</div>";
-
-      return;
-
-    }
-
-
-    /* DISPLAY */
-
-    posts.forEach(function(post) {
-
-      const article =
-        document.createElement("div");
-
-      article.className = "post";
-
-
-      const postLikes =
-        likes.filter(function(like) {
-
-          return like.post_id === post.id;
-
-        });
-
-
-      const likedByMe =
-        postLikes.some(function(like) {
-
-          return like.user_id === currentUser.id;
-
-        });
-
-
-      const postComments =
-        comments.filter(function(comment) {
-
-          return comment.post_id === post.id;
-
-        });
-
-
-      const username =
-        post.username ||
-        "BERAKAH User";
-
-
-      const date =
-        new Date(post.created_at);
-
-
-      let commentsHtml = "";
-
-
-      if (postComments.length === 0) {
-
-        commentsHtml =
-          "<div class='no-comments'>No comments yet.</div>";
-
-      } else {
-
-        commentsHtml =
-          postComments.map(function(comment) {
-
-            const commentUsername =
-              comment.username ||
-              "BERAKAH User";
-
-            const commentDate =
-              new Date(comment.created_at);
-
-
-            const deleteButton =
-              comment.user_id === currentUser.id
-              ?
-              `
-              <button
-                class="comment-delete"
-                onclick="deleteComment('${comment.id}')"
-              >
-                Delete
-              </button>
-              `
-              :
-              "";
-
-
-            return `
-
-              <div class="comment">
-
-                <div class="comment-header">
-
-                  <div class="comment-user">
-                    ${escapeHtml(commentUsername)}
-                  </div>
-
-                  <div class="comment-time">
-                    ${commentDate.toLocaleString()}
-                  </div>
-
-                </div>
-
-                <div class="comment-text">
-                  ${escapeHtml(comment.content)}
-                </div>
-
-                ${deleteButton}
-
-              </div>
-
-            `;
-
-          }).join("");
-
-      }
-
-
-      article.innerHTML = `
-
-        <div class="post-header">
-
-          <div class="user">
-            ${escapeHtml(username)}
-          </div>
-
-          <div class="time">
-            ${date.toLocaleString()}
-          </div>
-
-        </div>
-
-
-        <div class="post-content">
-          ${escapeHtml(post.content || "")}
-        </div>
-
-
-        ${
-          post.image_url
-          ?
-          `
-          <img
-            class="post-image"
-            src="${escapeHtml(post.image_url)}"
-            alt="Post image"
-          >
-          `
-          :
-          ""
-        }
-
-
-        <div class="actions">
-
-          <button
-            class="like-button ${likedByMe ? "liked" : ""}"
-            onclick="likePost('${post.id}')"
-          >
-            ${likedByMe ? "❤️ Unlike" : "❤️ Like"}
-            (${postLikes.length})
-          </button>
-
-
-          <button
-            onclick="toggleComments('${post.id}')"
-          >
-            💬 Comments (${postComments.length})
-          </button>
-
-
-          ${
-            post.user_id === currentUser.id
-            ?
-            `
-            <button
-              class="delete"
-              onclick="deletePost('${post.id}')"
-            >
-              Delete
-            </button>
-            `
-            :
-            ""
-          }
-
-        </div>
-
-
-        <div
-          id="comments-${post.id}"
-          class="comments-section"
-        >
-
-          <div class="comments-title">
-            💬 Comments
-          </div>
-
-          <div>
-            ${commentsHtml}
-          </div>
-
-          <textarea
-            id="comment-input-${post.id}"
-            class="comment-input"
-            placeholder="Write a comment..."
-          ></textarea>
-
-          <button
-            class="comment-submit"
-            onclick="addComment('${post.id}')"
-          >
-            POST COMMENT
-          </button>
-
-        </div>
-
-      `;
-
-
-      feed.appendChild(article);
-
-    });
-
-
-  } catch (error) {
-
-    loading.style.display = "none";
-
-    document.getElementById("message")
-      .textContent =
-      error.message;
-
-  }
+throw new Error(
+postsText ||
+"Could not load posts."
+);
 
 }
 
 
-/* CREATE POST */
+let posts = [];
+
+if (postsText.trim()) {
+
+posts =
+JSON.parse(postsText);
+
+}
+
+
+/* GET LIKES */
+
+let likes = [];
+
+
+try {
+
+const likesResponse =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/post_likes?select=post_id,user_id",
+
+{
+headers: headers()
+}
+
+);
+
+
+if (likesResponse.ok) {
+
+const likesText =
+await likesResponse.text();
+
+if (likesText.trim()) {
+
+likes =
+JSON.parse(likesText);
+
+}
+
+}
+
+} catch(error) {
+
+console.log(
+"Likes could not load:",
+error
+);
+
+}
+
+
+/* GET COMMENTS */
+
+let comments = [];
+
+
+try {
+
+const commentsResponse =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/post_comments?select=*",
+
+{
+headers: headers()
+}
+
+);
+
+
+if (commentsResponse.ok) {
+
+const commentsText =
+await commentsResponse.text();
+
+if (commentsText.trim()) {
+
+comments =
+JSON.parse(commentsText);
+
+}
+
+}
+
+} catch(error) {
+
+console.log(
+"Comments could not load:",
+error
+);
+
+}
+
+
+/* STOP LOADING */
+
+loading.style.display =
+"none";
+
+
+feed.innerHTML = "";
+
+
+/* NO POSTS */
+
+if (!posts.length) {
+
+feed.innerHTML =
+
+"<div class='post'>" +
+"No posts yet. Be the first to post!" +
+"</div>";
+
+return;
+
+}
+
+
+/* DISPLAY POSTS */
+
+posts.forEach(function(post) {
+
+
+const article =
+document.createElement("div");
+
+
+article.className =
+"post";
+
+
+/* LIKES */
+
+const postLikes =
+likes.filter(function(like) {
+
+return like.post_id === post.id;
+
+});
+
+
+const likedByMe =
+postLikes.some(function(like) {
+
+return like.user_id ===
+currentUser.id;
+
+});
+
+
+/* COMMENTS */
+
+const postComments =
+comments.filter(function(comment) {
+
+return comment.post_id === post.id;
+
+});
+
+
+const username =
+post.username ||
+"BERAKAH User";
+
+
+const date =
+new Date(post.created_at);
+
+
+/* COMMENTS HTML */
+
+let commentsHTML = "";
+
+
+if (!postComments.length) {
+
+commentsHTML =
+"<div class='no-comments'>" +
+"No comments yet." +
+"</div>";
+
+} else {
+
+
+commentsHTML =
+postComments.map(function(comment) {
+
+
+const commentDelete =
+comment.user_id ===
+currentUser.id
+
+?
+
+"<button class='comment-delete' " +
+"onclick=\"deleteComment('" +
+comment.id +
+"')\">" +
+"Delete" +
+"</button>"
+
+:
+
+"";
+
+
+return `
+
+<div class="comment">
+
+<div class="comment-user">
+${safe(comment.username || "BERAKAH User")}
+</div>
+
+<div class="comment-time">
+${new Date(comment.created_at).toLocaleString()}
+</div>
+
+<div class="comment-text">
+${safe(comment.content)}
+</div>
+
+${commentDelete}
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+/* POST HTML */
+
+article.innerHTML = `
+
+<div class="post-header">
+
+<div class="username">
+${safe(username)}
+</div>
+
+<div class="time">
+${date.toLocaleString()}
+</div>
+
+</div>
+
+
+<div class="post-content">
+${safe(post.content)}
+</div>
+
+
+${
+post.image_url
+
+?
+
+`
+<img
+class="post-image"
+src="${safe(post.image_url)}"
+alt="Post image"
+>
+`
+
+:
+
+""
+}
+
+
+<div class="actions">
+
+
+<button
+class="${likedByMe ? "liked" : ""}"
+onclick="likePost('${post.id}')"
+>
+
+${likedByMe ? "❤️ Unlike" : "❤️ Like"}
+
+(${postLikes.length})
+
+</button>
+
+
+<button
+onclick="toggleComments('${post.id}')"
+>
+
+💬 Comments
+(${postComments.length})
+
+</button>
+
+
+${
+post.user_id === currentUser.id
+
+?
+
+`
+<button
+class="delete"
+onclick="deletePost('${post.id}')"
+>
+Delete
+</button>
+`
+
+:
+
+""
+}
+
+
+</div>
+
+
+<div
+id="comments-${post.id}"
+class="comments"
+>
+
+
+<strong>
+💬 Comments
+</strong>
+
+
+<div>
+
+${commentsHTML}
+
+</div>
+
+
+<textarea
+id="comment-${post.id}"
+placeholder="Write a comment..."
+></textarea>
+
+
+<button
+class="comment-button"
+onclick="addComment('${post.id}')"
+>
+POST COMMENT
+</button>
+
+
+</div>
+
+`;
+
+
+feed.appendChild(article);
+
+});
+
+
+} catch(error) {
+
+
+loading.style.display =
+"none";
+
+
+message.textContent =
+error.message;
+
+
+console.error(error);
+
+}
+
+}
+
+
+/* -------------------------
+   CREATE POST
+------------------------- */
 
 document
-  .getElementById("postButton")
-  .addEventListener(
-    "click",
-    async function() {
-
-      const text =
-        document.getElementById("postText")
-          .value.trim();
-
-      const imageUrl =
-        document.getElementById("imageUrl")
-          .value.trim();
-
-      const message =
-        document.getElementById("message");
+.getElementById("postButton")
+.addEventListener(
+"click",
+async function() {
 
 
-      if (!text) {
-
-        message.textContent =
-          "Please write something first.";
-
-        return;
-
-      }
+const text =
+document
+.getElementById("postText")
+.value
+.trim();
 
 
-      this.disabled = true;
-      this.textContent = "POSTING...";
+const imageUrl =
+document
+.getElementById("imageUrl")
+.value
+.trim();
 
 
-      try {
-
-        const response =
-          await fetch(
-            SUPABASE_URL +
-            "/rest/v1/posts",
-            {
-              method: "POST",
-
-              headers: getHeaders({
-                "Content-Type":
-                  "application/json",
-
-                "Prefer":
-                  "return=minimal"
-              }),
-
-              body: JSON.stringify({
-
-                user_id:
-                  currentUser.id,
-
-                username:
-                  currentUser.user_metadata?.username ||
-                  currentUser.email?.split("@")[0] ||
-                  "BERAKAH User",
-
-                content:
-                  text,
-
-                image_url:
-                  imageUrl || null
-
-              })
-
-            }
-          );
+const message =
+document.getElementById("message");
 
 
-        if (!response.ok) {
+if (!text) {
 
-          const errorText =
-            await response.text();
+message.textContent =
+"Please write something first.";
 
-          throw new Error(
-            errorText ||
-            "Could not create post."
-          );
+return;
 
-        }
+}
 
 
-        document.getElementById("postText")
-          .value = "";
+this.disabled = true;
 
-        document.getElementById("imageUrl")
-          .value = "";
-
-
-        message.textContent =
-          "Post published successfully!";
+this.textContent =
+"POSTING...";
 
 
-        await loadPosts();
+try {
 
 
-      } catch (error) {
+const response =
+await fetch(
 
-        message.textContent =
-          error.message;
+SUPABASE_URL +
+"/rest/v1/posts",
 
-      }
+{
+
+method: "POST",
+
+headers: headers({
+
+"Content-Type":
+"application/json",
+
+"Prefer":
+"return=minimal"
+
+}),
+
+body: JSON.stringify({
+
+user_id:
+currentUser.id,
+
+username:
+currentUser.user_metadata?.username ||
+currentUser.email?.split("@")[0] ||
+"BERAKAH User",
+
+content:
+text,
+
+image_url:
+imageUrl || null
+
+})
+
+}
+
+);
 
 
-      this.disabled = false;
-      this.textContent = "POST";
+if (!response.ok) {
 
-    }
-  );
+throw new Error(
+await response.text()
+);
+
+}
 
 
-/* LIKE / UNLIKE */
+document
+.getElementById("postText")
+.value = "";
+
+
+document
+.getElementById("imageUrl")
+.value = "";
+
+
+message.textContent =
+"Post published successfully!";
+
+
+await loadPosts();
+
+
+} catch(error) {
+
+message.textContent =
+error.message;
+
+}
+
+
+this.disabled = false;
+
+this.textContent =
+"POST";
+
+});
+
+
+/* -------------------------
+   LIKE / UNLIKE
+------------------------- */
 
 async function likePost(postId) {
 
-  try {
-
-    const checkResponse =
-      await fetch(
-        SUPABASE_URL +
-        "/rest/v1/post_likes" +
-        "?post_id=eq." +
-        encodeURIComponent(postId) +
-        "&user_id=eq." +
-        encodeURIComponent(currentUser.id),
-        {
-          headers: getHeaders()
-        }
-      );
+try {
 
 
-    const checkText =
-      await checkResponse.text();
+const check =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/post_likes" +
+"?post_id=eq." +
+encodeURIComponent(postId) +
+"&user_id=eq." +
+encodeURIComponent(currentUser.id),
+
+{
+headers: headers()
+}
+
+);
 
 
-    let existingLikes = [];
+const checkText =
+await check.text();
 
 
-    if (checkText.trim()) {
-      existingLikes =
-        JSON.parse(checkText);
-    }
+let existing = [];
 
 
-    /* UNLIKE */
+if (checkText.trim()) {
 
-    if (existingLikes.length > 0) {
+existing =
+JSON.parse(checkText);
 
-      const response =
-        await fetch(
-          SUPABASE_URL +
-          "/rest/v1/post_likes" +
-          "?post_id=eq." +
-          encodeURIComponent(postId) +
-          "&user_id=eq." +
-          encodeURIComponent(currentUser.id),
-          {
-            method: "DELETE",
-            headers: getHeaders()
-          }
-        );
+}
 
 
-      if (!response.ok) {
+/* UNLIKE */
 
-        throw new Error(
-          "Could not unlike post."
-        );
-
-      }
-
-    }
+if (existing.length) {
 
 
-    /* LIKE */
+const response =
+await fetch(
 
-    else {
+SUPABASE_URL +
+"/rest/v1/post_likes" +
+"?post_id=eq." +
+encodeURIComponent(postId) +
+"&user_id=eq." +
+encodeURIComponent(currentUser.id),
 
-      const response =
-        await fetch(
-          SUPABASE_URL +
-          "/rest/v1/post_likes",
-          {
-            method: "POST",
+{
 
-            headers: getHeaders({
-              "Content-Type":
-                "application/json",
+method: "DELETE",
 
-              "Prefer":
-                "return=minimal"
-            }),
+headers:
+headers()
 
-            body
+}
+
+);
+
+
+if (!response.ok) {
+
+throw new Error(
+"Could not unlike post."
+);
+
+}
+
+
+}
+
+
+/* LIKE */
+
+else {
+
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/post_likes",
+
+{
+
+method: "POST",
+
+headers: headers({
+
+"Content-Type":
+"application/json",
+
+"Prefer":
+"return=minimal"
+
+}),
+
+body: JSON.stringify({
+
+post_id:
+postId,
+
+user_id:
+currentUser.id
+
+})
+
+}
+
+);
+
+
+if (!response.ok) {
+
+throw new Error(
+await response.text()
+);
+
+}
+
+}
+
+
+await loadPosts();
+
+
+} catch(error) {
+
+alert(error.message);
+
+}
+
+}
+
+
+/* -------------------------
+   SHOW COMMENTS
+------------------------- */
+
+function toggleComments(postId) {
+
+const box =
+document.getElementById(
+"comments-" + postId
+);
+
+
+if (!box) return;
+
+
+box.classList.toggle("show");
+
+}
+
+
+/* -------------------------
+   ADD COMMENT
+------------------------- */
+
+async function addComment(postId) {
+
+
+const input =
+document.getElementById(
+"comment-" + postId
+);
+
+
+const content =
+input.value.trim();
+
+
+if (!content) {
+
+alert(
+"Please write a comment."
+);
+
+return;
+
+}
+
+
+try {
+
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/post_comments",
+
+{
+
+method: "POST",
+
+headers: headers({
+
+"Content-Type":
+"application/json",
+
+"Prefer":
+"return=minimal"
+
+}),
+
+body: JSON.stringify({
+
+post_id:
+postId,
+
+user_id:
+currentUser.id,
+
+username:
+currentUser.user_metadata?.username ||
+currentUser.email?.split("@")[0] ||
+"BERAKAH User",
+
+content:
+content
+
+})
+
+}
+
+);
+
+
+if (!response.ok) {
+
+throw new Error(
+await response.text()
+);
+
+}
+
+
+await loadPosts();
+
+
+const box =
+document.getElementById(
+"comments-" + postId
+);
+
+
+if (box) {
+
+box.classList.add("show");
+
+}
+
+
+} catch(error) {
+
+alert(error.message);
+
+}
+
+}
+
+
+/* -------------------------
+   DELETE COMMENT
+------------------------- */
+
+async function deleteComment(commentId) {
+
+
+if (!confirm(
+"Delete this comment?"
+)) {
+
+return;
+
+}
+
+
+try {
+
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/post_comments" +
+"?id=eq." +
+encodeURIComponent(commentId),
+
+{
+
+method: "DELETE",
+
+headers:
+headers()
+
+}
+
+);
+
+
+if (!response.ok) {
+
+throw new Error(
+await response.text()
+);
+
+}
+
+
+await loadPosts();
+
+
+} catch(error) {
+
+alert(error.message);
+
+}
+
+}
+
+
+/* -------------------------
+   DELETE POST
+------------------------- */
+
+async function deletePost(postId) {
+
+
+if (!confirm(
+"Delete this post?"
+)) {
+
+return;
+
+}
+
+
+try {
+
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/posts" +
+"?id=eq." +
+encodeURIComponent(postId),
+
+{
+
+method: "DELETE",
+
+headers:
+headers()
+
+}
+
+);
+
+
+if (!response.ok) {
+
+throw new Error(
+await response.text()
+);
+
+}
+
+
+await loadPosts();
+
+
+} catch(error) {
+
+alert(error.message);
+
+}
+
+}
+
+
+/* -------------------------
+   LOGOUT
+------------------------- */
+
+document
+.getElementById("logoutButton")
+.addEventListener(
+"click",
+function() {
+
+
+localStorage.removeItem(
+"berakah_access_token"
+);
+
+
+localStorage.removeItem(
+"berakah_refresh_token"
+);
+
+
+localStorage.removeItem(
+"berakah_user"
+);
+
+
+location.href =
+"login.html";
+
+});
+
+
+/* -------------------------
+   START
+------------------------- */
+
+(async function() {
+
+
+const loggedIn =
+await getCurrentUser();
+
+
+if (loggedIn) {
+
+await loadPosts();
+
+}
+
+
+})();
+
+
+</script>
+
+</body>
+</html>
