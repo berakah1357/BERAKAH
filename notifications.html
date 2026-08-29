@@ -1,117 +1,575 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BERAKAH - Notifications</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<title>BERAKAH - Notifications</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #1f2937;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    header {
-      background: white;
-      padding: 18px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #e5e7eb;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #111827;
+}
 
-    .logo {
-      font-size: 28px;
-      font-weight: bold;
-      letter-spacing: 3px;
-    }
+header {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
 
-    header a {
-      text-decoration: none;
-      color: #111827;
-      font-weight: bold;
-    }
+.nav {
+  max-width: 900px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
 
-    .container {
-      max-width: 800px;
-      margin: 35px auto;
-      padding: 15px;
-    }
+.logo {
+  font-size: 25px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
 
-    .card {
-      background: white;
-      padding: 25px;
-      border-radius: 18px;
-    }
+.nav-buttons {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
 
-    .notification {
-      padding: 18px;
-      border-bottom: 1px solid #e5e7eb;
-      line-height: 1.5;
-    }
+.nav-buttons button {
+  border: 1px solid #d1d5db;
+  background: white;
+  padding: 8px 11px;
+  border-radius: 7px;
+  cursor: pointer;
+}
 
-    .notification:last-child {
-      border-bottom: none;
-    }
+.logout {
+  background: #111827 !important;
+  color: white !important;
+}
 
-    .time {
-      color: #6b7280;
-      font-size: 13px;
-    }
+main {
+  max-width: 650px;
+  margin: 25px auto;
+  padding: 0 15px;
+}
 
-    .language {
-      color: #6b7280;
-      font-size: 14px;
-    }
-  </style>
+.container {
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 24px;
+}
+
+.notification {
+  padding: 16px 10px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.notification:last-child {
+  border-bottom: none;
+}
+
+.notification.unread {
+  background: #f3f4f6;
+}
+
+.notification-icon {
+  font-size: 22px;
+  margin-right: 8px;
+}
+
+.notification-message {
+  font-weight: 500;
+}
+
+.notification-time {
+  color: #6b7280;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.mark-read {
+  margin-top: 15px;
+  width: 100%;
+  padding: 11px;
+  border: none;
+  border-radius: 8px;
+  background: #111827;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#loading {
+  text-align: center;
+  padding: 25px;
+}
+
+#message {
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.empty {
+  text-align: center;
+  padding: 30px 10px;
+  color: #6b7280;
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <div class="logo">BERAKAH</div>
-    <a href="profile.html">PROFILE</a>
-  </header>
+<header>
 
-  <main class="container">
+<div class="nav">
 
-    <section class="card">
+<div class="logo">
+BERAKAH
+</div>
 
-      <h1>🔔 Notifications</h1>
+<div class="nav-buttons">
 
-      <p class="language">
-        Stay updated with activity on BERAKAH.
-      </p>
+<button onclick="location.href='index.html'">
+Home
+</button>
 
-      <div class="notification">
-        ❤️ <strong>BERAKAH Community</strong> liked your post.
-        <div class="time">Just now</div>
-      </div>
+<button onclick="location.href='feed.html'">
+Feed
+</button>
 
-      <div class="notification">
-        💬 <strong>BERAKAH User</strong> commented on your post.
-        <div class="time">5 minutes ago</div>
-      </div>
+<button class="logout" id="logoutButton">
+Logout
+</button>
 
-      <div class="notification">
-        👤 <strong>BERAKAH Community</strong> started following you.
-        <div class="time">10 minutes ago</div>
-      </div>
+</div>
 
-      <div class="notification">
-        🏪 <strong>BERAKAH Business</strong> posted a new product.
-        <div class="time">Today</div>
-      </div>
+</div>
 
-    </section>
+</header>
 
-  </main>
+
+<main>
+
+<div class="container">
+
+<h1>🔔 Notifications</h1>
+
+<div id="message"></div>
+
+<div id="loading">
+Loading notifications...
+</div>
+
+<div id="notifications"></div>
+
+<button
+id="markRead"
+class="mark-read"
+style="display:none;"
+>
+MARK ALL AS READ
+</button>
+
+</div>
+
+</main>
+
+
+<script>
+
+const SUPABASE_URL =
+"https://utoyoglycqjmqznczfxa.supabase.co";
+
+const SUPABASE_ANON_KEY =
+"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+
+let accessToken =
+localStorage.getItem("berakah_access_token");
+
+let currentUser = null;
+
+
+/* LOGIN */
+
+if (!accessToken) {
+  location.href = "login.html";
+}
+
+
+/* HEADERS */
+
+function headers(extra) {
+
+return Object.assign({
+
+"apikey": SUPABASE_ANON_KEY,
+
+"Authorization":
+"Bearer " + accessToken
+
+}, extra || {});
+
+}
+
+
+/* USER */
+
+async function getCurrentUser() {
+
+try {
+
+const response =
+await fetch(
+SUPABASE_URL + "/auth/v1/user",
+{
+headers: headers()
+}
+);
+
+if (!response.ok) {
+throw new Error("Session expired.");
+}
+
+currentUser =
+await response.json();
+
+return true;
+
+} catch(error) {
+
+localStorage.clear();
+
+location.href =
+"login.html";
+
+return false;
+
+}
+
+}
+
+
+/* ICON */
+
+function getIcon(type) {
+
+if (type === "like") {
+return "❤️";
+}
+
+if (type === "comment") {
+return "💬";
+}
+
+if (type === "follow") {
+return "👤";
+}
+
+if (type === "business") {
+return "🏪";
+}
+
+return "🔔";
+
+}
+
+
+/* LOAD */
+
+async function loadNotifications() {
+
+const loading =
+document.getElementById("loading");
+
+const container =
+document.getElementById("notifications");
+
+const message =
+document.getElementById("message");
+
+const markRead =
+document.getElementById("markRead");
+
+
+try {
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/notifications" +
+"?user_id=eq." +
+encodeURIComponent(currentUser.id) +
+"&select=*" +
+"&order=created_at.desc",
+
+{
+headers: headers()
+}
+
+);
+
+
+const text =
+await response.text();
+
+
+if (!response.ok) {
+
+throw new Error(
+text ||
+"Could not load notifications."
+);
+
+}
+
+
+let notifications = [];
+
+if (text.trim()) {
+notifications =
+JSON.parse(text);
+}
+
+
+loading.style.display =
+"none";
+
+container.innerHTML = "";
+
+
+/* EMPTY */
+
+if (!notifications.length) {
+
+container.innerHTML =
+
+"<div class='empty'>" +
+"🔔 No notifications yet." +
+"</div>";
+
+markRead.style.display =
+"none";
+
+return;
+
+}
+
+
+/* DISPLAY */
+
+let unreadExists = false;
+
+
+notifications.forEach(function(notification) {
+
+if (!notification.is_read) {
+unreadExists = true;
+}
+
+
+const item =
+document.createElement("div");
+
+item.className =
+"notification" +
+(notification.is_read
+? ""
+: " unread");
+
+
+const date =
+new Date(
+notification.created_at
+);
+
+
+item.innerHTML = `
+
+<div>
+
+<span class="notification-icon">
+${getIcon(notification.type)}
+</span>
+
+<span class="notification-message">
+${escapeHtml(notification.message)}
+</span>
+
+</div>
+
+<div class="notification-time">
+${date.toLocaleString()}
+</div>
+
+`;
+
+container.appendChild(item);
+
+});
+
+
+markRead.style.display =
+unreadExists
+? "block"
+: "none";
+
+
+} catch(error) {
+
+loading.style.display =
+"none";
+
+message.textContent =
+error.message;
+
+}
+
+}
+
+
+/* SAFETY */
+
+function escapeHtml(value) {
+
+return String(value || "")
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+
+/* MARK READ */
+
+document
+.getElementById("markRead")
+.addEventListener(
+"click",
+async function() {
+
+try {
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/notifications" +
+"?user_id=eq." +
+encodeURIComponent(currentUser.id) +
+"&is_read=eq.false",
+
+{
+
+method: "PATCH",
+
+headers: headers({
+
+"Content-Type":
+"application/json",
+
+"Prefer":
+"return=minimal"
+
+}),
+
+body: JSON.stringify({
+
+is_read: true
+
+})
+
+}
+
+);
+
+
+if (!response.ok) {
+
+throw new Error(
+await response.text()
+);
+
+}
+
+
+await loadNotifications();
+
+
+} catch(error) {
+
+alert(error.message);
+
+}
+
+});
+
+
+/* LOGOUT */
+
+document
+.getElementById("logoutButton")
+.addEventListener(
+"click",
+function() {
+
+localStorage.removeItem(
+"berakah_access_token"
+);
+
+localStorage.removeItem(
+"berakah_refresh_token"
+);
+
+localStorage.removeItem(
+"berakah_user"
+);
+
+location.href =
+"login.html";
+
+});
+
+
+/* START */
+
+(async function() {
+
+const loggedIn =
+await getCurrentUser();
+
+if (loggedIn) {
+
+await loadNotifications();
+
+}
+
+})();
+
+</script>
 
 </body>
 </html>
