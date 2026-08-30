@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
 
-<head>
+«»
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>BERAKAH - Profile</title>
-
-<style>
+<title>BERAKAH - Profile</title><style>
 
 * {
   box-sizing: border-box;
@@ -225,6 +221,7 @@ h1 {
 }
 
 .edit-box input,
+.edit-box textarea,
 .edit-box select {
   width: 100%;
   padding: 12px;
@@ -232,6 +229,11 @@ h1 {
   border-radius: 8px;
   font-size: 15px;
   font-family: Arial, sans-serif;
+}
+
+.edit-box textarea {
+  min-height: 110px;
+  resize: vertical;
 }
 
 .save-button,
@@ -321,23 +323,9 @@ h1 {
 
 }
 
-</style>
-
-</head>
-
-<body>
-
-<header>
-
-<div class="nav">
-
-<div class="logo">
+</style></head><body><header><div class="nav"><div class="logo">
 BERAKAH
-</div>
-
-<div class="nav-buttons">
-
-<a href="index.html">Home</a>
+</div><div class="nav-buttons"><a href="index.html">Home</a>
 
 <a href="feed.html">Feed</a>
 
@@ -353,120 +341,52 @@ id="logoutButton">
 Logout
 </button>
 
-</div>
-
-</div>
-
-</header>
-
-
-<main>
-
-<div
-id="loading"
-class="loading">
+</div></div></header><main><div
+  id="loading"
+  class="loading">
 Loading profile...
-</div>
-
-
-<div
-id="error"
-class="error">
-</div>
-
-
-<div
-id="profile"
-class="profile">
-
-
-<div class="cover"></div>
-
-
-<section class="profile-card">
-
-
-<div
-class="avatar"
-id="avatar">
+</div><div
+  id="error"
+  class="error">
+</div><div
+  id="profile"
+  class="profile"><div class="cover"></div><section class="profile-card"><div
+  class="avatar"
+  id="avatar">
 👤
-</div>
-
-
-<h1 id="profileName">
+</div><h1 id="profileName">
 BERAKAH User
-</h1>
-
-
-<div
-class="username"
-id="profileUsername">
+</h1><div
+  class="username"
+  id="profileUsername">
 @berakahuser
-</div>
-
-
-<div
-class="language"
-id="profileLanguage">
+</div><div
+  class="language"
+  id="profileLanguage">
 Language: —
-</div>
-
-
-<p
-class="bio"
-id="profileBio">
+</div><p
+  class="bio"
+  id="profileBio">
 Welcome to my BERAKAH profile.
 Connect, share, build, and grow together.
-</p>
-
-
-<div class="stats">
-
-<div class="stat">
-
-<strong id="followersCount">
+</p><div class="stats"><div class="stat"><strong id="followersCount">
 0
-</strong>
+</strong>Followers
 
-Followers
-
-</div>
-
-
-<div class="stat">
-
-<strong id="followingCount">
+</div><div class="stat"><strong id="followingCount">
 0
-</strong>
+</strong>Following
 
-Following
-
-</div>
-
-
-<div class="stat">
-
-<strong id="postsCount">
+</div><div class="stat"><strong id="postsCount">
 0
-</strong>
+</strong>Posts
 
-Posts
-
-</div>
-
-</div>
-
-
-<div class="buttons">
-
-
-<button
+</div></div><div class="buttons"><button
 id="followButton"
 class="action-button follow"
 style="display:none;">
 Follow
 </button>
-
 
 <button
 id="editButton"
@@ -475,13 +395,11 @@ style="display:none;">
 EDIT PROFILE
 </button>
 
-
 <button
-class="action-button secondary"
-onclick="location.href='messages.html'">
+id="messageButton"
+class="action-button secondary">
 💬 MESSAGES
 </button>
-
 
 <button
 class="action-button secondary"
@@ -489,76 +407,41 @@ onclick="location.href='notifications.html'">
 🔔 NOTIFICATIONS
 </button>
 
-
-<div id="status"></div>
-
-
-</div>
-
-
-<div
-id="editBox"
-class="edit-box">
-
-
-<h3>
+<div id="status"></div></div><div
+  id="editBox"
+  class="edit-box"><h3>
 Edit Your BERAKAH Profile
-</h3>
-
-
-<label for="editFullName">
+</h3><label for="editFullName">
 Full Name
-</label>
-
-<input
+</label><input
 type="text"
 id="editFullName"
 maxlength="100"
 placeholder="Enter your full name">
 
-
 <label for="editUsername">
 Username
-</label>
-
-<input
+</label><input
 type="text"
 id="editUsername"
 maxlength="50"
 placeholder="Enter username">
 
-
 <label for="editLanguage">
 Language
-</label>
-
-<select id="editLanguage">
-
-<option value="ht">
+</label><select id="editLanguage"><option value="ht">
 Haitian Creole
-</option>
-
-<option value="en">
+</option><option value="en">
 English
-</option>
-
-<option value="fr">
+</option><option value="fr">
 French
-</option>
-
-<option value="es">
+</option><option value="es">
 Spanish
-</option>
-
-</select>
-
-
-<button
+</option></select><button
 id="saveProfileButton"
 class="save-button">
 SAVE PROFILE
 </button>
-
 
 <button
 id="cancelEditButton"
@@ -566,40 +449,13 @@ class="cancel-button">
 CANCEL
 </button>
 
-
-<div id="editStatus"></div>
-
-
-</div>
-
-</section>
-
-
-<section class="posts">
-
-<h2>
+<div id="editStatus"></div></div></section><section class="posts"><h2>
 Posts
-</h2>
-
-<div id="postsList"></div>
-
-</section>
-
-
-</div>
-
-</main>
-
-
-<script>
+</h2><div id="postsList"></div></section></div></main><script>
 
 /* =========================================
    SUPABASE
 ========================================= */
-
-/*
-   CORRECT SUPABASE URL
-*/
 
 const SUPABASE_URL =
 "https://utoyoglycqjmqznczfxa.supabase.co";
@@ -628,9 +484,11 @@ let profileAuthUserId = null;
    HEADERS
 ========================================= */
 
-function headers(extra = {}) {
+function headers(extra) {
 
-return Object.assign({
+return Object.assign(
+
+{
 
 "apikey":
 SUPABASE_ANON_KEY,
@@ -638,7 +496,11 @@ SUPABASE_ANON_KEY,
 "Authorization":
 "Bearer " + accessToken
 
-}, extra);
+},
+
+extra || {}
+
+);
 
 }
 
@@ -650,10 +512,15 @@ SUPABASE_ANON_KEY,
 function safe(value) {
 
 return String(value ?? "")
+
 .replaceAll("&","&amp;")
+
 .replaceAll("<","&lt;")
+
 .replaceAll(">","&gt;")
+
 .replaceAll('"',"&quot;")
+
 .replaceAll("'","&#039;");
 
 }
@@ -694,7 +561,7 @@ message;
 
 
 /* =========================================
-   GET URL PROFILE ID
+   PROFILE ID FROM URL
 ========================================= */
 
 function getProfileId() {
@@ -710,18 +577,6 @@ return params.get("id");
 
 
 /* =========================================
-   CHECK UUID
-========================================= */
-
-function isUUID(value) {
-
-return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-.test(value);
-
-}
-
-
-/* =========================================
    CURRENT USER
 ========================================= */
 
@@ -730,7 +585,7 @@ async function getCurrentUser() {
 if (!accessToken) {
 
 throw new Error(
-"Your login session is missing. Please log in again."
+"Your BERAKAH login session is missing. Please log in again."
 );
 
 }
@@ -743,8 +598,12 @@ SUPABASE_URL +
 "/auth/v1/user",
 
 {
+
 method: "GET",
-headers: headers()
+
+headers:
+headers()
+
 }
 
 );
@@ -798,60 +657,53 @@ throw new Error(
 
 
 /*
- IMPORTANT FIX
+ IMPORTANT:
 
- People page sends:
+ The People page sends:
 
  profile.html?id=1
 
- profile.html?id=2
+ profiles.id is BIGINT.
 
- profile.html?id=3
+ Therefore this query MUST use
+ the numeric profiles.id.
 
- etc.
+ After finding the row, we get:
 
- Those are profiles.id values.
+ profiles.user_id
 
- But if another page sends a UUID,
- we search using user_id instead.
+ which is the UUID used for:
 
- This prevents:
-
- invalid input syntax for type bigint
+ posts
+ follows
+ messages
+ notifications
 */
 
 
-let url;
+const numericId =
+Number(requestedId);
 
 
-if (isUUID(requestedId)) {
+if (
+!Number.isInteger(numericId) ||
+numericId <= 0
+) {
 
-url =
-SUPABASE_URL +
-"/rest/v1/profiles" +
-"?select=id,created_at,\"Full name\",username,language,avatar_url,user_id" +
-"&user_id=eq." +
-encodeURIComponent(requestedId) +
-"&limit=1";
+throw new Error(
+"Invalid profile ID."
+);
 
 }
-else {
 
-url =
+
+const url =
 SUPABASE_URL +
 "/rest/v1/profiles" +
 "?select=id,created_at,\"Full name\",username,language,avatar_url,user_id" +
 "&id=eq." +
-encodeURIComponent(requestedId) +
+numericId +
 "&limit=1";
-
-}
-
-
-console.log(
-"PROFILE URL:",
-url
-);
 
 
 const response =
@@ -860,8 +712,12 @@ await fetch(
 url,
 
 {
+
 method: "GET",
-headers: headers()
+
+headers:
+headers()
+
 }
 
 );
@@ -871,16 +727,10 @@ const text =
 await response.text();
 
 
-console.log(
-"PROFILE RESPONSE:",
-text
-);
-
-
 if (!response.ok) {
 
 throw new Error(
-"Could not load profile:\n\n" +
+"Could not load profile: " +
 text
 );
 
@@ -921,8 +771,22 @@ profileAuthUserId =
 profileData.user_id;
 
 
+/*
+ Make sure this profile has
+ its authentication UUID.
+*/
+
+if (!profileAuthUserId) {
+
+throw new Error(
+"This profile does not have a user_id UUID."
+);
+
+}
+
+
 /* =========================================
-   DISPLAY PROFILE
+   DISPLAY NAME
 ========================================= */
 
 const fullName =
@@ -937,6 +801,10 @@ document.getElementById(
 fullName;
 
 
+/* =========================================
+   USERNAME
+========================================= */
+
 const username =
 profileData.username ||
 "berakahuser";
@@ -948,6 +816,10 @@ document.getElementById(
 "@" +
 username.toLowerCase();
 
+
+/* =========================================
+   LANGUAGE
+========================================= */
 
 const language =
 profileData.language ||
@@ -994,7 +866,7 @@ String(fullName)
 
 
 /* =========================================
-   LOAD POSTS
+   POSTS
 ========================================= */
 
 const posts =
@@ -1005,7 +877,7 @@ displayPosts(posts);
 
 
 /* =========================================
-   FOLLOW DATA
+   FOLLOW
 ========================================= */
 
 await loadFollowCounts();
@@ -1018,18 +890,28 @@ await updateFollowButton();
 ========================================= */
 
 if (
-
-profileAuthUserId &&
-
 String(profileAuthUserId) ===
 String(currentUser.id)
-
 ) {
 
 document.getElementById(
 "editButton"
 ).style.display =
 "inline-block";
+
+
+document.getElementById(
+"followButton"
+).style.display =
+"none";
+
+}
+else {
+
+document.getElementById(
+"editButton"
+).style.display =
+"none";
 
 }
 
@@ -1065,6 +947,15 @@ return [];
 }
 
 
+/*
+ IMPORTANT:
+
+ posts.user_id is UUID.
+
+ Use profiles.user_id,
+ NOT profiles.id.
+*/
+
 const url =
 SUPABASE_URL +
 "/rest/v1/posts" +
@@ -1076,20 +967,18 @@ profileAuthUserId
 "&order=created_at.desc";
 
 
-console.log(
-"POSTS URL:",
-url
-);
-
-
 const response =
 await fetch(
 
 url,
 
 {
+
 method: "GET",
-headers: headers()
+
+headers:
+headers()
+
 }
 
 );
@@ -1102,7 +991,7 @@ await response.text();
 if (!response.ok) {
 
 throw new Error(
-"Could not load posts:\n\n" +
+"Could not load posts: " +
 text
 );
 
@@ -1159,6 +1048,7 @@ return;
 
 
 posts.forEach(
+
 function(post) {
 
 const div =
@@ -1202,9 +1092,9 @@ if (post.image_url) {
 imageHTML = `
 
 <img
-class="post-image"
-src="${safe(post.image_url)}"
-alt="Post image">
+  class="post-image"
+  src="${safe(post.image_url)}"
+  alt="Post image">
 
 `;
 
@@ -1235,7 +1125,9 @@ onclick="location.href='feed.html'">
 `;
 
 
-list.appendChild(div);
+list.appendChild(
+div
+);
 
 });
 
@@ -1258,7 +1150,7 @@ return;
 /*
  Followers:
 
- following_id = profile owner
+ following_id = profile owner UUID
 */
 
 const followersResponse =
@@ -1273,8 +1165,12 @@ profileAuthUserId
 ),
 
 {
+
 method: "GET",
-headers: headers()
+
+headers:
+headers()
+
 }
 
 );
@@ -1287,7 +1183,7 @@ await followersResponse.text();
 if (!followersResponse.ok) {
 
 throw new Error(
-"Could not load followers:\n\n" +
+"Could not load followers: " +
 followersText
 );
 
@@ -1305,7 +1201,7 @@ JSON.parse(followersText)
 /*
  Following:
 
- follower_id = profile owner
+ follower_id = profile owner UUID
 */
 
 const followingResponse =
@@ -1320,8 +1216,12 @@ profileAuthUserId
 ),
 
 {
+
 method: "GET",
-headers: headers()
+
+headers:
+headers()
+
 }
 
 );
@@ -1334,7 +1234,7 @@ await followingResponse.text();
 if (!followingResponse.ok) {
 
 throw new Error(
-"Could not load following:\n\n" +
+"Could not load following: " +
 followingText
 );
 
@@ -1370,12 +1270,9 @@ following.length;
 async function checkFollowing() {
 
 if (
-
 !profileAuthUserId ||
-
 String(profileAuthUserId) ===
 String(currentUser.id)
-
 ) {
 
 return false;
@@ -1399,8 +1296,12 @@ profileAuthUserId
 ),
 
 {
+
 method: "GET",
-headers: headers()
+
+headers:
+headers()
+
 }
 
 );
@@ -1413,7 +1314,7 @@ await response.text();
 if (!response.ok) {
 
 throw new Error(
-"Could not check follow status:\n\n" +
+"Could not check follow status: " +
 text
 );
 
@@ -1433,7 +1334,7 @@ return JSON.parse(text).length > 0;
 
 
 /* =========================================
-   FOLLOW BUTTON
+   UPDATE FOLLOW BUTTON
 ========================================= */
 
 async function updateFollowButton() {
@@ -1445,12 +1346,9 @@ document.getElementById(
 
 
 if (
-
 !profileAuthUserId ||
-
 String(profileAuthUserId) ===
 String(currentUser.id)
-
 ) {
 
 button.style.display =
@@ -1474,6 +1372,7 @@ if (following) {
 button.textContent =
 "Following";
 
+
 button.className =
 "action-button following";
 
@@ -1482,6 +1381,7 @@ else {
 
 button.textContent =
 "Follow";
+
 
 button.className =
 "action-button follow";
@@ -1492,10 +1392,12 @@ button.className =
 
 
 /* =========================================
-   NOTIFICATION
+   FOLLOW NOTIFICATION
 ========================================= */
 
 async function createFollowNotification() {
+
+try {
 
 const actorName =
 currentUser.user_metadata?.username ||
@@ -1513,7 +1415,8 @@ SUPABASE_URL +
 
 method: "POST",
 
-headers: headers({
+headers:
+headers({
 
 "Content-Type":
 "application/json",
@@ -1544,16 +1447,20 @@ false
 
 })
 
+);
+
+
+return response.ok;
+
 }
+catch(error) {
 
+console.error(
+"NOTIFICATION ERROR:",
+error
 );
 
-
-if (!response.ok) {
-
-console.warn(
-"Notification could not be created."
-);
+return false;
 
 }
 
@@ -1605,8 +1512,12 @@ profileAuthUserId
 ),
 
 {
+
 method: "DELETE",
-headers: headers()
+
+headers:
+headers()
+
 }
 
 );
@@ -1619,8 +1530,8 @@ await response.text();
 if (!response.ok) {
 
 throw new Error(
-text ||
-"Could not unfollow."
+"Could not unfollow:\n\n" +
+text
 );
 
 }
@@ -1642,7 +1553,8 @@ SUPABASE_URL +
 
 method: "POST",
 
-headers: headers({
+headers:
+headers({
 
 "Content-Type":
 "application/json",
@@ -1675,8 +1587,8 @@ await response.text();
 if (!response.ok) {
 
 throw new Error(
-text ||
-"Could not follow."
+"Could not follow:\n\n" +
+text
 );
 
 }
@@ -1708,16 +1620,18 @@ status.textContent =
 error.message;
 
 }
-
+finally {
 
 button.disabled =
 false;
 
 }
 
+}
+
 
 /* =========================================
-   OPEN EDIT
+   OPEN EDIT PROFILE
 ========================================= */
 
 function openEditProfile() {
@@ -1761,7 +1675,10 @@ document.getElementById(
 
 
 editBox.scrollIntoView({
-behavior: "smooth"
+
+behavior:
+"smooth"
+
 });
 
 }
@@ -1808,13 +1725,15 @@ document.getElementById(
 const fullName =
 document.getElementById(
 "editFullName"
-).value.trim();
+).value
+.trim();
 
 
 const username =
 document.getElementById(
 "editUsername"
-).value.trim();
+).value
+.trim();
 
 
 const language =
@@ -1853,6 +1772,18 @@ editStatus.textContent =
 
 try {
 
+/*
+ IMPORTANT:
+
+ The profiles primary key is BIGINT.
+
+ Therefore update using:
+
+ id = profileDatabaseId
+
+ NOT user_id.
+*/
+
 const response =
 await fetch(
 
@@ -1867,7 +1798,8 @@ profileDatabaseId
 
 method: "PATCH",
 
-headers: headers({
+headers:
+headers({
 
 "Content-Type":
 "application/json",
@@ -1912,14 +1844,13 @@ text
 
 if (text.trim()) {
 
-const updated =
+const saved =
 JSON.parse(text);
 
-
-if (updated.length) {
+if (saved.length) {
 
 profileData =
-updated[0];
+saved[0];
 
 }
 
@@ -1950,15 +1881,11 @@ document.getElementById(
 language.toUpperCase();
 
 
-const avatar =
-document.getElementById(
-"avatar"
-);
-
-
 if (!profileData.avatar_url) {
 
-avatar.textContent =
+document.getElementById(
+"avatar"
+).textContent =
 fullName
 .charAt(0)
 .toUpperCase();
@@ -1971,6 +1898,7 @@ editStatus.textContent =
 
 
 setTimeout(
+
 function() {
 
 document.getElementById(
@@ -1983,7 +1911,9 @@ editStatus.textContent =
 "";
 
 },
+
 1200
+
 );
 
 }
@@ -1999,16 +1929,60 @@ editStatus.textContent =
 error.message;
 
 }
-
+finally {
 
 button.disabled =
 false;
 
 }
 
+}
+
 
 /* =========================================
-   EVENTS
+   OPEN MESSAGES
+========================================= */
+
+function openMessages() {
+
+if (!profileAuthUserId) {
+
+alert(
+"This profile cannot receive messages because its user_id is missing."
+);
+
+return;
+
+}
+
+
+/*
+ IMPORTANT:
+
+ Messages use:
+
+ profiles.user_id
+
+ which is a UUID.
+
+ NOT:
+
+ profiles.id
+
+ which is a BIGINT.
+*/
+
+window.location.href =
+"messages.html?id=" +
+encodeURIComponent(
+profileAuthUserId
+);
+
+}
+
+
+/* =========================================
+   BUTTON EVENTS
 ========================================= */
 
 document.getElementById(
@@ -2024,6 +1998,14 @@ document.getElementById(
 ).addEventListener(
 "click",
 openEditProfile
+);
+
+
+document.getElementById(
+"messageButton"
+).addEventListener(
+"click",
+openMessages
 );
 
 
@@ -2050,7 +2032,9 @@ saveProfile
 document.getElementById(
 "logoutButton"
 ).addEventListener(
+
 "click",
+
 function() {
 
 localStorage.removeItem(
@@ -2068,7 +2052,9 @@ localStorage.removeItem(
 location.href =
 "login.html";
 
-});
+}
+
+);
 
 
 /* =========================================
@@ -2093,12 +2079,6 @@ currentUser =
 await getCurrentUser();
 
 
-console.log(
-"CURRENT USER:",
-currentUser.id
-);
-
-
 await loadProfile();
 
 }
@@ -2121,8 +2101,4 @@ error.message
 
 start();
 
-</script>
-
-</body>
-
-</html>
+</script></body></html>
