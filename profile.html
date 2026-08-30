@@ -120,13 +120,6 @@ main {
   font-weight: bold;
   margin-top: -70px;
   border: 5px solid white;
-  overflow: hidden;
-}
-
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 h1 {
@@ -200,6 +193,64 @@ h1 {
   min-height: 20px;
 }
 
+.edit-box {
+  display: none;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  padding: 20px;
+  border-radius: 14px;
+  margin-top: 20px;
+}
+
+.edit-box h3 {
+  margin-top: 0;
+}
+
+.edit-box label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.edit-box input,
+.edit-box textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: Arial, sans-serif;
+}
+
+.edit-box textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.save-button {
+  background: #111827;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.cancel-button {
+  background: #e5e7eb;
+  color: #111827;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-left: 5px;
+}
+
 .posts {
   margin-top: 25px;
   background: white;
@@ -253,146 +304,11 @@ h1 {
   padding: 30px 10px;
 }
 
-
-/* =========================================
-   EDIT PROFILE
-========================================= */
-
-#editPanel {
-  display: none;
-  margin-top: 25px;
-}
-
-.edit-card {
-  background: white;
-  padding: 25px;
-  border-radius: 18px;
-}
-
-.edit-card h2 {
-  margin-top: 0;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 7px;
-}
-
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 16px;
-  font-family: Arial, sans-serif;
-}
-
-.form-group textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: #111827;
-}
-
-.photo-preview {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.edit-avatar {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  background: #e5e7eb;
-  margin: 0 auto 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  font-size: 45px;
-  font-weight: bold;
-}
-
-.edit-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.photo-label {
-  display: inline-block;
-  padding: 10px 15px;
-  background: #111827;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-#profilePhoto {
-  display: none;
-}
-
-.edit-buttons {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.save-button {
-  border: none;
-  background: #111827;
-  color: white;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.cancel-button {
-  border: none;
-  background: #e5e7eb;
-  color: #111827;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-#editMessage {
-  display: none;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  font-weight: bold;
-}
-
-.success {
-  background: #dcfce7;
-  color: #166534;
-}
-
-.edit-error {
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-
 @media (max-width: 600px) {
 
   .nav {
-    flex-direction: column;
     align-items: flex-start;
+    flex-direction: column;
   }
 
   .nav-buttons {
@@ -419,25 +335,15 @@ BERAKAH
 
 <div class="nav-buttons">
 
-<a href="index.html">
-Home
-</a>
+<a href="index.html">Home</a>
 
-<a href="feed.html">
-Feed
-</a>
+<a href="feed.html">Feed</a>
 
-<a href="people.html">
-👥 People
-</a>
+<a href="people.html">👥 People</a>
 
-<a href="marketplace.html">
-Market
-</a>
+<a href="marketplace.html">Market</a>
 
-<a href="notifications.html">
-🔔
-</a>
+<a href="notifications.html">🔔</a>
 
 <button
 class="logout"
@@ -454,11 +360,9 @@ Logout
 
 <main>
 
-
 <div id="loading">
 Loading profile...
 </div>
-
 
 <div id="error"></div>
 
@@ -504,11 +408,9 @@ Connect, share, build, and grow together.
 
 <div class="stats">
 
-
 <div class="stat">
 
-<strong
-id="followersCount">
+<strong id="followersCount">
 0
 </strong>
 
@@ -519,8 +421,7 @@ Followers
 
 <div class="stat">
 
-<strong
-id="followingCount">
+<strong id="followingCount">
 0
 </strong>
 
@@ -531,15 +432,13 @@ Following
 
 <div class="stat">
 
-<strong
-id="postsCount">
+<strong id="postsCount">
 0
 </strong>
 
 Posts
 
 </div>
-
 
 </div>
 
@@ -551,9 +450,7 @@ Posts
 id="followButton"
 class="action-button follow"
 style="display:none;">
-
 Follow
-
 </button>
 
 
@@ -561,27 +458,21 @@ Follow
 id="editButton"
 class="action-button primary"
 style="display:none;">
-
-✏️ EDIT PROFILE
-
+EDIT PROFILE
 </button>
 
 
 <button
 class="action-button secondary"
 onclick="location.href='messages.html'">
-
 💬 MESSAGES
-
 </button>
 
 
 <button
 class="action-button secondary"
 onclick="location.href='notifications.html'">
-
 🔔 NOTIFICATIONS
-
 </button>
 
 
@@ -590,148 +481,75 @@ onclick="location.href='notifications.html'">
 
 </div>
 
-</section>
 
-
-<!-- =====================================
-     EDIT PROFILE PANEL
-===================================== -->
-
-<div id="editPanel">
-
-<div class="edit-card">
-
-
-<h2>
-✏️ Edit Profile
-</h2>
-
-
-<div id="editMessage"></div>
-
-
-<!-- PHOTO -->
-
-<div class="photo-preview">
-
+<!-- EDIT PROFILE -->
 
 <div
-class="edit-avatar"
-id="editAvatar">
+id="editBox"
+class="edit-box"
+>
 
-👤
-
-</div>
-
-
-<label
-class="photo-label"
-for="profilePhoto">
-
-📷 Choose Profile Photo
-
-</label>
+<h3>
+Edit Your BERAKAH Profile
+</h3>
 
 
-<input
-type="file"
-id="profilePhoto"
-accept="image/*">
-
-</div>
-
-
-<!-- FULL NAME -->
-
-<div class="form-group">
-
-<label for="fullName">
-
+<label for="editFullName">
 Full Name
-
 </label>
-
 
 <input
 type="text"
-id="fullName"
+id="editFullName"
+placeholder="Enter your full name"
 maxlength="100"
-placeholder="Enter your full name">
+>
 
-</div>
-
-
-<!-- USERNAME -->
-
-<div class="form-group">
 
 <label for="editUsername">
-
 Username
-
 </label>
-
 
 <input
 type="text"
 id="editUsername"
+placeholder="Enter username"
 maxlength="50"
-placeholder="Enter your username">
+>
 
-</div>
-
-
-<!-- BIO -->
-
-<div class="form-group">
 
 <label for="editBio">
-
 Bio
-
 </label>
-
 
 <textarea
 id="editBio"
+placeholder="Tell people about yourself..."
 maxlength="500"
-placeholder="Tell people about yourself..."></textarea>
-
-</div>
-
-
-<div class="edit-buttons">
+></textarea>
 
 
 <button
-class="save-button"
-id="saveProfileButton">
-
-💾 SAVE CHANGES
-
+id="saveProfileButton"
+class="save-button">
+SAVE PROFILE
 </button>
 
 
 <button
-class="cancel-button"
-id="cancelEditButton">
-
+id="cancelEditButton"
+class="cancel-button">
 CANCEL
-
 </button>
 
 
-</div>
-
-
-</div>
+<div id="editStatus"></div>
 
 </div>
 
 
-<!-- =====================================
-     POSTS
-===================================== -->
+</section>
+
 
 <section class="posts">
 
@@ -748,19 +566,17 @@ Posts
 
 </div>
 
-
 </main>
 
 
 <script>
-
 
 /* =========================================
    SUPABASE
 ========================================= */
 
 const SUPABASE_URL =
-"https://utoyoglycqjmqznczfxa.supabase.co";
+"https://utoyoglycqjmqznczfxxa.supabase.co";
 
 const SUPABASE_ANON_KEY =
 "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
@@ -775,7 +591,7 @@ let currentUser = null;
 
 let profileUserId = null;
 
-let currentProfile = null;
+let profileData = null;
 
 
 /* =========================================
@@ -798,7 +614,7 @@ SUPABASE_ANON_KEY,
 
 
 /* =========================================
-   SAFE TEXT
+   SAFE
 ========================================= */
 
 function safe(value) {
@@ -825,19 +641,13 @@ document.getElementById(
 "none";
 
 document.getElementById(
-"profile"
-).style.display =
-"none";
-
-const error =
-document.getElementById(
 "error"
-);
-
-error.style.display =
+).style.display =
 "block";
 
-error.textContent =
+document.getElementById(
+"error"
+).textContent =
 message;
 
 }
@@ -865,8 +675,8 @@ SUPABASE_URL +
 "/auth/v1/user",
 
 {
-method: "GET",
-headers: headers()
+headers:
+headers()
 }
 
 );
@@ -876,28 +686,10 @@ const text =
 await response.text();
 
 
-console.log(
-"CURRENT USER:",
-text
-);
-
-
 if (!response.ok) {
-
-if (
-response.status === 401 ||
-response.status === 403
-) {
 
 throw new Error(
 "Your login session has expired. Please log in again."
-);
-
-}
-
-throw new Error(
-"Login error:\n" +
-text
 );
 
 }
@@ -930,30 +722,27 @@ return params.get("id");
 
 async function loadProfile() {
 
-
 const requestedId =
 getProfileId();
 
 
-/*
-If there is no ID,
-show the logged-in user's profile.
-*/
+if (!requestedId) {
 
-const targetId =
-requestedId ||
-currentUser.id;
-
-
-console.log(
-"PROFILE ID:",
-targetId
+throw new Error(
+"No profile ID was provided."
 );
 
+}
 
-/* =========================================
-   GET PROFILE
-========================================= */
+
+/* IMPORTANT:
+
+The People page must send the REAL
+Supabase UUID.
+
+Do NOT use 1, 2, 3, 4, 5.
+*/
+
 
 const response =
 await fetch(
@@ -962,12 +751,12 @@ SUPABASE_URL +
 "/rest/v1/profiles" +
 "?select=*" +
 "&id=eq." +
-encodeURIComponent(targetId) +
+encodeURIComponent(requestedId) +
 "&limit=1",
 
 {
-method: "GET",
-headers: headers()
+headers:
+headers()
 }
 
 );
@@ -975,12 +764,6 @@ headers: headers()
 
 const text =
 await response.text();
-
-
-console.log(
-"PROFILE RESPONSE:",
-text
-);
 
 
 if (!response.ok) {
@@ -1009,17 +792,17 @@ JSON.parse(text);
 if (!rows.length) {
 
 throw new Error(
-"Profile not found for this account."
+"Profile not found."
 );
 
 }
 
 
-currentProfile =
+profileData =
 rows[0];
 
 profileUserId =
-currentProfile.id;
+profileData.id;
 
 
 /* =========================================
@@ -1027,8 +810,9 @@ currentProfile.id;
 ========================================= */
 
 const fullName =
-currentProfile["Full name"] ||
-currentProfile.username ||
+profileData["Full name"] ||
+profileData.full_name ||
+profileData.username ||
 "BERAKAH User";
 
 
@@ -1043,7 +827,7 @@ fullName;
 ========================================= */
 
 const username =
-currentProfile.username ||
+profileData.username ||
 "berakahuser";
 
 
@@ -1051,74 +835,48 @@ document.getElementById(
 "profileUsername"
 ).textContent =
 "@" +
-username;
+username.toLowerCase();
 
 
 /* =========================================
    AVATAR
 ========================================= */
 
-setAvatar(
-currentProfile,
-"profileAvatar"
-);
-
-const avatar =
-document.getElementById(
-"avatar"
-);
-
-
-const avatarPhoto =
-currentProfile.avatar_url ||
-currentProfile.profile_photo ||
-currentProfile.photo_url ||
-"";
-
-
-if (avatarPhoto) {
-
-avatar.innerHTML = `
-
-<img
-src="${safe(avatarPhoto)}"
-alt="Profile photo">
-
-`;
-
-}
-else {
-
-avatar.textContent =
-fullName
+const firstLetter =
+String(fullName)
 .charAt(0)
 .toUpperCase();
 
-}
+
+document.getElementById(
+"avatar"
+).textContent =
+firstLetter || "B";
 
 
 /* =========================================
    BIO
 ========================================= */
 
+if (profileData.bio) {
+
 document.getElementById(
 "profileBio"
 ).textContent =
-currentProfile.bio ||
-"Welcome to my BERAKAH profile. Connect, share, build, and grow together.";
+profileData.bio;
+
+}
 
 
 /* =========================================
-   LOAD POSTS
+   POSTS
 ========================================= */
 
 const posts =
 await loadPosts();
 
 
-displayPosts(
-posts
-);
+displayPosts(posts);
 
 
 /* =========================================
@@ -1131,8 +889,21 @@ await updateFollowButton();
 
 
 /* =========================================
-   SHOW
+   EDIT PROFILE
 ========================================= */
+
+if (
+String(profileUserId) ===
+String(currentUser.id)
+) {
+
+document.getElementById(
+"editButton"
+).style.display =
+"inline-block";
+
+}
+
 
 document.getElementById(
 "loading"
@@ -1143,63 +914,6 @@ document.getElementById(
 "profile"
 ).style.display =
 "block";
-
-
-}
-
-
-/* =========================================
-   AVATAR HELPER
-========================================= */
-
-function setAvatar(
-profile,
-unused
-) {
-
-const fullName =
-profile["Full name"] ||
-profile.username ||
-"BERAKAH User";
-
-
-const photo =
-profile.avatar_url ||
-profile.profile_photo ||
-profile.photo_url ||
-"";
-
-
-const editAvatar =
-document.getElementById(
-"editAvatar"
-);
-
-
-if (!editAvatar) {
-return;
-}
-
-
-if (photo) {
-
-editAvatar.innerHTML = `
-
-<img
-src="${safe(photo)}"
-alt="Profile photo">
-
-`;
-
-}
-else {
-
-editAvatar.textContent =
-fullName
-.charAt(0)
-.toUpperCase();
-
-}
 
 }
 
@@ -1217,12 +931,14 @@ SUPABASE_URL +
 "/rest/v1/posts" +
 "?select=*" +
 "&user_id=eq." +
-encodeURIComponent(profileUserId) +
+encodeURIComponent(
+profileUserId
+) +
 "&order=created_at.desc",
 
 {
-method: "GET",
-headers: headers()
+headers:
+headers()
 }
 
 );
@@ -1230,12 +946,6 @@ headers: headers()
 
 const text =
 await response.text();
-
-
-console.log(
-"POSTS RESPONSE:",
-text
-);
 
 
 if (!response.ok) {
@@ -1266,13 +976,13 @@ return JSON.parse(text);
 
 function displayPosts(posts) {
 
-const postsList =
+const list =
 document.getElementById(
 "postsList"
 );
 
 
-postsList.innerHTML =
+list.innerHTML =
 "";
 
 
@@ -1284,12 +994,10 @@ posts.length;
 
 if (!posts.length) {
 
-postsList.innerHTML = `
+list.innerHTML = `
 
 <div class="empty">
-
 No posts yet.
-
 </div>
 
 `;
@@ -1323,7 +1031,6 @@ new Date(
 post.created_at
 );
 
-
 if (!isNaN(date.getTime())) {
 
 dateText =
@@ -1355,29 +1062,20 @@ alt="Post image">
 div.innerHTML = `
 
 <div class="post-time">
-
 ${safe(dateText)}
-
 </div>
-
 
 <div class="post-content">
-
 ${safe(post.content)}
-
 </div>
 
-
 ${imageHTML}
-
 
 <div class="post-actions">
 
 <button
 onclick="location.href='feed.html'">
-
 ❤️ Like
-
 </button>
 
 </div>
@@ -1385,9 +1083,7 @@ onclick="location.href='feed.html'">
 `;
 
 
-postsList.appendChild(
-div
-);
+list.appendChild(div);
 
 });
 
@@ -1401,8 +1097,6 @@ div
 async function loadFollowCounts() {
 
 
-/* FOLLOWERS */
-
 const followersResponse =
 await fetch(
 
@@ -1410,10 +1104,13 @@ SUPABASE_URL +
 "/rest/v1/follows" +
 "?select=id" +
 "&following_id=eq." +
-encodeURIComponent(profileUserId),
+encodeURIComponent(
+profileUserId
+),
 
 {
-headers: headers()
+headers:
+headers()
 }
 
 );
@@ -1433,20 +1130,13 @@ followersText
 }
 
 
-let followers = [];
+const followers =
+followersText.trim()
+?
+JSON.parse(followersText)
+:
+[];
 
-
-if (followersText.trim()) {
-
-followers =
-JSON.parse(
-followersText
-);
-
-}
-
-
-/* FOLLOWING */
 
 const followingResponse =
 await fetch(
@@ -1455,10 +1145,13 @@ SUPABASE_URL +
 "/rest/v1/follows" +
 "?select=id" +
 "&follower_id=eq." +
-encodeURIComponent(profileUserId),
+encodeURIComponent(
+profileUserId
+),
 
 {
-headers: headers()
+headers:
+headers()
 }
 
 );
@@ -1478,17 +1171,12 @@ followingText
 }
 
 
-let following = [];
-
-
-if (followingText.trim()) {
-
-following =
-JSON.parse(
-followingText
-);
-
-}
+const following =
+followingText.trim()
+?
+JSON.parse(followingText)
+:
+[];
 
 
 document.getElementById(
@@ -1506,7 +1194,7 @@ following.length;
 
 
 /* =========================================
-   CHECK FOLLOWING
+   CHECK FOLLOW
 ========================================= */
 
 async function checkFollowing() {
@@ -1528,12 +1216,17 @@ SUPABASE_URL +
 "/rest/v1/follows" +
 "?select=id" +
 "&follower_id=eq." +
-encodeURIComponent(currentUser.id) +
+encodeURIComponent(
+currentUser.id
+) +
 "&following_id=eq." +
-encodeURIComponent(profileUserId),
+encodeURIComponent(
+profileUserId
+),
 
 {
-headers: headers()
+headers:
+headers()
 }
 
 );
@@ -1560,11 +1253,7 @@ return false;
 }
 
 
-const rows =
-JSON.parse(text);
-
-
-return rows.length > 0;
+return JSON.parse(text).length > 0;
 
 }
 
@@ -1580,11 +1269,6 @@ document.getElementById(
 "followButton"
 );
 
-const editButton =
-document.getElementById(
-"editButton"
-);
-
 
 if (
 String(profileUserId) ===
@@ -1594,16 +1278,10 @@ String(currentUser.id)
 button.style.display =
 "none";
 
-editButton.style.display =
-"inline-block";
-
 return;
 
 }
 
-
-editButton.style.display =
-"none";
 
 button.style.display =
 "inline-block";
@@ -1655,9 +1333,11 @@ SUPABASE_URL +
 
 {
 
-method: "POST",
+method:
+"POST",
 
-headers: headers({
+headers:
+headers({
 
 "Content-Type":
 "application/json",
@@ -1693,14 +1373,7 @@ false
 );
 
 
-if (!response.ok) {
-
-console.error(
-"Notification error:",
-await response.text()
-);
-
-}
+return response.ok;
 
 }
 
@@ -1716,6 +1389,7 @@ document.getElementById(
 "followButton"
 );
 
+
 const status =
 document.getElementById(
 "status"
@@ -1728,13 +1402,11 @@ true;
 
 try {
 
-
 const following =
 await checkFollowing();
 
 
 if (following) {
-
 
 const response =
 await fetch(
@@ -1742,18 +1414,19 @@ await fetch(
 SUPABASE_URL +
 "/rest/v1/follows" +
 "?follower_id=eq." +
-encodeURIComponent(currentUser.id) +
+encodeURIComponent(
+currentUser.id
+) +
 "&following_id=eq." +
-encodeURIComponent(profileUserId),
+encodeURIComponent(
+profileUserId
+),
 
 {
-
 method:
 "DELETE",
-
 headers:
 headers()
-
 }
 
 );
@@ -1766,8 +1439,8 @@ await response.text();
 if (!response.ok) {
 
 throw new Error(
-"Could not unfollow:\n\n" +
-text
+text ||
+"Could not unfollow."
 );
 
 }
@@ -1778,7 +1451,6 @@ status.textContent =
 
 }
 else {
-
 
 const response =
 await fetch(
@@ -1825,8 +1497,8 @@ await response.text();
 if (!response.ok) {
 
 throw new Error(
-"Could not follow:\n\n" +
-text
+text ||
+"Could not follow."
 );
 
 }
@@ -1848,13 +1520,13 @@ await updateFollowButton();
 }
 catch(error) {
 
+status.textContent =
+error.message;
+
 console.error(
 "FOLLOW ERROR:",
 error
 );
-
-status.textContent =
-error.message;
 
 }
 
@@ -1871,91 +1543,39 @@ false;
 
 function openEditProfile() {
 
-if (
-String(profileUserId) !==
-String(currentUser.id)
-) {
-
-return;
-
-}
-
-
-const panel =
+const editBox =
 document.getElementById(
-"editPanel"
+"editBox"
 );
 
 
-panel.style.display =
+editBox.style.display =
 "block";
 
 
-/* FULL NAME */
-
 document.getElementById(
-"fullName"
+"editFullName"
 ).value =
-currentProfile["Full name"] || "";
+profileData["Full name"] ||
+profileData.full_name ||
+"";
 
-
-/* USERNAME */
 
 document.getElementById(
 "editUsername"
 ).value =
-currentProfile.username || "";
+profileData.username ||
+"";
 
-
-/* BIO */
 
 document.getElementById(
 "editBio"
 ).value =
-currentProfile.bio || "";
-
-
-/* PHOTO */
-
-const photo =
-currentProfile.avatar_url ||
-currentProfile.profile_photo ||
-currentProfile.photo_url ||
+profileData.bio ||
 "";
 
 
-const editAvatar =
-document.getElementById(
-"editAvatar"
-);
-
-
-if (photo) {
-
-editAvatar.innerHTML = `
-
-<img
-src="${safe(photo)}"
-alt="Profile photo">
-
-`;
-
-}
-else {
-
-const name =
-currentProfile["Full name"] ||
-currentProfile.username ||
-"BERAKAH";
-
-
-editAvatar.textContent =
-name.charAt(0).toUpperCase();
-
-}
-
-
-panel.scrollIntoView({
+editBox.scrollIntoView({
 behavior: "smooth"
 });
 
@@ -1963,102 +1583,20 @@ behavior: "smooth"
 
 
 /* =========================================
-   PHOTO PREVIEW
+   CANCEL EDIT
 ========================================= */
 
-document
-.getElementById(
-"profilePhoto"
-)
-.addEventListener(
-"change",
-function(event) {
-
-const file =
-event.target.files[0];
-
-
-if (!file) {
-return;
-}
-
-
-if (!file.type.startsWith("image/")) {
-
-showEditMessage(
-"Please choose an image file.",
-false
-);
-
-return;
-
-}
-
-
-if (
-file.size >
-5 * 1024 * 1024
-) {
-
-showEditMessage(
-"Photo must be smaller than 5 MB.",
-false
-);
-
-return;
-
-}
-
-
-const reader =
-new FileReader();
-
-
-reader.onload =
-function(e) {
+function cancelEdit() {
 
 document.getElementById(
-"editAvatar"
-).innerHTML = `
+"editBox"
+).style.display =
+"none";
 
-<img
-src="${e.target.result}"
-alt="Photo preview">
-
-`;
-
-};
-
-
-reader.readAsDataURL(file);
-
-});
-
-
-/* =========================================
-   EDIT MESSAGE
-========================================= */
-
-function showEditMessage(
-message,
-success
-) {
-
-const box =
 document.getElementById(
-"editMessage"
-);
-
-box.textContent =
-message;
-
-box.className =
-success ?
-"success" :
-"edit-error";
-
-box.style.display =
-"block";
+"editStatus"
+).textContent =
+"";
 
 }
 
@@ -2075,23 +1613,19 @@ document.getElementById(
 );
 
 
-button.disabled =
-true;
-
-button.textContent =
-"Saving...";
-
-
-try {
+const status =
+document.getElementById(
+"editStatus"
+);
 
 
 const fullName =
 document.getElementById(
-"fullName"
+"editFullName"
 ).value.trim();
 
 
-let username =
+const username =
 document.getElementById(
 "editUsername"
 ).value.trim();
@@ -2103,60 +1637,39 @@ document.getElementById(
 ).value.trim();
 
 
-/* REMOVE @ */
+if (!fullName) {
 
-username =
-username.replace(/^@/, "");
+status.textContent =
+"Please enter your full name.";
 
+return;
 
-/* VALIDATE */
+}
+
 
 if (!username) {
 
-throw new Error(
-"Username is required."
-);
+status.textContent =
+"Please enter your username.";
+
+return;
 
 }
 
 
-if (username.length < 3) {
+button.disabled =
+true;
 
-throw new Error(
-"Username must be at least 3 characters."
-);
-
-}
+status.textContent =
+"Saving...";
 
 
-if (
-!/^[a-zA-Z0-9_]+$/.test(username)
-) {
-
-throw new Error(
-"Username can only contain letters, numbers, and underscores."
-);
-
-}
+try {
 
 
 /* =========================================
-   UPDATE PROFILE
+   UPDATE PROFILES TABLE
 ========================================= */
-
-const updateData = {
-
-"Full name":
-fullName,
-
-username:
-username,
-
-bio:
-bio
-
-};
-
 
 const response =
 await fetch(
@@ -2164,7 +1677,9 @@ await fetch(
 SUPABASE_URL +
 "/rest/v1/profiles" +
 "?id=eq." +
-encodeURIComponent(currentUser.id),
+encodeURIComponent(
+profileUserId
+),
 
 {
 
@@ -2183,9 +1698,18 @@ headers({
 }),
 
 body:
-JSON.stringify(
-updateData
-)
+JSON.stringify({
+
+"Full name":
+fullName,
+
+username:
+username,
+
+bio:
+bio
+
+})
 
 }
 
@@ -2194,12 +1718,6 @@ updateData
 
 const text =
 await response.text();
-
-
-console.log(
-"SAVE PROFILE:",
-text
-);
 
 
 if (!response.ok) {
@@ -2212,39 +1730,30 @@ text
 }
 
 
-if (!text.trim()) {
+if (text.trim()) {
 
-throw new Error(
-"Profile was not updated. Check your Supabase RLS policy."
-);
+profileData =
+JSON.parse(text)[0] ||
+profileData;
 
 }
 
 
 /* =========================================
-   UPDATE LOCAL PROFILE
-========================================= */
-
-currentProfile =
-JSON.parse(text)[0];
-
-
-/* =========================================
-   UPDATE PAGE IMMEDIATELY
+   UPDATE SCREEN
 ========================================= */
 
 document.getElementById(
 "profileName"
 ).textContent =
-fullName ||
-username;
+fullName;
 
 
 document.getElementById(
 "profileUsername"
 ).textContent =
 "@" +
-username;
+username.toLowerCase();
 
 
 document.getElementById(
@@ -2254,146 +1763,86 @@ bio ||
 "Welcome to my BERAKAH profile. Connect, share, build, and grow together.";
 
 
-/* AVATAR */
-
-const avatar =
 document.getElementById(
 "avatar"
-);
-
-
-avatar.textContent =
-(
-fullName ||
-username
-)
+).textContent =
+fullName
 .charAt(0)
 .toUpperCase();
 
 
-const editAvatar =
-document.getElementById(
-"editAvatar"
-);
+status.textContent =
+"Profile saved successfully!";
 
 
-editAvatar.textContent =
-(
-fullName ||
-username
-)
-.charAt(0)
-.toUpperCase();
-
-
-/* =========================================
-   CLOSE EDITOR
-========================================= */
+setTimeout(
+function() {
 
 document.getElementById(
-"editPanel"
+"editBox"
 ).style.display =
 "none";
 
+status.textContent =
+"";
 
-showEditMessage(
-"",
-true
+},
+1200
 );
-
-
-document.getElementById(
-"status"
-).textContent =
-"Profile updated successfully! ✅";
-
 
 }
 catch(error) {
 
 console.error(
-"SAVE ERROR:",
+"SAVE PROFILE ERROR:",
 error
 );
 
-showEditMessage(
-error.message,
-false
-);
+status.textContent =
+error.message;
 
 }
-finally {
+
 
 button.disabled =
 false;
-
-button.textContent =
-"💾 SAVE CHANGES";
-
-}
 
 }
 
 
 /* =========================================
-   EDIT BUTTON
+   BUTTON EVENTS
 ========================================= */
 
-document
-.getElementById(
+document.getElementById(
+"followButton"
+).addEventListener(
+"click",
+toggleFollow
+);
+
+
+document.getElementById(
 "editButton"
-)
-.addEventListener(
+).addEventListener(
 "click",
 openEditProfile
 );
 
 
-/* =========================================
-   SAVE BUTTON
-========================================= */
-
-document
-.getElementById(
-"saveProfileButton"
-)
-.addEventListener(
+document.getElementById(
+"cancelEditButton"
+).addEventListener(
 "click",
-saveProfile
+cancelEdit
 );
 
 
-/* =========================================
-   CANCEL EDIT
-========================================= */
-
-document
-.getElementById(
-"cancelEditButton"
-)
-.addEventListener(
-"click",
-function() {
-
 document.getElementById(
-"editPanel"
-).style.display =
-"none";
-
-});
-
-
-/* =========================================
-   FOLLOW BUTTON
-========================================= */
-
-document
-.getElementById(
-"followButton"
-)
-.addEventListener(
+"saveProfileButton"
+).addEventListener(
 "click",
-toggleFollow
+saveProfile
 );
 
 
@@ -2401,11 +1850,9 @@ toggleFollow
    LOGOUT
 ========================================= */
 
-document
-.getElementById(
+document.getElementById(
 "logoutButton"
-)
-.addEventListener(
+).addEventListener(
 "click",
 function() {
 
@@ -2435,7 +1882,6 @@ async function start() {
 
 try {
 
-
 if (!accessToken) {
 
 location.href =
@@ -2450,14 +1896,7 @@ currentUser =
 await getCurrentUser();
 
 
-console.log(
-"BERAKAH LOGGED USER UUID:",
-currentUser.id
-);
-
-
 await loadProfile();
-
 
 }
 catch(error) {
