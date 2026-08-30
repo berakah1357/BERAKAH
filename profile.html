@@ -225,7 +225,6 @@ h1 {
 }
 
 .edit-box input,
-.edit-box textarea,
 .edit-box select {
   width: 100%;
   padding: 12px;
@@ -233,11 +232,6 @@ h1 {
   border-radius: 8px;
   font-size: 15px;
   font-family: Arial, sans-serif;
-}
-
-.edit-box textarea {
-  min-height: 110px;
-  resize: vertical;
 }
 
 .save-button,
@@ -365,6 +359,7 @@ Logout
 
 </header>
 
+
 <main>
 
 <div
@@ -373,18 +368,23 @@ class="loading">
 Loading profile...
 </div>
 
+
 <div
 id="error"
 class="error">
 </div>
 
+
 <div
 id="profile"
 class="profile">
 
+
 <div class="cover"></div>
 
+
 <section class="profile-card">
+
 
 <div
 class="avatar"
@@ -392,9 +392,11 @@ id="avatar">
 👤
 </div>
 
+
 <h1 id="profileName">
 BERAKAH User
 </h1>
+
 
 <div
 class="username"
@@ -402,77 +404,119 @@ id="profileUsername">
 @berakahuser
 </div>
 
+
 <div
 class="language"
 id="profileLanguage">
 Language: —
 </div>
 
+
 <p
 class="bio"
 id="profileBio">
+
 Welcome to my BERAKAH profile.
 Connect, share, build, and grow together.
+
 </p>
+
 
 <div class="stats">
 
+
 <div class="stat">
-<strong id="followersCount">0</strong>
+
+<strong id="followersCount">
+0
+</strong>
+
 Followers
+
 </div>
 
+
 <div class="stat">
-<strong id="followingCount">0</strong>
+
+<strong id="followingCount">
+0
+</strong>
+
 Following
+
 </div>
+
 
 <div class="stat">
-<strong id="postsCount">0</strong>
+
+<strong id="postsCount">
+0
+</strong>
+
 Posts
-</div>
 
 </div>
+
+
+</div>
+
 
 <div class="buttons">
+
 
 <button
 id="followButton"
 class="action-button follow"
 style="display:none;">
+
 Follow
+
 </button>
+
 
 <button
 id="editButton"
 class="action-button primary"
 style="display:none;">
+
 EDIT PROFILE
+
 </button>
+
 
 <button
 class="action-button secondary"
 onclick="location.href='messages.html'">
+
 💬 MESSAGES
+
 </button>
+
 
 <button
 class="action-button secondary"
 onclick="location.href='notifications.html'">
+
 🔔 NOTIFICATIONS
+
 </button>
+
 
 <div id="status"></div>
 
+
 </div>
+
 
 <div
 id="editBox"
 class="edit-box">
 
+
 <h3>
 Edit Your BERAKAH Profile
 </h3>
+
 
 <label for="editFullName">
 Full Name
@@ -484,6 +528,7 @@ id="editFullName"
 maxlength="100"
 placeholder="Enter your full name">
 
+
 <label for="editUsername">
 Username
 </label>
@@ -494,59 +539,95 @@ id="editUsername"
 maxlength="50"
 placeholder="Enter username">
 
+
 <label for="editLanguage">
 Language
 </label>
 
 <select id="editLanguage">
 
-<option value="ht">Haitian Creole</option>
-<option value="en">English</option>
-<option value="fr">French</option>
-<option value="es">Spanish</option>
+<option value="ht">
+Haitian Creole
+</option>
+
+<option value="en">
+English
+</option>
+
+<option value="fr">
+French
+</option>
+
+<option value="es">
+Spanish
+</option>
 
 </select>
+
 
 <button
 id="saveProfileButton"
 class="save-button">
+
 SAVE PROFILE
+
 </button>
+
 
 <button
 id="cancelEditButton"
 class="cancel-button">
+
 CANCEL
+
 </button>
+
 
 <div id="editStatus"></div>
 
+
 </div>
+
 
 </section>
 
+
 <section class="posts">
+
 
 <h2>
 Posts
 </h2>
 
+
 <div id="postsList"></div>
 
+
 </section>
+
 
 </div>
 
 </main>
 
+
 <script>
 
-/* =========================================
-   SUPABASE
-========================================= */
+
+/* =====================================================
+   BERAKAH SUPABASE
+===================================================== */
+
+
+/*
+ IMPORTANT:
+
+ This is the correct Supabase project URL.
+*/
 
 const SUPABASE_URL =
-"https://utoyoglycqjmqznczfxxa.supabase.co";
+"https://utoyoglycqjmqznczfxa.supabase.co";
+
 
 const SUPABASE_ANON_KEY =
 "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
@@ -559,16 +640,19 @@ localStorage.getItem(
 
 
 let currentUser = null;
+
 let profileData = null;
+
 let profileDatabaseId = null;
+
 let profileAuthUserId = null;
 
 
-/* =========================================
+/* =====================================================
    HEADERS
-========================================= */
+===================================================== */
 
-function headers(extra) {
+function getHeaders(extra = {}) {
 
 return Object.assign({
 
@@ -578,30 +662,35 @@ SUPABASE_ANON_KEY,
 "Authorization":
 "Bearer " + accessToken
 
-}, extra || {});
+}, extra);
 
 }
 
 
-/* =========================================
-   SAFE
-========================================= */
+/* =====================================================
+   SAFE TEXT
+===================================================== */
 
 function safe(value) {
 
 return String(value ?? "")
+
 .replaceAll("&","&amp;")
+
 .replaceAll("<","&lt;")
+
 .replaceAll(">","&gt;")
+
 .replaceAll('"',"&quot;")
+
 .replaceAll("'","&#039;");
 
 }
 
 
-/* =========================================
-   SHOW ERROR
-========================================= */
+/* =====================================================
+   ERROR
+===================================================== */
 
 function showError(message) {
 
@@ -610,18 +699,22 @@ document.getElementById(
 ).style.display =
 "none";
 
+
 document.getElementById(
 "profile"
 ).style.display =
 "none";
+
 
 const error =
 document.getElementById(
 "error"
 );
 
+
 error.style.display =
 "block";
+
 
 error.textContent =
 message;
@@ -629,9 +722,9 @@ message;
 }
 
 
-/* =========================================
-   GET PROFILE ID
-========================================= */
+/* =====================================================
+   PROFILE ID FROM URL
+===================================================== */
 
 function getProfileId() {
 
@@ -645,9 +738,9 @@ return params.get("id");
 }
 
 
-/* =========================================
+/* =====================================================
    CURRENT USER
-========================================= */
+===================================================== */
 
 async function getCurrentUser() {
 
@@ -659,6 +752,7 @@ throw new Error(
 
 }
 
+
 const response =
 await fetch(
 
@@ -666,14 +760,20 @@ SUPABASE_URL +
 "/auth/v1/user",
 
 {
+
 method: "GET",
-headers: headers()
+
+headers:
+getHeaders()
+
 }
 
 );
 
+
 const text =
 await response.text();
+
 
 if (!response.ok) {
 
@@ -684,6 +784,7 @@ text
 
 }
 
+
 if (!text.trim()) {
 
 throw new Error(
@@ -692,14 +793,15 @@ throw new Error(
 
 }
 
+
 return JSON.parse(text);
 
 }
 
 
-/* =========================================
+/* =====================================================
    LOAD PROFILE
-========================================= */
+===================================================== */
 
 async function loadProfile() {
 
@@ -717,25 +819,26 @@ throw new Error(
 
 
 /*
- IMPORTANT:
+ IMPORTANT DATABASE STRUCTURE:
 
- People.html uses the numeric profiles.id.
+ profiles.id       = numeric ID
+ profiles.user_id  = AUTH UUID
 
  Example:
 
- profile.html?id=1
+ id = 1
 
- But follows and posts use UUIDs.
+ user_id =
+2cac98ef-d552-4a6d-a620-9dad4bf07928
 
- Therefore:
 
- profiles.id
-        ↓
-        profile row
-        ↓
-profiles.user_id
-        ↓
-UUID used by posts/follows
+We use profiles.id ONLY to find the profile.
+
+After that we use user_id for:
+
+POSTS
+FOLLOWS
+NOTIFICATIONS
 */
 
 
@@ -754,8 +857,12 @@ await fetch(
 url,
 
 {
+
 method: "GET",
-headers: headers()
+
+headers:
+getHeaders()
+
 }
 
 );
@@ -763,6 +870,12 @@ headers: headers()
 
 const text =
 await response.text();
+
+
+console.log(
+"PROFILE RESPONSE:",
+text
+);
 
 
 if (!response.ok) {
@@ -809,9 +922,9 @@ profileAuthUserId =
 profileData.user_id;
 
 
-/* =========================================
-   DISPLAY NAME
-========================================= */
+/* =====================================================
+   FULL NAME
+===================================================== */
 
 const fullName =
 profileData["Full name"] ||
@@ -825,9 +938,9 @@ document.getElementById(
 fullName;
 
 
-/* =========================================
+/* =====================================================
    USERNAME
-========================================= */
+===================================================== */
 
 const username =
 profileData.username ||
@@ -841,9 +954,9 @@ document.getElementById(
 username.toLowerCase();
 
 
-/* =========================================
+/* =====================================================
    LANGUAGE
-========================================= */
+===================================================== */
 
 const language =
 profileData.language ||
@@ -857,9 +970,9 @@ document.getElementById(
 language.toUpperCase();
 
 
-/* =========================================
+/* =====================================================
    AVATAR
-========================================= */
+===================================================== */
 
 const avatar =
 document.getElementById(
@@ -881,7 +994,7 @@ alt="Profile picture">
 else {
 
 avatar.textContent =
-String(fullName)
+fullName
 .charAt(0)
 .toUpperCase() ||
 "B";
@@ -889,9 +1002,9 @@ String(fullName)
 }
 
 
-/* =========================================
+/* =====================================================
    LOAD POSTS
-========================================= */
+===================================================== */
 
 const posts =
 await loadPosts();
@@ -900,44 +1013,27 @@ await loadPosts();
 displayPosts(posts);
 
 
-/* =========================================
-   FOLLOW
-========================================= */
+/* =====================================================
+   FOLLOW INFORMATION
+===================================================== */
 
 await loadFollowCounts();
 
 await updateFollowButton();
 
 
-/* =========================================
+/* =====================================================
    OWNER CHECK
-========================================= */
-
-/*
- IMPORTANT FIX:
-
- Do NOT compare:
-
- profiles.id
-
- with
-
- auth user UUID.
-
- Instead compare:
-
- profiles.user_id
-
- with
-
- auth user UUID.
-*/
-
+===================================================== */
 
 if (
+
 profileAuthUserId &&
+
 String(profileAuthUserId) ===
+
 String(currentUser.id)
+
 ) {
 
 document.getElementById(
@@ -948,14 +1044,15 @@ document.getElementById(
 }
 
 
-/* =========================================
-   SHOW PROFILE
-========================================= */
+/* =====================================================
+   SHOW
+===================================================== */
 
 document.getElementById(
 "loading"
 ).style.display =
 "none";
+
 
 document.getElementById(
 "profile"
@@ -965,9 +1062,9 @@ document.getElementById(
 }
 
 
-/* =========================================
+/* =====================================================
    LOAD POSTS
-========================================= */
+===================================================== */
 
 async function loadPosts() {
 
@@ -979,9 +1076,11 @@ return [];
 
 
 /*
- Posts use the AUTH UUID.
+ IMPORTANT:
 
- NOT profiles.id.
+ posts.user_id is UUID.
+
+ We DO NOT use profiles.id here.
 */
 
 const url =
@@ -995,14 +1094,24 @@ profileAuthUserId
 "&order=created_at.desc";
 
 
+console.log(
+"POSTS URL:",
+url
+);
+
+
 const response =
 await fetch(
 
 url,
 
 {
+
 method: "GET",
-headers: headers()
+
+headers:
+getHeaders()
+
 }
 
 );
@@ -1010,6 +1119,12 @@ headers: headers()
 
 const text =
 await response.text();
+
+
+console.log(
+"POSTS RESPONSE:",
+text
+);
 
 
 if (!response.ok) {
@@ -1034,9 +1149,9 @@ return JSON.parse(text);
 }
 
 
-/* =========================================
+/* =====================================================
    DISPLAY POSTS
-========================================= */
+===================================================== */
 
 function displayPosts(posts) {
 
@@ -1044,6 +1159,7 @@ const list =
 document.getElementById(
 "postsList"
 );
+
 
 list.innerHTML =
 "";
@@ -1060,7 +1176,9 @@ if (!posts.length) {
 list.innerHTML = `
 
 <div class="empty">
+
 No posts yet.
+
 </div>
 
 `;
@@ -1078,6 +1196,7 @@ document.createElement(
 "div"
 );
 
+
 div.className =
 "post";
 
@@ -1093,7 +1212,10 @@ new Date(
 post.created_at
 );
 
-if (!isNaN(date.getTime())) {
+
+if (!isNaN(
+date.getTime()
+)) {
 
 dateText =
 date.toLocaleString();
@@ -1124,20 +1246,29 @@ alt="Post image">
 div.innerHTML = `
 
 <div class="post-time">
+
 ${safe(dateText)}
+
 </div>
+
 
 <div class="post-content">
+
 ${safe(post.content || "")}
+
 </div>
 
+
 ${imageHTML}
+
 
 <div class="post-actions">
 
 <button
 onclick="location.href='feed.html'">
+
 ❤️ Like
+
 </button>
 
 </div>
@@ -1145,16 +1276,18 @@ onclick="location.href='feed.html'">
 `;
 
 
-list.appendChild(div);
+list.appendChild(
+div
+);
 
 });
 
 }
 
 
-/* =========================================
+/* =====================================================
    FOLLOW COUNTS
-========================================= */
+===================================================== */
 
 async function loadFollowCounts() {
 
@@ -1165,27 +1298,30 @@ return;
 }
 
 
-/*
- Followers:
+/* FOLLOWERS */
 
- follower_id = person following
- following_id = profile owner
-*/
-
-const followersResponse =
-await fetch(
-
+const followersURL =
 SUPABASE_URL +
 "/rest/v1/follows" +
 "?select=id" +
 "&following_id=eq." +
 encodeURIComponent(
 profileAuthUserId
-),
+);
+
+
+const followersResponse =
+await fetch(
+
+followersURL,
 
 {
+
 method: "GET",
-headers: headers()
+
+headers:
+getHeaders()
+
 }
 
 );
@@ -1213,26 +1349,30 @@ JSON.parse(followersText)
 [];
 
 
-/*
- Following:
+/* FOLLOWING */
 
- follower_id = profile owner
-*/
-
-const followingResponse =
-await fetch(
-
+const followingURL =
 SUPABASE_URL +
 "/rest/v1/follows" +
 "?select=id" +
 "&follower_id=eq." +
 encodeURIComponent(
 profileAuthUserId
-),
+);
+
+
+const followingResponse =
+await fetch(
+
+followingURL,
 
 {
+
 method: "GET",
-headers: headers()
+
+headers:
+getHeaders()
+
 }
 
 );
@@ -1274,16 +1414,20 @@ following.length;
 }
 
 
-/* =========================================
+/* =====================================================
    CHECK FOLLOWING
-========================================= */
+===================================================== */
 
 async function checkFollowing() {
 
 if (
+
 !profileAuthUserId ||
+
 String(profileAuthUserId) ===
+
 String(currentUser.id)
+
 ) {
 
 return false;
@@ -1291,9 +1435,7 @@ return false;
 }
 
 
-const response =
-await fetch(
-
+const url =
 SUPABASE_URL +
 "/rest/v1/follows" +
 "?select=id" +
@@ -1304,11 +1446,21 @@ currentUser.id
 "&following_id=eq." +
 encodeURIComponent(
 profileAuthUserId
-),
+);
+
+
+const response =
+await fetch(
+
+url,
 
 {
+
 method: "GET",
-headers: headers()
+
+headers:
+getHeaders()
+
 }
 
 );
@@ -1340,9 +1492,9 @@ return JSON.parse(text).length > 0;
 }
 
 
-/* =========================================
+/* =====================================================
    FOLLOW BUTTON
-========================================= */
+===================================================== */
 
 async function updateFollowButton() {
 
@@ -1353,9 +1505,13 @@ document.getElementById(
 
 
 if (
+
 !profileAuthUserId ||
+
 String(profileAuthUserId) ===
+
 String(currentUser.id)
+
 ) {
 
 button.style.display =
@@ -1379,6 +1535,7 @@ if (following) {
 button.textContent =
 "Following";
 
+
 button.className =
 "action-button following";
 
@@ -1388,6 +1545,7 @@ else {
 button.textContent =
 "Follow";
 
+
 button.className =
 "action-button follow";
 
@@ -1396,15 +1554,20 @@ button.className =
 }
 
 
-/* =========================================
-   CREATE FOLLOW NOTIFICATION
-========================================= */
+/* =====================================================
+   NOTIFICATION
+===================================================== */
 
 async function createFollowNotification() {
 
+try {
+
 const actorName =
+
 currentUser.user_metadata?.username ||
+
 currentUser.email?.split("@")[0] ||
+
 "BERAKAH User";
 
 
@@ -1418,7 +1581,8 @@ SUPABASE_URL +
 
 method: "POST",
 
-headers: headers({
+headers:
+getHeaders({
 
 "Content-Type":
 "application/json",
@@ -1454,14 +1618,30 @@ false
 );
 
 
-return response.ok;
+if (!response.ok) {
+
+console.log(
+"Notification was not created."
+);
+
+}
+
+}
+catch(error) {
+
+console.log(
+"Notification error:",
+error
+);
+
+}
 
 }
 
 
-/* =========================================
+/* =====================================================
    FOLLOW / UNFOLLOW
-========================================= */
+===================================================== */
 
 async function toggleFollow() {
 
@@ -1469,6 +1649,7 @@ const button =
 document.getElementById(
 "followButton"
 );
+
 
 const status =
 document.getElementById(
@@ -1488,6 +1669,9 @@ await checkFollowing();
 
 if (following) {
 
+
+/* UNFOLLOW */
+
 const response =
 await fetch(
 
@@ -1503,8 +1687,12 @@ profileAuthUserId
 ),
 
 {
+
 method: "DELETE",
-headers: headers()
+
+headers:
+getHeaders()
+
 }
 
 );
@@ -1530,6 +1718,9 @@ status.textContent =
 }
 else {
 
+
+/* FOLLOW */
+
 const response =
 await fetch(
 
@@ -1540,7 +1731,8 @@ SUPABASE_URL +
 
 method: "POST",
 
-headers: headers({
+headers:
+getHeaders({
 
 "Content-Type":
 "application/json",
@@ -1596,13 +1788,14 @@ await updateFollowButton();
 }
 catch(error) {
 
-status.textContent =
-error.message;
-
 console.error(
 "FOLLOW ERROR:",
 error
 );
+
+
+status.textContent =
+error.message;
 
 }
 
@@ -1613,9 +1806,9 @@ false;
 }
 
 
-/* =========================================
+/* =====================================================
    OPEN EDIT PROFILE
-========================================= */
+===================================================== */
 
 function openEditProfile() {
 
@@ -1658,15 +1851,18 @@ document.getElementById(
 
 
 editBox.scrollIntoView({
-behavior: "smooth"
+
+behavior:
+"smooth"
+
 });
 
 }
 
 
-/* =========================================
+/* =====================================================
    CANCEL EDIT
-========================================= */
+===================================================== */
 
 function cancelEdit() {
 
@@ -1674,6 +1870,7 @@ document.getElementById(
 "editBox"
 ).style.display =
 "none";
+
 
 document.getElementById(
 "editStatus"
@@ -1683,9 +1880,9 @@ document.getElementById(
 }
 
 
-/* =========================================
+/* =====================================================
    SAVE PROFILE
-========================================= */
+===================================================== */
 
 async function saveProfile() {
 
@@ -1694,7 +1891,8 @@ document.getElementById(
 "saveProfileButton"
 );
 
-const status =
+
+const editStatus =
 document.getElementById(
 "editStatus"
 );
@@ -1720,7 +1918,7 @@ document.getElementById(
 
 if (!fullName) {
 
-status.textContent =
+editStatus.textContent =
 "Please enter your full name.";
 
 return;
@@ -1730,7 +1928,7 @@ return;
 
 if (!username) {
 
-status.textContent =
+editStatus.textContent =
 "Please enter your username.";
 
 return;
@@ -1741,7 +1939,8 @@ return;
 button.disabled =
 true;
 
-status.textContent =
+
+editStatus.textContent =
 "Saving...";
 
 
@@ -1751,28 +1950,36 @@ try {
 /*
  IMPORTANT:
 
- Your profiles table does NOT have
- a bio column.
+ There is NO bio column.
 
- So we only update columns that
- actually exist.
+ We update only:
+
+ Full name
+ username
+ language
 */
 
-const response =
-await fetch(
 
+const url =
 SUPABASE_URL +
 "/rest/v1/profiles" +
 "?id=eq." +
 encodeURIComponent(
 profileDatabaseId
-),
+);
+
+
+const response =
+await fetch(
+
+url,
 
 {
 
 method: "PATCH",
 
-headers: headers({
+headers:
+getHeaders({
 
 "Content-Type":
 "application/json",
@@ -1805,6 +2012,12 @@ const text =
 await response.text();
 
 
+console.log(
+"SAVE PROFILE RESPONSE:",
+text
+);
+
+
 if (!response.ok) {
 
 throw new Error(
@@ -1817,16 +2030,21 @@ text
 
 if (text.trim()) {
 
+const updated =
+JSON.parse(text);
+
+
+if (updated.length) {
+
 profileData =
-JSON.parse(text)[0] ||
-profileData;
+updated[0];
+
+}
 
 }
 
 
-/* =========================================
-   UPDATE SCREEN
-========================================= */
+/* UPDATE SCREEN */
 
 document.getElementById(
 "profileName"
@@ -1848,15 +2066,23 @@ document.getElementById(
 language.toUpperCase();
 
 
+const avatar =
 document.getElementById(
 "avatar"
-).textContent =
+);
+
+
+if (!profileData.avatar_url) {
+
+avatar.textContent =
 fullName
 .charAt(0)
 .toUpperCase();
 
+}
 
-status.textContent =
+
+editStatus.textContent =
 "Profile saved successfully!";
 
 
@@ -1868,7 +2094,7 @@ document.getElementById(
 ).style.display =
 "none";
 
-status.textContent =
+editStatus.textContent =
 "";
 
 },
@@ -1883,7 +2109,8 @@ console.error(
 error
 );
 
-status.textContent =
+
+editStatus.textContent =
 error.message;
 
 }
@@ -1895,9 +2122,9 @@ false;
 }
 
 
-/* =========================================
-   BUTTON EVENTS
-========================================= */
+/* =====================================================
+   EVENTS
+===================================================== */
 
 document.getElementById(
 "followButton"
@@ -1931,9 +2158,9 @@ saveProfile
 );
 
 
-/* =========================================
+/* =====================================================
    LOGOUT
-========================================= */
+===================================================== */
 
 document.getElementById(
 "logoutButton"
@@ -1945,13 +2172,16 @@ localStorage.removeItem(
 "berakah_access_token"
 );
 
+
 localStorage.removeItem(
 "berakah_refresh_token"
 );
 
+
 localStorage.removeItem(
 "berakah_user"
 );
+
 
 location.href =
 "login.html";
@@ -1959,9 +2189,9 @@ location.href =
 });
 
 
-/* =========================================
+/* =====================================================
    START
-========================================= */
+===================================================== */
 
 async function start() {
 
@@ -1981,6 +2211,12 @@ currentUser =
 await getCurrentUser();
 
 
+console.log(
+"CURRENT AUTH USER:",
+currentUser.id
+);
+
+
 await loadProfile();
 
 }
@@ -1990,6 +2226,7 @@ console.error(
 "BERAKAH PROFILE ERROR:",
 error
 );
+
 
 showError(
 error.message
