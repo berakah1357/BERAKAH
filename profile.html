@@ -144,7 +144,6 @@ h1 {
 .bio {
   line-height: 1.6;
   margin-top: 20px;
-  white-space: pre-wrap;
 }
 
 .stats {
@@ -152,10 +151,6 @@ h1 {
   gap: 35px;
   margin-top: 25px;
   flex-wrap: wrap;
-}
-
-.stat {
-  cursor: pointer;
 }
 
 .stat strong {
@@ -197,8 +192,7 @@ h1 {
   color: #111827;
 }
 
-.action-button:disabled,
-.save-button:disabled {
+.action-button:disabled {
   opacity: 0.6;
   cursor: wait;
 }
@@ -231,7 +225,6 @@ h1 {
 }
 
 .edit-box input,
-.edit-box textarea,
 .edit-box select {
   width: 100%;
   padding: 12px;
@@ -239,21 +232,6 @@ h1 {
   border-radius: 8px;
   font-size: 15px;
   font-family: Arial, sans-serif;
-}
-
-.edit-box textarea {
-  min-height: 110px;
-  resize: vertical;
-}
-
-.avatar-preview {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  object-fit: cover;
-  display: none;
-  margin-top: 10px;
-  border: 3px solid #e5e7eb;
 }
 
 .save-button,
@@ -330,22 +308,6 @@ h1 {
   padding: 30px 10px;
 }
 
-.list-panel {
-  display: none;
-  margin-top: 20px;
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  padding: 15px;
-  border-radius: 12px;
-}
-
-.list-user {
-  padding: 12px;
-  background: white;
-  border-radius: 9px;
-  margin-bottom: 8px;
-}
-
 @media (max-width: 600px) {
 
   .nav {
@@ -355,10 +317,6 @@ h1 {
 
   .nav-buttons {
     width: 100%;
-  }
-
-  .stats {
-    gap: 25px;
   }
 
 }
@@ -464,10 +422,7 @@ Connect, share, build, and grow together.
 
 <div class="stats">
 
-
-<div
-class="stat"
-id="followersStat">
+<div class="stat">
 
 <strong id="followersCount">
 0
@@ -478,9 +433,7 @@ Followers
 </div>
 
 
-<div
-class="stat"
-id="followingStat">
+<div class="stat">
 
 <strong id="followingCount">
 0
@@ -500,7 +453,6 @@ Following
 Posts
 
 </div>
-
 
 </div>
 
@@ -558,7 +510,6 @@ Edit Your BERAKAH Profile
 Full Name
 </label>
 
-
 <input
 type="text"
 id="editFullName"
@@ -570,7 +521,6 @@ placeholder="Enter your full name">
 Username
 </label>
 
-
 <input
 type="text"
 id="editUsername"
@@ -578,21 +528,9 @@ maxlength="50"
 placeholder="Enter username">
 
 
-<label for="editBio">
-Bio
-</label>
-
-
-<textarea
-id="editBio"
-maxlength="500"
-placeholder="Tell people about yourself..."></textarea>
-
-
 <label for="editLanguage">
 Language
 </label>
-
 
 <select id="editLanguage">
 
@@ -615,26 +553,6 @@ Spanish
 </select>
 
 
-<label for="editAvatar">
-Profile Photo
-</label>
-
-
-<input
-type="file"
-id="editAvatar"
-accept="image/*">
-
-
-<img
-id="avatarPreview"
-class="avatar-preview"
-alt="Profile photo preview">
-
-
-<br>
-
-
 <button
 id="saveProfileButton"
 class="save-button">
@@ -653,33 +571,6 @@ CANCEL
 
 
 </div>
-
-
-<div
-id="followersPanel"
-class="list-panel">
-
-<h3>
-Followers
-</h3>
-
-<div id="followersList"></div>
-
-</div>
-
-
-<div
-id="followingPanel"
-class="list-panel">
-
-<h3>
-Following
-</h3>
-
-<div id="followingList"></div>
-
-</div>
-
 
 </section>
 
@@ -706,8 +597,13 @@ Posts
    SUPABASE
 ========================================= */
 
+/*
+   CORRECT SUPABASE URL
+*/
+
 const SUPABASE_URL =
 "https://utoyoglycqjmqznczfxa.supabase.co";
+
 
 const SUPABASE_ANON_KEY =
 "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
@@ -720,8 +616,11 @@ localStorage.getItem(
 
 
 let currentUser = null;
+
 let profileData = null;
+
 let profileDatabaseId = null;
+
 let profileAuthUserId = null;
 
 
@@ -729,7 +628,7 @@ let profileAuthUserId = null;
    HEADERS
 ========================================= */
 
-function headers(extra) {
+function headers(extra = {}) {
 
 return Object.assign({
 
@@ -739,7 +638,7 @@ SUPABASE_ANON_KEY,
 "Authorization":
 "Bearer " + accessToken
 
-}, extra || {});
+}, extra);
 
 }
 
@@ -761,7 +660,7 @@ return String(value ?? "")
 
 
 /* =========================================
-   ERROR
+   SHOW ERROR
 ========================================= */
 
 function showError(message) {
@@ -771,18 +670,22 @@ document.getElementById(
 ).style.display =
 "none";
 
+
 document.getElementById(
 "profile"
 ).style.display =
 "none";
+
 
 const error =
 document.getElementById(
 "error"
 );
 
+
 error.style.display =
 "block";
+
 
 error.textContent =
 message;
@@ -791,7 +694,7 @@ message;
 
 
 /* =========================================
-   PROFILE ID
+   GET URL PROFILE ID
 ========================================= */
 
 function getProfileId() {
@@ -802,6 +705,18 @@ window.location.search
 );
 
 return params.get("id");
+
+}
+
+
+/* =========================================
+   CHECK UUID
+========================================= */
+
+function isUUID(value) {
+
+return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+.test(value);
 
 }
 
@@ -883,25 +798,60 @@ throw new Error(
 
 
 /*
- IMPORTANT:
+ IMPORTANT FIX
 
- URL:
+ People page sends:
 
  profile.html?id=1
 
- uses profiles.id.
+ profile.html?id=2
 
- Posts and follows use profiles.user_id.
+ profile.html?id=3
+
+ etc.
+
+ Those are profiles.id values.
+
+ But if another page sends a UUID,
+ we search using user_id instead.
+
+ This prevents:
+
+ invalid input syntax for type bigint
 */
 
 
-const url =
+let url;
+
+
+if (isUUID(requestedId)) {
+
+url =
 SUPABASE_URL +
 "/rest/v1/profiles" +
-"?select=id,created_at,\"Full name\",username,language,avatar_url,user_id,bio" +
+"?select=id,created_at,\"Full name\",username,language,avatar_url,user_id" +
+"&user_id=eq." +
+encodeURIComponent(requestedId) +
+"&limit=1";
+
+}
+else {
+
+url =
+SUPABASE_URL +
+"/rest/v1/profiles" +
+"?select=id,created_at,\"Full name\",username,language,avatar_url,user_id" +
 "&id=eq." +
 encodeURIComponent(requestedId) +
 "&limit=1";
+
+}
+
+
+console.log(
+"PROFILE URL:",
+url
+);
 
 
 const response =
@@ -919,6 +869,12 @@ headers: headers()
 
 const text =
 await response.text();
+
+
+console.log(
+"PROFILE RESPONSE:",
+text
+);
 
 
 if (!response.ok) {
@@ -975,25 +931,15 @@ profileData.username ||
 "BERAKAH User";
 
 
-const username =
-profileData.username ||
-"berakahuser";
-
-
-const language =
-profileData.language ||
-"—";
-
-
-const bio =
-profileData.bio ||
-"Welcome to my BERAKAH profile. Connect, share, build, and grow together.";
-
-
 document.getElementById(
 "profileName"
 ).textContent =
 fullName;
+
+
+const username =
+profileData.username ||
+"berakahuser";
 
 
 document.getElementById(
@@ -1003,6 +949,11 @@ document.getElementById(
 username.toLowerCase();
 
 
+const language =
+profileData.language ||
+"—";
+
+
 document.getElementById(
 "profileLanguage"
 ).textContent =
@@ -1010,24 +961,40 @@ document.getElementById(
 language.toUpperCase();
 
 
-document.getElementById(
-"profileBio"
-).textContent =
-bio;
-
-
 /* =========================================
    AVATAR
 ========================================= */
 
-setAvatar(
-fullName,
-profileData.avatar_url
+const avatar =
+document.getElementById(
+"avatar"
 );
 
 
+if (profileData.avatar_url) {
+
+avatar.innerHTML = `
+
+<img
+src="${safe(profileData.avatar_url)}"
+alt="Profile picture">
+
+`;
+
+}
+else {
+
+avatar.textContent =
+String(fullName)
+.charAt(0)
+.toUpperCase() ||
+"B";
+
+}
+
+
 /* =========================================
-   POSTS
+   LOAD POSTS
 ========================================= */
 
 const posts =
@@ -1047,13 +1014,16 @@ await updateFollowButton();
 
 
 /* =========================================
-   OWNER
+   OWNER CHECK
 ========================================= */
 
 if (
+
 profileAuthUserId &&
+
 String(profileAuthUserId) ===
 String(currentUser.id)
+
 ) {
 
 document.getElementById(
@@ -1065,7 +1035,7 @@ document.getElementById(
 
 
 /* =========================================
-   SHOW
+   SHOW PROFILE
 ========================================= */
 
 document.getElementById(
@@ -1073,67 +1043,11 @@ document.getElementById(
 ).style.display =
 "none";
 
+
 document.getElementById(
 "profile"
 ).style.display =
 "block";
-
-}
-
-
-/* =========================================
-   AVATAR DISPLAY
-========================================= */
-
-function setAvatar(name, imageUrl) {
-
-const avatar =
-document.getElementById(
-"avatar"
-);
-
-
-if (imageUrl) {
-
-avatar.innerHTML = "";
-
-
-const img =
-document.createElement("img");
-
-
-img.src =
-imageUrl;
-
-
-img.alt =
-"Profile picture";
-
-
-img.onerror =
-function() {
-
-avatar.textContent =
-String(name)
-.charAt(0)
-.toUpperCase() ||
-"B";
-
-};
-
-
-avatar.appendChild(img);
-
-}
-else {
-
-avatar.textContent =
-String(name)
-.charAt(0)
-.toUpperCase() ||
-"B";
-
-}
 
 }
 
@@ -1160,6 +1074,12 @@ encodeURIComponent(
 profileAuthUserId
 ) +
 "&order=created_at.desc";
+
+
+console.log(
+"POSTS URL:",
+url
+);
 
 
 const response =
@@ -1212,6 +1132,7 @@ document.getElementById(
 "postsList"
 );
 
+
 list.innerHTML =
 "";
 
@@ -1245,6 +1166,7 @@ document.createElement(
 "div"
 );
 
+
 div.className =
 "post";
 
@@ -1259,6 +1181,7 @@ const date =
 new Date(
 post.created_at
 );
+
 
 if (!isNaN(date.getTime())) {
 
@@ -1276,25 +1199,17 @@ let imageHTML =
 
 if (post.image_url) {
 
-const image =
-document.createElement("img");
+imageHTML = `
 
-image.className =
-"post-image";
+<img
+class="post-image"
+src="${safe(post.image_url)}"
+alt="Post image">
 
-image.src =
-post.image_url;
+`;
 
-image.alt =
-"Post image";
+}
 
-image.onerror =
-function() {
-
-this.style.display =
-"none";
-
-};
 
 div.innerHTML = `
 
@@ -1306,34 +1221,7 @@ ${safe(dateText)}
 ${safe(post.content || "")}
 </div>
 
-<div class="post-actions">
-
-<button
-onclick="location.href='feed.html'">
-❤️ Like
-</button>
-
-</div>
-
-`;
-
-div.insertBefore(
-image,
-div.querySelector(".post-actions")
-);
-
-}
-else {
-
-div.innerHTML = `
-
-<div class="post-time">
-${safe(dateText)}
-</div>
-
-<div class="post-content">
-${safe(post.content || "")}
-</div>
+${imageHTML}
 
 <div class="post-actions">
 
@@ -1345,8 +1233,6 @@ onclick="location.href='feed.html'">
 </div>
 
 `;
-
-}
 
 
 list.appendChild(div);
@@ -1357,7 +1243,7 @@ list.appendChild(div);
 
 
 /* =========================================
-   FOLLOW COUNTS
+   LOAD FOLLOW COUNTS
 ========================================= */
 
 async function loadFollowCounts() {
@@ -1369,7 +1255,11 @@ return;
 }
 
 
-/* Followers */
+/*
+ Followers:
+
+ following_id = profile owner
+*/
 
 const followersResponse =
 await fetch(
@@ -1412,7 +1302,11 @@ JSON.parse(followersText)
 [];
 
 
-/* Following */
+/*
+ Following:
+
+ follower_id = profile owner
+*/
 
 const followingResponse =
 await fetch(
@@ -1476,9 +1370,12 @@ following.length;
 async function checkFollowing() {
 
 if (
+
 !profileAuthUserId ||
+
 String(profileAuthUserId) ===
 String(currentUser.id)
+
 ) {
 
 return false;
@@ -1548,9 +1445,12 @@ document.getElementById(
 
 
 if (
+
 !profileAuthUserId ||
+
 String(profileAuthUserId) ===
 String(currentUser.id)
+
 ) {
 
 button.style.display =
@@ -1596,13 +1496,6 @@ button.className =
 ========================================= */
 
 async function createFollowNotification() {
-
-if (!profileAuthUserId) {
-
-return;
-
-}
-
 
 const actorName =
 currentUser.user_metadata?.username ||
@@ -1658,7 +1551,7 @@ false
 
 if (!response.ok) {
 
-console.log(
+console.warn(
 "Notification could not be created."
 );
 
@@ -1677,6 +1570,7 @@ const button =
 document.getElementById(
 "followButton"
 );
+
 
 const status =
 document.getElementById(
@@ -1809,6 +1703,7 @@ console.error(
 error
 );
 
+
 status.textContent =
 error.message;
 
@@ -1822,7 +1717,7 @@ false;
 
 
 /* =========================================
-   EDIT PROFILE
+   OPEN EDIT
 ========================================= */
 
 function openEditProfile() {
@@ -1853,46 +1748,10 @@ profileData.username ||
 
 
 document.getElementById(
-"editBio"
-).value =
-profileData.bio ||
-"";
-
-
-document.getElementById(
 "editLanguage"
 ).value =
 profileData.language ||
 "ht";
-
-
-document.getElementById(
-"editAvatar"
-).value =
-"";
-
-
-const preview =
-document.getElementById(
-"avatarPreview"
-);
-
-
-if (profileData.avatar_url) {
-
-preview.src =
-profileData.avatar_url;
-
-preview.style.display =
-"block";
-
-}
-else {
-
-preview.style.display =
-"none";
-
-}
 
 
 document.getElementById(
@@ -1909,72 +1768,7 @@ behavior: "smooth"
 
 
 /* =========================================
-   AVATAR PREVIEW
-========================================= */
-
-document.getElementById(
-"editAvatar"
-).addEventListener(
-"change",
-function() {
-
-const file =
-this.files[0];
-
-const preview =
-document.getElementById(
-"avatarPreview"
-);
-
-
-if (!file) {
-
-preview.style.display =
-"none";
-
-return;
-
-}
-
-
-if (!file.type.startsWith("image/")) {
-
-document.getElementById(
-"editStatus"
-).textContent =
-"Please select an image.";
-
-this.value =
-"";
-
-return;
-
-}
-
-
-const reader =
-new FileReader();
-
-
-reader.onload =
-function(event) {
-
-preview.src =
-event.target.result;
-
-preview.style.display =
-"block";
-
-};
-
-
-reader.readAsDataURL(file);
-
-});
-
-
-/* =========================================
-   CANCEL
+   CANCEL EDIT
 ========================================= */
 
 function cancelEdit() {
@@ -1983,6 +1777,7 @@ document.getElementById(
 "editBox"
 ).style.display =
 "none";
+
 
 document.getElementById(
 "editStatus"
@@ -2003,7 +1798,8 @@ document.getElementById(
 "saveProfileButton"
 );
 
-const status =
+
+const editStatus =
 document.getElementById(
 "editStatus"
 );
@@ -2021,27 +1817,15 @@ document.getElementById(
 ).value.trim();
 
 
-const bio =
-document.getElementById(
-"editBio"
-).value.trim();
-
-
 const language =
 document.getElementById(
 "editLanguage"
 ).value;
 
 
-const imageFile =
-document.getElementById(
-"editAvatar"
-).files[0];
-
-
 if (!fullName) {
 
-status.textContent =
+editStatus.textContent =
 "Please enter your full name.";
 
 return;
@@ -2051,7 +1835,7 @@ return;
 
 if (!username) {
 
-status.textContent =
+editStatus.textContent =
 "Please enter your username.";
 
 return;
@@ -2063,76 +1847,11 @@ button.disabled =
 true;
 
 
-status.textContent =
-"Saving profile...";
+editStatus.textContent =
+"Saving...";
 
 
 try {
-
-/*
- =========================================
- SAVE PROFILE DATA
- =========================================
-*/
-
-const updateData = {
-
-"Full name":
-fullName,
-
-username:
-username,
-
-bio:
-bio,
-
-language:
-language
-
-};
-
-
-/*
- =========================================
- PROFILE PHOTO
- =========================================
-
- If an image is selected, this version
- stores it as a Data URL in avatar_url.
-
- This avoids requiring a separate
- Supabase Storage bucket.
-*/
-
-if (imageFile) {
-
-if (imageFile.size >
-2 * 1024 * 1024) {
-
-throw new Error(
-"Profile photo must be smaller than 2 MB."
-);
-
-}
-
-
-const imageData =
-await fileToDataURL(
-imageFile
-);
-
-
-updateData.avatar_url =
-imageData;
-
-}
-
-
-/*
- =========================================
- PATCH PROFILE
- =========================================
-*/
 
 const response =
 await fetch(
@@ -2159,9 +1878,18 @@ headers: headers({
 }),
 
 body:
-JSON.stringify(
-updateData
-)
+JSON.stringify({
+
+"Full name":
+fullName,
+
+username:
+username,
+
+language:
+language
+
+})
 
 }
 
@@ -2184,25 +1912,23 @@ text
 
 if (text.trim()) {
 
-const returned =
+const updated =
 JSON.parse(text);
 
 
-if (returned.length) {
+if (updated.length) {
 
 profileData =
-returned[0];
+updated[0];
 
 }
 
 }
 
 
-/*
- =========================================
- UPDATE SCREEN
- =========================================
-*/
+/* =========================================
+   UPDATE SCREEN
+========================================= */
 
 document.getElementById(
 "profileName"
@@ -2224,20 +1950,23 @@ document.getElementById(
 language.toUpperCase();
 
 
+const avatar =
 document.getElementById(
-"profileBio"
-).textContent =
-bio ||
-"Welcome to my BERAKAH profile. Connect, share, build, and grow together.";
-
-
-setAvatar(
-fullName,
-profileData.avatar_url
+"avatar"
 );
 
 
-status.textContent =
+if (!profileData.avatar_url) {
+
+avatar.textContent =
+fullName
+.charAt(0)
+.toUpperCase();
+
+}
+
+
+editStatus.textContent =
 "Profile saved successfully!";
 
 
@@ -2249,7 +1978,8 @@ document.getElementById(
 ).style.display =
 "none";
 
-status.textContent =
+
+editStatus.textContent =
 "";
 
 },
@@ -2264,7 +1994,8 @@ console.error(
 error
 );
 
-status.textContent =
+
+editStatus.textContent =
 error.message;
 
 }
@@ -2277,356 +2008,7 @@ false;
 
 
 /* =========================================
-   FILE TO DATA URL
-========================================= */
-
-function fileToDataURL(file) {
-
-return new Promise(
-function(resolve, reject) {
-
-const reader =
-new FileReader();
-
-
-reader.onload =
-function() {
-
-resolve(
-reader.result
-);
-
-};
-
-
-reader.onerror =
-function() {
-
-reject(
-new Error(
-"Could not read the image."
-)
-);
-
-};
-
-
-reader.readAsDataURL(file);
-
-});
-
-}
-
-
-/* =========================================
-   FOLLOWERS / FOLLOWING PANELS
-========================================= */
-
-async function loadUserList(type) {
-
-const panel =
-document.getElementById(
-type === "followers"
-?
-"followersPanel"
-:
-"followingPanel"
-);
-
-
-const list =
-document.getElementById(
-type === "followers"
-?
-"followersList"
-:
-"followingList"
-);
-
-
-panel.style.display =
-"block";
-
-
-list.innerHTML =
-"Loading...";
-
-
-const column =
-type === "followers"
-?
-"following_id"
-:
-"follower_id";
-
-
-const response =
-await fetch(
-
-SUPABASE_URL +
-"/rest/v1/follows" +
-"?select=follower_id,following_id" +
-"&" +
-column +
-"=eq." +
-encodeURIComponent(
-profileAuthUserId
-),
-
-{
-method: "GET",
-headers: headers()
-}
-
-);
-
-
-const text =
-await response.text();
-
-
-if (!response.ok) {
-
-list.textContent =
-"Could not load list.";
-
-return;
-
-}
-
-
-const rows =
-text.trim()
-?
-JSON.parse(text)
-:
-[];
-
-
-if (!rows.length) {
-
-list.innerHTML =
-"<div class='empty'>No users yet.</div>";
-
-return;
-
-}
-
-
-/*
- Determine which UUID to display.
-*/
-
-const ids =
-rows.map(
-function(row) {
-
-return type === "followers"
-?
-row.follower_id
-:
-row.following_id;
-
-}
-);
-
-
-list.innerHTML =
-"";
-
-
-for (
-const userId of ids
-) {
-
-try {
-
-const userResponse =
-await fetch(
-
-SUPABASE_URL +
-"/rest/v1/profiles" +
-"?select=id,\"Full name\",username" +
-"&user_id=eq." +
-encodeURIComponent(
-userId
-) +
-"&limit=1",
-
-{
-method: "GET",
-headers: headers()
-}
-
-);
-
-
-const userText =
-await userResponse.text();
-
-
-if (!userResponse.ok) {
-
-continue;
-
-}
-
-
-const users =
-userText.trim()
-?
-JSON.parse(userText)
-:
-[];
-
-
-if (!users.length) {
-
-continue;
-
-}
-
-
-const user =
-users[0];
-
-
-const div =
-document.createElement(
-"div"
-);
-
-
-div.className =
-"list-user";
-
-
-div.innerHTML = `
-
-<strong>
-${safe(
-user["Full name"] ||
-user.username ||
-"BERAKAH User"
-)}
-</strong>
-
-<br>
-
-<span>
-@${safe(
-user.username ||
-"berakahuser"
-)}
-</span>
-
-<br><br>
-
-<a
-href="profile.html?id=${encodeURIComponent(user.id)}">
-View profile
-</a>
-
-`;
-
-
-list.appendChild(div);
-
-}
-catch(error) {
-
-console.error(
-"USER LIST ERROR:",
-error
-);
-
-}
-
-}
-
-}
-
-
-/* =========================================
-   PANEL BUTTONS
-========================================= */
-
-document.getElementById(
-"followersStat"
-).addEventListener(
-"click",
-async function() {
-
-const panel =
-document.getElementById(
-"followersPanel"
-);
-
-
-if (
-panel.style.display ===
-"block"
-) {
-
-panel.style.display =
-"none";
-
-}
-else {
-
-document.getElementById(
-"followingPanel"
-).style.display =
-"none";
-
-await loadUserList(
-"followers"
-);
-
-}
-
-});
-
-
-document.getElementById(
-"followingStat"
-).addEventListener(
-"click",
-async function() {
-
-const panel =
-document.getElementById(
-"followingPanel"
-);
-
-
-if (
-panel.style.display ===
-"block"
-) {
-
-panel.style.display =
-"none";
-
-}
-else {
-
-document.getElementById(
-"followersPanel"
-).style.display =
-"none";
-
-await loadUserList(
-"following"
-);
-
-}
-
-});
-
-
-/* =========================================
-   BUTTON EVENTS
+   EVENTS
 ========================================= */
 
 document.getElementById(
@@ -2711,6 +2093,12 @@ currentUser =
 await getCurrentUser();
 
 
+console.log(
+"CURRENT USER:",
+currentUser.id
+);
+
+
 await loadProfile();
 
 }
@@ -2720,6 +2108,7 @@ console.error(
 "BERAKAH PROFILE ERROR:",
 error
 );
+
 
 showError(
 error.message
