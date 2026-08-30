@@ -387,10 +387,12 @@ class="error">
 id="profile"
 class="profile">
 
+
 <div class="cover"></div>
 
 
 <section class="profile-card">
+
 
 <div
 class="avatar"
@@ -429,24 +431,42 @@ Connect, share, build, and grow together.
 <div class="stats">
 
 <div class="stat">
-<strong id="followersCount">0</strong>
+
+<strong id="followersCount">
+0
+</strong>
+
 Followers
+
 </div>
 
+
 <div class="stat">
-<strong id="followingCount">0</strong>
+
+<strong id="followingCount">
+0
+</strong>
+
 Following
+
 </div>
 
+
 <div class="stat">
-<strong id="postsCount">0</strong>
+
+<strong id="postsCount">
+0
+</strong>
+
 Posts
+
 </div>
 
 </div>
 
 
 <div class="buttons">
+
 
 <button
 id="followButton"
@@ -480,12 +500,11 @@ onclick="location.href='notifications.html'">
 
 <div id="status"></div>
 
-</div>
-
 
 <div
 id="editBox"
 class="edit-box">
+
 
 <h3>
 Edit Your BERAKAH Profile
@@ -518,12 +537,24 @@ placeholder="Enter username">
 Language
 </label>
 
+
 <select id="editLanguage">
 
-<option value="ht">Haitian Creole</option>
-<option value="en">English</option>
-<option value="fr">French</option>
-<option value="es">Spanish</option>
+<option value="ht">
+Haitian Creole
+</option>
+
+<option value="en">
+English
+</option>
+
+<option value="fr">
+French
+</option>
+
+<option value="es">
+Spanish
+</option>
 
 </select>
 
@@ -544,6 +575,9 @@ CANCEL
 
 <div id="editStatus"></div>
 
+
+</div>
+
 </div>
 
 </section>
@@ -559,6 +593,7 @@ Posts
 
 </section>
 
+
 </div>
 
 </main>
@@ -567,11 +602,11 @@ Posts
 <script>
 
 /* =========================================
-   BERAKAH SUPABASE CONFIGURATION
+   SUPABASE
 ========================================= */
 
 const SUPABASE_URL =
-"https://utoyoglycqjmqznczfxa.supabase.co";
+"https://utoyoglycqjmqznczfxxa.supabase.co";
 
 const SUPABASE_ANON_KEY =
 "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
@@ -593,7 +628,7 @@ let profileAuthUserId = null;
    HEADERS
 ========================================= */
 
-function getHeaders(extra = {}) {
+function headers(extra) {
 
 return Object.assign({
 
@@ -601,19 +636,15 @@ return Object.assign({
 SUPABASE_ANON_KEY,
 
 "Authorization":
-"Bearer " +
-(accessToken || SUPABASE_ANON_KEY),
+"Bearer " + accessToken
 
-"Accept":
-"application/json"
-
-}, extra);
+}, extra || {});
 
 }
 
 
 /* =========================================
-   SAFE TEXT
+   SAFE
 ========================================= */
 
 function safe(value) {
@@ -629,7 +660,7 @@ return String(value ?? "")
 
 
 /* =========================================
-   ERROR DISPLAY
+   SHOW ERROR
 ========================================= */
 
 function showError(message) {
@@ -639,22 +670,18 @@ document.getElementById(
 ).style.display =
 "none";
 
-
 document.getElementById(
 "profile"
 ).style.display =
 "none";
-
 
 const error =
 document.getElementById(
 "error"
 );
 
-
 error.style.display =
 "block";
-
 
 error.textContent =
 message;
@@ -663,7 +690,7 @@ message;
 
 
 /* =========================================
-   PROFILE ID FROM URL
+   PROFILE ID
 ========================================= */
 
 function getProfileId() {
@@ -701,7 +728,7 @@ SUPABASE_URL +
 
 {
 method: "GET",
-headers: getHeaders()
+headers: headers()
 }
 
 );
@@ -714,7 +741,7 @@ await response.text();
 if (!response.ok) {
 
 throw new Error(
-"Could not verify your login session.\n\n" +
+"Login session error:\n\n" +
 text
 );
 
@@ -736,6 +763,183 @@ return JSON.parse(text);
 
 
 /* =========================================
+   NORMALIZE USERNAME
+========================================= */
+
+function normalizeUsername(value) {
+
+return String(value || "")
+.trim()
+.replace(/^@/, "")
+.toLowerCase();
+
+}
+
+
+/* =========================================
+   GET LOGGED-IN USERNAME
+========================================= */
+
+function getLoggedInUsername() {
+
+if (!currentUser) {
+return "";
+}
+
+
+/*
+ Try several possible locations because
+ different BERAKAH login versions may
+ store username differently.
+*/
+
+const metadata =
+currentUser.user_metadata || {};
+
+
+const candidates = [
+
+metadata.username,
+
+metadata.user_name,
+
+metadata.userName,
+
+metadata["Username"],
+
+metadata["username"],
+
+localStorage.getItem("berakah_username")
+
+];
+
+
+for (const value of candidates) {
+
+if (value) {
+
+return normalizeUsername(value);
+
+}
+
+}
+
+
+/*
+ If username is not in metadata,
+ use the email prefix as a final fallback.
+*/
+
+if (currentUser.email) {
+
+return normalizeUsername(
+currentUser.email.split("@")[0]
+);
+
+}
+
+
+return "";
+
+}
+
+
+/* =========================================
+   OWNER CHECK
+========================================= */
+
+function isOwnProfile() {
+
+if (!currentUser || !profileData) {
+
+return false;
+
+}
+
+
+/*
+ PRIMARY CHECK:
+
+profiles.user_id
+        =
+auth.users.id
+*/
+
+if (
+profileAuthUserId &&
+String(profileAuthUserId).toLowerCase() ===
+String(currentUser.id).toLowerCase()
+) {
+
+return true;
+
+}
+
+
+/*
+ FALLBACK CHECK:
+
+If the profile UUID is not correctly
+linked, compare the profile username
+with the authenticated username.
+
+This allows the five BERAKAH accounts
+to identify their own profile.
+*/
+
+const loggedUsername =
+getLoggedInUsername();
+
+
+const profileUsername =
+normalizeUsername(
+profileData.username
+);
+
+
+if (
+loggedUsername &&
+profileUsername &&
+loggedUsername === profileUsername
+) {
+
+return true;
+
+}
+
+
+return false;
+
+}
+
+
+/* =========================================
+   SET OWNER BUTTON
+========================================= */
+
+function setupOwnerButton() {
+
+const editButton =
+document.getElementById(
+"editButton"
+);
+
+
+editButton.style.display =
+"none";
+
+
+if (isOwnProfile()) {
+
+editButton.style.display =
+"inline-block";
+
+}
+
+}
+
+
+/* =========================================
    LOAD PROFILE
 ========================================= */
 
@@ -748,7 +952,7 @@ getProfileId();
 if (!requestedId) {
 
 throw new Error(
-"No profile ID was provided in the URL."
+"No profile ID was provided."
 );
 
 }
@@ -757,27 +961,22 @@ throw new Error(
 /*
  IMPORTANT:
 
- profiles.id = BIGINT
+ profiles.id is BIGINT.
 
- profiles.user_id = UUID
+ Therefore profile URLs use:
 
- Example:
-
+ profile.html?id=1
+ profile.html?id=2
  profile.html?id=3
 
- means:
-
- profiles.id = 3
-
- Then we retrieve the UUID from
- profiles.user_id.
+ etc.
 */
 
 
 if (!/^\d+$/.test(requestedId)) {
 
 throw new Error(
-"Invalid profile ID. The profile URL must use the numeric profiles.id."
+"Invalid profile ID. Profile ID must be a number."
 );
 
 }
@@ -799,7 +998,7 @@ url,
 
 {
 method: "GET",
-headers: getHeaders()
+headers: headers()
 }
 
 );
@@ -812,7 +1011,7 @@ await response.text();
 if (!response.ok) {
 
 throw new Error(
-"Could not load profile:\n\n" +
+"Could not load profile: " +
 text
 );
 
@@ -822,36 +1021,20 @@ text
 if (!text.trim()) {
 
 throw new Error(
-"Supabase returned an empty response."
+"Profile not found."
 );
 
 }
 
 
-let rows;
-
-try {
-
-rows =
+const rows =
 JSON.parse(text);
 
-}
-catch {
+
+if (!rows.length) {
 
 throw new Error(
-"Supabase returned invalid JSON:\n\n" +
-text
-);
-
-}
-
-
-if (!Array.isArray(rows) || !rows.length) {
-
-throw new Error(
-"Profile #" +
-requestedId +
-" was not found."
+"Profile not found."
 );
 
 }
@@ -914,7 +1097,7 @@ document.getElementById(
 "profileLanguage"
 ).textContent =
 "Language: " +
-String(language).toUpperCase();
+language.toUpperCase();
 
 
 /* =========================================
@@ -929,18 +1112,13 @@ document.getElementById(
 
 if (profileData.avatar_url) {
 
-avatar.innerHTML = "";
+avatar.innerHTML = `
 
-const image =
-document.createElement("img");
+<img
+src="${safe(profileData.avatar_url)}"
+alt="Profile picture">
 
-image.src =
-profileData.avatar_url;
-
-image.alt =
-"Profile picture";
-
-avatar.appendChild(image);
+`;
 
 }
 else {
@@ -955,22 +1133,6 @@ String(fullName)
 
 
 /* =========================================
-   BIO
-
-   Your profiles table does not currently
-   have a bio column.
-
-   Therefore we intentionally do not
-   request or update bio.
-========================================= */
-
-document.getElementById(
-"profileBio"
-).textContent =
-"Welcome to my BERAKAH profile. Connect, share, build, and grow together.";
-
-
-/* =========================================
    POSTS
 ========================================= */
 
@@ -982,15 +1144,10 @@ displayPosts(posts);
 
 
 /* =========================================
-   FOLLOW COUNTS
+   FOLLOW
 ========================================= */
 
 await loadFollowCounts();
-
-
-/* =========================================
-   FOLLOW BUTTON
-========================================= */
 
 await updateFollowButton();
 
@@ -999,22 +1156,11 @@ await updateFollowButton();
    OWNER
 ========================================= */
 
-if (
-profileAuthUserId &&
-String(profileAuthUserId) ===
-String(currentUser.id)
-) {
-
-document.getElementById(
-"editButton"
-).style.display =
-"inline-block";
-
-}
+setupOwnerButton();
 
 
 /* =========================================
-   SHOW PROFILE
+   SHOW
 ========================================= */
 
 document.getElementById(
@@ -1049,7 +1195,9 @@ SUPABASE_URL +
 "/rest/v1/posts" +
 "?select=*" +
 "&user_id=eq." +
-encodeURIComponent(profileAuthUserId) +
+encodeURIComponent(
+profileAuthUserId
+) +
 "&order=created_at.desc";
 
 
@@ -1060,7 +1208,7 @@ url,
 
 {
 method: "GET",
-headers: getHeaders()
+headers: headers()
 }
 
 );
@@ -1087,18 +1235,7 @@ return [];
 }
 
 
-try {
-
 return JSON.parse(text);
-
-}
-catch {
-
-throw new Error(
-"Posts response was not valid JSON."
-);
-
-}
 
 }
 
@@ -1113,7 +1250,6 @@ const list =
 document.getElementById(
 "postsList"
 );
-
 
 list.innerHTML =
 "";
@@ -1206,7 +1342,6 @@ ${imageHTML}
 <div class="post-actions">
 
 <button
-type="button"
 onclick="location.href='feed.html'">
 ❤️ Like
 </button>
@@ -1236,7 +1371,7 @@ return;
 }
 
 
-/* Followers */
+/* FOLLOWERS */
 
 const followersResponse =
 await fetch(
@@ -1245,11 +1380,13 @@ SUPABASE_URL +
 "/rest/v1/follows" +
 "?select=id" +
 "&following_id=eq." +
-encodeURIComponent(profileAuthUserId),
+encodeURIComponent(
+profileAuthUserId
+),
 
 {
 method: "GET",
-headers: getHeaders()
+headers: headers()
 }
 
 );
@@ -1277,7 +1414,7 @@ JSON.parse(followersText)
 [];
 
 
-/* Following */
+/* FOLLOWING */
 
 const followingResponse =
 await fetch(
@@ -1286,11 +1423,13 @@ SUPABASE_URL +
 "/rest/v1/follows" +
 "?select=id" +
 "&follower_id=eq." +
-encodeURIComponent(profileAuthUserId),
+encodeURIComponent(
+profileAuthUserId
+),
 
 {
 method: "GET",
-headers: getHeaders()
+headers: headers()
 }
 
 );
@@ -1356,13 +1495,17 @@ SUPABASE_URL +
 "/rest/v1/follows" +
 "?select=id" +
 "&follower_id=eq." +
-encodeURIComponent(currentUser.id) +
+encodeURIComponent(
+currentUser.id
+) +
 "&following_id=eq." +
-encodeURIComponent(profileAuthUserId),
+encodeURIComponent(
+profileAuthUserId
+),
 
 {
 method: "GET",
-headers: getHeaders()
+headers: headers()
 }
 
 );
@@ -1395,7 +1538,7 @@ return JSON.parse(text).length > 0;
 
 
 /* =========================================
-   UPDATE FOLLOW BUTTON
+   FOLLOW BUTTON
 ========================================= */
 
 async function updateFollowButton() {
@@ -1456,13 +1599,6 @@ button.className =
 
 async function createFollowNotification() {
 
-if (!profileAuthUserId) {
-
-return;
-
-}
-
-
 const actorName =
 currentUser.user_metadata?.username ||
 currentUser.email?.split("@")[0] ||
@@ -1479,7 +1615,7 @@ SUPABASE_URL +
 
 method: "POST",
 
-headers: getHeaders({
+headers: headers({
 
 "Content-Type":
 "application/json",
@@ -1515,19 +1651,7 @@ false
 );
 
 
-/*
- Notification failure should not
- make the Follow action fail.
-*/
-
-if (!response.ok) {
-
-console.warn(
-"Notification could not be created:",
-await response.text()
-);
-
-}
+return response.ok;
 
 }
 
@@ -1553,10 +1677,6 @@ button.disabled =
 true;
 
 
-status.textContent =
-"";
-
-
 try {
 
 const following =
@@ -1571,13 +1691,17 @@ await fetch(
 SUPABASE_URL +
 "/rest/v1/follows" +
 "?follower_id=eq." +
-encodeURIComponent(currentUser.id) +
+encodeURIComponent(
+currentUser.id
+) +
 "&following_id=eq." +
-encodeURIComponent(profileAuthUserId),
+encodeURIComponent(
+profileAuthUserId
+),
 
 {
 method: "DELETE",
-headers: getHeaders()
+headers: headers()
 }
 
 );
@@ -1613,7 +1737,7 @@ SUPABASE_URL +
 
 method: "POST",
 
-headers: getHeaders({
+headers: headers({
 
 "Content-Type":
 "application/json",
@@ -1669,13 +1793,13 @@ await updateFollowButton();
 }
 catch(error) {
 
+status.textContent =
+error.message;
+
 console.error(
 "FOLLOW ERROR:",
 error
 );
-
-status.textContent =
-error.message;
 
 }
 
@@ -1691,6 +1815,18 @@ false;
 ========================================= */
 
 function openEditProfile() {
+
+if (!isOwnProfile()) {
+
+document.getElementById(
+"status"
+).textContent =
+"You can only edit your own profile.";
+
+return;
+
+}
+
 
 const editBox =
 document.getElementById(
@@ -1738,7 +1874,7 @@ behavior: "smooth"
 
 
 /* =========================================
-   CANCEL EDIT
+   CANCEL
 ========================================= */
 
 function cancelEdit() {
@@ -1762,6 +1898,18 @@ document.getElementById(
 ========================================= */
 
 async function saveProfile() {
+
+if (!isOwnProfile()) {
+
+document.getElementById(
+"editStatus"
+).textContent =
+"You can only edit your own profile.";
+
+return;
+
+}
+
 
 const button =
 document.getElementById(
@@ -1827,13 +1975,15 @@ await fetch(
 SUPABASE_URL +
 "/rest/v1/profiles" +
 "?id=eq." +
-encodeURIComponent(profileDatabaseId),
+encodeURIComponent(
+profileDatabaseId
+),
 
 {
 
 method: "PATCH",
 
-headers: getHeaders({
+headers: headers({
 
 "Content-Type":
 "application/json",
@@ -1881,6 +2031,7 @@ if (text.trim()) {
 const updated =
 JSON.parse(text);
 
+
 if (updated.length) {
 
 profileData =
@@ -1891,7 +2042,7 @@ updated[0];
 }
 
 
-/* Update page */
+/* UPDATE SCREEN */
 
 document.getElementById(
 "profileName"
@@ -2016,6 +2167,10 @@ localStorage.removeItem(
 
 localStorage.removeItem(
 "berakah_user"
+);
+
+localStorage.removeItem(
+"berakah_username"
 );
 
 location.href =
