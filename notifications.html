@@ -91,6 +91,7 @@ h1 {
   background: #f3f4f6;
   border-radius: 10px;
   white-space: pre-wrap;
+  line-height: 1.5;
 }
 
 .notification {
@@ -125,6 +126,7 @@ h1 {
 
 .notification-content {
   flex: 1;
+  min-width: 0;
 }
 
 .message {
@@ -146,12 +148,7 @@ h1 {
   border-radius: 7px;
   cursor: pointer;
   font-weight: bold;
-}
-
-.empty {
-  text-align: center;
-  color: #6b7280;
-  padding: 35px 10px;
+  flex-shrink: 0;
 }
 
 .mark-all {
@@ -163,6 +160,18 @@ h1 {
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
+}
+
+.mark-all:disabled,
+.notification-button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.empty {
+  text-align: center;
+  color: #6b7280;
+  padding: 35px 10px;
 }
 
 @media (max-width: 600px) {
@@ -178,6 +187,10 @@ h1 {
 
   .notification {
     align-items: flex-start;
+  }
+
+  .notification-button {
+    padding: 8px 10px;
   }
 
 }
@@ -265,17 +278,15 @@ Mark all as read
 ========================================= */
 
 const SUPABASE_URL =
-"https://utoyoglycqjmqznczfxxa.supabase.co";
+"https://utoyoglycqjmqznczfxa.supabase.co";
 
 const SUPABASE_ANON_KEY =
 "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
-
 
 const accessToken =
 localStorage.getItem(
 "berakah_access_token"
 );
-
 
 let currentUser = null;
 
@@ -342,12 +353,95 @@ throw new Error(
 
 }
 
-
 const response =
 await fetch(
 
 SUPABASE_URL +
 "/auth/v1/user",
+
+{
+method: "GET",
+headers: headers()
+}
+
+);
+
+const text =
+await response.text();
+
+if (!response.ok) {
+
+throw new Error(
+"Login session error:\n\n" +
+text
+);
+
+}
+
+if (!text.trim()) {
+
+throw new Error(
+"Supabase returned no user."
+);
+
+}
+
+return JSON.parse(text);
+
+}
+
+
+/* =========================================
+   GET PROFILE BY AUTH UUID
+========================================= */
+
+/*
+ IMPORTANT:
+
+ actor_id is a UUID.
+
+ profiles.id is a BIGINT.
+
+ Therefore we CANNOT do:
+
+ profile.html?id=UUID
+
+ We first find:
+
+ profiles.user_id = actor_id
+
+ Then we get:
+
+ profiles.id
+
+ Then we open:
+
+ profile.html?id=BIGINT
+*/
+
+async function getProfileByUserId(
+userId
+) {
+
+if (!userId) {
+
+return null;
+
+}
+
+const url =
+SUPABASE_URL +
+"/rest/v1/profiles" +
+"?select=id,\"Full name\",username,avatar_url,user_id" +
+"&user_id=eq." +
+encodeURIComponent(userId) +
+"&limit=1";
+
+
+const response =
+await fetch(
+
+url,
 
 {
 method: "GET",
@@ -363,24 +457,35 @@ await response.text();
 
 if (!response.ok) {
 
-throw new Error(
-"Login session error:\n\n" +
+console.error(
+"PROFILE LOOKUP ERROR:",
 text
 );
+
+return null;
 
 }
 
 
 if (!text.trim()) {
 
-throw new Error(
-"Supabase returned no user."
-);
+return null;
 
 }
 
 
-return JSON.parse(text);
+const rows =
+JSON.parse(text);
+
+
+if (!rows.length) {
+
+return null;
+
+}
+
+
+return rows[0];
 
 }
 
@@ -457,7 +562,7 @@ JSON.parse(text);
 }
 
 
-displayNotifications(
+await displayNotifications(
 notifications
 );
 
@@ -475,7 +580,7 @@ notifications.length +
    DISPLAY NOTIFICATIONS
 ========================================= */
 
-function displayNotifications(
+async function displayNotifications(
 notifications
 ) {
 
@@ -483,7 +588,6 @@ const container =
 document.getElementById(
 "notifications"
 );
-
 
 container.innerHTML =
 "";
@@ -510,14 +614,28 @@ return;
 }
 
 
-notifications.forEach(
-function(notification) {
+/*
+ Process every notification.
+
+ If actor_id exists:
+
+ UUID
+   ↓
+profiles.user_id
+   ↓
+profiles.id
+   ↓
+profile.html?id=NUMBER
+*/
+
+for (
+const notification of notifications
+) {
 
 const div =
 document.createElement(
 "div"
 );
-
 
 div.className =
 "notification";
@@ -532,15 +650,35 @@ div.classList.add(
 }
 
 
-const actorId =
-notification.actor_id ||
-"";
+/* -----------------------------------------
+   FIND ACTOR PROFILE
+----------------------------------------- */
 
+let actorProfile = null;
+
+
+if (notification.actor_id) {
+
+actorProfile =
+await getProfileByUserId(
+notification.actor_id
+);
+
+}
+
+
+/* -----------------------------------------
+   MESSAGE
+----------------------------------------- */
 
 const message =
 notification.message ||
 "Someone interacted with you on BERAKAH.";
 
+
+/* -----------------------------------------
+   TIME
+----------------------------------------- */
 
 let time =
 "";
@@ -563,12 +701,68 @@ date.toLocaleString();
 }
 
 
-const firstLetter =
-message
-.charAt(0)
-.toUpperCase() ||
+/* -----------------------------------------
+   AVATAR
+----------------------------------------- */
+
+let firstLetter =
 "B";
 
+
+if (
+actorProfile &&
+actorProfile["Full name"]
+) {
+
+firstLetter =
+actorProfile["Full name"]
+.charAt(0)
+.toUpperCase();
+
+}
+else if (
+actorProfile &&
+actorProfile.username
+) {
+
+firstLetter =
+actorProfile.username
+.charAt(0)
+.toUpperCase();
+
+}
+
+
+/* -----------------------------------------
+   VIEW BUTTON
+----------------------------------------- */
+
+let viewButtonHTML =
+"";
+
+
+if (
+actorProfile &&
+actorProfile.id
+) {
+
+viewButtonHTML = `
+
+<button
+class="notification-button"
+data-profile-id="${safe(actorProfile.id)}"
+data-notification-id="${safe(notification.id || "")}">
+View
+</button>
+
+`;
+
+}
+
+
+/* -----------------------------------------
+   HTML
+----------------------------------------- */
 
 div.innerHTML = `
 
@@ -588,22 +782,14 @@ ${safe(time)}
 
 </div>
 
-${
-actorId
-?
-`
-<button
-class="notification-button"
-data-actor="${safe(actorId)}">
-View
-</button>
-`
-:
-""
-}
+${viewButtonHTML}
 
 `;
 
+
+/* -----------------------------------------
+   VIEW BUTTON EVENT
+----------------------------------------- */
 
 const viewButton =
 div.querySelector(
@@ -615,25 +801,65 @@ if (viewButton) {
 
 viewButton.addEventListener(
 "click",
-function() {
+async function() {
 
-const id =
-this.dataset.actor;
+const profileId =
+this.dataset.profileId;
+
+const notificationId =
+this.dataset.notificationId;
+
+
+/*
+ Mark this notification
+ as read before opening
+ the profile.
+*/
+
+if (notificationId) {
+
+await markNotificationRead(
+notificationId
+);
+
+}
+
+
+/*
+ IMPORTANT:
+
+ profileId is now numeric.
+
+ Example:
+
+ profileId = 1
+
+ NOT:
+
+ profileId =
+f4fecfb1-efc5-4a79-b9aa-881003f0ec24
+*/
 
 location.href =
 "profile.html?id=" +
-encodeURIComponent(id);
+encodeURIComponent(
+profileId
+);
 
 });
 
 }
 
 
+/* -----------------------------------------
+   ADD TO PAGE
+----------------------------------------- */
+
 container.appendChild(
 div
 );
 
-});
+}
 
 }
 
@@ -645,6 +871,13 @@ div
 async function markNotificationRead(
 notificationId
 ) {
+
+if (!notificationId) {
+
+return;
+
+}
+
 
 const response =
 await fetch(
@@ -703,7 +936,6 @@ const button =
 document.getElementById(
 "markAllButton"
 );
-
 
 button.disabled =
 true;
@@ -861,6 +1093,12 @@ return;
 
 currentUser =
 await getCurrentUser();
+
+
+console.log(
+"CURRENT USER:",
+currentUser.id
+);
 
 
 await loadNotifications();
