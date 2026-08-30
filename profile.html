@@ -84,12 +84,11 @@ main {
 
 #error {
   display: none;
-  background: #fff;
+  background: white;
   color: #b91c1c;
   padding: 25px;
   border-radius: 18px;
   white-space: pre-wrap;
-  margin-bottom: 20px;
   line-height: 1.5;
 }
 
@@ -121,6 +120,13 @@ main {
   font-weight: bold;
   margin-top: -70px;
   border: 5px solid white;
+  overflow: hidden;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 h1 {
@@ -130,6 +136,12 @@ h1 {
 .username {
   color: #6b7280;
   font-size: 16px;
+}
+
+.language {
+  color: #6b7280;
+  font-size: 14px;
+  margin-top: 8px;
 }
 
 .bio {
@@ -335,25 +347,15 @@ BERAKAH
 
 <div class="nav-buttons">
 
-<a href="index.html">
-Home
-</a>
+<a href="index.html">Home</a>
 
-<a href="feed.html">
-Feed
-</a>
+<a href="feed.html">Feed</a>
 
-<a href="people.html">
-👥 People
-</a>
+<a href="people.html">👥 People</a>
 
-<a href="marketplace.html">
-Market
-</a>
+<a href="marketplace.html">Market</a>
 
-<a href="notifications.html">
-🔔
-</a>
+<a href="notifications.html">🔔</a>
 
 <button
 class="logout"
@@ -374,10 +376,12 @@ Logout
 Loading profile...
 </div>
 
+
 <div id="error"></div>
 
 
 <div id="profile" class="profile">
+
 
 <div class="cover"></div>
 
@@ -401,6 +405,12 @@ BERAKAH User
 class="username"
 id="profileUsername">
 @berakahuser
+</div>
+
+
+<div
+class="language"
+id="profileLanguage">
 </div>
 
 
@@ -502,7 +512,6 @@ Full Name
 <input
 type="text"
 id="editFullName"
-placeholder="Enter your full name"
 maxlength="100">
 
 
@@ -513,7 +522,6 @@ Username
 <input
 type="text"
 id="editUsername"
-placeholder="Enter username"
 maxlength="50">
 
 
@@ -523,8 +531,18 @@ Bio
 
 <textarea
 id="editBio"
-placeholder="Tell people about yourself..."
 maxlength="500"></textarea>
+
+
+<label for="editLanguage">
+Language
+</label>
+
+<input
+type="text"
+id="editLanguage"
+maxlength="20"
+placeholder="ht / en / fr / es">
 
 
 <button
@@ -588,9 +606,11 @@ localStorage.getItem(
 
 let currentUser = null;
 
-let profileUserId = null;
-
 let profileData = null;
+
+let profileNumberId = null;
+
+let profileAuthUserId = null;
 
 
 /* =========================================
@@ -629,7 +649,7 @@ return String(value ?? "")
 
 
 /* =========================================
-   SHOW ERROR
+   ERROR
 ========================================= */
 
 function showError(message) {
@@ -693,12 +713,6 @@ const text =
 await response.text();
 
 
-console.log(
-"AUTH RESPONSE:",
-text
-);
-
-
 if (!response.ok) {
 
 throw new Error(
@@ -724,7 +738,7 @@ return JSON.parse(text);
 
 
 /* =========================================
-   GET PROFILE ID
+   PROFILE ID FROM URL
 ========================================= */
 
 function getProfileId() {
@@ -734,17 +748,7 @@ new URLSearchParams(
 window.location.search
 );
 
-const id =
-params.get("id");
-
-
-console.log(
-"PROFILE ID FROM URL:",
-id
-);
-
-
-return id;
+return params.get("id");
 
 }
 
@@ -769,32 +773,26 @@ throw new Error(
 
 
 /*
-   IMPORTANT:
+   profiles.id is numeric.
 
-   People.html sends numeric IDs:
+   Example:
 
-   profile.html?id=1
-   profile.html?id=2
-   profile.html?id=3
-
-   We therefore query the profiles
-   table using the numeric ID.
+   id = 1
+   user_id = 2cac98ef-d552-4a6d-a620-9dad4bf07928
 */
+
+
+profileNumberId =
+requestedId;
 
 
 const url =
 SUPABASE_URL +
 "/rest/v1/profiles" +
-"?select=*" +
+"?select=id,created_at,%22Full%20name%22,username,language,avatar_url,stripe_connect_account_id,user_id" +
 "&id=eq." +
 encodeURIComponent(requestedId) +
 "&limit=1";
-
-
-console.log(
-"PROFILE REQUEST:",
-url
-);
 
 
 const response =
@@ -830,35 +828,19 @@ text
 }
 
 
-if (!text.trim()) {
-
-throw new Error(
-"Profile not found."
-);
-
-}
+let rows =
+[];
 
 
-let rows;
-
-
-try {
+if (text.trim()) {
 
 rows =
 JSON.parse(text);
 
 }
-catch(error) {
-
-throw new Error(
-"Supabase returned invalid data:\n\n" +
-text
-);
-
-}
 
 
-if (!Array.isArray(rows) || !rows.length) {
+if (!rows.length) {
 
 throw new Error(
 "Profile not found."
@@ -871,17 +853,16 @@ profileData =
 rows[0];
 
 
-profileUserId =
-profileData.id;
+profileAuthUserId =
+profileData.user_id;
 
 
 /* =========================================
-   NAME
+   DISPLAY NAME
 ========================================= */
 
 const fullName =
 profileData["Full name"] ||
-profileData.full_name ||
 profileData.username ||
 "BERAKAH User";
 
@@ -909,19 +890,50 @@ username.toLowerCase();
 
 
 /* =========================================
+   LANGUAGE
+========================================= */
+
+if (profileData.language) {
+
+document.getElementById(
+"profileLanguage"
+).textContent =
+"Language: " +
+profileData.language.toUpperCase();
+
+}
+
+
+/* =========================================
    AVATAR
 ========================================= */
 
-const firstLetter =
-String(fullName)
-.charAt(0)
-.toUpperCase();
-
-
+const avatar =
 document.getElementById(
 "avatar"
-).textContent =
-firstLetter || "B";
+);
+
+
+if (profileData.avatar_url) {
+
+avatar.innerHTML = `
+
+<img
+src="${safe(profileData.avatar_url)}"
+alt="Profile photo">
+
+`;
+
+}
+else {
+
+avatar.textContent =
+String(fullName)
+.charAt(0)
+.toUpperCase() ||
+"B";
+
+}
 
 
 /* =========================================
@@ -936,14 +948,14 @@ profileData.bio ||
 
 
 /* =========================================
-   POSTS
+   LOAD POSTS
 ========================================= */
 
-await loadAndDisplayPosts();
+await loadPosts();
 
 
 /* =========================================
-   FOLLOW COUNTS
+   LOAD FOLLOWERS
 ========================================= */
 
 await loadFollowCounts();
@@ -961,7 +973,7 @@ await updateFollowButton();
 ========================================= */
 
 if (
-String(profileUserId) ===
+String(profileAuthUserId) ===
 String(currentUser.id)
 ) {
 
@@ -972,6 +984,10 @@ document.getElementById(
 
 }
 
+
+/* =========================================
+   SHOW PROFILE
+========================================= */
 
 document.getElementById(
 "loading"
@@ -991,7 +1007,39 @@ document.getElementById(
    LOAD POSTS
 ========================================= */
 
-async function loadAndDisplayPosts() {
+async function loadPosts() {
+
+/*
+   IMPORTANT:
+
+   posts.user_id is UUID.
+
+   Therefore we use:
+
+   profileData.user_id
+
+   NOT:
+
+   profileData.id
+*/
+
+
+if (!profileAuthUserId) {
+
+document.getElementById(
+"postsList"
+).innerHTML = `
+
+<div class="empty">
+No posts yet.
+</div>
+
+`;
+
+return;
+
+}
+
 
 const url =
 SUPABASE_URL +
@@ -999,7 +1047,7 @@ SUPABASE_URL +
 "?select=*" +
 "&user_id=eq." +
 encodeURIComponent(
-profileUserId
+profileAuthUserId
 ) +
 "&order=created_at.desc";
 
@@ -1037,7 +1085,8 @@ text
 }
 
 
-let posts = [];
+let posts =
+[];
 
 
 if (text.trim()) {
@@ -1170,13 +1219,22 @@ div
 
 async function loadFollowCounts() {
 
+if (!profileAuthUserId) {
+
+return;
+
+}
+
+
+/* FOLLOWERS */
+
 const followersURL =
 SUPABASE_URL +
 "/rest/v1/follows" +
 "?select=id" +
 "&following_id=eq." +
 encodeURIComponent(
-profileUserId
+profileAuthUserId
 );
 
 
@@ -1215,13 +1273,15 @@ JSON.parse(followersText)
 [];
 
 
+/* FOLLOWING */
+
 const followingURL =
 SUPABASE_URL +
 "/rest/v1/follows" +
 "?select=id" +
 "&follower_id=eq." +
 encodeURIComponent(
-profileUserId
+profileAuthUserId
 );
 
 
@@ -1281,7 +1341,7 @@ following.length;
 async function checkFollowing() {
 
 if (
-String(profileUserId) ===
+String(profileAuthUserId) ===
 String(currentUser.id)
 ) {
 
@@ -1300,7 +1360,7 @@ currentUser.id
 ) +
 "&following_id=eq." +
 encodeURIComponent(
-profileUserId
+profileAuthUserId
 );
 
 
@@ -1338,17 +1398,13 @@ return false;
 }
 
 
-const rows =
-JSON.parse(text);
-
-
-return rows.length > 0;
+return JSON.parse(text).length > 0;
 
 }
 
 
 /* =========================================
-   UPDATE FOLLOW BUTTON
+   FOLLOW BUTTON
 ========================================= */
 
 async function updateFollowButton() {
@@ -1360,7 +1416,7 @@ document.getElementById(
 
 
 if (
-String(profileUserId) ===
+String(profileAuthUserId) ===
 String(currentUser.id)
 ) {
 
@@ -1403,7 +1459,7 @@ button.className =
 
 
 /* =========================================
-   CREATE NOTIFICATION
+   FOLLOW NOTIFICATION
 ========================================= */
 
 async function createFollowNotification() {
@@ -1422,9 +1478,11 @@ SUPABASE_URL +
 
 {
 
-method: "POST",
+method:
+"POST",
 
-headers: headers({
+headers:
+headers({
 
 "Content-Type":
 "application/json",
@@ -1438,7 +1496,7 @@ body:
 JSON.stringify({
 
 user_id:
-profileUserId,
+profileAuthUserId,
 
 actor_id:
 currentUser.id,
@@ -1466,7 +1524,7 @@ return response.ok;
 
 
 /* =========================================
-   FOLLOW / UNFOLLOW
+   TOGGLE FOLLOW
 ========================================= */
 
 async function toggleFollow() {
@@ -1495,9 +1553,7 @@ await checkFollowing();
 
 if (following) {
 
-const response =
-await fetch(
-
+const url =
 SUPABASE_URL +
 "/rest/v1/follows" +
 "?follower_id=eq." +
@@ -1506,17 +1562,18 @@ currentUser.id
 ) +
 "&following_id=eq." +
 encodeURIComponent(
-profileUserId
-),
+profileAuthUserId
+);
+
+
+const response =
+await fetch(
+
+url,
 
 {
-
-method:
-"DELETE",
-
-headers:
-headers()
-
+method: "DELETE",
+headers: headers()
 }
 
 );
@@ -1571,7 +1628,7 @@ follower_id:
 currentUser.id,
 
 following_id:
-profileUserId
+profileAuthUserId
 
 })
 
@@ -1610,13 +1667,13 @@ await updateFollowButton();
 }
 catch(error) {
 
-status.textContent =
-error.message;
-
 console.error(
 "FOLLOW ERROR:",
 error
 );
+
+status.textContent =
+error.message;
 
 }
 
@@ -1628,7 +1685,7 @@ false;
 
 
 /* =========================================
-   OPEN EDIT PROFILE
+   OPEN EDIT
 ========================================= */
 
 function openEditProfile() {
@@ -1643,7 +1700,6 @@ document.getElementById(
 "editFullName"
 ).value =
 profileData["Full name"] ||
-profileData.full_name ||
 "";
 
 
@@ -1658,6 +1714,13 @@ document.getElementById(
 "editBio"
 ).value =
 profileData.bio ||
+"";
+
+
+document.getElementById(
+"editLanguage"
+).value =
+profileData.language ||
 "";
 
 
@@ -1726,6 +1789,12 @@ document.getElementById(
 ).value.trim();
 
 
+const language =
+document.getElementById(
+"editLanguage"
+).value.trim();
+
+
 if (!fullName) {
 
 status.textContent =
@@ -1755,6 +1824,23 @@ status.textContent =
 
 try {
 
+const body = {
+
+"Full name":
+fullName,
+
+username:
+username,
+
+bio:
+bio,
+
+language:
+language
+
+};
+
+
 const response =
 await fetch(
 
@@ -1762,7 +1848,7 @@ SUPABASE_URL +
 "/rest/v1/profiles" +
 "?id=eq." +
 encodeURIComponent(
-profileUserId
+profileNumberId
 ),
 
 {
@@ -1782,18 +1868,7 @@ headers({
 }),
 
 body:
-JSON.stringify({
-
-"Full name":
-fullName,
-
-username:
-username,
-
-bio:
-bio
-
-})
+JSON.stringify(body)
 
 }
 
@@ -1818,7 +1893,6 @@ if (text.trim()) {
 
 const updated =
 JSON.parse(text);
-
 
 if (updated.length) {
 
@@ -1851,11 +1925,41 @@ bio ||
 
 
 document.getElementById(
-"avatar"
+"profileLanguage"
 ).textContent =
+language
+?
+"Language: " +
+language.toUpperCase()
+:
+"";
+
+
+const avatar =
+document.getElementById(
+"avatar"
+);
+
+
+if (profileData.avatar_url) {
+
+avatar.innerHTML = `
+
+<img
+src="${safe(profileData.avatar_url)}"
+alt="Profile photo">
+
+`;
+
+}
+else {
+
+avatar.textContent =
 fullName
 .charAt(0)
 .toUpperCase();
+
+}
 
 
 status.textContent =
@@ -1984,7 +2088,7 @@ await getCurrentUser();
 
 
 console.log(
-"CURRENT USER ID:",
+"CURRENT AUTH USER:",
 currentUser.id
 );
 
