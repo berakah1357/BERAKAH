@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BERAKAH - Edit Profile</title>
+<title>BERAKAH - Profile</title>
 
 <style>
 
@@ -69,30 +69,43 @@ header {
 }
 
 main {
-  max-width: 650px;
+  max-width: 850px;
   margin: 30px auto;
   padding: 0 15px;
 }
 
-.card {
+#loading {
   background: white;
+  padding: 30px;
+  border-radius: 18px;
+  text-align: center;
+  font-weight: bold;
+}
+
+#error {
+  display: none;
+  background: white;
+  color: #b91c1c;
   padding: 25px;
   border-radius: 18px;
-  box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+  white-space: pre-wrap;
+  margin-bottom: 20px;
 }
 
-h1 {
-  margin-top: 0;
+.profile {
+  display: none;
 }
 
-.subtitle {
-  color: #6b7280;
-  margin-bottom: 25px;
+.cover {
+  height: 180px;
+  background: #111827;
+  border-radius: 18px 18px 0 0;
 }
 
-.avatar-area {
-  text-align: center;
-  margin-bottom: 25px;
+.profile-card {
+  background: white;
+  padding: 25px;
+  border-radius: 0 0 18px 18px;
 }
 
 .avatar {
@@ -100,15 +113,14 @@ h1 {
   height: 110px;
   border-radius: 50%;
   background: #e5e7eb;
-  margin: 0 auto 15px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 45px;
   font-weight: bold;
+  margin-top: -70px;
+  border: 5px solid white;
   overflow: hidden;
-  border: 4px solid white;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.10);
 }
 
 .avatar img {
@@ -117,11 +129,211 @@ h1 {
   object-fit: cover;
 }
 
-.photo-label {
-  display: inline-block;
+h1 {
+  margin: 15px 0 5px;
+}
+
+.username {
+  color: #6b7280;
+  font-size: 16px;
+}
+
+.bio {
+  line-height: 1.6;
+  margin-top: 20px;
+}
+
+.stats {
+  display: flex;
+  gap: 35px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+.stat strong {
+  display: block;
+  font-size: 20px;
+}
+
+.buttons {
+  margin-top: 25px;
+}
+
+.action-button {
+  padding: 11px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.primary {
   background: #111827;
   color: white;
+}
+
+.secondary {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.follow {
+  background: #111827;
+  color: white;
+}
+
+.following {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.action-button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+#status {
+  margin-top: 10px;
+  font-weight: bold;
+  min-height: 20px;
+}
+
+.posts {
+  margin-top: 25px;
+  background: white;
+  padding: 25px;
+  border-radius: 18px;
+}
+
+.post {
+  padding: 20px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.post:last-child {
+  border-bottom: none;
+}
+
+.post-time {
+  color: #6b7280;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.post-content {
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.post-image {
+  width: 100%;
+  max-height: 450px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.post-actions {
+  margin-top: 12px;
+}
+
+.post-actions button {
+  border: none;
+  background: #f3f4f6;
+  padding: 8px 13px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.empty {
+  text-align: center;
+  color: #6b7280;
+  padding: 30px 10px;
+}
+
+
+/* =========================================
+   EDIT PROFILE
+========================================= */
+
+#editPanel {
+  display: none;
+  margin-top: 25px;
+}
+
+.edit-card {
+  background: white;
+  padding: 25px;
+  border-radius: 18px;
+}
+
+.edit-card h2 {
+  margin-top: 0;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+}
+
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #111827;
+}
+
+.photo-preview {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.edit-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  margin: 0 auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-size: 45px;
+  font-weight: bold;
+}
+
+.edit-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-label {
+  display: inline-block;
   padding: 10px 15px;
+  background: #111827;
+  color: white;
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
@@ -131,87 +343,37 @@ h1 {
   display: none;
 }
 
-.form-group {
-  margin-bottom: 20px;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 7px;
-}
-
-input,
-textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 16px;
-  font-family: Arial, sans-serif;
-}
-
-input:focus,
-textarea:focus {
-  outline: none;
-  border-color: #111827;
-}
-
-textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-
-.help {
-  color: #6b7280;
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-.buttons {
+.edit-buttons {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  margin-top: 25px;
 }
 
-.save-button,
-.cancel-button {
+.save-button {
   border: none;
+  background: #111827;
+  color: white;
   padding: 12px 20px;
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
 }
 
-.save-button {
-  background: #111827;
-  color: white;
-}
-
 .cancel-button {
+  border: none;
   background: #e5e7eb;
   color: #111827;
-}
-
-button:disabled {
-  opacity: 0.6;
-  cursor: wait;
-}
-
-#loading {
-  text-align: center;
-  background: white;
-  padding: 30px;
-  border-radius: 18px;
+  padding: 12px 20px;
+  border-radius: 8px;
   font-weight: bold;
+  cursor: pointer;
 }
 
-#message {
-  margin-bottom: 15px;
+#editMessage {
+  display: none;
   padding: 12px;
   border-radius: 8px;
-  display: none;
+  margin-bottom: 15px;
   font-weight: bold;
 }
 
@@ -220,10 +382,11 @@ button:disabled {
   color: #166534;
 }
 
-.error {
+.edit-error {
   background: #fee2e2;
   color: #991b1b;
 }
+
 
 @media (max-width: 600px) {
 
@@ -232,8 +395,8 @@ button:disabled {
     align-items: flex-start;
   }
 
-  .card {
-    padding: 20px;
+  .nav-buttons {
+    width: 100%;
   }
 
 }
@@ -291,39 +454,175 @@ Logout
 
 <main>
 
+
 <div id="loading">
 Loading profile...
 </div>
 
 
+<div id="error"></div>
+
+
 <div
-id="editor"
-style="display:none;"
+id="profile"
+class="profile"
 >
 
-<div class="card">
 
-<h1>
-✏️ Edit Profile
-</h1>
-
-<div class="subtitle">
-Update your BERAKAH profile information.
-</div>
+<div class="cover"></div>
 
 
-<div id="message"></div>
+<section class="profile-card">
 
-
-<!-- PROFILE PHOTO -->
-
-<div class="avatar-area">
 
 <div
 class="avatar"
 id="avatar">
 👤
 </div>
+
+
+<h1 id="profileName">
+BERAKAH User
+</h1>
+
+
+<div
+class="username"
+id="profileUsername">
+@berakahuser
+</div>
+
+
+<p
+class="bio"
+id="profileBio">
+Welcome to my BERAKAH profile.
+Connect, share, build, and grow together.
+</p>
+
+
+<div class="stats">
+
+
+<div class="stat">
+
+<strong
+id="followersCount">
+0
+</strong>
+
+Followers
+
+</div>
+
+
+<div class="stat">
+
+<strong
+id="followingCount">
+0
+</strong>
+
+Following
+
+</div>
+
+
+<div class="stat">
+
+<strong
+id="postsCount">
+0
+</strong>
+
+Posts
+
+</div>
+
+
+</div>
+
+
+<div class="buttons">
+
+
+<button
+id="followButton"
+class="action-button follow"
+style="display:none;">
+
+Follow
+
+</button>
+
+
+<button
+id="editButton"
+class="action-button primary"
+style="display:none;">
+
+✏️ EDIT PROFILE
+
+</button>
+
+
+<button
+class="action-button secondary"
+onclick="location.href='messages.html'">
+
+💬 MESSAGES
+
+</button>
+
+
+<button
+class="action-button secondary"
+onclick="location.href='notifications.html'">
+
+🔔 NOTIFICATIONS
+
+</button>
+
+
+<div id="status"></div>
+
+
+</div>
+
+</section>
+
+
+<!-- =====================================
+     EDIT PROFILE PANEL
+===================================== -->
+
+<div id="editPanel">
+
+<div class="edit-card">
+
+
+<h2>
+✏️ Edit Profile
+</h2>
+
+
+<div id="editMessage"></div>
+
+
+<!-- PHOTO -->
+
+<div class="photo-preview">
+
+
+<div
+class="edit-avatar"
+id="editAvatar">
+
+👤
+
+</div>
+
 
 <label
 class="photo-label"
@@ -332,6 +631,7 @@ for="profilePhoto">
 📷 Choose Profile Photo
 
 </label>
+
 
 <input
 type="file"
@@ -346,14 +646,17 @@ accept="image/*">
 <div class="form-group">
 
 <label for="fullName">
+
 Full Name
+
 </label>
+
 
 <input
 type="text"
 id="fullName"
-placeholder="Enter your full name"
-maxlength="100">
+maxlength="100"
+placeholder="Enter your full name">
 
 </div>
 
@@ -362,19 +665,18 @@ maxlength="100">
 
 <div class="form-group">
 
-<label for="username">
+<label for="editUsername">
+
 Username
+
 </label>
+
 
 <input
 type="text"
-id="username"
-placeholder="Enter your username"
-maxlength="50">
-
-<div class="help">
-Your username will appear as @username.
-</div>
+id="editUsername"
+maxlength="50"
+placeholder="Enter your username">
 
 </div>
 
@@ -383,48 +685,75 @@ Your username will appear as @username.
 
 <div class="form-group">
 
-<label for="bio">
+<label for="editBio">
+
 Bio
+
 </label>
 
+
 <textarea
-id="bio"
-placeholder="Tell people about yourself..."
-maxlength="500"></textarea>
+id="editBio"
+maxlength="500"
+placeholder="Tell people about yourself..."></textarea>
 
 </div>
 
 
-<!-- BUTTONS -->
+<div class="edit-buttons">
 
-<div class="buttons">
 
 <button
 class="save-button"
-id="saveButton">
+id="saveProfileButton">
 
-SAVE CHANGES
+💾 SAVE CHANGES
 
 </button>
 
+
 <button
 class="cancel-button"
-id="cancelButton">
+id="cancelEditButton">
 
 CANCEL
 
 </button>
 
+
 </div>
+
 
 </div>
 
 </div>
+
+
+<!-- =====================================
+     POSTS
+===================================== -->
+
+<section class="posts">
+
+<h2>
+Posts
+</h2>
+
+
+<div id="postsList"></div>
+
+
+</section>
+
+
+</div>
+
 
 </main>
 
 
 <script>
+
 
 /* =========================================
    SUPABASE
@@ -444,9 +773,9 @@ localStorage.getItem(
 
 let currentUser = null;
 
-let currentProfile = null;
+let profileUserId = null;
 
-let selectedPhoto = null;
+let currentProfile = null;
 
 
 /* =========================================
@@ -469,33 +798,53 @@ SUPABASE_ANON_KEY,
 
 
 /* =========================================
-   SHOW MESSAGE
+   SAFE TEXT
 ========================================= */
 
-function showMessage(
-message,
-type
-) {
+function safe(value) {
 
-const box =
-document.getElementById(
-"message"
-);
-
-box.textContent =
-message;
-
-box.className =
-type;
-
-box.style.display =
-"block";
+return String(value ?? "")
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
 
 }
 
 
 /* =========================================
-   GET CURRENT USER
+   ERROR
+========================================= */
+
+function showError(message) {
+
+document.getElementById(
+"loading"
+).style.display =
+"none";
+
+document.getElementById(
+"profile"
+).style.display =
+"none";
+
+const error =
+document.getElementById(
+"error"
+);
+
+error.style.display =
+"block";
+
+error.textContent =
+message;
+
+}
+
+
+/* =========================================
+   CURRENT USER
 ========================================= */
 
 async function getCurrentUser() {
@@ -560,10 +909,51 @@ return JSON.parse(text);
 
 
 /* =========================================
+   PROFILE ID
+========================================= */
+
+function getProfileId() {
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+return params.get("id");
+
+}
+
+
+/* =========================================
    LOAD PROFILE
 ========================================= */
 
 async function loadProfile() {
+
+
+const requestedId =
+getProfileId();
+
+
+/*
+If there is no ID,
+show the logged-in user's profile.
+*/
+
+const targetId =
+requestedId ||
+currentUser.id;
+
+
+console.log(
+"PROFILE ID:",
+targetId
+);
+
+
+/* =========================================
+   GET PROFILE
+========================================= */
 
 const response =
 await fetch(
@@ -572,9 +962,7 @@ SUPABASE_URL +
 "/rest/v1/profiles" +
 "?select=*" +
 "&id=eq." +
-encodeURIComponent(
-currentUser.id
-) +
+encodeURIComponent(targetId) +
 "&limit=1",
 
 {
@@ -590,7 +978,7 @@ await response.text();
 
 
 console.log(
-"PROFILE:",
+"PROFILE RESPONSE:",
 text
 );
 
@@ -608,7 +996,7 @@ text
 if (!text.trim()) {
 
 throw new Error(
-"Profile was not found."
+"Profile not found."
 );
 
 }
@@ -621,7 +1009,7 @@ JSON.parse(text);
 if (!rows.length) {
 
 throw new Error(
-"No profile exists for your account."
+"Profile not found for this account."
 );
 
 }
@@ -630,56 +1018,50 @@ throw new Error(
 currentProfile =
 rows[0];
 
-
-console.log(
-"PROFILE DATA:",
-currentProfile
-);
+profileUserId =
+currentProfile.id;
 
 
 /* =========================================
-   FULL NAME
+   NAME
 ========================================= */
 
-/*
-IMPORTANT:
+const fullName =
+currentProfile["Full name"] ||
+currentProfile.username ||
+"BERAKAH User";
 
-Your database column is:
-
-"Full name"
-
-The space is intentional.
-*/
 
 document.getElementById(
-"fullName"
-).value =
-currentProfile["Full name"] || "";
+"profileName"
+).textContent =
+fullName;
 
 
 /* =========================================
    USERNAME
 ========================================= */
 
-document.getElementById(
-"username"
-).value =
-currentProfile.username || "";
+const username =
+currentProfile.username ||
+"berakahuser";
 
-
-/* =========================================
-   BIO
-========================================= */
 
 document.getElementById(
-"bio"
-).value =
-currentProfile.bio || "";
+"profileUsername"
+).textContent =
+"@" +
+username;
 
 
 /* =========================================
    AVATAR
 ========================================= */
+
+setAvatar(
+currentProfile,
+"profileAvatar"
+);
 
 const avatar =
 document.getElementById(
@@ -687,25 +1069,873 @@ document.getElementById(
 );
 
 
-/*
-If your profile table has
-avatar_url or profile_photo,
-use it.
-*/
-
-const photoURL =
+const avatarPhoto =
 currentProfile.avatar_url ||
 currentProfile.profile_photo ||
 currentProfile.photo_url ||
-null;
+"";
 
 
-if (photoURL) {
+if (avatarPhoto) {
 
 avatar.innerHTML = `
 
 <img
-src="${photoURL}"
+src="${safe(avatarPhoto)}"
+alt="Profile photo">
+
+`;
+
+}
+else {
+
+avatar.textContent =
+fullName
+.charAt(0)
+.toUpperCase();
+
+}
+
+
+/* =========================================
+   BIO
+========================================= */
+
+document.getElementById(
+"profileBio"
+).textContent =
+currentProfile.bio ||
+"Welcome to my BERAKAH profile. Connect, share, build, and grow together.";
+
+
+/* =========================================
+   LOAD POSTS
+========================================= */
+
+const posts =
+await loadPosts();
+
+
+displayPosts(
+posts
+);
+
+
+/* =========================================
+   FOLLOW
+========================================= */
+
+await loadFollowCounts();
+
+await updateFollowButton();
+
+
+/* =========================================
+   SHOW
+========================================= */
+
+document.getElementById(
+"loading"
+).style.display =
+"none";
+
+document.getElementById(
+"profile"
+).style.display =
+"block";
+
+
+}
+
+
+/* =========================================
+   AVATAR HELPER
+========================================= */
+
+function setAvatar(
+profile,
+unused
+) {
+
+const fullName =
+profile["Full name"] ||
+profile.username ||
+"BERAKAH User";
+
+
+const photo =
+profile.avatar_url ||
+profile.profile_photo ||
+profile.photo_url ||
+"";
+
+
+const editAvatar =
+document.getElementById(
+"editAvatar"
+);
+
+
+if (!editAvatar) {
+return;
+}
+
+
+if (photo) {
+
+editAvatar.innerHTML = `
+
+<img
+src="${safe(photo)}"
+alt="Profile photo">
+
+`;
+
+}
+else {
+
+editAvatar.textContent =
+fullName
+.charAt(0)
+.toUpperCase();
+
+}
+
+}
+
+
+/* =========================================
+   LOAD POSTS
+========================================= */
+
+async function loadPosts() {
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/posts" +
+"?select=*" +
+"&user_id=eq." +
+encodeURIComponent(profileUserId) +
+"&order=created_at.desc",
+
+{
+method: "GET",
+headers: headers()
+}
+
+);
+
+
+const text =
+await response.text();
+
+
+console.log(
+"POSTS RESPONSE:",
+text
+);
+
+
+if (!response.ok) {
+
+throw new Error(
+"Could not load posts:\n\n" +
+text
+);
+
+}
+
+
+if (!text.trim()) {
+
+return [];
+
+}
+
+
+return JSON.parse(text);
+
+}
+
+
+/* =========================================
+   DISPLAY POSTS
+========================================= */
+
+function displayPosts(posts) {
+
+const postsList =
+document.getElementById(
+"postsList"
+);
+
+
+postsList.innerHTML =
+"";
+
+
+document.getElementById(
+"postsCount"
+).textContent =
+posts.length;
+
+
+if (!posts.length) {
+
+postsList.innerHTML = `
+
+<div class="empty">
+
+No posts yet.
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+posts.forEach(
+function(post) {
+
+const div =
+document.createElement(
+"div"
+);
+
+
+div.className =
+"post";
+
+
+let dateText =
+"Date unavailable";
+
+
+if (post.created_at) {
+
+const date =
+new Date(
+post.created_at
+);
+
+
+if (!isNaN(date.getTime())) {
+
+dateText =
+date.toLocaleString();
+
+}
+
+}
+
+
+let imageHTML =
+"";
+
+
+if (post.image_url) {
+
+imageHTML = `
+
+<img
+class="post-image"
+src="${safe(post.image_url)}"
+alt="Post image">
+
+`;
+
+}
+
+
+div.innerHTML = `
+
+<div class="post-time">
+
+${safe(dateText)}
+
+</div>
+
+
+<div class="post-content">
+
+${safe(post.content)}
+
+</div>
+
+
+${imageHTML}
+
+
+<div class="post-actions">
+
+<button
+onclick="location.href='feed.html'">
+
+❤️ Like
+
+</button>
+
+</div>
+
+`;
+
+
+postsList.appendChild(
+div
+);
+
+});
+
+}
+
+
+/* =========================================
+   FOLLOW COUNTS
+========================================= */
+
+async function loadFollowCounts() {
+
+
+/* FOLLOWERS */
+
+const followersResponse =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/follows" +
+"?select=id" +
+"&following_id=eq." +
+encodeURIComponent(profileUserId),
+
+{
+headers: headers()
+}
+
+);
+
+
+const followersText =
+await followersResponse.text();
+
+
+if (!followersResponse.ok) {
+
+throw new Error(
+"Could not load followers:\n\n" +
+followersText
+);
+
+}
+
+
+let followers = [];
+
+
+if (followersText.trim()) {
+
+followers =
+JSON.parse(
+followersText
+);
+
+}
+
+
+/* FOLLOWING */
+
+const followingResponse =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/follows" +
+"?select=id" +
+"&follower_id=eq." +
+encodeURIComponent(profileUserId),
+
+{
+headers: headers()
+}
+
+);
+
+
+const followingText =
+await followingResponse.text();
+
+
+if (!followingResponse.ok) {
+
+throw new Error(
+"Could not load following:\n\n" +
+followingText
+);
+
+}
+
+
+let following = [];
+
+
+if (followingText.trim()) {
+
+following =
+JSON.parse(
+followingText
+);
+
+}
+
+
+document.getElementById(
+"followersCount"
+).textContent =
+followers.length;
+
+
+document.getElementById(
+"followingCount"
+).textContent =
+following.length;
+
+}
+
+
+/* =========================================
+   CHECK FOLLOWING
+========================================= */
+
+async function checkFollowing() {
+
+if (
+String(profileUserId) ===
+String(currentUser.id)
+) {
+
+return false;
+
+}
+
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/follows" +
+"?select=id" +
+"&follower_id=eq." +
+encodeURIComponent(currentUser.id) +
+"&following_id=eq." +
+encodeURIComponent(profileUserId),
+
+{
+headers: headers()
+}
+
+);
+
+
+const text =
+await response.text();
+
+
+if (!response.ok) {
+
+throw new Error(
+"Could not check follow status:\n\n" +
+text
+);
+
+}
+
+
+if (!text.trim()) {
+
+return false;
+
+}
+
+
+const rows =
+JSON.parse(text);
+
+
+return rows.length > 0;
+
+}
+
+
+/* =========================================
+   FOLLOW BUTTON
+========================================= */
+
+async function updateFollowButton() {
+
+const button =
+document.getElementById(
+"followButton"
+);
+
+const editButton =
+document.getElementById(
+"editButton"
+);
+
+
+if (
+String(profileUserId) ===
+String(currentUser.id)
+) {
+
+button.style.display =
+"none";
+
+editButton.style.display =
+"inline-block";
+
+return;
+
+}
+
+
+editButton.style.display =
+"none";
+
+button.style.display =
+"inline-block";
+
+
+const following =
+await checkFollowing();
+
+
+if (following) {
+
+button.textContent =
+"Following";
+
+button.className =
+"action-button following";
+
+}
+else {
+
+button.textContent =
+"Follow";
+
+button.className =
+"action-button follow";
+
+}
+
+}
+
+
+/* =========================================
+   NOTIFICATION
+========================================= */
+
+async function createFollowNotification() {
+
+const actorName =
+currentUser.user_metadata?.username ||
+currentUser.email?.split("@")[0] ||
+"BERAKAH User";
+
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/notifications",
+
+{
+
+method: "POST",
+
+headers: headers({
+
+"Content-Type":
+"application/json",
+
+"Prefer":
+"return=minimal"
+
+}),
+
+body:
+JSON.stringify({
+
+user_id:
+profileUserId,
+
+actor_id:
+currentUser.id,
+
+type:
+"follow",
+
+message:
+actorName +
+" follows you",
+
+read:
+false
+
+})
+
+}
+
+);
+
+
+if (!response.ok) {
+
+console.error(
+"Notification error:",
+await response.text()
+);
+
+}
+
+}
+
+
+/* =========================================
+   FOLLOW / UNFOLLOW
+========================================= */
+
+async function toggleFollow() {
+
+const button =
+document.getElementById(
+"followButton"
+);
+
+const status =
+document.getElementById(
+"status"
+);
+
+
+button.disabled =
+true;
+
+
+try {
+
+
+const following =
+await checkFollowing();
+
+
+if (following) {
+
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/follows" +
+"?follower_id=eq." +
+encodeURIComponent(currentUser.id) +
+"&following_id=eq." +
+encodeURIComponent(profileUserId),
+
+{
+
+method:
+"DELETE",
+
+headers:
+headers()
+
+}
+
+);
+
+
+const text =
+await response.text();
+
+
+if (!response.ok) {
+
+throw new Error(
+"Could not unfollow:\n\n" +
+text
+);
+
+}
+
+
+status.textContent =
+"Unfollowed successfully.";
+
+}
+else {
+
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/follows",
+
+{
+
+method:
+"POST",
+
+headers:
+headers({
+
+"Content-Type":
+"application/json",
+
+"Prefer":
+"return=minimal"
+
+}),
+
+body:
+JSON.stringify({
+
+follower_id:
+currentUser.id,
+
+following_id:
+profileUserId
+
+})
+
+}
+
+);
+
+
+const text =
+await response.text();
+
+
+if (!response.ok) {
+
+throw new Error(
+"Could not follow:\n\n" +
+text
+);
+
+}
+
+
+await createFollowNotification();
+
+
+status.textContent =
+"Following successfully.";
+
+}
+
+
+await loadFollowCounts();
+
+await updateFollowButton();
+
+}
+catch(error) {
+
+console.error(
+"FOLLOW ERROR:",
+error
+);
+
+status.textContent =
+error.message;
+
+}
+
+
+button.disabled =
+false;
+
+}
+
+
+/* =========================================
+   EDIT PROFILE
+========================================= */
+
+function openEditProfile() {
+
+if (
+String(profileUserId) !==
+String(currentUser.id)
+) {
+
+return;
+
+}
+
+
+const panel =
+document.getElementById(
+"editPanel"
+);
+
+
+panel.style.display =
+"block";
+
+
+/* FULL NAME */
+
+document.getElementById(
+"fullName"
+).value =
+currentProfile["Full name"] || "";
+
+
+/* USERNAME */
+
+document.getElementById(
+"editUsername"
+).value =
+currentProfile.username || "";
+
+
+/* BIO */
+
+document.getElementById(
+"editBio"
+).value =
+currentProfile.bio || "";
+
+
+/* PHOTO */
+
+const photo =
+currentProfile.avatar_url ||
+currentProfile.profile_photo ||
+currentProfile.photo_url ||
+"";
+
+
+const editAvatar =
+document.getElementById(
+"editAvatar"
+);
+
+
+if (photo) {
+
+editAvatar.innerHTML = `
+
+<img
+src="${safe(photo)}"
 alt="Profile photo">
 
 `;
@@ -719,18 +1949,21 @@ currentProfile.username ||
 "BERAKAH";
 
 
-avatar.textContent =
-name
-.charAt(0)
-.toUpperCase();
+editAvatar.textContent =
+name.charAt(0).toUpperCase();
 
 }
+
+
+panel.scrollIntoView({
+behavior: "smooth"
+});
 
 }
 
 
 /* =========================================
-   PROFILE PHOTO SELECT
+   PHOTO PREVIEW
 ========================================= */
 
 document
@@ -746,50 +1979,36 @@ event.target.files[0];
 
 
 if (!file) {
-
 return;
-
 }
 
 
-/* Check image */
+if (!file.type.startsWith("image/")) {
 
-if (
-!file.type.startsWith("image/")
-) {
-
-showMessage(
+showEditMessage(
 "Please choose an image file.",
-"error"
+false
 );
 
 return;
 
 }
 
-
-/* Limit 5 MB */
 
 if (
 file.size >
 5 * 1024 * 1024
 ) {
 
-showMessage(
-"Profile photo must be smaller than 5 MB.",
-"error"
+showEditMessage(
+"Photo must be smaller than 5 MB.",
+false
 );
 
 return;
 
 }
 
-
-selectedPhoto =
-file;
-
-
-/* Preview */
 
 const reader =
 new FileReader();
@@ -799,12 +2018,12 @@ reader.onload =
 function(e) {
 
 document.getElementById(
-"avatar"
+"editAvatar"
 ).innerHTML = `
 
 <img
 src="${e.target.result}"
-alt="Profile photo preview">
+alt="Photo preview">
 
 `;
 
@@ -817,21 +2036,49 @@ reader.readAsDataURL(file);
 
 
 /* =========================================
-   UPDATE PROFILE
+   EDIT MESSAGE
+========================================= */
+
+function showEditMessage(
+message,
+success
+) {
+
+const box =
+document.getElementById(
+"editMessage"
+);
+
+box.textContent =
+message;
+
+box.className =
+success ?
+"success" :
+"edit-error";
+
+box.style.display =
+"block";
+
+}
+
+
+/* =========================================
+   SAVE PROFILE
 ========================================= */
 
 async function saveProfile() {
 
-const saveButton =
+const button =
 document.getElementById(
-"saveButton"
+"saveProfileButton"
 );
 
 
-saveButton.disabled =
+button.disabled =
 true;
 
-saveButton.textContent =
+button.textContent =
 "Saving...";
 
 
@@ -844,21 +2091,25 @@ document.getElementById(
 ).value.trim();
 
 
-const username =
+let username =
 document.getElementById(
-"username"
+"editUsername"
 ).value.trim();
 
 
 const bio =
 document.getElementById(
-"bio"
+"editBio"
 ).value.trim();
 
 
-/* =========================================
-   VALIDATION
-========================================= */
+/* REMOVE @ */
+
+username =
+username.replace(/^@/, "");
+
+
+/* VALIDATE */
 
 if (!username) {
 
@@ -869,10 +2120,7 @@ throw new Error(
 }
 
 
-if (
-username.length <
-3
-) {
+if (username.length < 3) {
 
 throw new Error(
 "Username must be at least 3 characters."
@@ -881,17 +2129,9 @@ throw new Error(
 }
 
 
-/* =========================================
-   USERNAME CLEANUP
-========================================= */
-
-const cleanUsername =
-username
-.replace(/^@/, "")
-.trim();
-
-
-if (!/^[a-zA-Z0-9_]+$/.test(cleanUsername)) {
+if (
+!/^[a-zA-Z0-9_]+$/.test(username)
+) {
 
 throw new Error(
 "Username can only contain letters, numbers, and underscores."
@@ -901,7 +2141,7 @@ throw new Error(
 
 
 /* =========================================
-   UPDATE PROFILES TABLE
+   UPDATE PROFILE
 ========================================= */
 
 const updateData = {
@@ -910,7 +2150,7 @@ const updateData = {
 fullName,
 
 username:
-cleanUsername,
+username,
 
 bio:
 bio
@@ -918,24 +2158,13 @@ bio
 };
 
 
-/*
-IMPORTANT:
-
-We update by the authenticated
-Supabase UUID.
-
-NOT by People page number.
-*/
-
 const response =
 await fetch(
 
 SUPABASE_URL +
 "/rest/v1/profiles" +
 "?id=eq." +
-encodeURIComponent(
-currentUser.id
-),
+encodeURIComponent(currentUser.id),
 
 {
 
@@ -968,7 +2197,7 @@ await response.text();
 
 
 console.log(
-"PROFILE UPDATE:",
+"SAVE PROFILE:",
 text
 );
 
@@ -983,10 +2212,6 @@ text
 }
 
 
-/* =========================================
-   CHECK UPDATE
-========================================= */
-
 if (!text.trim()) {
 
 throw new Error(
@@ -996,116 +2221,132 @@ throw new Error(
 }
 
 
+/* =========================================
+   UPDATE LOCAL PROFILE
+========================================= */
+
 currentProfile =
 JSON.parse(text)[0];
 
 
 /* =========================================
-   UPDATE AUTH METADATA
+   UPDATE PAGE IMMEDIATELY
 ========================================= */
 
-try {
+document.getElementById(
+"profileName"
+).textContent =
+fullName ||
+username;
 
-await fetch(
 
-SUPABASE_URL +
-"/auth/v1/user",
+document.getElementById(
+"profileUsername"
+).textContent =
+"@" +
+username;
 
-{
 
-method:
-"PUT",
+document.getElementById(
+"profileBio"
+).textContent =
+bio ||
+"Welcome to my BERAKAH profile. Connect, share, build, and grow together.";
 
-headers:
-headers({
 
-"Content-Type":
-"application/json"
+/* AVATAR */
 
-}),
-
-body:
-JSON.stringify({
-
-data: {
-
-username:
-cleanUsername,
-
-"Full name":
-fullName
-
-}
-
-})
-
-}
-
+const avatar =
+document.getElementById(
+"avatar"
 );
 
-}
-catch(authError) {
 
-console.log(
-"Auth metadata update skipped:",
-authError
+avatar.textContent =
+(
+fullName ||
+username
+)
+.charAt(0)
+.toUpperCase();
+
+
+const editAvatar =
+document.getElementById(
+"editAvatar"
 );
 
-}
+
+editAvatar.textContent =
+(
+fullName ||
+username
+)
+.charAt(0)
+.toUpperCase();
 
 
 /* =========================================
-   SUCCESS
+   CLOSE EDITOR
 ========================================= */
 
-showMessage(
-"Profile updated successfully! ✅",
-"success"
+document.getElementById(
+"editPanel"
+).style.display =
+"none";
+
+
+showEditMessage(
+"",
+true
 );
 
 
-/* =========================================
-   REDIRECT
-========================================= */
+document.getElementById(
+"status"
+).textContent =
+"Profile updated successfully! ✅";
 
-setTimeout(
-function() {
-
-location.href =
-"profile.html?id=" +
-encodeURIComponent(
-currentUser.id
-);
-
-},
-800
-);
 
 }
 catch(error) {
 
 console.error(
-"SAVE PROFILE ERROR:",
+"SAVE ERROR:",
 error
 );
 
-showMessage(
+showEditMessage(
 error.message,
-"error"
+false
 );
 
 }
 finally {
 
-saveButton.disabled =
+button.disabled =
 false;
 
-saveButton.textContent =
-"SAVE CHANGES";
+button.textContent =
+"💾 SAVE CHANGES";
 
 }
 
 }
+
+
+/* =========================================
+   EDIT BUTTON
+========================================= */
+
+document
+.getElementById(
+"editButton"
+)
+.addEventListener(
+"click",
+openEditProfile
+);
 
 
 /* =========================================
@@ -1114,7 +2355,7 @@ saveButton.textContent =
 
 document
 .getElementById(
-"saveButton"
+"saveProfileButton"
 )
 .addEventListener(
 "click",
@@ -1123,24 +2364,37 @@ saveProfile
 
 
 /* =========================================
-   CANCEL
+   CANCEL EDIT
 ========================================= */
 
 document
 .getElementById(
-"cancelButton"
+"cancelEditButton"
 )
 .addEventListener(
 "click",
 function() {
 
-location.href =
-"profile.html?id=" +
-encodeURIComponent(
-currentUser.id
-);
+document.getElementById(
+"editPanel"
+).style.display =
+"none";
 
 });
+
+
+/* =========================================
+   FOLLOW BUTTON
+========================================= */
+
+document
+.getElementById(
+"followButton"
+)
+.addEventListener(
+"click",
+toggleFollow
+);
 
 
 /* =========================================
@@ -1192,50 +2446,30 @@ return;
 }
 
 
-/* GET USER */
-
 currentUser =
 await getCurrentUser();
 
 
 console.log(
-"BERAKAH USER UUID:",
+"BERAKAH LOGGED USER UUID:",
 currentUser.id
 );
 
 
-/* LOAD PROFILE */
-
 await loadProfile();
-
-
-/* SHOW EDITOR */
-
-document.getElementById(
-"loading"
-).style.display =
-"none";
-
-document.getElementById(
-"editor"
-).style.display =
-"block";
 
 
 }
 catch(error) {
 
 console.error(
-"EDIT PROFILE ERROR:",
+"BERAKAH PROFILE ERROR:",
 error
 );
 
-
-document.getElementById(
-"loading"
-).textContent =
-"Could not load profile.\n\n" +
-error.message;
+showError(
+error.message
+);
 
 }
 
