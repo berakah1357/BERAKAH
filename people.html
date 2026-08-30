@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BERAKAH - Profile</title>
+<title>BERAKAH - People</title>
 
 <style>
 
@@ -40,7 +40,7 @@ header {
 }
 
 .logo {
-  font-size: 26px;
+  font-size: 25px;
   font-weight: bold;
   letter-spacing: 3px;
 }
@@ -53,14 +53,14 @@ header {
 
 .nav-buttons a,
 .nav-buttons button {
+  padding: 8px 11px;
   border: 1px solid #d1d5db;
+  border-radius: 7px;
   background: white;
   color: #111827;
-  padding: 8px 11px;
-  border-radius: 7px;
-  cursor: pointer;
   text-decoration: none;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .logout {
@@ -69,239 +69,96 @@ header {
 }
 
 main {
-  max-width: 850px;
+  max-width: 700px;
   margin: 30px auto;
   padding: 0 15px;
 }
 
-#loading {
+.card {
   background: white;
-  padding: 30px;
-  border-radius: 18px;
-  text-align: center;
-  font-weight: bold;
-}
-
-#error {
-  display: none;
-  background: white;
-  color: #b91c1c;
-  padding: 25px;
-  border-radius: 18px;
-  white-space: pre-wrap;
-  margin-bottom: 20px;
-}
-
-.profile {
-  display: none;
-}
-
-.cover {
-  height: 180px;
-  background: #111827;
-  border-radius: 18px 18px 0 0;
-}
-
-.profile-card {
-  background: white;
-  padding: 25px;
-  border-radius: 0 0 18px 18px;
-}
-
-.avatar {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  background: #e5e7eb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 45px;
-  font-weight: bold;
-  margin-top: -70px;
-  border: 5px solid white;
+  padding: 22px;
+  border-radius: 16px;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.06);
 }
 
 h1 {
-  margin: 15px 0 5px;
-}
-
-.username {
-  color: #6b7280;
-  font-size: 16px;
-}
-
-.bio {
-  line-height: 1.6;
-  margin-top: 20px;
-}
-
-.stats {
-  display: flex;
-  gap: 35px;
-  margin-top: 25px;
-  flex-wrap: wrap;
-}
-
-.stat strong {
-  display: block;
-  font-size: 20px;
-}
-
-.buttons {
-  margin-top: 25px;
-}
-
-.action-button {
-  padding: 11px 18px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-right: 8px;
-  margin-bottom: 8px;
-}
-
-.primary {
-  background: #111827;
-  color: white;
-}
-
-.secondary {
-  background: #e5e7eb;
-  color: #111827;
-}
-
-.follow {
-  background: #111827;
-  color: white;
-}
-
-.following {
-  background: #e5e7eb;
-  color: #111827;
-}
-
-.action-button:disabled {
-  opacity: 0.6;
-  cursor: wait;
-}
-
-#status {
-  margin-top: 10px;
-  font-weight: bold;
-  min-height: 20px;
-}
-
-.edit-box {
-  display: none;
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  padding: 20px;
-  border-radius: 14px;
-  margin-top: 20px;
-}
-
-.edit-box h3 {
   margin-top: 0;
 }
 
-.edit-box label {
-  display: block;
-  margin-top: 15px;
-  margin-bottom: 6px;
-  font-weight: bold;
-}
-
-.edit-box input,
-.edit-box textarea {
-  width: 100%;
+#status {
   padding: 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 15px;
-  font-family: Arial, sans-serif;
+  margin-bottom: 15px;
+  background: #f3f4f6;
+  border-radius: 10px;
+  white-space: pre-wrap;
+  line-height: 1.5;
 }
 
-.edit-box textarea {
-  min-height: 110px;
-  resize: vertical;
+.person {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
 }
 
-.save-button {
+.person-info {
+  min-width: 0;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
   background: #111827;
   color: white;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: bold;
-  cursor: pointer;
-  margin-top: 15px;
+  font-size: 20px;
+  margin-bottom: 8px;
 }
 
-.cancel-button {
-  background: #e5e7eb;
-  color: #111827;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 8px;
+.username {
   font-weight: bold;
-  cursor: pointer;
-  margin-top: 15px;
-  margin-left: 5px;
+  font-size: 17px;
+  overflow-wrap: anywhere;
 }
 
-.posts {
-  margin-top: 25px;
-  background: white;
-  padding: 25px;
-  border-radius: 18px;
-}
-
-.post {
-  padding: 20px 0;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.post:last-child {
-  border-bottom: none;
-}
-
-.post-time {
+.member {
   color: #6b7280;
-  font-size: 12px;
-  margin-bottom: 10px;
+  font-size: 13px;
+  margin-top: 4px;
 }
 
-.post-content {
-  line-height: 1.5;
-  white-space: pre-wrap;
-}
-
-.post-image {
-  width: 100%;
-  max-height: 450px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-top: 10px;
-}
-
-.post-actions {
-  margin-top: 12px;
-}
-
-.post-actions button {
-  border: none;
-  background: #f3f4f6;
-  padding: 8px 13px;
+.profile-button {
+  flex-shrink: 0;
+  background: #111827;
+  color: white;
+  padding: 10px 14px;
   border-radius: 8px;
-  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.profile-button:hover {
+  background: #374151;
 }
 
 .empty {
   text-align: center;
   color: #6b7280;
   padding: 30px 10px;
+}
+
+.error {
+  color: #b91c1c;
+  background: #fef2f2;
 }
 
 @media (max-width: 600px) {
@@ -311,8 +168,14 @@ h1 {
     flex-direction: column;
   }
 
-  .nav-buttons {
+  .person {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .profile-button {
     width: 100%;
+    text-align: center;
   }
 
 }
@@ -321,7 +184,9 @@ h1 {
 
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -341,10 +206,6 @@ Home
 Feed
 </a>
 
-<a href="people.html">
-👥 People
-</a>
-
 <a href="marketplace.html">
 Market
 </a>
@@ -353,9 +214,7 @@ Market
 🔔
 </a>
 
-<button
-class="logout"
-id="logoutButton">
+<button id="logoutButton">
 Logout
 </button>
 
@@ -368,205 +227,17 @@ Logout
 
 <main>
 
-<div id="loading">
-Loading profile...
-</div>
+<div class="card">
 
-<div id="error"></div>
-
-
-<div
-id="profile"
-class="profile"
->
-
-<div class="cover"></div>
-
-
-<section class="profile-card">
-
-
-<div
-class="avatar"
-id="avatar">
-👤
-</div>
-
-
-<h1 id="profileName">
-BERAKAH User
+<h1>
+👥 People
 </h1>
 
-
-<div
-class="username"
-id="profileUsername">
-@berakahuser
+<div id="status">
+Connecting to BERAKAH...
 </div>
 
-
-<p
-class="bio"
-id="profileBio">
-Welcome to my BERAKAH profile.
-Connect, share, build, and grow together.
-</p>
-
-
-<div class="stats">
-
-<div class="stat">
-
-<strong id="followersCount">
-0
-</strong>
-
-Followers
-
-</div>
-
-
-<div class="stat">
-
-<strong id="followingCount">
-0
-</strong>
-
-Following
-
-</div>
-
-
-<div class="stat">
-
-<strong id="postsCount">
-0
-</strong>
-
-Posts
-
-</div>
-
-</div>
-
-
-<div class="buttons">
-
-
-<button
-id="followButton"
-class="action-button follow"
-style="display:none;">
-Follow
-</button>
-
-
-<button
-id="editButton"
-class="action-button primary"
-style="display:none;">
-EDIT PROFILE
-</button>
-
-
-<button
-class="action-button secondary"
-onclick="location.href='messages.html'">
-💬 MESSAGES
-</button>
-
-
-<button
-class="action-button secondary"
-onclick="location.href='notifications.html'">
-🔔 NOTIFICATIONS
-</button>
-
-
-<div id="status"></div>
-
-</div>
-
-
-<div
-id="editBox"
-class="edit-box"
->
-
-<h3>
-Edit Your BERAKAH Profile
-</h3>
-
-
-<label for="editFullName">
-Full Name
-</label>
-
-<input
-type="text"
-id="editFullName"
-placeholder="Enter your full name"
-maxlength="100"
->
-
-
-<label for="editUsername">
-Username
-</label>
-
-<input
-type="text"
-id="editUsername"
-placeholder="Enter username"
-maxlength="50"
->
-
-
-<label for="editBio">
-Bio
-</label>
-
-<textarea
-id="editBio"
-placeholder="Tell people about yourself..."
-maxlength="500"
-></textarea>
-
-
-<button
-id="saveProfileButton"
-class="save-button">
-SAVE PROFILE
-</button>
-
-
-<button
-id="cancelEditButton"
-class="cancel-button">
-CANCEL
-</button>
-
-
-<div id="editStatus"></div>
-
-</div>
-
-
-</section>
-
-
-<section class="posts">
-
-<h2>
-Posts
-</h2>
-
-
-<div id="postsList"></div>
-
-
-</section>
-
+<div id="people"></div>
 
 </div>
 
@@ -579,11 +250,6 @@ Posts
    SUPABASE
 ========================================= */
 
-/*
-   IMPORTANT:
-   This URL MUST match people.html
-*/
-
 const SUPABASE_URL =
 "https://utoyoglycqjmqznczfxa.supabase.co";
 
@@ -592,17 +258,13 @@ const SUPABASE_ANON_KEY =
 "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
 
-let accessToken =
+const accessToken =
 localStorage.getItem(
 "berakah_access_token"
 );
 
 
 let currentUser = null;
-
-let profileUserId = null;
-
-let profileData = null;
 
 
 /* =========================================
@@ -611,1266 +273,400 @@ let profileData = null;
 
 function headers(extra) {
 
-return Object.assign({
+  return Object.assign(
 
-"apikey":
-SUPABASE_ANON_KEY,
+    {
 
-"Authorization":
-"Bearer " + accessToken
+      "apikey":
+        SUPABASE_ANON_KEY,
 
-}, extra || {});
+      "Authorization":
+        "Bearer " + accessToken
+
+    },
+
+    extra || {}
+
+  );
 
 }
 
 
 /* =========================================
-   SAFE
+   SAFE TEXT
 ========================================= */
 
 function safe(value) {
 
-return String(value ?? "")
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 
 }
 
 
 /* =========================================
-   ERROR
+   STATUS
 ========================================= */
 
-function showError(message) {
+function setStatus(text, error = false) {
 
-document.getElementById(
-"loading"
-).style.display =
-"none";
+  const element =
+    document.getElementById("status");
 
-document.getElementById(
-"error"
-).style.display =
-"block";
+  element.textContent = text;
 
-document.getElementById(
-"error"
-).textContent =
-message;
+  element.className =
+    error ? "error" : "";
 
 }
 
 
 /* =========================================
-   CURRENT USER
+   GET CURRENT USER
 ========================================= */
 
 async function getCurrentUser() {
 
-if (!accessToken) {
-
-throw new Error(
-"Your login session is missing. Please log in again."
-);
-
-}
+  setStatus(
+    "Step 1: Checking your BERAKAH login..."
+  );
 
 
-const response =
-await fetch(
+  if (!accessToken) {
 
-SUPABASE_URL +
-"/auth/v1/user",
+    throw new Error(
+      "You are not logged in. Please log in again."
+    );
 
-{
-headers:
-headers()
-}
-
-);
+  }
 
 
-const text =
-await response.text();
+  const response =
+    await fetch(
+
+      SUPABASE_URL +
+      "/auth/v1/user",
+
+      {
+
+        method: "GET",
+
+        headers:
+          headers()
+
+      }
+
+    );
 
 
-if (!response.ok) {
-
-throw new Error(
-"Your login session has expired. Please log in again."
-);
-
-}
+  const text =
+    await response.text();
 
 
-return JSON.parse(text);
+  console.log(
+    "AUTH RESPONSE:",
+    text
+  );
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      "Login error:\n\n" +
+      text
+    );
+
+  }
+
+
+  if (!text.trim()) {
+
+    throw new Error(
+      "Supabase returned no user."
+    );
+
+  }
+
+
+  return JSON.parse(text);
 
 }
 
 
 /* =========================================
-   PROFILE ID
+   LOAD PEOPLE
 ========================================= */
 
-function getProfileId() {
+async function loadPeople() {
 
-const params =
-new URLSearchParams(
-window.location.search
-);
+  setStatus(
+    "Step 2: Loading BERAKAH members..."
+  );
 
-return params.get("id");
+
+  /*
+    IMPORTANT:
+
+    We explicitly request the REAL
+    profile ID.
+
+    The ID is what Profile.html
+    needs in:
+
+    profile.html?id=UUID
+  */
+
+  const url =
+    SUPABASE_URL +
+    "/rest/v1/profiles" +
+    "?select=id,username,language";
+
+
+  console.log(
+    "PROFILES URL:",
+    url
+  );
+
+
+  const response =
+    await fetch(
+
+      url,
+
+      {
+
+        method: "GET",
+
+        headers:
+          headers()
+
+      }
+
+    );
+
+
+  const text =
+    await response.text();
+
+
+  console.log(
+    "PROFILES RESPONSE:",
+    text
+  );
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      "Could not load people:\n\n" +
+      text
+    );
+
+  }
+
+
+  let profiles = [];
+
+
+  if (text.trim()) {
+
+    profiles =
+      JSON.parse(text);
+
+  }
+
+
+  const container =
+    document.getElementById(
+      "people"
+    );
+
+
+  container.innerHTML =
+    "";
+
+
+  /*
+    Remove current user.
+  */
+
+  const otherUsers =
+    profiles.filter(
+
+      function(profile) {
+
+        return (
+          profile.id &&
+          String(profile.id) !==
+          String(currentUser.id)
+        );
+
+      }
+
+    );
+
+
+  if (!otherUsers.length) {
+
+    container.innerHTML = `
+
+      <div class="empty">
+
+        👥
+
+        <br><br>
+
+        No other BERAKAH users found yet.
+
+      </div>
+
+    `;
+
+
+    setStatus(
+      "Step 3: People loaded successfully.\n\n" +
+      "No other users found."
+    );
+
+
+    return;
+
+  }
+
+
+  /*
+    DISPLAY USERS
+  */
+
+  otherUsers.forEach(
+
+    function(profile) {
+
+      /*
+        This MUST be the Supabase UUID.
+      */
+
+      const profileId =
+        String(profile.id);
+
+
+      const username =
+        profile.username ||
+        "BERAKAH User";
+
+
+      const firstLetter =
+        username
+          .charAt(0)
+          .toUpperCase();
+
+
+      const profileLink =
+        "profile.html?id=" +
+        encodeURIComponent(profileId);
+
+
+      console.log(
+        "PROFILE LINK:",
+        profileLink
+      );
+
+
+      const div =
+        document.createElement(
+          "div"
+        );
+
+
+      div.className =
+        "person";
+
+
+      div.innerHTML = `
+
+        <div class="person-info">
+
+          <div class="avatar">
+            ${safe(firstLetter)}
+          </div>
+
+          <div class="username">
+            ${safe(username)}
+          </div>
+
+          <div class="member">
+            BERAKAH member
+          </div>
+
+        </div>
+
+
+        <a
+          class="profile-button"
+          href="${safe(profileLink)}"
+        >
+          View profile
+        </a>
+
+      `;
+
+
+      container.appendChild(
+        div
+      );
+
+    }
+
+  );
+
+
+  setStatus(
+    "Step 3: People loaded successfully.\n\n" +
+    "Found " +
+    otherUsers.length +
+    " other BERAKAH member(s)."
+  );
 
 }
-
-
-/* =========================================
-   LOAD PROFILE
-========================================= */
-
-async function loadProfile() {
-
-const requestedId =
-getProfileId();
-
-
-if (!requestedId) {
-
-throw new Error(
-"No profile ID was provided."
-);
-
-}
-
-
-/*
-   The People page sends the real
-   Supabase UUID here.
-*/
-
-const response =
-await fetch(
-
-SUPABASE_URL +
-"/rest/v1/profiles" +
-"?select=*" +
-"&id=eq." +
-encodeURIComponent(requestedId) +
-"&limit=1",
-
-{
-headers:
-headers()
-}
-
-);
-
-
-const text =
-await response.text();
-
-
-if (!response.ok) {
-
-throw new Error(
-"Could not load profile:\n\n" +
-text
-);
-
-}
-
-
-if (!text.trim()) {
-
-throw new Error(
-"Profile not found."
-);
-
-}
-
-
-const rows =
-JSON.parse(text);
-
-
-if (!rows.length) {
-
-throw new Error(
-"Profile not found."
-);
-
-}
-
-
-profileData =
-rows[0];
-
-profileUserId =
-profileData.id;
-
-
-/* =========================================
-   NAME
-========================================= */
-
-const fullName =
-profileData["Full name"] ||
-profileData.full_name ||
-profileData.username ||
-"BERAKAH User";
-
-
-document.getElementById(
-"profileName"
-).textContent =
-fullName;
-
-
-/* =========================================
-   USERNAME
-========================================= */
-
-const username =
-profileData.username ||
-"berakahuser";
-
-
-document.getElementById(
-"profileUsername"
-).textContent =
-"@" +
-username.toLowerCase();
-
-
-/* =========================================
-   AVATAR
-========================================= */
-
-const firstLetter =
-String(fullName)
-.charAt(0)
-.toUpperCase();
-
-
-document.getElementById(
-"avatar"
-).textContent =
-firstLetter || "B";
-
-
-/* =========================================
-   BIO
-========================================= */
-
-if (profileData.bio) {
-
-document.getElementById(
-"profileBio"
-).textContent =
-profileData.bio;
-
-}
-
-
-/* =========================================
-   POSTS
-========================================= */
-
-const posts =
-await loadPosts();
-
-
-displayPosts(posts);
-
-
-/* =========================================
-   FOLLOW
-========================================= */
-
-await loadFollowCounts();
-
-await updateFollowButton();
-
-
-/* =========================================
-   EDIT PROFILE
-========================================= */
-
-if (
-String(profileUserId) ===
-String(currentUser.id)
-) {
-
-document.getElementById(
-"editButton"
-).style.display =
-"inline-block";
-
-}
-
-
-document.getElementById(
-"loading"
-).style.display =
-"none";
-
-document.getElementById(
-"profile"
-).style.display =
-"block";
-
-}
-
-
-/* =========================================
-   LOAD POSTS
-========================================= */
-
-async function loadPosts() {
-
-const response =
-await fetch(
-
-SUPABASE_URL +
-"/rest/v1/posts" +
-"?select=*" +
-"&user_id=eq." +
-encodeURIComponent(
-profileUserId
-) +
-"&order=created_at.desc",
-
-{
-headers:
-headers()
-}
-
-);
-
-
-const text =
-await response.text();
-
-
-if (!response.ok) {
-
-throw new Error(
-"Could not load posts:\n\n" +
-text
-);
-
-}
-
-
-if (!text.trim()) {
-
-return [];
-
-}
-
-
-return JSON.parse(text);
-
-}
-
-
-/* =========================================
-   DISPLAY POSTS
-========================================= */
-
-function displayPosts(posts) {
-
-const list =
-document.getElementById(
-"postsList"
-);
-
-
-list.innerHTML =
-"";
-
-
-document.getElementById(
-"postsCount"
-).textContent =
-posts.length;
-
-
-if (!posts.length) {
-
-list.innerHTML = `
-
-<div class="empty">
-No posts yet.
-</div>
-
-`;
-
-return;
-
-}
-
-
-posts.forEach(
-function(post) {
-
-const div =
-document.createElement(
-"div"
-);
-
-
-div.className =
-"post";
-
-
-let dateText =
-"Date unavailable";
-
-
-if (post.created_at) {
-
-const date =
-new Date(
-post.created_at
-);
-
-if (!isNaN(date.getTime())) {
-
-dateText =
-date.toLocaleString();
-
-}
-
-}
-
-
-let imageHTML =
-"";
-
-
-if (post.image_url) {
-
-imageHTML = `
-
-<img
-class="post-image"
-src="${safe(post.image_url)}"
-alt="Post image">
-
-`;
-
-}
-
-
-div.innerHTML = `
-
-<div class="post-time">
-${safe(dateText)}
-</div>
-
-<div class="post-content">
-${safe(post.content)}
-</div>
-
-${imageHTML}
-
-<div class="post-actions">
-
-<button
-onclick="location.href='feed.html'">
-❤️ Like
-</button>
-
-</div>
-
-`;
-
-
-list.appendChild(div);
-
-});
-
-}
-
-
-/* =========================================
-   FOLLOW COUNTS
-========================================= */
-
-async function loadFollowCounts() {
-
-
-const followersResponse =
-await fetch(
-
-SUPABASE_URL +
-"/rest/v1/follows" +
-"?select=id" +
-"&following_id=eq." +
-encodeURIComponent(
-profileUserId
-),
-
-{
-headers:
-headers()
-}
-
-);
-
-
-const followersText =
-await followersResponse.text();
-
-
-if (!followersResponse.ok) {
-
-throw new Error(
-"Could not load followers:\n\n" +
-followersText
-);
-
-}
-
-
-const followers =
-followersText.trim()
-?
-JSON.parse(followersText)
-:
-[];
-
-
-const followingResponse =
-await fetch(
-
-SUPABASE_URL +
-"/rest/v1/follows" +
-"?select=id" +
-"&follower_id=eq." +
-encodeURIComponent(
-profileUserId
-),
-
-{
-headers:
-headers()
-}
-
-);
-
-
-const followingText =
-await followingResponse.text();
-
-
-if (!followingResponse.ok) {
-
-throw new Error(
-"Could not load following:\n\n" +
-followingText
-);
-
-}
-
-
-const following =
-followingText.trim()
-?
-JSON.parse(followingText)
-:
-[];
-
-
-document.getElementById(
-"followersCount"
-).textContent =
-followers.length;
-
-
-document.getElementById(
-"followingCount"
-).textContent =
-following.length;
-
-}
-
-
-/* =========================================
-   CHECK FOLLOW
-========================================= */
-
-async function checkFollowing() {
-
-if (
-String(profileUserId) ===
-String(currentUser.id)
-) {
-
-return false;
-
-}
-
-
-const response =
-await fetch(
-
-SUPABASE_URL +
-"/rest/v1/follows" +
-"?select=id" +
-"&follower_id=eq." +
-encodeURIComponent(
-currentUser.id
-) +
-"&following_id=eq." +
-encodeURIComponent(
-profileUserId
-),
-
-{
-headers:
-headers()
-}
-
-);
-
-
-const text =
-await response.text();
-
-
-if (!response.ok) {
-
-throw new Error(
-"Could not check follow status:\n\n" +
-text
-);
-
-}
-
-
-if (!text.trim()) {
-
-return false;
-
-}
-
-
-return JSON.parse(text).length > 0;
-
-}
-
-
-/* =========================================
-   FOLLOW BUTTON
-========================================= */
-
-async function updateFollowButton() {
-
-const button =
-document.getElementById(
-"followButton"
-);
-
-
-if (
-String(profileUserId) ===
-String(currentUser.id)
-) {
-
-button.style.display =
-"none";
-
-return;
-
-}
-
-
-button.style.display =
-"inline-block";
-
-
-const following =
-await checkFollowing();
-
-
-if (following) {
-
-button.textContent =
-"Following";
-
-button.className =
-"action-button following";
-
-}
-else {
-
-button.textContent =
-"Follow";
-
-button.className =
-"action-button follow";
-
-}
-
-}
-
-
-/* =========================================
-   NOTIFICATION
-========================================= */
-
-async function createFollowNotification() {
-
-const actorName =
-currentUser.user_metadata?.username ||
-currentUser.email?.split("@")[0] ||
-"BERAKAH User";
-
-
-const response =
-await fetch(
-
-SUPABASE_URL +
-"/rest/v1/notifications",
-
-{
-
-method:
-"POST",
-
-headers:
-headers({
-
-"Content-Type":
-"application/json",
-
-"Prefer":
-"return=minimal"
-
-}),
-
-body:
-JSON.stringify({
-
-user_id:
-profileUserId,
-
-actor_id:
-currentUser.id,
-
-type:
-"follow",
-
-message:
-actorName +
-" follows you",
-
-read:
-false
-
-})
-
-}
-
-);
-
-
-return response.ok;
-
-}
-
-
-/* =========================================
-   FOLLOW / UNFOLLOW
-========================================= */
-
-async function toggleFollow() {
-
-const button =
-document.getElementById(
-"followButton"
-);
-
-
-const status =
-document.getElementById(
-"status"
-);
-
-
-button.disabled =
-true;
-
-
-try {
-
-const following =
-await checkFollowing();
-
-
-if (following) {
-
-const response =
-await fetch(
-
-SUPABASE_URL +
-"/rest/v1/follows" +
-"?follower_id=eq." +
-encodeURIComponent(
-currentUser.id
-) +
-"&following_id=eq." +
-encodeURIComponent(
-profileUserId
-),
-
-{
-method:
-"DELETE",
-headers:
-headers()
-}
-
-);
-
-
-const text =
-await response.text();
-
-
-if (!response.ok) {
-
-throw new Error(
-text ||
-"Could not unfollow."
-);
-
-}
-
-
-status.textContent =
-"Unfollowed successfully.";
-
-}
-else {
-
-const response =
-await fetch(
-
-SUPABASE_URL +
-"/rest/v1/follows",
-
-{
-
-method:
-"POST",
-
-headers:
-headers({
-
-"Content-Type":
-"application/json",
-
-"Prefer":
-"return=minimal"
-
-}),
-
-body:
-JSON.stringify({
-
-follower_id:
-currentUser.id,
-
-following_id:
-profileUserId
-
-})
-
-}
-
-);
-
-
-const text =
-await response.text();
-
-
-if (!response.ok) {
-
-throw new Error(
-text ||
-"Could not follow."
-);
-
-}
-
-
-await createFollowNotification();
-
-
-status.textContent =
-"Following successfully.";
-
-}
-
-
-await loadFollowCounts();
-
-await updateFollowButton();
-
-}
-catch(error) {
-
-status.textContent =
-error.message;
-
-console.error(
-"FOLLOW ERROR:",
-error
-);
-
-}
-
-
-button.disabled =
-false;
-
-}
-
-
-/* =========================================
-   EDIT PROFILE
-========================================= */
-
-function openEditProfile() {
-
-const editBox =
-document.getElementById(
-"editBox"
-);
-
-
-editBox.style.display =
-"block";
-
-
-document.getElementById(
-"editFullName"
-).value =
-profileData["Full name"] ||
-profileData.full_name ||
-"";
-
-
-document.getElementById(
-"editUsername"
-).value =
-profileData.username ||
-"";
-
-
-document.getElementById(
-"editBio"
-).value =
-profileData.bio ||
-"";
-
-
-editBox.scrollIntoView({
-behavior: "smooth"
-});
-
-}
-
-
-/* =========================================
-   CANCEL EDIT
-========================================= */
-
-function cancelEdit() {
-
-document.getElementById(
-"editBox"
-).style.display =
-"none";
-
-
-document.getElementById(
-"editStatus"
-).textContent =
-"";
-
-}
-
-
-/* =========================================
-   SAVE PROFILE
-========================================= */
-
-async function saveProfile() {
-
-const button =
-document.getElementById(
-"saveProfileButton"
-);
-
-
-const status =
-document.getElementById(
-"editStatus"
-);
-
-
-const fullName =
-document.getElementById(
-"editFullName"
-).value.trim();
-
-
-const username =
-document.getElementById(
-"editUsername"
-).value.trim();
-
-
-const bio =
-document.getElementById(
-"editBio"
-).value.trim();
-
-
-if (!fullName) {
-
-status.textContent =
-"Please enter your full name.";
-
-return;
-
-}
-
-
-if (!username) {
-
-status.textContent =
-"Please enter your username.";
-
-return;
-
-}
-
-
-button.disabled =
-true;
-
-status.textContent =
-"Saving...";
-
-
-try {
-
-const response =
-await fetch(
-
-SUPABASE_URL +
-"/rest/v1/profiles" +
-"?id=eq." +
-encodeURIComponent(
-profileUserId
-),
-
-{
-
-method:
-"PATCH",
-
-headers:
-headers({
-
-"Content-Type":
-"application/json",
-
-"Prefer":
-"return=representation"
-
-}),
-
-body:
-JSON.stringify({
-
-"Full name":
-fullName,
-
-username:
-username,
-
-bio:
-bio
-
-})
-
-}
-
-);
-
-
-const text =
-await response.text();
-
-
-if (!response.ok) {
-
-throw new Error(
-"Could not save profile:\n\n" +
-text
-);
-
-}
-
-
-if (text.trim()) {
-
-profileData =
-JSON.parse(text)[0] ||
-profileData;
-
-}
-
-
-document.getElementById(
-"profileName"
-).textContent =
-fullName;
-
-
-document.getElementById(
-"profileUsername"
-).textContent =
-"@" +
-username.toLowerCase();
-
-
-document.getElementById(
-"profileBio"
-).textContent =
-bio ||
-"Welcome to my BERAKAH profile. Connect, share, build, and grow together.";
-
-
-document.getElementById(
-"avatar"
-).textContent =
-fullName
-.charAt(0)
-.toUpperCase();
-
-
-status.textContent =
-"Profile saved successfully!";
-
-
-setTimeout(
-function() {
-
-document.getElementById(
-"editBox"
-).style.display =
-"none";
-
-status.textContent =
-"";
-
-},
-1200
-);
-
-}
-catch(error) {
-
-console.error(
-"SAVE PROFILE ERROR:",
-error
-);
-
-status.textContent =
-error.message;
-
-}
-
-
-button.disabled =
-false;
-
-}
-
-
-/* =========================================
-   BUTTON EVENTS
-========================================= */
-
-document.getElementById(
-"followButton"
-).addEventListener(
-"click",
-toggleFollow
-);
-
-
-document.getElementById(
-"editButton"
-).addEventListener(
-"click",
-openEditProfile
-);
-
-
-document.getElementById(
-"cancelEditButton"
-).addEventListener(
-"click",
-cancelEdit
-);
-
-
-document.getElementById(
-"saveProfileButton"
-).addEventListener(
-"click",
-saveProfile
-);
 
 
 /* =========================================
    LOGOUT
 ========================================= */
 
-document.getElementById(
-"logoutButton"
-).addEventListener(
-"click",
-function() {
+document
+  .getElementById(
+    "logoutButton"
+  )
+  .addEventListener(
 
-localStorage.removeItem(
-"berakah_access_token"
-);
+    "click",
 
-localStorage.removeItem(
-"berakah_refresh_token"
-);
+    function() {
 
-localStorage.removeItem(
-"berakah_user"
-);
+      localStorage.removeItem(
+        "berakah_access_token"
+      );
 
-location.href =
-"login.html";
+      localStorage.removeItem(
+        "berakah_refresh_token"
+      );
 
-});
+      localStorage.removeItem(
+        "berakah_user"
+      );
+
+
+      location.href =
+        "login.html";
+
+    }
+
+  );
 
 
 /* =========================================
@@ -1879,43 +675,37 @@ location.href =
 
 async function start() {
 
-try {
+  try {
 
-if (!accessToken) {
-
-location.href =
-"login.html";
-
-return;
-
-}
+    currentUser =
+      await getCurrentUser();
 
 
-currentUser =
-await getCurrentUser();
+    console.log(
+      "CURRENT USER ID:",
+      currentUser.id
+    );
 
 
-console.log(
-"CURRENT USER:",
-currentUser.id
-);
+    await loadPeople();
+
+  }
+
+  catch(error) {
+
+    console.error(
+      "BERAKAH PEOPLE ERROR:",
+      error
+    );
 
 
-await loadProfile();
+    setStatus(
+      "ERROR:\n\n" +
+      error.message,
+      true
+    );
 
-}
-catch(error) {
-
-console.error(
-"BERAKAH PROFILE ERROR:",
-error
-);
-
-showError(
-error.message
-);
-
-}
+  }
 
 }
 
