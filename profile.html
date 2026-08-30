@@ -380,7 +380,9 @@ Loading profile...
 <div id="error"></div>
 
 
-<div id="profile" class="profile">
+<div
+id="profile"
+class="profile">
 
 
 <div class="cover"></div>
@@ -461,6 +463,7 @@ Posts
 
 <div class="buttons">
 
+
 <button
 id="followButton"
 class="action-button follow"
@@ -493,12 +496,14 @@ onclick="location.href='notifications.html'">
 
 <div id="status"></div>
 
+
 </div>
 
 
 <div
 id="editBox"
 class="edit-box">
+
 
 <h3>
 Edit Your BERAKAH Profile
@@ -561,6 +566,7 @@ CANCEL
 
 <div id="editStatus"></div>
 
+
 </div>
 
 
@@ -569,12 +575,14 @@ CANCEL
 
 <section class="posts">
 
+
 <h2>
 Posts
 </h2>
 
 
 <div id="postsList"></div>
+
 
 </section>
 
@@ -738,7 +746,7 @@ return JSON.parse(text);
 
 
 /* =========================================
-   PROFILE ID FROM URL
+   GET PROFILE ID
 ========================================= */
 
 function getProfileId() {
@@ -773,12 +781,18 @@ throw new Error(
 
 
 /*
-   profiles.id is numeric.
+   IMPORTANT DATABASE STRUCTURE:
+
+   profiles.id = NUMBER
+
+   profiles.user_id = AUTH UUID
 
    Example:
 
-   id = 1
-   user_id = 2cac98ef-d552-4a6d-a620-9dad4bf07928
+   id = 2
+
+   user_id =
+   574bfeaf-38a9-48f3-879b-966d18d66c32
 */
 
 
@@ -828,8 +842,7 @@ text
 }
 
 
-let rows =
-[];
+let rows = [];
 
 
 if (text.trim()) {
@@ -855,6 +868,24 @@ rows[0];
 
 profileAuthUserId =
 profileData.user_id;
+
+
+console.log(
+"PROFILE NUMBER ID:",
+profileNumberId
+);
+
+
+console.log(
+"PROFILE AUTH UUID:",
+profileAuthUserId
+);
+
+
+console.log(
+"CURRENT AUTH UUID:",
+currentUser.id
+);
 
 
 /* =========================================
@@ -955,10 +986,45 @@ await loadPosts();
 
 
 /* =========================================
-   LOAD FOLLOWERS
+   LOAD FOLLOW COUNTS
 ========================================= */
 
 await loadFollowCounts();
+
+
+/* =========================================
+   OWN PROFILE CHECK
+========================================= */
+
+const editButton =
+document.getElementById(
+"editButton"
+);
+
+
+const isOwner =
+String(profileAuthUserId).trim() ===
+String(currentUser.id).trim();
+
+
+console.log(
+"IS PROFILE OWNER:",
+isOwner
+);
+
+
+if (isOwner) {
+
+editButton.style.display =
+"inline-block";
+
+}
+else {
+
+editButton.style.display =
+"none";
+
+}
 
 
 /* =========================================
@@ -966,23 +1032,6 @@ await loadFollowCounts();
 ========================================= */
 
 await updateFollowButton();
-
-
-/* =========================================
-   EDIT BUTTON
-========================================= */
-
-if (
-String(profileAuthUserId) ===
-String(currentUser.id)
-) {
-
-document.getElementById(
-"editButton"
-).style.display =
-"inline-block";
-
-}
 
 
 /* =========================================
@@ -1009,21 +1058,6 @@ document.getElementById(
 
 async function loadPosts() {
 
-/*
-   IMPORTANT:
-
-   posts.user_id is UUID.
-
-   Therefore we use:
-
-   profileData.user_id
-
-   NOT:
-
-   profileData.id
-*/
-
-
 if (!profileAuthUserId) {
 
 document.getElementById(
@@ -1039,6 +1073,13 @@ No posts yet.
 return;
 
 }
+
+
+/*
+   POSTS USE THE AUTH UUID.
+
+   NEVER USE profiles.id HERE.
+*/
 
 
 const url =
@@ -1214,7 +1255,7 @@ div
 
 
 /* =========================================
-   FOLLOW COUNTS
+   LOAD FOLLOW COUNTS
 ========================================= */
 
 async function loadFollowCounts() {
@@ -1524,7 +1565,7 @@ return response.ok;
 
 
 /* =========================================
-   TOGGLE FOLLOW
+   FOLLOW / UNFOLLOW
 ========================================= */
 
 async function toggleFollow() {
@@ -1572,8 +1613,10 @@ await fetch(
 url,
 
 {
-method: "DELETE",
-headers: headers()
+method:
+"DELETE",
+headers:
+headers()
 }
 
 );
@@ -1685,7 +1728,7 @@ false;
 
 
 /* =========================================
-   OPEN EDIT
+   OPEN EDIT PROFILE
 ========================================= */
 
 function openEditProfile() {
@@ -1904,6 +1947,8 @@ updated[0];
 }
 
 
+/* UPDATE SCREEN */
+
 document.getElementById(
 "profileName"
 ).textContent =
@@ -2088,7 +2133,7 @@ await getCurrentUser();
 
 
 console.log(
-"CURRENT AUTH USER:",
+"CURRENT USER:",
 currentUser.id
 );
 
