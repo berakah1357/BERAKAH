@@ -619,8 +619,11 @@ localStorage.getItem(
 
 
 let currentUser = null;
+
 let profileData = null;
+
 let profileDatabaseId = null;
+
 let profileAuthUserId = null;
 
 
@@ -660,7 +663,7 @@ return String(value ?? "")
 
 
 /* =========================================
-   SHOW ERROR
+   ERROR
 ========================================= */
 
 function showError(message) {
@@ -670,18 +673,22 @@ document.getElementById(
 ).style.display =
 "none";
 
+
 document.getElementById(
 "profile"
 ).style.display =
 "none";
+
 
 const error =
 document.getElementById(
 "error"
 );
 
+
 error.style.display =
 "block";
+
 
 error.textContent =
 message;
@@ -777,21 +784,17 @@ return String(value || "")
 
 
 /* =========================================
-   GET LOGGED-IN USERNAME
+   LOGGED-IN USERNAME
 ========================================= */
 
 function getLoggedInUsername() {
 
 if (!currentUser) {
+
 return "";
+
 }
 
-
-/*
- Try several possible locations because
- different BERAKAH login versions may
- store username differently.
-*/
 
 const metadata =
 currentUser.user_metadata || {};
@@ -805,30 +808,31 @@ metadata.user_name,
 
 metadata.userName,
 
+metadata.Username,
+
 metadata["Username"],
 
-metadata["username"],
-
-localStorage.getItem("berakah_username")
+localStorage.getItem(
+"berakah_username"
+)
 
 ];
 
 
-for (const value of candidates) {
+for (
+const value of candidates
+) {
 
 if (value) {
 
-return normalizeUsername(value);
+return normalizeUsername(
+value
+);
 
 }
 
 }
 
-
-/*
- If username is not in metadata,
- use the email prefix as a final fallback.
-*/
 
 if (currentUser.email) {
 
@@ -845,12 +849,15 @@ return "";
 
 
 /* =========================================
-   OWNER CHECK
+   IS OWN PROFILE
 ========================================= */
 
 function isOwnProfile() {
 
-if (!currentUser || !profileData) {
+if (
+!currentUser ||
+!profileData
+) {
 
 return false;
 
@@ -858,10 +865,10 @@ return false;
 
 
 /*
- PRIMARY CHECK:
+ PRIMARY:
 
 profiles.user_id
-        =
+must equal
 auth.users.id
 */
 
@@ -877,15 +884,19 @@ return true;
 
 
 /*
- FALLBACK CHECK:
+ SECONDARY:
 
-If the profile UUID is not correctly
-linked, compare the profile username
-with the authenticated username.
+Use username only when the
+profile user_id is missing.
 
-This allows the five BERAKAH accounts
-to identify their own profile.
+This helps older BERAKAH
+profiles whose user_id was not
+properly populated.
 */
+
+if (
+!profileAuthUserId
+) {
 
 const loggedUsername =
 getLoggedInUsername();
@@ -907,6 +918,8 @@ return true;
 
 }
 
+}
+
 
 return false;
 
@@ -914,7 +927,7 @@ return false;
 
 
 /* =========================================
-   SET OWNER BUTTON
+   OWNER BUTTON
 ========================================= */
 
 function setupOwnerButton() {
@@ -959,24 +972,16 @@ throw new Error(
 
 
 /*
- IMPORTANT:
-
  profiles.id is BIGINT.
 
- Therefore profile URLs use:
-
- profile.html?id=1
- profile.html?id=2
- profile.html?id=3
-
- etc.
+Therefore only numeric
+profile IDs are accepted.
 */
-
 
 if (!/^\d+$/.test(requestedId)) {
 
 throw new Error(
-"Invalid profile ID. Profile ID must be a number."
+"Invalid profile ID. Use a numeric profile ID."
 );
 
 }
@@ -1011,7 +1016,7 @@ await response.text();
 if (!response.ok) {
 
 throw new Error(
-"Could not load profile: " +
+"Could not load profile:\n\n" +
 text
 );
 
@@ -1052,9 +1057,7 @@ profileAuthUserId =
 profileData.user_id;
 
 
-/* =========================================
-   NAME
-========================================= */
+/* NAME */
 
 const fullName =
 profileData["Full name"] ||
@@ -1068,9 +1071,7 @@ document.getElementById(
 fullName;
 
 
-/* =========================================
-   USERNAME
-========================================= */
+/* USERNAME */
 
 const username =
 profileData.username ||
@@ -1084,9 +1085,7 @@ document.getElementById(
 username.toLowerCase();
 
 
-/* =========================================
-   LANGUAGE
-========================================= */
+/* LANGUAGE */
 
 const language =
 profileData.language ||
@@ -1100,9 +1099,7 @@ document.getElementById(
 language.toUpperCase();
 
 
-/* =========================================
-   AVATAR
-========================================= */
+/* AVATAR */
 
 const avatar =
 document.getElementById(
@@ -1132,9 +1129,7 @@ String(fullName)
 }
 
 
-/* =========================================
-   POSTS
-========================================= */
+/* POSTS */
 
 const posts =
 await loadPosts();
@@ -1143,25 +1138,19 @@ await loadPosts();
 displayPosts(posts);
 
 
-/* =========================================
-   FOLLOW
-========================================= */
+/* FOLLOW */
 
 await loadFollowCounts();
 
 await updateFollowButton();
 
 
-/* =========================================
-   OWNER
-========================================= */
+/* OWNER */
 
 setupOwnerButton();
 
 
-/* =========================================
-   SHOW
-========================================= */
+/* SHOW PROFILE */
 
 document.getElementById(
 "loading"
@@ -1178,7 +1167,7 @@ document.getElementById(
 
 
 /* =========================================
-   LOAD POSTS
+   POSTS
 ========================================= */
 
 async function loadPosts() {
@@ -1251,6 +1240,7 @@ document.getElementById(
 "postsList"
 );
 
+
 list.innerHTML =
 "";
 
@@ -1284,6 +1274,7 @@ document.createElement(
 "div"
 );
 
+
 div.className =
 "post";
 
@@ -1299,7 +1290,10 @@ new Date(
 post.created_at
 );
 
-if (!isNaN(date.getTime())) {
+
+if (!isNaN(
+date.getTime()
+)) {
 
 dateText =
 date.toLocaleString();
@@ -1479,8 +1473,8 @@ async function checkFollowing() {
 
 if (
 !profileAuthUserId ||
-String(profileAuthUserId) ===
-String(currentUser.id)
+String(profileAuthUserId).toLowerCase() ===
+String(currentUser.id).toLowerCase()
 ) {
 
 return false;
@@ -1551,8 +1545,8 @@ document.getElementById(
 
 if (
 !profileAuthUserId ||
-String(profileAuthUserId) ===
-String(currentUser.id)
+String(profileAuthUserId).toLowerCase() ===
+String(currentUser.id).toLowerCase()
 ) {
 
 button.style.display =
@@ -1666,6 +1660,7 @@ const button =
 document.getElementById(
 "followButton"
 );
+
 
 const status =
 document.getElementById(
@@ -1811,7 +1806,7 @@ false;
 
 
 /* =========================================
-   OPEN EDIT PROFILE
+   OPEN EDIT
 ========================================= */
 
 function openEditProfile() {
@@ -1874,7 +1869,7 @@ behavior: "smooth"
 
 
 /* =========================================
-   CANCEL
+   CANCEL EDIT
 ========================================= */
 
 function cancelEdit() {
@@ -1915,6 +1910,7 @@ const button =
 document.getElementById(
 "saveProfileButton"
 );
+
 
 const status =
 document.getElementById(
@@ -1962,6 +1958,7 @@ return;
 
 button.disabled =
 true;
+
 
 status.textContent =
 "Saving...";
@@ -2112,7 +2109,7 @@ false;
 
 
 /* =========================================
-   BUTTON EVENTS
+   EVENTS
 ========================================= */
 
 document.getElementById(
