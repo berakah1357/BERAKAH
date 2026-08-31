@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -22,7 +23,7 @@ body {
 
 .container {
   max-width: 430px;
-  margin: 60px auto;
+  margin: 70px auto;
   padding: 20px;
 }
 
@@ -38,12 +39,13 @@ body {
   font-size: 30px;
   font-weight: 800;
   letter-spacing: 3px;
+  margin-bottom: 8px;
 }
 
 .subtitle {
   text-align: center;
   color: #6b7280;
-  margin: 8px 0 28px;
+  margin-bottom: 28px;
 }
 
 label {
@@ -78,10 +80,10 @@ button:disabled {
 }
 
 .message {
-  display: none;
   margin-top: 18px;
   padding: 12px;
   border-radius: 8px;
+  display: none;
   white-space: pre-wrap;
 }
 
@@ -109,6 +111,7 @@ button:disabled {
 
 </head>
 
+
 <body>
 
 <div class="container">
@@ -123,6 +126,7 @@ BERAKAH
 Connect. Share. Grow Together.
 </div>
 
+
 <form id="loginForm">
 
 <label for="email">
@@ -136,6 +140,7 @@ autocomplete="email"
 required
 placeholder="Enter your email">
 
+
 <label for="password">
 Password
 </label>
@@ -147,18 +152,23 @@ autocomplete="current-password"
 required
 placeholder="Enter your password">
 
+
 <button
 id="loginButton"
 type="submit">
+
 LOGIN
+
 </button>
 
 </form>
+
 
 <div
 id="message"
 class="message">
 </div>
+
 
 <div class="signup">
 
@@ -174,10 +184,11 @@ Create Account
 
 </div>
 
+
 <script>
 
 /* =====================================================
-   BERAKAH SUPABASE
+   BERAKAH SUPABASE CONFIGURATION
    ===================================================== */
 
 const SUPABASE_URL =
@@ -208,42 +219,83 @@ document.getElementById("message");
 
 
 /* =====================================================
-   SHOW MESSAGE
+   MESSAGE
    ===================================================== */
 
 function showMessage(text, type) {
 
-  message.style.display = "block";
+message.style.display =
+"block";
 
-  message.className =
-    "message " + type;
+message.className =
+"message " + type;
 
-  message.textContent = text;
+message.textContent =
+text;
 
 }
 
 
 /* =====================================================
-   CLEAR OLD BERAKAH SESSION
+   CLEAR OLD SESSION
    ===================================================== */
 
 function clearOldSession() {
 
-  localStorage.removeItem(
-    "berakah_access_token"
-  );
+localStorage.removeItem(
+"berakah_access_token"
+);
 
-  localStorage.removeItem(
-    "berakah_refresh_token"
-  );
+localStorage.removeItem(
+"berakah_refresh_token"
+);
 
-  localStorage.removeItem(
-    "berakah_user"
-  );
+localStorage.removeItem(
+"berakah_user"
+);
 
-  localStorage.removeItem(
-    "berakah_username"
-  );
+localStorage.removeItem(
+"berakah_username"
+);
+
+localStorage.removeItem(
+"supabase.auth.token"
+);
+
+
+/*
+Clear possible Supabase
+browser session keys.
+*/
+
+const keys = [];
+
+for (
+let i = 0;
+i < localStorage.length;
+i++
+) {
+
+const key =
+localStorage.key(i);
+
+if (
+key &&
+(
+key.includes("supabase") ||
+key.includes("auth-token")
+)
+) {
+
+keys.push(key);
+
+}
+
+}
+
+keys.forEach(
+key => localStorage.removeItem(key)
+);
 
 }
 
@@ -253,240 +305,261 @@ function clearOldSession() {
    ===================================================== */
 
 form.addEventListener(
-  "submit",
-  async function(event) {
+"submit",
+async function(event) {
 
-    event.preventDefault();
+event.preventDefault();
 
-    const email =
-      emailInput.value.trim();
 
-    const password =
-      passwordInput.value;
+const email =
+emailInput.value.trim();
 
+const password =
+passwordInput.value;
 
-    if (!email || !password) {
 
-      showMessage(
-        "Please enter your email and password.",
-        "error"
-      );
+if (!email || !password) {
 
-      return;
-
-    }
-
-
-    loginButton.disabled = true;
-
-    loginButton.textContent =
-      "LOGGING IN...";
-
-    message.style.display = "none";
-
-
-    /*
-      IMPORTANT:
-      Remove the previous user's session
-      before authenticating the new user.
-    */
-
-    clearOldSession();
-
-
-    try {
-
-      /* =============================================
-         SUPABASE PASSWORD LOGIN
-         ============================================= */
-
-      const response =
-        await fetch(
-
-          SUPABASE_URL +
-          "/auth/v1/token?grant_type=password",
-
-          {
-            method: "POST",
-
-            headers: {
-
-              "apikey":
-                SUPABASE_KEY,
-
-              "Content-Type":
-                "application/json"
-
-            },
-
-            body: JSON.stringify({
-
-              email: email,
-
-              password: password
-
-            })
-
-          }
-
-        );
-
-
-      const text =
-        await response.text();
-
-
-      let data;
-
-      try {
-
-        data =
-          text
-          ? JSON.parse(text)
-          : {};
-
-      }
-      catch {
-
-        data = {};
-
-      }
-
-
-      /* =============================================
-         LOGIN ERROR
-         ============================================= */
-
-      if (!response.ok) {
-
-        throw new Error(
-
-          data.error_description ||
-          data.msg ||
-          data.message ||
-          "Login failed."
-
-        );
-
-      }
-
-
-      if (!data.access_token) {
-
-        throw new Error(
-          "Supabase did not return an access token."
-        );
-
-      }
-
-
-      /* =============================================
-         SAVE NEW USER SESSION
-         ============================================= */
-
-      localStorage.setItem(
-        "berakah_access_token",
-        data.access_token
-      );
-
-
-      if (data.refresh_token) {
-
-        localStorage.setItem(
-          "berakah_refresh_token",
-          data.refresh_token
-        );
-
-      }
-
-
-      if (data.user) {
-
-        localStorage.setItem(
-          "berakah_user",
-          JSON.stringify(data.user)
-        );
-
-
-        const metadata =
-          data.user.user_metadata || {};
-
-
-        const username =
-          metadata.username ||
-          metadata.user_name ||
-          metadata.userName ||
-          "";
-
-
-        if (username) {
-
-          localStorage.setItem(
-            "berakah_username",
-            username
-          );
-
-        }
-
-      }
-
-
-      /* =============================================
-         SUCCESS
-         ============================================= */
-
-      showMessage(
-        "Login successful! Opening BERAKAH...",
-        "success"
-      );
-
-
-      setTimeout(
-        function() {
-
-          window.location.href =
-            "index.html";
-
-        },
-        700
-      );
-
-
-    }
-    catch(error) {
-
-      console.error(
-        "BERAKAH LOGIN ERROR:",
-        error
-      );
-
-
-      /*
-        Make sure an old user's session
-        is never left behind.
-      */
-
-      clearOldSession();
-
-
-      showMessage(
-        error.message,
-        "error"
-      );
-
-
-      loginButton.disabled =
-        false;
-
-      loginButton.textContent =
-        "LOGIN";
-
-    }
-
-  }
+showMessage(
+"Please enter your email and password.",
+"error"
 );
+
+return;
+
+}
+
+
+loginButton.disabled =
+true;
+
+loginButton.textContent =
+"LOGGING IN...";
+
+
+showMessage(
+"",
+"success"
+);
+
+
+/*
+IMPORTANT:
+
+Remove the previous account FIRST.
+
+This prevents QUICKENETH's
+old token from remaining active.
+*/
+
+clearOldSession();
+
+
+try {
+
+
+/* =================================================
+   AUTHENTICATE WITH SUPABASE
+   ================================================= */
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/auth/v1/token?grant_type=password",
+
+{
+
+method: "POST",
+
+headers: {
+
+"apikey":
+SUPABASE_KEY,
+
+"Content-Type":
+"application/json"
+
+},
+
+body:
+JSON.stringify({
+
+email:
+email,
+
+password:
+password
+
+})
+
+}
+
+);
+
+
+const text =
+await response.text();
+
+
+let data = null;
+
+try {
+
+data =
+text ?
+JSON.parse(text) :
+null;
+
+}
+catch {
+
+data = null;
+
+}
+
+
+if (!response.ok) {
+
+throw new Error(
+
+data?.msg ||
+data?.message ||
+data?.error_description ||
+"Invalid email or password."
+
+);
+
+}
+
+
+if (
+!data ||
+!data.access_token
+) {
+
+throw new Error(
+"Supabase did not return an access token."
+);
+
+}
+
+
+/* =================================================
+   SAVE NEW ACCOUNT SESSION
+   ================================================= */
+
+localStorage.setItem(
+"berakah_access_token",
+data.access_token
+);
+
+
+if (data.refresh_token) {
+
+localStorage.setItem(
+"berakah_refresh_token",
+data.refresh_token
+);
+
+}
+
+
+if (data.user) {
+
+localStorage.setItem(
+"berakah_user",
+JSON.stringify(data.user)
+);
+
+
+/*
+Save the authenticated
+username when available.
+*/
+
+const username =
+data.user.user_metadata?.username ||
+data.user.user_metadata?.user_name ||
+data.user.user_metadata?.userName ||
+"";
+
+
+if (username) {
+
+localStorage.setItem(
+"berakah_username",
+username
+);
+
+}
+
+}
+
+
+/* =================================================
+   SUCCESS
+   ================================================= */
+
+showMessage(
+"Login successful! Opening BERAKAH...",
+"success"
+);
+
+
+/*
+Small delay so the user
+can see the success message.
+*/
+
+setTimeout(
+function() {
+
+window.location.href =
+"index.html";
+
+},
+500
+);
+
+
+}
+catch(error) {
+
+console.error(
+"BERAKAH LOGIN ERROR:",
+error
+);
+
+
+/*
+Make absolutely sure a bad
+login doesn't leave an old
+account token behind.
+*/
+
+clearOldSession();
+
+
+showMessage(
+"Login failed:\n\n" +
+error.message,
+"error"
+);
+
+
+loginButton.disabled =
+false;
+
+loginButton.textContent =
+"LOGIN";
+
+}
+
+});
 
 </script>
 
 </body>
+
 </html>
