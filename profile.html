@@ -4,10 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>BERAKAH - Profile</title>
 
@@ -24,10 +21,6 @@ body {
   color: #111827;
 }
 
-/* =========================
-   HEADER
-========================= */
-
 header {
   background: #ffffff;
   border-bottom: 1px solid #e5e7eb;
@@ -38,7 +31,7 @@ header {
 }
 
 .nav {
-  max-width: 1050px;
+  max-width: 1100px;
   margin: auto;
   display: flex;
   align-items: center;
@@ -62,7 +55,7 @@ header {
 .nav-links button {
   text-decoration: none;
   border: 1px solid #d1d5db;
-  background: #fff;
+  background: white;
   color: #111827;
   padding: 8px 11px;
   border-radius: 8px;
@@ -75,12 +68,8 @@ header {
   color: white;
 }
 
-/* =========================
-   MAIN
-========================= */
-
 main {
-  max-width: 950px;
+  max-width: 900px;
   margin: 25px auto;
   padding: 0 15px;
 }
@@ -100,21 +89,13 @@ main {
   white-space: pre-wrap;
 }
 
-/* =========================
-   PROFILE
-========================= */
-
 .profile {
   display: none;
 }
 
 .cover {
-  height: 200px;
-  background: linear-gradient(
-    135deg,
-    #111827,
-    #374151
-  );
+  height: 210px;
+  background: linear-gradient(135deg, #111827, #374151);
   border-radius: 18px 18px 0 0;
 }
 
@@ -164,13 +145,9 @@ h1 {
   white-space: pre-wrap;
 }
 
-/* =========================
-   STATS
-========================= */
-
 .stats {
   display: flex;
-  gap: 45px;
+  gap: 35px;
   margin-top: 25px;
   flex-wrap: wrap;
 }
@@ -184,13 +161,9 @@ h1 {
   font-size: 22px;
 }
 
-.stat span {
-  color: #6b7280;
+.stat-label {
+  color: #374151;
 }
-
-/* =========================
-   ACTIONS
-========================= */
 
 .actions {
   margin-top: 25px;
@@ -208,7 +181,7 @@ h1 {
 
 .action:disabled {
   opacity: 0.6;
-  cursor: not-allowed;
+  cursor: wait;
 }
 
 .primary {
@@ -235,10 +208,6 @@ h1 {
   margin-top: 12px;
   font-weight: bold;
 }
-
-/* =========================
-   EDIT PROFILE
-========================= */
 
 .edit-box {
   display: none;
@@ -287,118 +256,8 @@ h1 {
 
 .cancel {
   background: #e5e7eb;
+  color: #111827;
 }
-
-/* =========================
-   CONNECTION PANEL
-========================= */
-
-.connections {
-  display: none;
-  margin-top: 20px;
-  background: white;
-  border-radius: 18px;
-  padding: 22px;
-}
-
-.connection-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.connection-header h2 {
-  margin: 0;
-}
-
-.close-connections {
-  border: 0;
-  background: #e5e7eb;
-  border-radius: 8px;
-  padding: 8px 12px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.connection-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.connection-user {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 12px;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-}
-
-.connection-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-}
-
-.connection-avatar {
-  width: 48px;
-  height: 48px;
-  min-width: 48px;
-  border-radius: 50%;
-  background: #e5e7eb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.connection-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.connection-info {
-  min-width: 0;
-}
-
-.connection-name {
-  font-weight: bold;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.connection-username {
-  color: #6b7280;
-  font-size: 14px;
-}
-
-.view-profile {
-  border: 0;
-  background: #111827;
-  color: white;
-  border-radius: 8px;
-  padding: 8px 11px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.empty {
-  text-align: center;
-  color: #6b7280;
-  padding: 30px 10px;
-}
-
-/* =========================
-   POSTS
-========================= */
 
 .posts {
   margin-top: 25px;
@@ -444,9 +303,11 @@ h1 {
   cursor: pointer;
 }
 
-/* =========================
-   MOBILE
-========================= */
+.empty {
+  text-align: center;
+  color: #6b7280;
+  padding: 30px 10px;
+}
 
 @media (max-width: 650px) {
 
@@ -459,20 +320,12 @@ h1 {
     width: 100%;
   }
 
-  .stats {
-    gap: 25px;
+  .cover {
+    height: 160px;
   }
 
   .profile-card {
     padding: 20px;
-  }
-
-  .connection-user {
-    align-items: flex-start;
-  }
-
-  .view-profile {
-    padding: 7px 9px;
   }
 
 }
@@ -481,9 +334,7 @@ h1 {
 
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -495,36 +346,22 @@ BERAKAH
 
 <div class="nav-links">
 
-<a href="index.html">
-Home
-</a>
+<a href="index.html">Home</a>
 
-<a href="feed.html">
-Feed
-</a>
+<a href="feed.html">Feed</a>
 
-<a href="people.html">
-👥 People
-</a>
+<a href="people.html">👥 People</a>
 
-<a href="marketplace.html">
-Market
-</a>
+<a href="marketplace.html">Market</a>
 
-<a href="notifications.html">
-🔔
-</a>
+<a href="notifications.html">🔔</a>
 
-<a href="messages.html">
-💬
-</a>
+<a href="messages.html">💬</a>
 
 <button
 class="logout"
 id="logoutButton">
-
 Logout
-
 </button>
 
 </div>
@@ -535,7 +372,6 @@ Logout
 
 
 <main>
-
 
 <div
 id="loading"
@@ -556,23 +392,14 @@ class="error">
 id="profile"
 class="profile">
 
-
-<!-- =========================
-     PROFILE HEADER
-========================= -->
-
 <div class="cover"></div>
 
-
 <div class="profile-card">
-
 
 <div
 id="avatar"
 class="avatar">
-
 👤
-
 </div>
 
 
@@ -584,37 +411,26 @@ BERAKAH
 <div
 id="profileUsername"
 class="username">
-
-@berakah1357
-
+@berakah
 </div>
 
 
 <div
 id="profileLanguage"
 class="language">
-
 Language: —
-
 </div>
 
 
 <div
 id="profileBio"
 class="bio">
-
 Welcome to my BERAKAH profile.
 Connect, share, build, and grow together.
-
 </div>
 
 
-<!-- =========================
-     REAL COUNTS
-========================= -->
-
 <div class="stats">
-
 
 <div
 class="stat"
@@ -624,7 +440,7 @@ id="followersStat">
 0
 </strong>
 
-<span>
+<span class="stat-label">
 Followers
 </span>
 
@@ -639,7 +455,7 @@ id="followingStat">
 0
 </strong>
 
-<span>
+<span class="stat-label">
 Following
 </span>
 
@@ -652,30 +468,22 @@ Following
 0
 </strong>
 
-<span>
+<span class="stat-label">
 Posts
 </span>
 
 </div>
 
-
 </div>
 
 
-<!-- =========================
-     ACTIONS
-========================= -->
-
 <div class="actions">
-
 
 <button
 id="followButton"
 class="action follow"
 style="display:none;">
-
 Follow
-
 </button>
 
 
@@ -683,27 +491,21 @@ Follow
 id="editButton"
 class="action primary"
 style="display:none;">
-
 EDIT PROFILE
-
 </button>
 
 
 <button
 class="action secondary"
 onclick="window.location.href='messages.html'">
-
 💬 MESSAGES
-
 </button>
 
 
 <button
 class="action secondary"
 onclick="window.location.href='notifications.html'">
-
 🔔 NOTIFICATIONS
-
 </button>
 
 
@@ -713,14 +515,9 @@ class="status">
 </div>
 
 
-<!-- =========================
-     EDIT BOX
-========================= -->
-
 <div
 id="editBox"
 class="edit-box">
-
 
 <h3>
 Edit Your Profile
@@ -787,18 +584,14 @@ placeholder="Tell people about yourself"></textarea>
 <button
 id="saveButton"
 class="save">
-
 SAVE PROFILE
-
 </button>
 
 
 <button
 id="cancelButton"
 class="cancel">
-
 CANCEL
-
 </button>
 
 
@@ -807,73 +600,24 @@ id="editStatus"
 class="status">
 </div>
 
+</div>
 
 </div>
 
-
 </div>
 
-
-</div>
-
-
-<!-- =========================
-     FOLLOWERS / FOLLOWING
-========================= -->
-
-<div
-id="connections"
-class="connections">
-
-
-<div class="connection-header">
-
-<h2 id="connectionsTitle">
-Followers
-</h2>
-
-
-<button
-id="closeConnections"
-class="close-connections">
-
-Close
-
-</button>
-
-</div>
-
-
-<div
-id="connectionList"
-class="connection-list">
-
-</div>
-
-
-</div>
-
-
-<!-- =========================
-     POSTS
-========================= -->
 
 <div class="posts">
-
 
 <h2>
 Posts
 </h2>
 
-
 <div id="postsList"></div>
 
-
 </div>
 
-
 </div>
-
 
 </main>
 
@@ -881,8 +625,8 @@ Posts
 <script>
 
 /* =====================================================
-   BERAKAH SUPABASE
-===================================================== */
+   BERAKAH SUPABASE CONFIGURATION
+   ===================================================== */
 
 const SUPABASE_URL =
 "https://utoyoglycqjmqznczfxa.supabase.co";
@@ -893,37 +637,36 @@ const SUPABASE_KEY =
 
 /* =====================================================
    SESSION
-===================================================== */
+   ===================================================== */
 
 let accessToken =
 localStorage.getItem(
 "berakah_access_token"
 );
 
-let currentUser =
-null;
+let currentUser = null;
 
-let profile =
-null;
+let profile = null;
 
 
 /* =====================================================
    SUPABASE HEADERS
-===================================================== */
+   ===================================================== */
 
 function supabaseHeaders(extra = {}) {
 
-return {
+const headers = {
 
-"apikey":
-SUPABASE_KEY,
+"apikey": SUPABASE_KEY,
 
 "Authorization":
-"Bearer " +
-accessToken,
+"Bearer " + accessToken
 
+};
+
+return {
+...headers,
 ...extra
-
 };
 
 }
@@ -931,7 +674,7 @@ accessToken,
 
 /* =====================================================
    HTML ESCAPE
-===================================================== */
+   ===================================================== */
 
 function escapeHTML(value) {
 
@@ -947,7 +690,7 @@ return String(value ?? "")
 
 /* =====================================================
    SHOW ERROR
-===================================================== */
+   ===================================================== */
 
 function showError(message) {
 
@@ -976,8 +719,8 @@ message;
 
 
 /* =====================================================
-   CLEAR SESSION
-===================================================== */
+   CLEAR BAD SESSION
+   ===================================================== */
 
 function clearSession() {
 
@@ -1001,12 +744,14 @@ localStorage.removeItem(
 "berakah_auth_user_id"
 );
 
+accessToken = null;
+
 }
 
 
 /* =====================================================
-   URL PARAMETER
-===================================================== */
+   GET URL PARAMETER
+   ===================================================== */
 
 function getURLParameter(name) {
 
@@ -1021,10 +766,18 @@ return params.get(name);
 
 
 /* =====================================================
-   AUTH USER
-===================================================== */
+   VERIFY SUPABASE SESSION
+   ===================================================== */
 
 async function getCurrentUser() {
+
+if (!accessToken) {
+
+throw new Error(
+"NO_SESSION"
+);
+
+}
 
 const response =
 await fetch(
@@ -1034,8 +787,7 @@ SUPABASE_URL +
 
 {
 
-method:
-"GET",
+method: "GET",
 
 headers:
 supabaseHeaders()
@@ -1051,23 +803,24 @@ await response.text();
 
 if (!response.ok) {
 
+console.error(
+"SUPABASE SESSION ERROR:",
+text
+);
+
 if (
 response.status === 401 ||
 response.status === 403
 ) {
 
-clearSession();
-
-window.location.href =
-"login.html";
-
-return null;
+throw new Error(
+"SESSION_EXPIRED"
+);
 
 }
 
 throw new Error(
-"Could not verify login:\n\n" +
-text
+"Could not verify login."
 );
 
 }
@@ -1076,20 +829,31 @@ text
 if (!text) {
 
 throw new Error(
-"No logged-in user was returned."
+"SESSION_EXPIRED"
 );
 
 }
 
 
+try {
+
 return JSON.parse(text);
+
+}
+catch(error) {
+
+throw new Error(
+"SESSION_EXPIRED"
+);
+
+}
 
 }
 
 
 /* =====================================================
    LOAD OWN PROFILE
-===================================================== */
+   ===================================================== */
 
 async function loadOwnProfile() {
 
@@ -1113,8 +877,7 @@ url,
 
 {
 
-method:
-"GET",
+method: "GET",
 
 headers:
 supabaseHeaders()
@@ -1130,9 +893,19 @@ await response.text();
 
 if (!response.ok) {
 
+if (
+response.status === 401 ||
+response.status === 403
+) {
+
 throw new Error(
-"Could not load your profile:\n\n" +
-text
+"SESSION_EXPIRED"
+);
+
+}
+
+throw new Error(
+"Could not load your profile."
 );
 
 }
@@ -1148,8 +921,7 @@ if (!rows.length) {
 
 throw new Error(
 "Your BERAKAH profile was not found.\n\n" +
-"Auth ID:\n" +
-userId
+"Your account is logged in, but there is no profile row connected to this Auth account."
 );
 
 }
@@ -1158,15 +930,12 @@ userId
 profile =
 rows[0];
 
-
-displayProfile();
-
 }
 
 
 /* =====================================================
    LOAD PROFILE BY ID
-===================================================== */
+   ===================================================== */
 
 async function loadProfileById(id) {
 
@@ -1195,8 +964,7 @@ url,
 
 {
 
-method:
-"GET",
+method: "GET",
 
 headers:
 supabaseHeaders()
@@ -1212,9 +980,19 @@ await response.text();
 
 if (!response.ok) {
 
+if (
+response.status === 401 ||
+response.status === 403
+) {
+
 throw new Error(
-"Could not load profile:\n\n" +
-text
+"SESSION_EXPIRED"
+);
+
+}
+
+throw new Error(
+"Could not load profile."
 );
 
 }
@@ -1238,22 +1016,18 @@ throw new Error(
 profile =
 rows[0];
 
-
-displayProfile();
-
 }
 
 
 /* =====================================================
    LOAD PROFILE BY USERNAME
-===================================================== */
+   ===================================================== */
 
 async function loadProfileByUsername(username) {
 
 username =
 String(username || "")
-.replace("@", "")
-.trim();
+replaceAtSymbol(username);
 
 
 if (!username) {
@@ -1281,8 +1055,7 @@ url,
 
 {
 
-method:
-"GET",
+method: "GET",
 
 headers:
 supabaseHeaders()
@@ -1298,9 +1071,19 @@ await response.text();
 
 if (!response.ok) {
 
+if (
+response.status === 401 ||
+response.status === 403
+) {
+
 throw new Error(
-"Could not load profile:\n\n" +
-text
+"SESSION_EXPIRED"
+);
+
+}
+
+throw new Error(
+"Could not load profile."
 );
 
 }
@@ -1326,29 +1109,52 @@ username +
 profile =
 rows[0];
 
+}
 
-displayProfile();
+
+/* =====================================================
+   REMOVE @ FROM USERNAME
+   ===================================================== */
+
+function replaceAtSymbol(username) {
+
+return String(username || "")
+.replace(/^@+/, "")
+.trim();
 
 }
 
 
 /* =====================================================
-   PROFILE DISPLAY
-===================================================== */
+   PROFILE NAME
+   ===================================================== */
 
-function displayProfile() {
+function getProfileName() {
 
-const fullName =
+return (
 profile["Full name"] ||
 profile.full_name ||
 profile.name ||
 profile.username ||
-"BERAKAH";
+"BERAKAH"
+);
+
+}
+
+
+/* =====================================================
+   DISPLAY PROFILE
+   ===================================================== */
+
+function displayProfile() {
+
+const fullName =
+getProfileName();
 
 
 const username =
 profile.username ||
-"berakah1357";
+"berakah";
 
 
 const language =
@@ -1387,7 +1193,9 @@ document.getElementById(
 bio;
 
 
-/* AVATAR */
+/* =====================================================
+   AVATAR
+   ===================================================== */
 
 const avatar =
 document.getElementById(
@@ -1406,14 +1214,17 @@ alt="Profile picture">`;
 else {
 
 avatar.textContent =
-fullName
+String(fullName)
 .charAt(0)
-.toUpperCase();
+.toUpperCase() ||
+"👤";
 
 }
 
 
-/* EDIT / FOLLOW */
+/* =====================================================
+   EDIT / FOLLOW
+   ===================================================== */
 
 setupEditPermission();
 
@@ -1421,13 +1232,12 @@ setupEditPermission();
 
 
 /* =====================================================
-   OWN PROFILE CHECK
-===================================================== */
+   CHECK OWN PROFILE
+   ===================================================== */
 
 function isOwnProfile() {
 
-if (!currentUser ||
-!profile) {
+if (!currentUser || !profile) {
 
 return false;
 
@@ -1445,24 +1255,25 @@ return true;
 }
 
 
-/*
-Fallback for older rows
-without user_id.
-*/
+/* OLD PROFILE FALLBACK */
 
 if (!profile.user_id) {
 
 const metadata =
 currentUser.user_metadata || {};
 
+
 const loggedUsername =
 String(
 metadata.username ||
 metadata.user_name ||
 metadata.userName ||
+localStorage.getItem(
+"berakah_username"
+) ||
 ""
 )
-.replace("@", "")
+.replace(/^@+/, "")
 .toLowerCase()
 .trim();
 
@@ -1472,7 +1283,7 @@ String(
 profile.username ||
 ""
 )
-.replace("@", "")
+.replace(/^@+/, "")
 .toLowerCase()
 .trim();
 
@@ -1496,8 +1307,8 @@ return false;
 
 
 /* =====================================================
-   EDIT / FOLLOW PERMISSION
-===================================================== */
+   SETUP EDIT / FOLLOW
+   ===================================================== */
 
 function setupEditPermission() {
 
@@ -1538,7 +1349,7 @@ checkFollowingStatus();
 
 /* =====================================================
    OPEN EDIT
-===================================================== */
+   ===================================================== */
 
 function openEdit() {
 
@@ -1595,7 +1406,7 @@ document.getElementById(
 
 /* =====================================================
    CANCEL EDIT
-===================================================== */
+   ===================================================== */
 
 function cancelEdit() {
 
@@ -1609,7 +1420,7 @@ document.getElementById(
 
 /* =====================================================
    SAVE PROFILE
-===================================================== */
+   ===================================================== */
 
 async function saveProfile() {
 
@@ -1627,11 +1438,11 @@ document.getElementById(
 
 
 const username =
+replaceAtSymbol(
 document.getElementById(
 "editUsername"
 ).value
-.trim()
-.replace("@", "");
+);
 
 
 const language =
@@ -1716,8 +1527,7 @@ profile.id
 
 {
 
-method:
-"PATCH",
+method: "PATCH",
 
 headers:
 supabaseHeaders({
@@ -1746,8 +1556,19 @@ await response.text();
 
 if (!response.ok) {
 
+if (
+response.status === 401 ||
+response.status === 403
+) {
+
 throw new Error(
-"Profile update failed:\n\n" +
+"SESSION_EXPIRED"
+);
+
+}
+
+throw new Error(
+"Profile update failed:\n" +
 text
 );
 
@@ -1789,9 +1610,7 @@ document.getElementById(
 ).style.display =
 "none";
 
-document.getElementById(
-"editStatus"
-).textContent =
+status.textContent =
 "";
 
 },
@@ -1805,6 +1624,20 @@ console.error(
 "PROFILE SAVE ERROR:",
 error
 );
+
+if (
+error.message ===
+"SESSION_EXPIRED"
+) {
+
+clearSession();
+
+window.location.href =
+"login.html";
+
+return;
+
+}
 
 status.textContent =
 error.message;
@@ -1822,7 +1655,7 @@ false;
 
 /* =====================================================
    LOAD POSTS
-===================================================== */
+   ===================================================== */
 
 async function loadPosts() {
 
@@ -1855,8 +1688,7 @@ url,
 
 {
 
-method:
-"GET",
+method: "GET",
 
 headers:
 supabaseHeaders()
@@ -1871,6 +1703,17 @@ await response.text();
 
 
 if (!response.ok) {
+
+if (
+response.status === 401 ||
+response.status === 403
+) {
+
+throw new Error(
+"SESSION_EXPIRED"
+);
+
+}
 
 console.warn(
 "Posts could not be loaded:",
@@ -1897,7 +1740,7 @@ displayPosts(posts);
 
 /* =====================================================
    DISPLAY POSTS
-===================================================== */
+   ===================================================== */
 
 function displayPosts(posts) {
 
@@ -1936,6 +1779,7 @@ const div =
 document.createElement(
 "div"
 );
+
 
 div.className =
 "post";
@@ -1986,15 +1830,14 @@ ${escapeHTML(date)}
 </div>
 
 <div class="post-content">
-${escapeHTML(
-post.content || ""
-)}
+${escapeHTML(post.content || "")}
 </div>
 
 ${image}
 
 <button
-class="like-button">
+class="like-button"
+type="button">
 
 ❤️ Like
 
@@ -2012,7 +1855,7 @@ list.appendChild(div);
 
 /* =====================================================
    LOAD FOLLOW COUNTS
-===================================================== */
+   ===================================================== */
 
 async function loadFollowCounts() {
 
@@ -2024,7 +1867,9 @@ return;
 }
 
 
-/* FOLLOWERS */
+/* =====================================================
+   FOLLOWERS
+   ===================================================== */
 
 const followersURL =
 SUPABASE_URL +
@@ -2043,8 +1888,7 @@ followersURL,
 
 {
 
-method:
-"GET",
+method: "GET",
 
 headers:
 supabaseHeaders()
@@ -2059,8 +1903,18 @@ await followersResponse.text();
 
 
 if (
-followersResponse.ok
+followersResponse.status === 401 ||
+followersResponse.status === 403
 ) {
+
+throw new Error(
+"SESSION_EXPIRED"
+);
+
+}
+
+
+if (followersResponse.ok) {
 
 const followers =
 followersText ?
@@ -2076,7 +1930,9 @@ followers.length;
 }
 
 
-/* FOLLOWING */
+/* =====================================================
+   FOLLOWING
+   ===================================================== */
 
 const followingURL =
 SUPABASE_URL +
@@ -2095,8 +1951,7 @@ followingURL,
 
 {
 
-method:
-"GET",
+method: "GET",
 
 headers:
 supabaseHeaders()
@@ -2111,8 +1966,18 @@ await followingResponse.text();
 
 
 if (
-followingResponse.ok
+followingResponse.status === 401 ||
+followingResponse.status === 403
 ) {
+
+throw new Error(
+"SESSION_EXPIRED"
+);
+
+}
+
+
+if (followingResponse.ok) {
 
 const following =
 followingText ?
@@ -2132,13 +1997,15 @@ following.length;
 
 /* =====================================================
    CHECK FOLLOWING STATUS
-===================================================== */
+   ===================================================== */
 
 async function checkFollowingStatus() {
 
-if (!currentUser ||
+if (
+!currentUser ||
 !profile ||
-!profile.user_id) {
+!profile.user_id
+) {
 
 return;
 
@@ -2178,8 +2045,7 @@ url,
 
 {
 
-method:
-"GET",
+method: "GET",
 
 headers:
 supabaseHeaders()
@@ -2191,6 +2057,18 @@ supabaseHeaders()
 
 const text =
 await response.text();
+
+
+if (
+response.status === 401 ||
+response.status === 403
+) {
+
+throw new Error(
+"SESSION_EXPIRED"
+);
+
+}
 
 
 if (!response.ok) {
@@ -2234,8 +2112,20 @@ button.className =
 }
 catch(error) {
 
+if (
+error.message ===
+"SESSION_EXPIRED"
+) {
+
+clearSession();
+
+window.location.href =
+"login.html";
+
+}
+
 console.warn(
-"Could not check follow status:",
+"FOLLOW STATUS ERROR:",
 error
 );
 
@@ -2246,13 +2136,15 @@ error
 
 /* =====================================================
    FOLLOW / UNFOLLOW
-===================================================== */
+   ===================================================== */
 
 async function followUser() {
 
-if (!currentUser ||
+if (
+!currentUser ||
 !profile ||
-!profile.user_id) {
+!profile.user_id
+) {
 
 return;
 
@@ -2270,6 +2162,7 @@ const button =
 document.getElementById(
 "followButton"
 );
+
 
 const status =
 document.getElementById(
@@ -2304,8 +2197,7 @@ checkURL,
 
 {
 
-method:
-"GET",
+method: "GET",
 
 headers:
 supabaseHeaders()
@@ -2319,10 +2211,22 @@ const checkText =
 await checkResponse.text();
 
 
+if (
+checkResponse.status === 401 ||
+checkResponse.status === 403
+) {
+
+throw new Error(
+"SESSION_EXPIRED"
+);
+
+}
+
+
 if (!checkResponse.ok) {
 
 throw new Error(
-checkText
+"Could not check follow status."
 );
 
 }
@@ -2334,11 +2238,11 @@ JSON.parse(checkText) :
 [];
 
 
-/* =========================
-   UNFOLLOW
-========================= */
-
 if (existing.length) {
+
+/* =================================================
+   UNFOLLOW
+   ================================================= */
 
 const deleteURL =
 SUPABASE_URL +
@@ -2360,8 +2264,7 @@ deleteURL,
 
 {
 
-method:
-"DELETE",
+method: "DELETE",
 
 headers:
 supabaseHeaders()
@@ -2371,14 +2274,26 @@ supabaseHeaders()
 );
 
 
-if (!deleteResponse.ok) {
-
-const text =
+const deleteText =
 await deleteResponse.text();
 
+
+if (
+deleteResponse.status === 401 ||
+deleteResponse.status === 403
+) {
+
 throw new Error(
-"Could not unfollow:\n\n" +
-text
+"SESSION_EXPIRED"
+);
+
+}
+
+
+if (!deleteResponse.ok) {
+
+throw new Error(
+"Could not unfollow."
 );
 
 }
@@ -2394,13 +2309,11 @@ status.textContent =
 "Unfollowed.";
 
 }
-
-
-/* =========================
-   FOLLOW
-========================= */
-
 else {
+
+/* =================================================
+   FOLLOW
+   ================================================= */
 
 const followResponse =
 await fetch(
@@ -2410,8 +2323,7 @@ SUPABASE_URL +
 
 {
 
-method:
-"POST",
+method: "POST",
 
 headers:
 supabaseHeaders({
@@ -2440,14 +2352,27 @@ profile.user_id
 );
 
 
-if (!followResponse.ok) {
-
-const text =
+const followText =
 await followResponse.text();
 
+
+if (
+followResponse.status === 401 ||
+followResponse.status === 403
+) {
+
 throw new Error(
-"Could not follow:\n\n" +
-text
+"SESSION_EXPIRED"
+);
+
+}
+
+
+if (!followResponse.ok) {
+
+throw new Error(
+"Could not follow this user:\n" +
+followText
 );
 
 }
@@ -2465,12 +2390,7 @@ status.textContent =
 }
 
 
-/*
-Refresh real counts.
-*/
-
 await loadFollowCounts();
-
 
 }
 catch(error) {
@@ -2480,8 +2400,22 @@ console.error(
 error
 );
 
+if (
+error.message ===
+"SESSION_EXPIRED"
+) {
+
+clearSession();
+
+window.location.href =
+"login.html";
+
+return;
+
+}
+
 status.textContent =
-"Follow error:\n" +
+"Follow error: " +
 error.message;
 
 }
@@ -2496,564 +2430,8 @@ false;
 
 
 /* =====================================================
-   LOAD FOLLOWERS
-===================================================== */
-
-async function loadFollowers() {
-
-if (!profile ||
-!profile.user_id) {
-
-return;
-
-}
-
-
-openConnections(
-"Followers"
-);
-
-
-const list =
-document.getElementById(
-"connectionList"
-);
-
-
-list.innerHTML =
-`<div class="empty">
-Loading followers...
-</div>`;
-
-
-const url =
-SUPABASE_URL +
-"/rest/v1/follows" +
-"?select=id,follower_id" +
-"&following_id=eq." +
-encodeURIComponent(
-profile.user_id
-);
-
-
-try {
-
-const response =
-await fetch(
-
-url,
-
-{
-
-method:
-"GET",
-
-headers:
-supabaseHeaders()
-
-}
-
-);
-
-
-const text =
-await response.text();
-
-
-if (!response.ok) {
-
-throw new Error(text);
-
-}
-
-
-const follows =
-text ?
-JSON.parse(text) :
-[];
-
-
-if (!follows.length) {
-
-list.innerHTML =
-`<div class="empty">
-No followers yet.
-</div>`;
-
-return;
-
-}
-
-
-/*
-Get the follower profile IDs
-one by one.
-
-This avoids depending on
-foreign-key embedding names.
-*/
-
-const users = [];
-
-
-for (
-const follow
-of follows
-) {
-
-const user =
-await getProfileByUserId(
-follow.follower_id
-);
-
-if (user) {
-
-users.push(user);
-
-}
-
-}
-
-
-displayConnectionUsers(
-users
-);
-
-}
-catch(error) {
-
-console.error(
-"FOLLOWERS ERROR:",
-error
-);
-
-list.innerHTML =
-`<div class="empty">
-Could not load followers.
-</div>`;
-
-}
-
-}
-
-
-/* =====================================================
-   LOAD FOLLOWING
-===================================================== */
-
-async function loadFollowing() {
-
-if (!profile ||
-!profile.user_id) {
-
-return;
-
-}
-
-
-openConnections(
-"Following"
-);
-
-
-const list =
-document.getElementById(
-"connectionList"
-);
-
-
-list.innerHTML =
-`<div class="empty">
-Loading following...
-</div>`;
-
-
-const url =
-SUPABASE_URL +
-"/rest/v1/follows" +
-"?select=id,following_id" +
-"&follower_id=eq." +
-encodeURIComponent(
-profile.user_id
-);
-
-
-try {
-
-const response =
-await fetch(
-
-url,
-
-{
-
-method:
-"GET",
-
-headers:
-supabaseHeaders()
-
-}
-
-);
-
-
-const text =
-await response.text();
-
-
-if (!response.ok) {
-
-throw new Error(text);
-
-}
-
-
-const follows =
-text ?
-JSON.parse(text) :
-[];
-
-
-if (!follows.length) {
-
-list.innerHTML =
-`<div class="empty">
-Not following anyone yet.
-</div>`;
-
-return;
-
-}
-
-
-const users = [];
-
-
-for (
-const follow
-of follows
-) {
-
-const user =
-await getProfileByUserId(
-follow.following_id
-);
-
-if (user) {
-
-users.push(user);
-
-}
-
-}
-
-
-displayConnectionUsers(
-users
-);
-
-}
-catch(error) {
-
-console.error(
-"FOLLOWING ERROR:",
-error
-);
-
-list.innerHTML =
-`<div class="empty">
-Could not load following.
-</div>`;
-
-}
-
-}
-
-
-/* =====================================================
-   GET PROFILE BY AUTH UUID
-===================================================== */
-
-async function getProfileByUserId(userId) {
-
-if (!userId) {
-
-return null;
-
-}
-
-
-const url =
-SUPABASE_URL +
-"/rest/v1/profiles" +
-"?select=id,user_id,username,\"Full name\",full_name,name,avatar_url" +
-"&user_id=eq." +
-encodeURIComponent(userId) +
-"&limit=1";
-
-
-try {
-
-const response =
-await fetch(
-
-url,
-
-{
-
-method:
-"GET",
-
-headers:
-supabaseHeaders()
-
-}
-
-);
-
-
-const text =
-await response.text();
-
-
-if (!response.ok) {
-
-console.warn(
-"Profile lookup failed:",
-text
-);
-
-return null;
-
-}
-
-
-const rows =
-text ?
-JSON.parse(text) :
-[];
-
-
-return rows.length ?
-rows[0] :
-null;
-
-}
-catch(error) {
-
-console.warn(
-"Profile lookup error:",
-error
-);
-
-return null;
-
-}
-
-
-/* =====================================================
-   OPEN CONNECTIONS
-===================================================== */
-
-function openConnections(title) {
-
-document.getElementById(
-"connectionsTitle"
-).textContent =
-title;
-
-
-document.getElementById(
-"connections"
-).style.display =
-"block";
-
-
-document.getElementById(
-"connections"
-).scrollIntoView({
-
-behavior:
-"smooth",
-
-block:
-"start"
-
-});
-
-}
-
-
-/* =====================================================
-   CLOSE CONNECTIONS
-===================================================== */
-
-function closeConnections() {
-
-document.getElementById(
-"connections"
-).style.display =
-"none";
-
-}
-
-
-/* =====================================================
-   DISPLAY CONNECTION USERS
-===================================================== */
-
-function displayConnectionUsers(users) {
-
-const list =
-document.getElementById(
-"connectionList"
-);
-
-
-list.innerHTML =
-"";
-
-
-if (!users.length) {
-
-list.innerHTML =
-`<div class="empty">
-No profiles found.
-</div>`;
-
-return;
-
-}
-
-
-users.forEach(
-user => {
-
-const fullName =
-user["Full name"] ||
-user.full_name ||
-user.name ||
-user.username ||
-"BERAKAH";
-
-
-const username =
-user.username ||
-"";
-
-
-const div =
-document.createElement(
-"div"
-);
-
-
-div.className =
-"connection-user";
-
-
-let avatarHTML;
-
-
-if (user.avatar_url) {
-
-avatarHTML =
-`<img
-src="${escapeHTML(user.avatar_url)}"
-alt="Profile picture">`;
-
-}
-else {
-
-avatarHTML =
-escapeHTML(
-fullName.charAt(0).toUpperCase()
-);
-
-}
-
-
-div.innerHTML = `
-
-<div class="connection-left">
-
-<div class="connection-avatar">
-
-${avatarHTML}
-
-</div>
-
-<div class="connection-info">
-
-<div class="connection-name">
-
-${escapeHTML(fullName)}
-
-</div>
-
-<div class="connection-username">
-
-@${escapeHTML(username)}
-
-</div>
-
-</div>
-
-</div>
-
-<button
-class="view-profile">
-
-VIEW
-
-</button>
-
-`;
-
-
-const viewButton =
-div.querySelector(
-".view-profile"
-);
-
-
-viewButton.addEventListener(
-"click",
-function() {
-
-if (username) {
-
-window.location.href =
-"profile.html?username=" +
-encodeURIComponent(
-username
-);
-
-}
-else if (user.id) {
-
-window.location.href =
-"profile.html?id=" +
-encodeURIComponent(
-user.id
-);
-
-}
-
-});
-
-
-list.appendChild(div);
-
-});
-
-}
-
-
-/* =====================================================
    LOGOUT
-===================================================== */
+   ===================================================== */
 
 document.getElementById(
 "logoutButton"
@@ -3071,7 +2449,7 @@ window.location.href =
 
 /* =====================================================
    BUTTON EVENTS
-===================================================== */
+   ===================================================== */
 
 document.getElementById(
 "editButton"
@@ -3105,41 +2483,17 @@ followUser
 );
 
 
-document.getElementById(
-"followersStat"
-).addEventListener(
-"click",
-loadFollowers
-);
-
-
-document.getElementById(
-"followingStat"
-).addEventListener(
-"click",
-loadFollowing
-);
-
-
-document.getElementById(
-"closeConnections"
-).addEventListener(
-"click",
-closeConnections
-);
-
-
 /* =====================================================
-   START
-===================================================== */
+   START APPLICATION
+   ===================================================== */
 
 async function start() {
 
 try {
 
-/*
-No token = login.
-*/
+/* =================================================
+   1. CHECK TOKEN
+   ================================================= */
 
 if (!accessToken) {
 
@@ -3151,34 +2505,42 @@ return;
 }
 
 
-/*
-Verify the fresh Supabase
-session created by login.html.
-*/
+/* =================================================
+   2. VERIFY AUTH SESSION
+   ================================================= */
+
+try {
 
 currentUser =
 await getCurrentUser();
 
+}
+catch(error) {
 
-if (!currentUser) {
+if (
+error.message ===
+"SESSION_EXPIRED" ||
+error.message ===
+"NO_SESSION"
+) {
+
+clearSession();
+
+window.location.href =
+"login.html";
 
 return;
 
 }
 
+throw error;
 
-/*
-URL OPTIONS
+}
 
-profile.html
-= own profile
 
-profile.html?id=123
-= numeric profile ID
-
-profile.html?username=username
-= username profile
-*/
+/* =================================================
+   3. CHECK REQUESTED PROFILE
+   ================================================= */
 
 const requestedId =
 getURLParameter("id");
@@ -3208,18 +2570,30 @@ await loadOwnProfile();
 }
 
 
-/*
-Load profile data.
-*/
+/* =================================================
+   4. DISPLAY PROFILE
+   ================================================= */
+
+displayProfile();
+
+
+/* =================================================
+   5. LOAD POSTS
+   ================================================= */
 
 await loadPosts();
+
+
+/* =================================================
+   6. LOAD FOLLOW COUNTS
+   ================================================= */
 
 await loadFollowCounts();
 
 
-/*
-Show profile.
-*/
+/* =================================================
+   7. SHOW PAGE
+   ================================================= */
 
 document.getElementById(
 "loading"
@@ -3239,15 +2613,35 @@ console.error(
 error
 );
 
+
+if (
+error.message ===
+"SESSION_EXPIRED"
+) {
+
+clearSession();
+
+window.location.href =
+"login.html";
+
+return;
+
+}
+
+
 showError(
 error.message ||
-"Could not load profile."
+"Something went wrong while loading your profile."
 );
 
 }
 
 }
 
+
+/* =====================================================
+   RUN
+   ===================================================== */
 
 start();
 
