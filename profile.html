@@ -773,14 +773,95 @@ const SUPABASE_KEY =
    SESSION
    ===================================================== */
 
-const accessToken =
-localStorage.getItem(
-"berakah_access_token"
-);
+/* =====================================================
+   SESSION
+   ===================================================== */
+
+let accessToken =
+localStorage.getItem("berakah_access_token");
+
+let refreshToken =
+localStorage.getItem("berakah_refresh_token");
 
 let currentUser = null;
-
 let profile = null;
+
+
+/* =====================================================
+   REFRESH SUPABASE SESSION
+   ===================================================== */
+
+async function refreshSupabaseSession() {
+
+  if (!refreshToken) {
+    return false;
+  }
+
+  try {
+
+    const response = await fetch(
+      SUPABASE_URL +
+      "/auth/v1/token?grant_type=refresh_token",
+      {
+        method: "POST",
+
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          refresh_token: refreshToken
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok || !data.access_token) {
+
+      console.warn(
+        "SESSION REFRESH FAILED:",
+        data
+      );
+
+      return false;
+    }
+
+    /*
+      Save the NEW tokens.
+    */
+
+    accessToken =
+      data.access_token;
+
+    refreshToken =
+      data.refresh_token ||
+      refreshToken;
+
+    localStorage.setItem(
+      "berakah_access_token",
+      accessToken
+    );
+
+    localStorage.setItem(
+      "berakah_refresh_token",
+      refreshToken
+    );
+
+    return true;
+
+  }
+  catch (error) {
+
+    console.error(
+      "SESSION REFRESH ERROR:",
+      error
+    );
+
+    return false;
+  }
+}
 
 
 /* =====================================================
