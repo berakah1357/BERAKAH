@@ -4,7 +4,9 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>BERAKAH - Profile</title>
 
@@ -21,6 +23,10 @@ body {
   color: #111827;
 }
 
+/* =========================
+   HEADER
+========================= */
+
 header {
   background: #ffffff;
   border-bottom: 1px solid #e5e7eb;
@@ -31,7 +37,7 @@ header {
 }
 
 .nav {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: auto;
   display: flex;
   align-items: center;
@@ -68,6 +74,10 @@ header {
   color: white;
 }
 
+/* =========================
+   MAIN
+========================= */
+
 main {
   max-width: 900px;
   margin: 25px auto;
@@ -89,13 +99,21 @@ main {
   white-space: pre-wrap;
 }
 
+/* =========================
+   PROFILE
+========================= */
+
 .profile {
   display: none;
 }
 
 .cover {
   height: 190px;
-  background: linear-gradient(135deg, #111827, #374151);
+  background: linear-gradient(
+    135deg,
+    #111827,
+    #374151
+  );
   border-radius: 18px 18px 0 0;
 }
 
@@ -145,6 +163,10 @@ h1 {
   white-space: pre-wrap;
 }
 
+/* =========================
+   STATS
+========================= */
+
 .stats {
   display: flex;
   gap: 12px;
@@ -154,17 +176,16 @@ h1 {
 
 .stat {
   min-width: 120px;
-  border: 1px solid #e5e7eb;
   background: #f9fafb;
-  padding: 13px 18px;
+  border: 1px solid #e5e7eb;
   border-radius: 12px;
+  padding: 14px 18px;
   cursor: pointer;
   transition: 0.2s;
 }
 
 .stat:hover {
-  background: #eef2ff;
-  transform: translateY(-1px);
+  background: #f3f4f6;
 }
 
 .stat strong {
@@ -172,6 +193,10 @@ h1 {
   font-size: 21px;
   margin-bottom: 3px;
 }
+
+/* =========================
+   BUTTONS
+========================= */
 
 .actions {
   margin-top: 25px;
@@ -212,11 +237,18 @@ h1 {
   color: #111827;
 }
 
+/* =========================
+   STATUS
+========================= */
+
 .status {
   margin-top: 12px;
   font-weight: bold;
-  min-height: 20px;
 }
+
+/* =========================
+   EDIT BOX
+========================= */
 
 .edit-box {
   display: none;
@@ -249,25 +281,30 @@ h1 {
   resize: vertical;
 }
 
-.save,
+.save {
+  margin-top: 15px;
+  padding: 11px 17px;
+  border: 0;
+  border-radius: 8px;
+  background: #111827;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .cancel {
   margin-top: 15px;
   padding: 11px 17px;
   border: 0;
   border-radius: 8px;
+  background: #e5e7eb;
   font-weight: bold;
   cursor: pointer;
 }
 
-.save {
-  background: #111827;
-  color: white;
-}
-
-.cancel {
-  background: #e5e7eb;
-  color: #111827;
-}
+/* =========================
+   POSTS
+========================= */
 
 .posts {
   margin-top: 25px;
@@ -319,82 +356,60 @@ h1 {
   padding: 30px 10px;
 }
 
+/* =========================
+   FOLLOWERS / FOLLOWING
+========================= */
 
-/* =====================================================
-   FOLLOWERS / FOLLOWING MODAL
-   ===================================================== */
-
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  z-index: 1000;
-  padding: 20px;
-  overflow-y: auto;
-}
-
-.modal.show {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-box {
-  width: 100%;
-  max-width: 520px;
-  max-height: 85vh;
+.people-section {
+  margin-top: 25px;
   background: white;
+  padding: 25px;
   border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  display: none;
 }
 
-.modal-header {
+.people-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 20px;
-  border-bottom: 1px solid #e5e7eb;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
-.modal-header h2 {
+.people-header h2 {
   margin: 0;
-  font-size: 20px;
 }
 
-.close-modal {
+.close-people {
+  border: 0;
+  background: #e5e7eb;
   width: 36px;
   height: 36px;
-  border: 0;
   border-radius: 50%;
-  background: #f3f4f6;
-  font-size: 22px;
+  font-size: 20px;
   cursor: pointer;
 }
 
-.modal-body {
-  padding: 10px 15px 20px;
-  max-height: 65vh;
-  overflow-y: auto;
+.people-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .person {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 5px;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.person:last-child {
-  border-bottom: 0;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
 }
 
 .person-avatar {
-  width: 50px;
-  height: 50px;
-  min-width: 50px;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
   border-radius: 50%;
   background: #e5e7eb;
   display: flex;
@@ -429,57 +444,19 @@ h1 {
   margin-top: 3px;
 }
 
-.person-actions {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.person-button {
+.person-view {
   border: 0;
-  border-radius: 7px;
-  padding: 8px 11px;
+  background: #111827;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
 }
 
-.view-button {
-  background: #111827;
-  color: white;
-}
-
-.follow-small {
-  background: #111827;
-  color: white;
-}
-
-.following-small {
-  background: #e5e7eb;
-  color: #111827;
-}
-
-.modal-loading {
-  text-align: center;
-  padding: 35px 10px;
-  color: #6b7280;
-}
-
-.modal-empty {
-  text-align: center;
-  padding: 35px 10px;
-  color: #6b7280;
-}
-
-.modal-error {
-  color: #b91c1c;
-  text-align: center;
-  padding: 25px 10px;
-}
-
-
-/* =====================================================
+/* =========================
    MOBILE
-   ===================================================== */
+========================= */
 
 @media (max-width: 650px) {
 
@@ -492,13 +469,8 @@ h1 {
     width: 100%;
   }
 
-  .nav-links a,
-  .nav-links button {
-    font-size: 13px;
-  }
-
   .cover {
-    height: 145px;
+    height: 150px;
   }
 
   .profile-card {
@@ -511,29 +483,14 @@ h1 {
     margin-top: -60px;
   }
 
-  .stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
   .stat {
-    min-width: 0;
+    flex: 1;
+    min-width: 100px;
   }
 
-  .modal {
-    padding: 10px;
-  }
-
-  .modal-box {
-    max-height: 90vh;
-  }
-
-  .person {
-    align-items: flex-start;
-  }
-
-  .person-actions {
-    flex-direction: column;
+  .person-view {
+    padding: 7px 9px;
+    font-size: 12px;
   }
 
 }
@@ -542,13 +499,11 @@ h1 {
 
 </head>
 
-
 <body>
 
-
-<!-- =====================================================
-     NAVIGATION
-     ===================================================== -->
+<!-- =========================
+     HEADER
+========================= -->
 
 <header>
 
@@ -560,22 +515,36 @@ BERAKAH
 
 <div class="nav-links">
 
-<a href="index.html">Home</a>
+<a href="index.html">
+Home
+</a>
 
-<a href="feed.html">Feed</a>
+<a href="feed.html">
+Feed
+</a>
 
-<a href="people.html">👥 People</a>
+<a href="people.html">
+👥 People
+</a>
 
-<a href="marketplace.html">Market</a>
+<a href="marketplace.html">
+Market
+</a>
 
-<a href="notifications.html">🔔</a>
+<a href="notifications.html">
+🔔
+</a>
 
-<a href="messages.html">💬</a>
+<a href="messages.html">
+💬
+</a>
 
 <button
 class="logout"
 id="logoutButton">
+
 Logout
+
 </button>
 
 </div>
@@ -585,12 +554,11 @@ Logout
 </header>
 
 
-<!-- =====================================================
+<!-- =========================
      MAIN
-     ===================================================== -->
+========================= -->
 
 <main>
-
 
 <div
 id="loading"
@@ -612,8 +580,12 @@ id="profile"
 class="profile">
 
 
+<!-- COVER -->
+
 <div class="cover"></div>
 
+
+<!-- PROFILE CARD -->
 
 <div class="profile-card">
 
@@ -621,7 +593,9 @@ class="profile">
 <div
 id="avatar"
 class="avatar">
+
 👤
+
 </div>
 
 
@@ -633,14 +607,18 @@ BERAKAH
 <div
 id="profileUsername"
 class="username">
+
 @berakah1357
+
 </div>
 
 
 <div
 id="profileLanguage"
 class="language">
+
 Language: —
+
 </div>
 
 
@@ -654,17 +632,16 @@ Connect, share, build, and grow together.
 </div>
 
 
-<!-- =====================================================
-     REAL FOLLOWER / FOLLOWING COUNTS
-     ===================================================== -->
+<!-- =========================
+     STATS
+========================= -->
 
 <div class="stats">
 
 
 <div
 class="stat"
-id="followersStat"
-title="View followers">
+id="followersStat">
 
 <strong id="followersCount">
 0
@@ -677,8 +654,7 @@ Followers
 
 <div
 class="stat"
-id="followingStat"
-title="View following">
+id="followingStat">
 
 <strong id="followingCount">
 0
@@ -703,9 +679,9 @@ Posts
 </div>
 
 
-<!-- =====================================================
+<!-- =========================
      ACTIONS
-     ===================================================== -->
+========================= -->
 
 <div class="actions">
 
@@ -754,14 +730,13 @@ class="status">
 </div>
 
 
-<!-- =====================================================
+<!-- =========================
      EDIT PROFILE
-     ===================================================== -->
+========================= -->
 
 <div
 id="editBox"
 class="edit-box">
-
 
 <h3>
 Edit Your Profile
@@ -848,59 +823,31 @@ id="editStatus"
 class="status">
 </div>
 
+</div>
+
+</div>
 
 </div>
 
 
-</div>
-
-
-</div>
-
-
-<!-- =====================================================
-     POSTS
-     ===================================================== -->
-
-<div class="posts">
-
-<h2>
-Posts
-</h2>
-
-<div id="postsList"></div>
-
-</div>
-
-
-</div>
-
-
-</main>
-
-
-<!-- =====================================================
-     FOLLOWERS / FOLLOWING MODAL
-     ===================================================== -->
+<!-- =========================
+     FOLLOWERS / FOLLOWING
+========================= -->
 
 <div
-id="peopleModal"
-class="modal">
+id="peopleSection"
+class="people-section">
 
 
-<div class="modal-box">
+<div class="people-header">
 
-
-<div class="modal-header">
-
-<h2 id="modalTitle">
-Following
+<h2 id="peopleTitle">
+Followers
 </h2>
 
 <button
-class="close-modal"
-id="closeModalButton"
-aria-label="Close">
+id="closePeopleButton"
+class="close-people">
 
 ×
 
@@ -910,22 +857,49 @@ aria-label="Close">
 
 
 <div
-id="modalBody"
-class="modal-body">
+id="peopleLoading"
+class="empty">
 
+Loading...
+
+</div>
+
+
+<div
+id="peopleList"
+class="people-list">
 </div>
 
 
 </div>
 
 
+<!-- =========================
+     POSTS
+========================= -->
+
+<div class="posts">
+
+<h2>
+Posts
+</h2>
+
+<div
+id="postsList">
 </div>
+
+</div>
+
+
+</div>
+
+</main>
 
 
 <script>
 
 /* =====================================================
-   BERAKAH SUPABASE
+   BERAKAH SUPABASE CONFIGURATION
    ===================================================== */
 
 const SUPABASE_URL =
@@ -937,7 +911,7 @@ const SUPABASE_KEY =
 
 /* =====================================================
    SESSION
-   ===================================================== */
+===================================================== */
 
 let accessToken =
 localStorage.getItem(
@@ -952,17 +926,30 @@ let profile = null;
 
 /* =====================================================
    SUPABASE HEADERS
-   ===================================================== */
+===================================================== */
 
 function supabaseHeaders(extra = {}) {
 
-return {
+const headers = {
 
 "apikey":
 SUPABASE_KEY,
 
-"Authorization":
-"Bearer " + accessToken,
+"Content-Type":
+"application/json"
+
+};
+
+if (accessToken) {
+
+headers["Authorization"] =
+"Bearer " + accessToken;
+
+}
+
+return {
+
+...headers,
 
 ...extra
 
@@ -972,8 +959,8 @@ SUPABASE_KEY,
 
 
 /* =====================================================
-   HTML ESCAPE
-   ===================================================== */
+   ESCAPE HTML
+===================================================== */
 
 function escapeHTML(value) {
 
@@ -988,8 +975,39 @@ return String(value ?? "")
 
 
 /* =====================================================
-   ERROR
-   ===================================================== */
+   CLEAR SESSION
+===================================================== */
+
+function clearSession() {
+
+localStorage.removeItem(
+"berakah_access_token"
+);
+
+localStorage.removeItem(
+"berakah_refresh_token"
+);
+
+localStorage.removeItem(
+"berakah_user"
+);
+
+localStorage.removeItem(
+"berakah_username"
+);
+
+localStorage.removeItem(
+"berakah_auth_user_id"
+);
+
+accessToken = null;
+
+}
+
+
+/* =====================================================
+   SHOW ERROR
+===================================================== */
 
 function showError(message) {
 
@@ -1018,8 +1036,8 @@ message;
 
 
 /* =====================================================
-   URL PARAMETERS
-   ===================================================== */
+   URL PARAMETER
+===================================================== */
 
 function getURLParameter(name) {
 
@@ -1034,10 +1052,19 @@ return params.get(name);
 
 
 /* =====================================================
-   CURRENT SUPABASE AUTH USER
-   ===================================================== */
+   SUPABASE AUTH USER
+===================================================== */
 
 async function getCurrentUser() {
+
+if (!accessToken) {
+
+throw new Error(
+"NO_SESSION"
+);
+
+}
+
 
 const response =
 await fetch(
@@ -1061,6 +1088,25 @@ const text =
 await response.text();
 
 
+/*
+If Supabase says the session no longer
+exists, remove the broken browser session.
+*/
+
+if (
+response.status === 401 ||
+response.status === 403
+) {
+
+clearSession();
+
+throw new Error(
+"SESSION_EXPIRED"
+);
+
+}
+
+
 if (!response.ok) {
 
 throw new Error(
@@ -1080,14 +1126,25 @@ throw new Error(
 }
 
 
+try {
+
 return JSON.parse(text);
+
+}
+catch(error) {
+
+throw new Error(
+"Invalid authentication response."
+);
+
+}
 
 }
 
 
 /* =====================================================
    LOAD OWN PROFILE
-   ===================================================== */
+===================================================== */
 
 async function loadOwnProfile() {
 
@@ -1135,16 +1192,31 @@ text
 }
 
 
-const rows =
+let rows = [];
+
+try {
+
+rows =
 text ?
 JSON.parse(text) :
 [];
+
+}
+catch(error) {
+
+throw new Error(
+"Invalid profile response."
+);
+
+}
 
 
 if (!rows.length) {
 
 throw new Error(
-"Your BERAKAH profile was not found."
+"Your BERAKAH profile was not found.\n\n" +
+"Auth ID:\n" +
+userId
 );
 
 }
@@ -1153,7 +1225,6 @@ throw new Error(
 profile =
 rows[0];
 
-
 displayProfile();
 
 }
@@ -1161,7 +1232,7 @@ displayProfile();
 
 /* =====================================================
    LOAD PROFILE BY ID
-   ===================================================== */
+===================================================== */
 
 async function loadProfileById(id) {
 
@@ -1232,7 +1303,6 @@ throw new Error(
 profile =
 rows[0];
 
-
 displayProfile();
 
 }
@@ -1240,13 +1310,21 @@ displayProfile();
 
 /* =====================================================
    LOAD PROFILE BY USERNAME
-   ===================================================== */
+===================================================== */
 
 async function loadProfileByUsername(username) {
 
+/*
+Clean the username.
+
+@JODBELEM1357
+becomes
+JODBELEM1357
+*/
+
 username =
 String(username || "")
-replaceAtSymbol(username)
+.replace("@", "")
 .trim();
 
 
@@ -1319,27 +1397,14 @@ username +
 profile =
 rows[0];
 
-
 displayProfile();
 
 }
 
 
 /* =====================================================
-   REMOVE @
-   ===================================================== */
-
-function replaceAtSymbol(value) {
-
-return String(value || "")
-replace("@", "");
-
-}
-
-
-/* =====================================================
    DISPLAY PROFILE
-   ===================================================== */
+===================================================== */
 
 function displayProfile() {
 
@@ -1383,7 +1448,7 @@ document.getElementById(
 "profileLanguage"
 ).textContent =
 "Language: " +
-language.toUpperCase();
+String(language).toUpperCase();
 
 
 document.getElementById(
@@ -1392,7 +1457,9 @@ document.getElementById(
 bio;
 
 
-/* AVATAR */
+/* =========================
+   AVATAR
+========================= */
 
 const avatar =
 document.getElementById(
@@ -1411,15 +1478,16 @@ alt="Profile picture">`;
 else {
 
 avatar.textContent =
-fullName
+String(fullName)
 .charAt(0)
-.toUpperCase() ||
-"👤";
+.toUpperCase();
 
 }
 
 
-/* EDIT / FOLLOW */
+/* =========================
+   PERMISSIONS
+========================= */
 
 setupEditPermission();
 
@@ -1427,8 +1495,8 @@ setupEditPermission();
 
 
 /* =====================================================
-   OWN PROFILE CHECK
-   ===================================================== */
+   IS OWN PROFILE
+===================================================== */
 
 function isOwnProfile() {
 
@@ -1451,10 +1519,15 @@ return true;
 }
 
 
+/*
+Fallback for older profile records.
+*/
+
 if (!profile.user_id) {
 
 const metadata =
-currentUser.user_metadata || {};
+currentUser.user_metadata ||
+{};
 
 
 const loggedUsername =
@@ -1462,6 +1535,9 @@ String(
 metadata.username ||
 metadata.user_name ||
 metadata.userName ||
+localStorage.getItem(
+"berakah_username"
+) ||
 ""
 )
 .replace("@", "")
@@ -1498,8 +1574,8 @@ return false;
 
 
 /* =====================================================
-   EDIT / FOLLOW BUTTONS
-   ===================================================== */
+   EDIT / FOLLOW PERMISSION
+===================================================== */
 
 function setupEditPermission() {
 
@@ -1540,7 +1616,7 @@ checkFollowingStatus();
 
 /* =====================================================
    OPEN EDIT
-   ===================================================== */
+===================================================== */
 
 function openEdit() {
 
@@ -1571,7 +1647,7 @@ document.getElementById(
 "editLanguage"
 ).value =
 profile.language ||
-"ht";
+"en";
 
 
 document.getElementById(
@@ -1597,7 +1673,7 @@ document.getElementById(
 
 /* =====================================================
    CANCEL EDIT
-   ===================================================== */
+===================================================== */
 
 function cancelEdit() {
 
@@ -1611,7 +1687,7 @@ document.getElementById(
 
 /* =====================================================
    SAVE PROFILE
-   ===================================================== */
+===================================================== */
 
 async function saveProfile() {
 
@@ -1633,7 +1709,7 @@ document.getElementById(
 "editUsername"
 ).value
 .trim()
-.replace("@", "");
+.replace(/^@+/, "");
 
 
 const language =
@@ -1680,6 +1756,20 @@ return;
 }
 
 
+/*
+Basic username validation.
+*/
+
+if (!/^[a-zA-Z0-9_.-]+$/.test(username)) {
+
+status.textContent =
+"Username can contain letters, numbers, _, . or - only.";
+
+return;
+
+}
+
+
 button.disabled =
 true;
 
@@ -1712,9 +1802,7 @@ await fetch(
 SUPABASE_URL +
 "/rest/v1/profiles" +
 "?id=eq." +
-encodeURIComponent(
-profile.id
-),
+encodeURIComponent(profile.id),
 
 {
 
@@ -1723,18 +1811,13 @@ method: "PATCH",
 headers:
 supabaseHeaders({
 
-"Content-Type":
-"application/json",
-
 "Prefer":
 "return=representation"
 
 }),
 
 body:
-JSON.stringify(
-updateData
-)
+JSON.stringify(updateData)
 
 }
 
@@ -1777,7 +1860,6 @@ username
 
 displayProfile();
 
-
 status.textContent =
 "Profile saved successfully!";
 
@@ -1790,13 +1872,14 @@ document.getElementById(
 ).style.display =
 "none";
 
-status.textContent =
+document.getElementById(
+"editStatus"
+).textContent =
 "";
 
 },
 1200
 );
-
 
 }
 catch(error) {
@@ -1810,17 +1893,19 @@ status.textContent =
 error.message;
 
 }
-
+finally {
 
 button.disabled =
 false;
 
 }
 
+}
+
 
 /* =====================================================
    LOAD POSTS
-   ===================================================== */
+===================================================== */
 
 async function loadPosts() {
 
@@ -1881,10 +1966,21 @@ return;
 }
 
 
-const posts =
+let posts = [];
+
+try {
+
+posts =
 text ?
 JSON.parse(text) :
 [];
+
+}
+catch(error) {
+
+posts = [];
+
+}
 
 
 displayPosts(posts);
@@ -1894,7 +1990,7 @@ displayPosts(posts);
 
 /* =====================================================
    DISPLAY POSTS
-   ===================================================== */
+===================================================== */
 
 function displayPosts(posts) {
 
@@ -1984,16 +2080,13 @@ ${escapeHTML(date)}
 </div>
 
 <div class="post-content">
-${escapeHTML(
-post.content || ""
-)}
+${escapeHTML(post.content || "")}
 </div>
 
 ${image}
 
 <button
-class="like-button"
-type="button">
+class="like-button">
 
 ❤️ Like
 
@@ -2010,30 +2103,22 @@ list.appendChild(div);
 
 
 /* =====================================================
-   FOLLOW COUNTS
-   ===================================================== */
+   LOAD FOLLOW COUNTS
+===================================================== */
 
 async function loadFollowCounts() {
 
 if (!profile ||
 !profile.user_id) {
 
-document.getElementById(
-"followersCount"
-).textContent =
-"0";
-
-document.getElementById(
-"followingCount"
-).textContent =
-"0";
-
 return;
 
 }
 
 
-/* FOLLOWERS */
+/* =========================
+   FOLLOWERS
+========================= */
 
 const followersURL =
 SUPABASE_URL +
@@ -2052,6 +2137,8 @@ followersURL,
 
 {
 
+method: "GET",
+
 headers:
 supabaseHeaders()
 
@@ -2062,8 +2149,16 @@ supabaseHeaders()
 
 if (followersResponse.ok) {
 
+const text =
+await followersResponse.text();
+
+
+try {
+
 const followers =
-await followersResponse.json();
+text ?
+JSON.parse(text) :
+[];
 
 
 document.getElementById(
@@ -2072,9 +2167,14 @@ document.getElementById(
 followers.length;
 
 }
+catch(error) {}
+
+}
 
 
-/* FOLLOWING */
+/* =========================
+   FOLLOWING
+========================= */
 
 const followingURL =
 SUPABASE_URL +
@@ -2093,6 +2193,8 @@ followingURL,
 
 {
 
+method: "GET",
+
 headers:
 supabaseHeaders()
 
@@ -2103,8 +2205,16 @@ supabaseHeaders()
 
 if (followingResponse.ok) {
 
+const text =
+await followingResponse.text();
+
+
+try {
+
 const following =
-await followingResponse.json();
+text ?
+JSON.parse(text) :
+[];
 
 
 document.getElementById(
@@ -2113,13 +2223,16 @@ document.getElementById(
 following.length;
 
 }
+catch(error) {}
+
+}
 
 }
 
 
 /* =====================================================
    CHECK FOLLOWING STATUS
-   ===================================================== */
+===================================================== */
 
 async function checkFollowingStatus() {
 
@@ -2165,6 +2278,8 @@ url,
 
 {
 
+method: "GET",
+
 headers:
 supabaseHeaders()
 
@@ -2180,8 +2295,14 @@ return;
 }
 
 
+const text =
+await response.text();
+
+
 const rows =
-await response.json();
+text ?
+JSON.parse(text) :
+[];
 
 
 const button =
@@ -2190,7 +2311,7 @@ document.getElementById(
 );
 
 
-if (rows.length) {
+if (rows.length > 0) {
 
 button.textContent =
 "Following";
@@ -2213,7 +2334,7 @@ button.className =
 catch(error) {
 
 console.warn(
-"FOLLOW STATUS ERROR:",
+"Could not check follow status:",
 error
 );
 
@@ -2224,14 +2345,20 @@ error
 
 /* =====================================================
    FOLLOW / UNFOLLOW
-   ===================================================== */
+===================================================== */
 
 async function followUser() {
 
 if (!currentUser ||
 !profile ||
-!profile.user_id ||
-isOwnProfile()) {
+!profile.user_id) {
+
+return;
+
+}
+
+
+if (isOwnProfile()) {
 
 return;
 
@@ -2256,6 +2383,10 @@ true;
 
 try {
 
+/*
+Check whether the follow already exists.
+*/
+
 const checkURL =
 SUPABASE_URL +
 "/rest/v1/follows" +
@@ -2277,6 +2408,8 @@ checkURL,
 
 {
 
+method: "GET",
+
 headers:
 supabaseHeaders()
 
@@ -2288,18 +2421,27 @@ supabaseHeaders()
 if (!checkResponse.ok) {
 
 throw new Error(
-await checkResponse.text()
+"Could not check follow status."
 );
 
 }
 
 
+const checkText =
+await checkResponse.text();
+
+
 const existing =
-await checkResponse.json();
+checkText ?
+JSON.parse(checkText) :
+[];
 
 
-if (existing.length) {
+/* =========================
+   UNFOLLOW
+========================= */
 
+if (existing.length > 0) {
 
 const deleteURL =
 SUPABASE_URL +
@@ -2333,8 +2475,12 @@ supabaseHeaders()
 
 if (!deleteResponse.ok) {
 
+const deleteText =
+await deleteResponse.text();
+
 throw new Error(
-"Could not unfollow this user."
+"Could not unfollow.\n\n" +
+deleteText
 );
 
 }
@@ -2350,8 +2496,13 @@ status.textContent =
 "Unfollowed.";
 
 }
-else {
 
+
+/* =========================
+   FOLLOW
+========================= */
+
+else {
 
 const followResponse =
 await fetch(
@@ -2365,9 +2516,6 @@ method: "POST",
 
 headers:
 supabaseHeaders({
-
-"Content-Type":
-"application/json",
 
 "Prefer":
 "return=minimal"
@@ -2392,11 +2540,12 @@ profile.user_id
 
 if (!followResponse.ok) {
 
-const errorText =
+const text =
 await followResponse.text();
 
 throw new Error(
-errorText
+"Could not follow this user.\n\n" +
+text
 );
 
 }
@@ -2414,6 +2563,10 @@ status.textContent =
 }
 
 
+/*
+Refresh real counts.
+*/
+
 await loadFollowCounts();
 
 
@@ -2427,7 +2580,6 @@ status.textContent =
 1500
 );
 
-
 }
 catch(error) {
 
@@ -2437,23 +2589,24 @@ error
 );
 
 status.textContent =
-"Follow error: " +
 error.message;
 
 }
-
+finally {
 
 button.disabled =
 false;
 
 }
 
+}
+
 
 /* =====================================================
-   LOAD PEOPLE LIST
-   ===================================================== */
+   LOAD PEOPLE
+===================================================== */
 
-async function openPeopleModal(type) {
+async function loadPeople(type) {
 
 if (!profile ||
 !profile.user_id) {
@@ -2463,22 +2616,40 @@ return;
 }
 
 
-const modal =
+const section =
 document.getElementById(
-"peopleModal"
+"peopleSection"
 );
 
 
 const title =
 document.getElementById(
-"modalTitle"
+"peopleTitle"
 );
 
 
-const body =
+const loading =
 document.getElementById(
-"modalBody"
+"peopleLoading"
 );
+
+
+const list =
+document.getElementById(
+"peopleList"
+);
+
+
+section.style.display =
+"block";
+
+
+list.innerHTML =
+"";
+
+
+loading.style.display =
+"block";
 
 
 if (type === "followers") {
@@ -2495,50 +2666,48 @@ title.textContent =
 }
 
 
-modal.classList.add(
-"show"
-);
+let url = "";
 
 
-body.innerHTML =
-`<div class="modal-loading">
-Loading...
-</div>`;
-
-
-try {
-
-
-let url;
-
+/* =========================
+   FOLLOWERS
+========================= */
 
 if (type === "followers") {
 
 url =
 SUPABASE_URL +
 "/rest/v1/follows" +
-"?select=follower_id" +
+"?select=id,follower_id" +
 "&following_id=eq." +
 encodeURIComponent(
 profile.user_id
 ) +
-"&order=created_at.desc";
+"&order=id.desc";
 
 }
+
+
+/* =========================
+   FOLLOWING
+========================= */
+
 else {
 
 url =
 SUPABASE_URL +
 "/rest/v1/follows" +
-"?select=following_id" +
+"?select=id,following_id" +
 "&follower_id=eq." +
 encodeURIComponent(
 profile.user_id
 ) +
-"&order=created_at.desc";
+"&order=id.desc";
 
 }
 
+
+try {
 
 const response =
 await fetch(
@@ -2546,6 +2715,8 @@ await fetch(
 url,
 
 {
+
+method: "GET",
 
 headers:
 supabaseHeaders()
@@ -2561,7 +2732,9 @@ await response.text();
 
 if (!response.ok) {
 
-throw new Error(text);
+throw new Error(
+text
+);
 
 }
 
@@ -2574,8 +2747,11 @@ JSON.parse(text) :
 
 if (!follows.length) {
 
-body.innerHTML =
-`<div class="modal-empty">
+loading.style.display =
+"none";
+
+list.innerHTML =
+`<div class="empty">
 No ${type} yet.
 </div>`;
 
@@ -2585,118 +2761,131 @@ return;
 
 
 /*
-Collect user IDs.
+Get the user UUIDs.
 */
 
 const userIds =
-follows.map(
+follows
+.map(
 row =>
 type === "followers"
 ? row.follower_id
 : row.following_id
-);
+)
+.filter(Boolean);
 
 
 /*
-Load profiles one at a time.
+Load profiles belonging to those UUIDs.
 
-This avoids depending on a
-foreign-key relationship.
+We do one request rather than
+one request per person.
 */
 
-const people = [];
+const profileRequests =
+userIds.map(
+userId =>
+fetch(
 
-
-for (
-const userId of userIds
-) {
-
-try {
-
-const profileURL =
 SUPABASE_URL +
 "/rest/v1/profiles" +
-"?select=*" +
+"?select=id,user_id,username,\"Full name\",full_name,name,avatar_url" +
 "&user_id=eq." +
-encodeURIComponent(
-userId
-) +
-"&limit=1";
-
-
-const profileResponse =
-await fetch(
-
-profileURL,
+encodeURIComponent(userId) +
+"&limit=1",
 
 {
+
+method: "GET",
 
 headers:
 supabaseHeaders()
 
 }
 
+)
 );
 
 
-if (!profileResponse.ok) {
+const profileResponses =
+await Promise.all(
+profileRequests
+);
+
+
+const people = [];
+
+
+for (
+let i = 0;
+i < profileResponses.length;
+i++
+) {
+
+const personResponse =
+profileResponses[i];
+
+
+if (!personResponse.ok) {
 
 continue;
 
 }
 
 
-const profileText =
-await profileResponse.text();
+const personText =
+await personResponse.text();
 
 
-const rows =
-profileText
-? JSON.parse(profileText)
-: [];
+if (!personText) {
+
+continue;
+
+}
 
 
-if (rows.length) {
+try {
+
+const personRows =
+JSON.parse(
+personText
+);
+
+
+if (personRows.length) {
 
 people.push(
-rows[0]
+personRows[0]
 );
 
 }
 
 }
-catch(error) {
-
-console.warn(
-"Could not load person:",
-userId,
-error
-);
-
-}
+catch(error) {}
 
 }
 
 
-displayPeopleList(
-people,
-body
-);
+loading.style.display =
+"none";
 
+
+displayPeople(people);
 
 }
 catch(error) {
 
 console.error(
-"PEOPLE LIST ERROR:",
+"PEOPLE LOAD ERROR:",
 error
 );
 
-body.innerHTML =
-`<div class="modal-error">
+loading.style.display =
+"none";
+
+list.innerHTML =
+`<div class="empty">
 Could not load ${type}.
-<br><br>
-${escapeHTML(error.message)}
 </div>`;
 
 }
@@ -2706,22 +2895,25 @@ ${escapeHTML(error.message)}
 
 /* =====================================================
    DISPLAY PEOPLE
-   ===================================================== */
+===================================================== */
 
-function displayPeopleList(
-people,
-container
-) {
+function displayPeople(people) {
 
-container.innerHTML =
+const list =
+document.getElementById(
+"peopleList"
+);
+
+
+list.innerHTML =
 "";
 
 
 if (!people.length) {
 
-container.innerHTML =
-`<div class="modal-empty">
-No people found.
+list.innerHTML =
+`<div class="empty">
+No profiles found.
 </div>`;
 
 return;
@@ -2731,16 +2923,6 @@ return;
 
 people.forEach(
 person => {
-
-const row =
-document.createElement(
-"div"
-);
-
-
-row.className =
-"person";
-
 
 const fullName =
 person["Full name"] ||
@@ -2752,21 +2934,31 @@ person.username ||
 
 const username =
 person.username ||
-"berakah1357";
+"";
 
 
-const initial =
-fullName
-.charAt(0)
-.toUpperCase();
+const item =
+document.createElement(
+"div"
+);
 
 
-let avatarHTML;
+item.className =
+"person";
+
+
+const avatar =
+document.createElement(
+"div"
+);
+
+avatar.className =
+"person-avatar";
 
 
 if (person.avatar_url) {
 
-avatarHTML =
+avatar.innerHTML =
 `<img
 src="${escapeHTML(person.avatar_url)}"
 alt="Profile picture">`;
@@ -2774,65 +2966,84 @@ alt="Profile picture">`;
 }
 else {
 
-avatarHTML =
-escapeHTML(initial);
+avatar.textContent =
+String(fullName)
+.charAt(0)
+.toUpperCase();
 
 }
 
 
-row.innerHTML = `
+const info =
+document.createElement(
+"div"
+);
 
-<div class="person-avatar">
-${avatarHTML}
-</div>
-
-<div class="person-info">
-
-<div class="person-name">
-${escapeHTML(fullName)}
-</div>
-
-<div class="person-username">
-@${escapeHTML(username)}
-</div>
-
-</div>
-
-<div class="person-actions">
-
-<button
-class="person-button view-button"
-type="button">
-
-View
-
-</button>
-
-</div>
-
-`;
+info.className =
+"person-info";
 
 
-/*
-View profile.
-*/
+const name =
+document.createElement(
+"div"
+);
 
-const viewButton =
-row.querySelector(
-".view-button"
+name.className =
+"person-name";
+
+name.textContent =
+fullName;
+
+
+const user =
+document.createElement(
+"div"
+);
+
+user.className =
+"person-username";
+
+user.textContent =
+username
+? "@" + username
+: "";
+
+
+info.appendChild(
+name
+);
+
+info.appendChild(
+user
 );
 
 
-viewButton.addEventListener(
+const view =
+document.createElement(
+"button"
+);
+
+view.className =
+"person-view";
+
+view.textContent =
+"View";
+
+
+view.addEventListener(
 "click",
 function() {
 
-if (!person.id) {
+if (person.user_id) {
 
-return;
+window.location.href =
+"profile.html?username=" +
+encodeURIComponent(
+username
+);
 
 }
-
+else if (person.id) {
 
 window.location.href =
 "profile.html?id=" +
@@ -2840,58 +3051,27 @@ encodeURIComponent(
 person.id
 );
 
-});
-
-
-/*
-If this is somebody else,
-add Follow / Following button.
-*/
-
-if (
-currentUser &&
-person.user_id &&
-String(person.user_id).toLowerCase() !==
-String(currentUser.id).toLowerCase()
-) {
-
-const followButton =
-document.createElement(
-"button"
-);
-
-
-followButton.type =
-"button";
-
-
-followButton.className =
-"person-button follow-small";
-
-
-followButton.textContent =
-"Follow";
-
-
-row
-.querySelector(
-".person-actions"
-)
-.appendChild(
-followButton
-);
-
-
-setupSmallFollowButton(
-followButton,
-person.user_id
-);
-
 }
 
+}
+);
 
-container.appendChild(
-row
+
+item.appendChild(
+avatar
+);
+
+item.appendChild(
+info
+);
+
+item.appendChild(
+view
+);
+
+
+list.appendChild(
+item
 );
 
 });
@@ -2900,284 +3080,22 @@ row
 
 
 /* =====================================================
-   SMALL FOLLOW BUTTON
-   ===================================================== */
+   CLOSE PEOPLE
+===================================================== */
 
-async function setupSmallFollowButton(
-button,
-targetUserId
-) {
-
-if (!currentUser) {
-
-return;
-
-}
-
-
-try {
-
-const url =
-SUPABASE_URL +
-"/rest/v1/follows" +
-"?select=id" +
-"&follower_id=eq." +
-encodeURIComponent(
-currentUser.id
-) +
-"&following_id=eq." +
-encodeURIComponent(
-targetUserId
-);
-
-
-const response =
-await fetch(
-
-url,
-
-{
-
-headers:
-supabaseHeaders()
-
-}
-
-);
-
-
-if (response.ok) {
-
-const rows =
-await response.json();
-
-
-if (rows.length) {
-
-button.textContent =
-"Following";
-
-button.className =
-"person-button following-small";
-
-}
-
-}
-
-}
-catch(error) {
-
-console.warn(
-"Small follow check failed:",
-error
-);
-
-}
-
-
-button.addEventListener(
-"click",
-async function() {
-
-button.disabled =
-true;
-
-
-try {
-
-const checkURL =
-SUPABASE_URL +
-"/rest/v1/follows" +
-"?select=id" +
-"&follower_id=eq." +
-encodeURIComponent(
-currentUser.id
-) +
-"&following_id=eq." +
-encodeURIComponent(
-targetUserId
-);
-
-
-const checkResponse =
-await fetch(
-
-checkURL,
-
-{
-
-headers:
-supabaseHeaders()
-
-}
-
-);
-
-
-if (!checkResponse.ok) {
-
-throw new Error(
-await checkResponse.text()
-);
-
-}
-
-
-const existing =
-await checkResponse.json();
-
-
-if (existing.length) {
-
-
-const deleteURL =
-SUPABASE_URL +
-"/rest/v1/follows" +
-"?follower_id=eq." +
-encodeURIComponent(
-currentUser.id
-) +
-"&following_id=eq." +
-encodeURIComponent(
-targetUserId
-);
-
-
-const deleteResponse =
-await fetch(
-
-deleteURL,
-
-{
-
-method: "DELETE",
-
-headers:
-supabaseHeaders()
-
-}
-
-);
-
-
-if (!deleteResponse.ok) {
-
-throw new Error(
-"Could not unfollow."
-);
-
-}
-
-
-button.textContent =
-"Follow";
-
-button.className =
-"person-button follow-small";
-
-}
-else {
-
-
-const postResponse =
-await fetch(
-
-SUPABASE_URL +
-"/rest/v1/follows",
-
-{
-
-method: "POST",
-
-headers:
-supabaseHeaders({
-
-"Content-Type":
-"application/json",
-
-"Prefer":
-"return=minimal"
-
-}),
-
-body:
-JSON.stringify({
-
-follower_id:
-currentUser.id,
-
-following_id:
-targetUserId
-
-})
-
-}
-
-);
-
-
-if (!postResponse.ok) {
-
-throw new Error(
-await postResponse.text()
-);
-
-}
-
-
-button.textContent =
-"Following";
-
-button.className =
-"person-button following-small";
-
-}
-
-
-await loadFollowCounts();
-
-}
-catch(error) {
-
-console.error(
-"SMALL FOLLOW ERROR:",
-error
-);
-
-alert(
-"Could not update follow:\n\n" +
-error.message
-);
-
-}
-
-
-button.disabled =
-false;
-
-});
-
-}
-
-
-/* =====================================================
-   CLOSE MODAL
-   ===================================================== */
-
-function closePeopleModal() {
+function closePeople() {
 
 document.getElementById(
-"peopleModal"
-).classList.remove(
-"show"
-);
+"peopleSection"
+).style.display =
+"none";
 
 }
 
 
 /* =====================================================
    LOGOUT
-   ===================================================== */
+===================================================== */
 
 document.getElementById(
 "logoutButton"
@@ -3185,25 +3103,7 @@ document.getElementById(
 "click",
 function() {
 
-localStorage.removeItem(
-"berakah_access_token"
-);
-
-localStorage.removeItem(
-"berakah_refresh_token"
-);
-
-localStorage.removeItem(
-"berakah_user"
-);
-
-localStorage.removeItem(
-"berakah_username"
-);
-
-localStorage.removeItem(
-"berakah_auth_user_id"
-);
+clearSession();
 
 window.location.href =
 "login.html";
@@ -3213,7 +3113,7 @@ window.location.href =
 
 /* =====================================================
    BUTTONS
-   ===================================================== */
+===================================================== */
 
 document.getElementById(
 "editButton"
@@ -3253,11 +3153,12 @@ document.getElementById(
 "click",
 function() {
 
-openPeopleModal(
+loadPeople(
 "followers"
 );
 
-});
+}
+);
 
 
 document.getElementById(
@@ -3266,75 +3167,32 @@ document.getElementById(
 "click",
 function() {
 
-openPeopleModal(
+loadPeople(
 "following"
 );
 
-});
-
-
-document.getElementById(
-"closeModalButton"
-).addEventListener(
-"click",
-closePeopleModal
+}
 );
 
 
-/*
-Close modal when clicking
-outside the white box.
-*/
-
 document.getElementById(
-"peopleModal"
+"closePeopleButton"
 ).addEventListener(
 "click",
-function(event) {
-
-if (
-event.target ===
-this
-) {
-
-closePeopleModal();
-
-}
-
-});
-
-
-/*
-Close modal with ESC.
-*/
-
-document.addEventListener(
-"keydown",
-function(event) {
-
-if (
-event.key ===
-"Escape"
-) {
-
-closePeopleModal();
-
-}
-
-});
+closePeople
+);
 
 
 /* =====================================================
    START
-   ===================================================== */
+===================================================== */
 
 async function start() {
 
 try {
 
-
 /*
-No access token.
+No session.
 */
 
 if (!accessToken) {
@@ -3348,29 +3206,62 @@ return;
 
 
 /*
-Verify current Supabase
-session.
+Verify actual Supabase account.
 */
+
+try {
 
 currentUser =
 await getCurrentUser();
 
+}
+catch(error) {
 
 /*
-Check requested profile.
+Old/dead JWT.
+
+This fixes:
+
+403
+session_not_found
+*/
+
+if (
+error.message ===
+"SESSION_EXPIRED" ||
+error.message ===
+"NO_SESSION"
+) {
+
+clearSession();
+
+window.location.href =
+"login.html";
+
+return;
+
+}
+
+throw error;
+
+}
+
+
+/*
+Read URL.
 */
 
 const requestedId =
-getURLParameter(
-"id"
-);
+getURLParameter("id");
 
 
 const requestedUsername =
-getURLParameter(
-"username"
-);
+getURLParameter("username");
 
+
+/*
+Load requested profile.
+*/
 
 if (requestedId) {
 
@@ -3394,7 +3285,7 @@ await loadOwnProfile();
 
 
 /*
-Load profile data.
+Load profile information.
 */
 
 await loadPosts();
@@ -3403,7 +3294,7 @@ await loadFollowCounts();
 
 
 /*
-Show profile.
+Show page.
 */
 
 document.getElementById(
@@ -3417,7 +3308,6 @@ document.getElementById(
 ).style.display =
 "block";
 
-
 }
 catch(error) {
 
@@ -3427,44 +3317,14 @@ error
 );
 
 
-/*
-If the old/stale token is
-causing the Supabase
-session_not_found error,
-clear it and return to login.
-*/
-
-const message =
-String(
-error.message || ""
-);
-
-
 if (
-message.includes(
-"session_not_found"
-)
+error.message ===
+"SESSION_EXPIRED" ||
+error.message ===
+"NO_SESSION"
 ) {
 
-localStorage.removeItem(
-"berakah_access_token"
-);
-
-localStorage.removeItem(
-"berakah_refresh_token"
-);
-
-localStorage.removeItem(
-"berakah_user"
-);
-
-localStorage.removeItem(
-"berakah_username"
-);
-
-localStorage.removeItem(
-"berakah_auth_user_id"
-);
+clearSession();
 
 window.location.href =
 "login.html";
@@ -3482,6 +3342,10 @@ error.message
 
 }
 
+
+/* =====================================================
+   RUN
+===================================================== */
 
 start();
 
