@@ -1,235 +1,365 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BERAKAH - Log In</title>
 
-  <style>
-    * { box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
+<title>BERAKAH - Login</title>
 
-    .container {
-      width: 100%;
-      max-width: 450px;
-      background: white;
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-    }
+<style>
 
-    .logo {
-      text-align: center;
-      font-size: 32px;
-      font-weight: bold;
-      letter-spacing: 3px;
-      margin-bottom: 10px;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    h1 {
-      text-align: center;
-      font-size: 24px;
-      margin-bottom: 30px;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #111827;
+}
 
-    label {
-      display: block;
-      margin-top: 16px;
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
+.container {
+  max-width: 430px;
+  margin: 70px auto;
+  padding: 20px;
+}
 
-    input {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 15px;
-    }
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 5px 25px rgba(0,0,0,.08);
+}
 
-    button {
-      width: 100%;
-      margin-top: 25px;
-      padding: 14px;
-      border: none;
-      border-radius: 8px;
-      background: #111827;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.logo {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
 
-    button:disabled {
-      opacity: 0.6;
-    }
+.subtitle {
+  text-align: center;
+  color: #6b7280;
+  margin-bottom: 28px;
+}
 
-    #message {
-      margin-top: 15px;
-      text-align: center;
-      font-weight: bold;
-    }
+label {
+  display: block;
+  font-weight: bold;
+  margin: 15px 0 7px;
+}
 
-    .forgot {
-      text-align: right;
-      margin-top: 12px;
-    }
+input {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  font-size: 16px;
+}
 
-    .signup {
-      text-align: center;
-      margin-top: 20px;
-    }
+button {
+  width: 100%;
+  margin-top: 22px;
+  padding: 13px;
+  border: 0;
+  border-radius: 9px;
+  background: #111827;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    a {
-      text-decoration: none;
-      font-weight: bold;
-    }
-  </style>
+button:disabled {
+  opacity: .6;
+}
+
+.message {
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: 8px;
+  display: none;
+  white-space: pre-wrap;
+}
+
+.error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.signup {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.signup a {
+  color: #111827;
+  font-weight: bold;
+}
+
+</style>
+
 </head>
+
 
 <body>
 
 <div class="container">
 
-  <div class="logo">BERAKAH</div>
+<div class="card">
 
-  <h1>Welcome Back</h1>
+<div class="logo">
+BERAKAH
+</div>
 
-  <form id="loginForm">
+<div class="subtitle">
+Connect. Share. Grow Together.
+</div>
 
-    <label for="email">Email</label>
-    <input
-      id="email"
-      type="email"
-      placeholder="Enter your email"
-      autocomplete="email"
-      required
-    >
 
-    <label for="password">Password</label>
-    <input
-      id="password"
-      type="password"
-      placeholder="Enter your password"
-      autocomplete="current-password"
-      required
-    >
+<form id="loginForm">
 
-    <div class="forgot">
-      <a href="#">Forgot password?</a>
-    </div>
+<label for="email">
+Email
+</label>
 
-    <button id="loginButton" type="submit">
-      LOG IN
-    </button>
+<input
+id="email"
+type="email"
+autocomplete="email"
+required
+placeholder="Enter your email">
 
-    <div id="message"></div>
 
-  </form>
+<label for="password">
+Password
+</label>
 
-  <div class="signup">
-    Don't have an account?
-    <a href="signup.html">Create an account</a>
-  </div>
+<input
+id="password"
+type="password"
+autocomplete="current-password"
+required
+placeholder="Enter your password">
+
+
+<button
+id="loginButton"
+type="submit">
+
+LOGIN
+
+</button>
+
+</form>
+
+
+<div
+id="message"
+class="message">
+</div>
+
+
+<div class="signup">
+
+Don't have an account?
+
+<a href="signup.html">
+Create Account
+</a>
 
 </div>
 
+</div>
+
+</div>
+
+
 <script>
+
+/* =====================================================
+   BERAKAH SUPABASE CONFIGURATION
+   ===================================================== */
+
 const SUPABASE_URL =
-  "https://utoyoglycqjmqznczfxa.supabase.co";
+"https://utoyoglycqjmqznczfxa.supabase.co";
 
-const SUPABASE_ANON_KEY =
-  "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+const SUPABASE_KEY =
+"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
-const form = document.getElementById("loginForm");
-const button = document.getElementById("loginButton");
-const message = document.getElementById("message");
 
-form.addEventListener("submit", async function(event) {
+/* =====================================================
+   ELEMENTS
+   ===================================================== */
 
-  event.preventDefault();
+const form =
+document.getElementById("loginForm");
 
-  button.disabled = true;
-  button.textContent = "LOGGING IN...";
-  message.textContent = "";
+const emailInput =
+document.getElementById("email");
 
-  const email =
-    document.getElementById("email").value.trim();
+const passwordInput =
+document.getElementById("password");
 
-  const password =
-    document.getElementById("password").value;
+const loginButton =
+document.getElementById("loginButton");
 
-  try {
+const message =
+document.getElementById("message");
 
-    const response = await fetch(
-      SUPABASE_URL +
-      "/auth/v1/token?grant_type=password",
-      {
-        method: "POST",
 
-        headers: {
-          "Content-Type": "application/json",
-          "apikey": SUPABASE_ANON_KEY
-        },
+/* =====================================================
+   MESSAGE
+   ===================================================== */
 
-        body: JSON.stringify({
-          email: email,
-          password: password
-        })
-      }
-    );
+function showMessage(text, type) {
 
-    const data = await response.json();
+message.style.display =
+"block";
 
-    if (!response.ok) {
-      throw new Error(
-        data.error_description ||
-        data.msg ||
-        data.message ||
-        "Login failed."
-      );
-    }
+message.className =
+"message " + type;
 
-    localStorage.setItem(
-      "berakah_access_token",
-      data.access_token
-    );
+message.textContent =
+text;
 
-    localStorage.setItem(
-      "berakah_refresh_token",
-      data.refresh_token
-    );
+}
 
-    localStorage.setItem(
-      "berakah_user",
-      JSON.stringify(data.user)
-    );
 
-    message.textContent = "Login successful!";
+/* =====================================================
+   CLEAR OLD SESSION
+   ===================================================== */
 
-    setTimeout(function() {
-      window.location.href = "feed.html";
-    }, 1000);
+function clearOldSession() {
 
-  } catch (error) {
+localStorage.removeItem(
+"berakah_access_token"
+);
 
-    message.textContent = error.message;
+localStorage.removeItem(
+"berakah_refresh_token"
+);
 
-    button.disabled = false;
-    button.textContent = "LOG IN";
-  }
+localStorage.removeItem(
+"berakah_user"
+);
 
-});
-</script>
+localStorage.removeItem(
+"berakah_username"
+);
 
-</body>
-</html>
+localStorage.removeItem(
+"supabase.auth.token"
+);
+
+
+/*
+Clear possible Supabase
+browser session keys.
+*/
+
+const keys = [];
+
+for (
+let i = 0;
+i < localStorage.length;
+i++
+) {
+
+const key =
+localStorage.key(i);
+
+if (
+key &&
+(
+key.includes("supabase") ||
+key.includes("auth-token")
+)
+) {
+
+keys.push(key);
+
+}
+
+}
+
+keys.forEach(
+key => localStorage.removeItem(key)
+);
+
+}
+
+
+/* =====================================================
+   LOGIN
+   ===================================================== */
+
+form.addEventListener(
+"submit",
+async function(event) {
+
+event.preventDefault();
+
+
+const email =
+emailInput.value.trim();
+
+const password =
+passwordInput.value;
+
+
+if (!email || !password) {
+
+showMessage(
+"Please enter your email and password.",
+"error"
+);
+
+return;
+
+}
+
+
+loginButton.disabled =
+true;
+
+loginButton.textContent =
+"LOGGING IN...";
+
+
+showMessage(
+"",
+"success"
+);
+
+
+/*
+IMPORTANT:
+
+Remove the previous account FIRST.
+
+This prevents QUICKENETH's
+old token from remaining active.
+*/
+
+clearOldSession();
+
+
+try {
+
+
+/* =================================================
+   AUTHENTICATE WITH SUPABASE
+   ================================================= */
+
+const
