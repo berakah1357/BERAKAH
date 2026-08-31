@@ -4,7 +4,10 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>BERAKAH - Login</title>
 
@@ -21,36 +24,69 @@ body {
   color: #111827;
 }
 
-.container {
-  max-width: 430px;
-  margin: 60px auto;
-  padding: 20px;
+header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 15px 20px;
 }
 
-.card {
-  background: white;
-  padding: 30px;
-  border-radius: 18px;
-  box-shadow: 0 5px 25px rgba(0,0,0,.08);
+.header-inner {
+  max-width: 1000px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
 }
 
 .logo {
-  text-align: center;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 800;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
+}
+
+.home-link {
+  text-decoration: none;
+  color: #111827;
+  font-weight: bold;
+  border: 1px solid #d1d5db;
+  padding: 9px 14px;
+  border-radius: 8px;
+  background: white;
+}
+
+main {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px 15px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 450px;
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: 30px;
 }
 
 .subtitle {
-  text-align: center;
   color: #6b7280;
-  margin: 8px 0 28px;
+  margin-bottom: 25px;
+  line-height: 1.5;
 }
 
 label {
   display: block;
   font-weight: bold;
-  margin: 15px 0 7px;
+  margin: 17px 0 7px;
 }
 
 input {
@@ -59,12 +95,37 @@ input {
   border: 1px solid #d1d5db;
   border-radius: 9px;
   font-size: 16px;
+  outline: none;
 }
 
-button {
+input:focus {
+  border-color: #111827;
+}
+
+.password-wrap {
+  position: relative;
+}
+
+.password-wrap input {
+  padding-right: 90px;
+}
+
+.show-password {
+  position: absolute;
+  right: 8px;
+  top: 7px;
+  border: 0;
+  background: #f3f4f6;
+  padding: 8px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.login-button {
   width: 100%;
-  margin-top: 22px;
-  padding: 13px;
+  margin-top: 24px;
+  padding: 14px;
   border: 0;
   border-radius: 9px;
   background: #111827;
@@ -74,142 +135,232 @@ button {
   cursor: pointer;
 }
 
-button:disabled {
-  opacity: .6;
+.login-button:hover {
+  opacity: 0.92;
+}
+
+.login-button:disabled {
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
-.message {
+.status {
   display: none;
   margin-top: 18px;
-  padding: 12px;
-  border-radius: 8px;
+  padding: 13px;
+  border-radius: 9px;
   white-space: pre-wrap;
+  line-height: 1.5;
+  font-size: 14px;
 }
 
-.error {
-  background: #fee2e2;
+.status.error {
+  display: block;
+  background: #fef2f2;
   color: #991b1b;
+  border: 1px solid #fecaca;
 }
 
-.success {
-  background: #dcfce7;
+.status.success {
+  display: block;
+  background: #f0fdf4;
   color: #166534;
+  border: 1px solid #bbf7d0;
 }
 
 .signup {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 23px;
+  color: #6b7280;
 }
 
 .signup a {
   color: #111827;
   font-weight: bold;
+  text-decoration: none;
+}
+
+.forgot {
+  display: block;
+  margin-top: 12px;
+  text-align: right;
+  color: #374151;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.languages {
+  text-align: center;
+  margin-top: 25px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+@media (max-width: 500px) {
+
+  .login-card {
+    padding: 23px;
+  }
+
+  h1 {
+    font-size: 27px;
+  }
+
 }
 
 </style>
-
-<!-- SUPABASE JAVASCRIPT CLIENT -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 </head>
 
 
 <body>
 
-<div class="container">
 
-  <div class="card">
+<header>
 
-    <div class="logo">
-      BERAKAH
-    </div>
+<div class="header-inner">
 
-    <div class="subtitle">
-      Connect. Share. Grow Together.
-    </div>
+<div class="logo">
+BERAKAH
+</div>
 
+<a
+class="home-link"
+href="index.html">
 
-    <form id="loginForm">
+Home
 
-      <label for="email">
-        Email
-      </label>
-
-      <input
-        id="email"
-        type="email"
-        autocomplete="email"
-        required
-        placeholder="Enter your email"
-      >
-
-
-      <label for="password">
-        Password
-      </label>
-
-      <input
-        id="password"
-        type="password"
-        autocomplete="current-password"
-        required
-        placeholder="Enter your password"
-      >
-
-
-      <button
-        id="loginButton"
-        type="submit">
-        LOGIN
-      </button>
-
-    </form>
-
-
-    <div
-      id="message"
-      class="message">
-    </div>
-
-
-    <div class="signup">
-
-      Don't have an account?
-
-      <a href="signup.html">
-        Create Account
-      </a>
-
-    </div>
-
-  </div>
+</a>
 
 </div>
+
+</header>
+
+
+<main>
+
+
+<div class="login-card">
+
+
+<h1>
+Welcome Back
+</h1>
+
+
+<div class="subtitle">
+
+Log in to your BERAKAH account and
+connect, share, and grow together.
+
+</div>
+
+
+<form id="loginForm">
+
+
+<label for="email">
+Email
+</label>
+
+<input
+id="email"
+type="email"
+autocomplete="email"
+placeholder="Enter your email"
+required>
+
+
+<label for="password">
+Password
+</label>
+
+
+<div class="password-wrap">
+
+<input
+id="password"
+type="password"
+autocomplete="current-password"
+placeholder="Enter your password"
+required>
+
+<button
+type="button"
+class="show-password"
+id="showPassword">
+
+Show
+
+</button>
+
+</div>
+
+
+<a
+href="#"
+class="forgot"
+id="forgotPassword">
+
+Forgot password?
+
+</a>
+
+
+<button
+type="submit"
+class="login-button"
+id="loginButton">
+
+LOG IN
+
+</button>
+
+
+</form>
+
+
+<div
+id="status"
+class="status">
+</div>
+
+
+<div class="signup">
+
+Don't have an account?
+
+<a href="signup.html">
+CREATE ACCOUNT
+</a>
+
+</div>
+
+
+<div class="languages">
+
+Haitian Creole • English • French • Spanish
+
+</div>
+
+
+</div>
+
+
+</main>
 
 
 <script>
 
 /* =====================================================
-   BERAKAH SUPABASE CONFIG
+   BERAKAH SUPABASE CONFIGURATION
    ===================================================== */
 
 const SUPABASE_URL =
-  "https://utoyoglycqjmqznczfxa.supabase.co";
+"https://utoyoglycqjmqznczfxa.supabase.co";
 
-const SUPABASE_ANON_KEY =
-  "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
-
-
-/* =====================================================
-   CREATE SUPABASE CLIENT
-   ===================================================== */
-
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
+const SUPABASE_KEY =
+"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
 
 /* =====================================================
@@ -217,209 +368,891 @@ const supabaseClient =
    ===================================================== */
 
 const loginForm =
-  document.getElementById("loginForm");
+document.getElementById("loginForm");
 
 const emailInput =
-  document.getElementById("email");
+document.getElementById("email");
 
 const passwordInput =
-  document.getElementById("password");
+document.getElementById("password");
 
 const loginButton =
-  document.getElementById("loginButton");
+document.getElementById("loginButton");
 
-const messageBox =
-  document.getElementById("message");
+const statusBox =
+document.getElementById("status");
+
+const showPasswordButton =
+document.getElementById("showPassword");
+
+const forgotPassword =
+document.getElementById("forgotPassword");
 
 
 /* =====================================================
-   MESSAGE
+   SHOW STATUS
    ===================================================== */
 
-function showMessage(text, type) {
+function showStatus(message, type) {
 
-  messageBox.style.display = "block";
+statusBox.textContent =
+message;
 
-  messageBox.className =
-    "message " + type;
-
-  messageBox.textContent = text;
+statusBox.className =
+"status " + type;
 
 }
 
 
 /* =====================================================
-   LOGIN
+   CLEAR OLD / BROKEN SESSION
+   ===================================================== */
+
+function clearBERAKAHSession() {
+
+localStorage.removeItem(
+"berakah_access_token"
+);
+
+localStorage.removeItem(
+"berakah_refresh_token"
+);
+
+localStorage.removeItem(
+"berakah_user"
+);
+
+localStorage.removeItem(
+"berakah_username"
+);
+
+localStorage.removeItem(
+"berakah_auth_user_id"
+);
+
+
+/*
+Also remove older possible keys
+from previous versions.
+*/
+
+localStorage.removeItem(
+"access_token"
+);
+
+localStorage.removeItem(
+"refresh_token"
+);
+
+localStorage.removeItem(
+"supabase.auth.token"
+);
+
+}
+
+
+/* =====================================================
+   SAVE SESSION
+   ===================================================== */
+
+function saveBERAKAHSession(data) {
+
+if (!data ||
+!data.access_token) {
+
+throw new Error(
+"No access token was returned by Supabase."
+);
+
+}
+
+
+/*
+Save the new access token.
+*/
+
+localStorage.setItem(
+"berakah_access_token",
+data.access_token
+);
+
+
+/*
+Save refresh token when Supabase
+provides one.
+*/
+
+if (data.refresh_token) {
+
+localStorage.setItem(
+"berakah_refresh_token",
+data.refresh_token
+);
+
+}
+
+
+/*
+Save the complete user object.
+*/
+
+if (data.user) {
+
+localStorage.setItem(
+"berakah_user",
+JSON.stringify(data.user)
+);
+
+
+/*
+Save Auth UUID separately.
+*/
+
+if (data.user.id) {
+
+localStorage.setItem(
+"berakah_auth_user_id",
+data.user.id
+);
+
+}
+
+
+/*
+Try to get username from
+Supabase user metadata.
+*/
+
+const metadata =
+data.user.user_metadata || {};
+
+const username =
+metadata.username ||
+metadata.user_name ||
+metadata.userName ||
+"";
+
+
+if (username) {
+
+localStorage.setItem(
+"berakah_username",
+String(username)
+.replace("@", "")
+.trim()
+);
+
+}
+
+}
+
+}
+
+
+/* =====================================================
+   LOGIN WITH SUPABASE
+   ===================================================== */
+
+async function loginUser(email, password) {
+
+/*
+IMPORTANT:
+
+Delete any broken/stale session
+BEFORE creating a new login.
+*/
+
+clearBERAKAHSession();
+
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/auth/v1/token?grant_type=password",
+
+{
+
+method: "POST",
+
+headers: {
+
+"apikey":
+SUPABASE_KEY,
+
+"Content-Type":
+"application/json"
+
+},
+
+body:
+JSON.stringify({
+
+email:
+email,
+
+password:
+password
+
+})
+
+}
+
+);
+
+
+const text =
+await response.text();
+
+
+let data = null;
+
+
+try {
+
+data =
+text ?
+JSON.parse(text) :
+null;
+
+}
+catch(error) {
+
+throw new Error(
+"Supabase returned an invalid response."
+);
+
+}
+
+
+/*
+Login failed.
+*/
+
+if (!response.ok) {
+
+console.error(
+"BERAKAH LOGIN ERROR:",
+data
+);
+
+
+if (
+data &&
+data.error_code ===
+"invalid_credentials"
+) {
+
+throw new Error(
+"Incorrect email or password."
+);
+
+}
+
+
+if (
+data &&
+data.msg
+) {
+
+throw new Error(
+data.msg
+);
+
+}
+
+
+if (
+data &&
+data.error_description
+) {
+
+throw new Error(
+data.error_description
+);
+
+}
+
+
+throw new Error(
+"Login failed. Please check your email and password."
+);
+
+}
+
+
+/*
+Make absolutely sure an
+access token exists.
+*/
+
+if (!data.access_token) {
+
+throw new Error(
+"Login succeeded but Supabase did not return an access token."
+);
+
+}
+
+
+/*
+Save fresh session.
+*/
+
+saveBERAKAHSession(data);
+
+
+/*
+Return session data.
+*/
+
+return data;
+
+}
+
+
+/* =====================================================
+   VERIFY NEW SESSION
+   ===================================================== */
+
+async function verifyNewSession(accessToken) {
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/auth/v1/user",
+
+{
+
+method: "GET",
+
+headers: {
+
+"apikey":
+SUPABASE_KEY,
+
+"Authorization":
+"Bearer " +
+accessToken
+
+}
+
+}
+
+);
+
+
+const text =
+await response.text();
+
+
+if (!response.ok) {
+
+console.error(
+"SESSION VERIFY ERROR:",
+text
+);
+
+return null;
+
+}
+
+
+if (!text) {
+
+return null;
+
+}
+
+
+try {
+
+return JSON.parse(text);
+
+}
+catch(error) {
+
+return null;
+
+}
+
+}
+
+
+/* =====================================================
+   GET PROFILE USERNAME
+   ===================================================== */
+
+async function getProfileUsername(user) {
+
+if (!user ||
+!user.id) {
+
+return "";
+
+}
+
+
+const url =
+SUPABASE_URL +
+"/rest/v1/profiles" +
+"?select=username" +
+"&user_id=eq." +
+encodeURIComponent(user.id) +
+"&limit=1";
+
+
+try {
+
+const response =
+await fetch(
+
+url,
+
+{
+
+method: "GET",
+
+headers: {
+
+"apikey":
+SUPABASE_KEY,
+
+"Authorization":
+"Bearer " +
+localStorage.getItem(
+"berakah_access_token"
+)
+
+}
+
+}
+
+);
+
+
+if (!response.ok) {
+
+return "";
+
+}
+
+
+const text =
+await response.text();
+
+
+const rows =
+text ?
+JSON.parse(text) :
+[];
+
+
+if (
+rows.length &&
+rows[0].username
+) {
+
+return rows[0].username;
+
+}
+
+
+}
+catch(error) {
+
+console.warn(
+"Could not load profile username:",
+error
+);
+
+}
+
+
+return "";
+
+}
+
+
+/* =====================================================
+   LOGIN FORM
    ===================================================== */
 
 loginForm.addEventListener(
-  "submit",
-  async function(event) {
+"submit",
+async function(event) {
 
-    event.preventDefault();
-
-
-    const email =
-      emailInput.value.trim();
-
-    const password =
-      passwordInput.value;
+event.preventDefault();
 
 
-    if (!email || !password) {
-
-      showMessage(
-        "Please enter your email and password.",
-        "error"
-      );
-
-      return;
-
-    }
+const email =
+emailInput.value
+.trim()
+.toLowerCase();
 
 
-    loginButton.disabled = true;
-
-    loginButton.textContent =
-      "LOGGING IN...";
-
-    messageBox.style.display =
-      "none";
+const password =
+passwordInput.value;
 
 
-    try {
+if (!email) {
 
-      /*
-       First make sure an old Supabase
-       session is not being reused.
-      */
-
-      await supabaseClient.auth.signOut();
-
-
-      /* =============================================
-         SUPABASE AUTH LOGIN
-         ============================================= */
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient.auth.signInWithPassword({
-
-          email: email,
-
-          password: password
-
-        });
-
-
-      if (error) {
-
-        throw error;
-
-      }
-
-
-      if (!data || !data.user) {
-
-        throw new Error(
-          "Login succeeded, but no user was returned."
-        );
-
-      }
-
-
-      /* =============================================
-         SAVE USER INFORMATION
-         ============================================= */
-
-      localStorage.setItem(
-        "berakah_user",
-        JSON.stringify(data.user)
-      );
-
-
-      localStorage.setItem(
-        "berakah_auth_user_id",
-        data.user.id
-      );
-
-
-      const metadata =
-        data.user.user_metadata || {};
-
-
-      const username =
-        metadata.username ||
-        metadata.user_name ||
-        metadata.userName ||
-        "";
-
-
-      if (username) {
-
-        localStorage.setItem(
-          "berakah_username",
-          username
-        );
-
-      }
-
-
-      /* =============================================
-         SUCCESS
-         ============================================= */
-
-      showMessage(
-        "Login successful!\nOpening BERAKAH...",
-        "success"
-      );
-
-
-      /*
-       Always go to the first BERAKAH page.
-      */
-
-      setTimeout(
-        function() {
-
-          window.location.href =
-            "index.html";
-
-        },
-        700
-      );
-
-
-    }
-
-    catch(error) {
-
-      console.error(
-        "BERAKAH LOGIN ERROR:",
-        error
-      );
-
-
-      showMessage(
-        "Login failed:\n\n" +
-        (error.message ||
-         "Unable to log in."),
-        "error"
-      );
-
-
-      loginButton.disabled =
-        false;
-
-      loginButton.textContent =
-        "LOGIN";
-
-    }
-
-  }
+showStatus(
+"Please enter your email.",
+"error"
 );
+
+return;
+
+}
+
+
+if (!password) {
+
+showStatus(
+"Please enter your password.",
+"error"
+);
+
+return;
+
+}
+
+
+loginButton.disabled =
+true;
+
+loginButton.textContent =
+"LOGGING IN...";
+
+
+showStatus(
+"Connecting to BERAKAH...",
+"success"
+);
+
+
+try {
+
+
+/*
+LOGIN
+*/
+
+const session =
+await loginUser(
+email,
+password
+);
+
+
+/*
+VERIFY THE FRESH TOKEN
+*/
+
+const verifiedUser =
+await verifyNewSession(
+session.access_token
+);
+
+
+if (!verifiedUser) {
+
+/*
+If the new token cannot be
+verified, destroy it immediately.
+*/
+
+clearBERAKAHSession();
+
+
+throw new Error(
+"Your login session could not be verified. Please try again."
+);
+
+}
+
+
+/*
+Use the verified Supabase
+Auth user.
+*/
+
+localStorage.setItem(
+"berakah_user",
+JSON.stringify(
+verifiedUser
+)
+);
+
+localStorage.setItem(
+"berakah_auth_user_id",
+verifiedUser.id
+);
+
+
+/*
+Get username from profile
+if it was not already stored
+in user metadata.
+*/
+
+let username =
+localStorage.getItem(
+"berakah_username"
+) || "";
+
+
+if (!username) {
+
+username =
+await getProfileUsername(
+verifiedUser
+);
+
+}
+
+
+if (username) {
+
+localStorage.setItem(
+"berakah_username",
+username
+);
+
+}
+
+
+/*
+SUCCESS
+*/
+
+showStatus(
+"Login successful! Redirecting...",
+"success"
+);
+
+
+/*
+Give localStorage a moment
+to finish before navigation.
+*/
+
+setTimeout(
+function() {
+
+window.location.href =
+"profile.html";
+
+},
+500
+);
+
+
+}
+catch(error) {
+
+console.error(
+"BERAKAH LOGIN ERROR:",
+error
+);
+
+
+clearBERAKAHSession();
+
+
+showStatus(
+error.message ||
+"Unable to log in. Please try again.",
+"error"
+);
+
+
+loginButton.disabled =
+false;
+
+loginButton.textContent =
+"LOG IN";
+
+}
+
+});
+
+
+/* =====================================================
+   SHOW / HIDE PASSWORD
+   ===================================================== */
+
+showPasswordButton.addEventListener(
+"click",
+function() {
+
+if (
+passwordInput.type ===
+"password"
+) {
+
+passwordInput.type =
+"text";
+
+showPasswordButton.textContent =
+"Hide";
+
+}
+else {
+
+passwordInput.type =
+"password";
+
+showPasswordButton.textContent =
+"Show";
+
+}
+
+});
+
+
+/* =====================================================
+   FORGOT PASSWORD
+   ===================================================== */
+
+forgotPassword.addEventListener(
+"click",
+async function(event) {
+
+event.preventDefault();
+
+
+const email =
+emailInput.value
+.trim()
+.toLowerCase();
+
+
+if (!email) {
+
+showStatus(
+"Enter your email address first, then select Forgot password.",
+"error"
+);
+
+emailInput.focus();
+
+return;
+
+}
+
+
+try {
+
+showStatus(
+"Sending password reset email...",
+"success"
+);
+
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/auth/v1/recover",
+
+{
+
+method: "POST",
+
+headers: {
+
+"apikey":
+SUPABASE_KEY,
+
+"Content-Type":
+"application/json"
+
+},
+
+body:
+JSON.stringify({
+
+email:
+email
+
+})
+
+}
+
+);
+
+
+const text =
+await response.text();
+
+
+if (!response.ok) {
+
+let data = null;
+
+try {
+
+data =
+JSON.parse(text);
+
+}
+catch(error) {}
+
+throw new Error(
+data?.msg ||
+data?.message ||
+"Could not send password reset email."
+);
+
+}
+
+
+showStatus(
+"Password reset instructions have been sent if this email belongs to a BERAKAH account.",
+"success"
+);
+
+
+}
+catch(error) {
+
+console.error(
+"PASSWORD RESET ERROR:",
+error
+);
+
+
+showStatus(
+error.message,
+"error"
+);
+
+}
+
+});
+
+
+/* =====================================================
+   PAGE START
+   ===================================================== */
+
+function prepareLoginPage() {
+
+/*
+We intentionally do NOT trust an old
+access token on the login page.
+
+The user can always perform a fresh
+login.
+*/
+
+}
+
+
+prepareLoginPage();
 
 </script>
 
