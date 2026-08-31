@@ -2,12 +2,14 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>BERAKAH - Profile</title>
 
 <style>
+
 * {
   box-sizing: border-box;
 }
@@ -295,6 +297,7 @@ h1 {
 }
 
 @media (max-width: 650px) {
+
   .nav {
     align-items: flex-start;
     flex-direction: column;
@@ -303,12 +306,16 @@ h1 {
   .nav-links {
     width: 100%;
   }
+
 }
+
 </style>
 
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -347,6 +354,7 @@ Logout
 
 <main>
 
+
 <div
 id="loading"
 class="loading">
@@ -366,10 +374,12 @@ class="error">
 id="profile"
 class="profile">
 
+
 <div class="cover"></div>
 
 
 <div class="profile-card">
+
 
 <div
 id="avatar"
@@ -409,6 +419,7 @@ Connect, share, build, and grow together.
 
 <div class="stats">
 
+
 <div class="stat">
 
 <strong id="followersCount">
@@ -441,10 +452,12 @@ Posts
 
 </div>
 
+
 </div>
 
 
 <div class="actions">
+
 
 <button
 id="followButton"
@@ -493,6 +506,7 @@ class="status">
 <div
 id="editBox"
 class="edit-box">
+
 
 <h3>
 Edit Your Profile
@@ -579,9 +593,12 @@ id="editStatus"
 class="status">
 </div>
 
-</div>
 
 </div>
+
+
+</div>
+
 
 </div>
 
@@ -596,7 +613,9 @@ Posts
 
 </div>
 
+
 </div>
+
 
 </main>
 
@@ -604,7 +623,7 @@ Posts
 <script>
 
 /* =====================================================
-   BERAKAH SUPABASE CONFIGURATION
+   BERAKAH SUPABASE
    ===================================================== */
 
 const SUPABASE_URL =
@@ -641,8 +660,7 @@ return {
 SUPABASE_KEY,
 
 "Authorization":
-"Bearer " +
-accessToken,
+"Bearer " + accessToken,
 
 ...extra
 
@@ -668,28 +686,28 @@ return String(value ?? "")
 
 
 /* =====================================================
-   ERROR DISPLAY
+   ERROR
    ===================================================== */
 
 function showError(message) {
 
 document.getElementById(
 "loading"
-).style.display = "none";
-
+).style.display =
+"none";
 
 document.getElementById(
 "profile"
-).style.display = "none";
-
+).style.display =
+"none";
 
 const error =
 document.getElementById(
 "error"
 );
 
-
-error.style.display = "block";
+error.style.display =
+"block";
 
 error.textContent =
 message;
@@ -698,17 +716,17 @@ message;
 
 
 /* =====================================================
-   PROFILE ID FROM URL
+   GET URL PARAMETERS
    ===================================================== */
 
-function getRequestedProfileId() {
+function getURLParameter(name) {
 
 const params =
 new URLSearchParams(
 window.location.search
 );
 
-return params.get("id");
+return params.get(name);
 
 }
 
@@ -766,50 +784,105 @@ return JSON.parse(text);
 
 
 /* =====================================================
-   LOAD PROFILE
+   LOAD OWN PROFILE
    ===================================================== */
 
-async function loadProfile() {
+async function loadOwnProfile() {
 
-const id =
-getRequestedProfileId();
+const userId =
+currentUser.id;
 
 
-if (!id) {
+/*
+Find profile using the Auth UUID.
+
+This is the important correction.
+
+The profile ID is NOT required.
+*/
+
+const url =
+SUPABASE_URL +
+"/rest/v1/profiles" +
+"?select=*" +
+"&user_id=eq." +
+encodeURIComponent(userId) +
+"&limit=1";
+
+
+const response =
+await fetch(
+
+url,
+
+{
+
+method: "GET",
+
+headers:
+supabaseHeaders()
+
+}
+
+);
+
+
+const text =
+await response.text();
+
+
+if (!response.ok) {
 
 throw new Error(
-"Missing profile ID."
+"Could not load your profile:\n\n" +
+text
 );
 
 }
 
 
-/*
- IMPORTANT:
+const rows =
+text ?
+JSON.parse(text) :
+[];
 
-profiles.id is BIGINT.
 
-Therefore this query uses
-the numeric profile ID.
+if (!rows.length) {
 
-The UUID belongs in user_id.
+throw new Error(
+"Your BERAKAH profile was not found.\n\n" +
+"Auth ID:\n" +
+userId
+);
 
-We NEVER send the UUID into id.
-*/
+}
 
+
+profile =
+rows[0];
+
+
+displayProfile();
+
+}
+
+
+/* =====================================================
+   LOAD PROFILE BY NUMERIC ID
+   ===================================================== */
+
+async function loadProfileById(id) {
 
 if (!/^[0-9]+$/.test(id)) {
 
 throw new Error(
-"Invalid profile ID: " +
-id +
-"\n\nThe profile URL must use the numeric ID."
+"Invalid profile ID."
 );
 
 }
 
 
-const query =
+const url =
 SUPABASE_URL +
 "/rest/v1/profiles" +
 "?select=*" +
@@ -821,7 +894,7 @@ encodeURIComponent(id) +
 const response =
 await fetch(
 
-query,
+url,
 
 {
 
@@ -850,14 +923,101 @@ text
 
 
 const rows =
-text ? JSON.parse(text) : [];
+text ?
+JSON.parse(text) :
+[];
 
 
 if (!rows.length) {
 
 throw new Error(
-"Profile ID " +
-id +
+"Profile was not found."
+);
+
+}
+
+
+profile =
+rows[0];
+
+
+displayProfile();
+
+}
+
+
+/* =====================================================
+   LOAD PROFILE BY USERNAME
+   ===================================================== */
+
+async function loadProfileByUsername(username) {
+
+username =
+String(username || "")
+.replace("@", "")
+.trim();
+
+
+if (!username) {
+
+throw new Error(
+"Username is empty."
+);
+
+}
+
+
+const url =
+SUPABASE_URL +
+"/rest/v1/profiles" +
+"?select=*" +
+"&username=eq." +
+encodeURIComponent(username) +
+"&limit=1";
+
+
+const response =
+await fetch(
+
+url,
+
+{
+
+method: "GET",
+
+headers:
+supabaseHeaders()
+
+}
+
+);
+
+
+const text =
+await response.text();
+
+
+if (!response.ok) {
+
+throw new Error(
+"Could not load profile:\n\n" +
+text
+);
+
+}
+
+
+const rows =
+text ?
+JSON.parse(text) :
+[];
+
+
+if (!rows.length) {
+
+throw new Error(
+"Username @" +
+username +
 " was not found."
 );
 
@@ -967,10 +1127,7 @@ setupEditPermission();
 
 function isOwnProfile() {
 
-if (
-!currentUser ||
-!profile
-) {
+if (!currentUser || !profile) {
 
 return false;
 
@@ -978,13 +1135,12 @@ return false;
 
 
 /*
- PRIMARY CHECK:
+MAIN OWNERSHIP CHECK
 
 profiles.user_id
-=
+must equal
 auth.users.id
 */
-
 
 if (
 profile.user_id &&
@@ -998,19 +1154,16 @@ return true;
 
 
 /*
- FALLBACK:
+FALLBACK FOR OLD PROFILE ROWS
 
-Older profiles may have no
-user_id.
-
-In that case compare the
-username from auth metadata.
+Compare username if user_id
+was not filled in.
 */
 
+if (!profile.user_id) {
 
 const metadata =
 currentUser.user_metadata || {};
-
 
 const loggedUsername =
 String(
@@ -1034,13 +1187,14 @@ profile.username || ""
 
 
 if (
-!profile.user_id &&
 loggedUsername &&
 profileUsername &&
 loggedUsername === profileUsername
 ) {
 
 return true;
+
+}
 
 }
 
@@ -1051,7 +1205,7 @@ return false;
 
 
 /* =====================================================
-   EDIT PERMISSION
+   EDIT / FOLLOW BUTTONS
    ===================================================== */
 
 function setupEditPermission() {
@@ -1060,7 +1214,6 @@ const editButton =
 document.getElementById(
 "editButton"
 );
-
 
 const followButton =
 document.getElementById(
@@ -1084,6 +1237,8 @@ editButton.style.display =
 
 followButton.style.display =
 "inline-block";
+
+checkFollowingStatus();
 
 }
 
@@ -1153,7 +1308,7 @@ document.getElementById(
 
 
 /* =====================================================
-   CANCEL EDIT
+   CANCEL
    ===================================================== */
 
 function cancelEdit() {
@@ -1193,7 +1348,9 @@ document.getElementById(
 const username =
 document.getElementById(
 "editUsername"
-).value.trim();
+).value
+.trim()
+.replace("@", "");
 
 
 const language =
@@ -1248,15 +1405,6 @@ status.textContent =
 
 
 try {
-
-
-/*
- Only update the current
- numeric profile row.
-
-This prevents one account
-from changing another account.
-*/
 
 
 const updateData = {
@@ -1339,7 +1487,16 @@ updatedRows[0];
 }
 
 
-/* REFRESH PROFILE */
+/*
+Also keep username in the browser
+session for the rest of BERAKAH.
+*/
+
+localStorage.setItem(
+"berakah_username",
+username
+);
+
 
 displayProfile();
 
@@ -1625,6 +1782,7 @@ followersText ?
 JSON.parse(followersText) :
 [];
 
+
 document.getElementById(
 "followersCount"
 ).textContent =
@@ -1671,6 +1829,7 @@ followingText ?
 JSON.parse(followingText) :
 [];
 
+
 document.getElementById(
 "followingCount"
 ).textContent =
@@ -1682,19 +1841,14 @@ following.length;
 
 
 /* =====================================================
-   FOLLOW
+   CHECK FOLLOWING
    ===================================================== */
 
-async function followUser() {
+async function checkFollowingStatus() {
 
-if (!currentUser) {
-
-return;
-
-}
-
-
-if (!profile.user_id) {
+if (!currentUser ||
+!profile ||
+!profile.user_id) {
 
 return;
 
@@ -1705,6 +1859,114 @@ if (
 String(currentUser.id).toLowerCase() ===
 String(profile.user_id).toLowerCase()
 ) {
+
+return;
+
+}
+
+
+const url =
+SUPABASE_URL +
+"/rest/v1/follows" +
+"?select=id" +
+"&follower_id=eq." +
+encodeURIComponent(
+currentUser.id
+) +
+"&following_id=eq." +
+encodeURIComponent(
+profile.user_id
+);
+
+
+try {
+
+const response =
+await fetch(
+
+url,
+
+{
+
+headers:
+supabaseHeaders()
+
+}
+
+);
+
+
+const text =
+await response.text();
+
+
+if (!response.ok) {
+
+return;
+
+}
+
+
+const rows =
+text ?
+JSON.parse(text) :
+[];
+
+
+const button =
+document.getElementById(
+"followButton"
+);
+
+
+if (rows.length) {
+
+button.textContent =
+"Following";
+
+button.className =
+"action following";
+
+}
+else {
+
+button.textContent =
+"Follow";
+
+button.className =
+"action follow";
+
+}
+
+}
+catch(error) {
+
+console.warn(
+"Could not check follow status:",
+error
+);
+
+}
+
+}
+
+
+/* =====================================================
+   FOLLOW / UNFOLLOW
+   ===================================================== */
+
+async function followUser() {
+
+if (!currentUser ||
+!profile ||
+!profile.user_id) {
+
+return;
+
+}
+
+
+if (isOwnProfile()) {
 
 return;
 
@@ -1763,6 +2025,15 @@ const checkText =
 await checkResponse.text();
 
 
+if (!checkResponse.ok) {
+
+throw new Error(
+checkText
+);
+
+}
+
+
 const existing =
 checkText ?
 JSON.parse(checkText) :
@@ -1771,8 +2042,6 @@ JSON.parse(checkText) :
 
 if (existing.length) {
 
-
-/* UNFOLLOW */
 
 const deleteURL =
 SUPABASE_URL +
@@ -1822,12 +2091,9 @@ button.className =
 status.textContent =
 "Unfollowed.";
 
-
 }
 else {
 
-
-/* FOLLOW */
 
 const followResponse =
 await fetch(
@@ -1937,6 +2203,10 @@ localStorage.removeItem(
 "berakah_username"
 );
 
+localStorage.removeItem(
+"berakah_auth_user_id"
+);
+
 window.location.href =
 "login.html";
 
@@ -1988,6 +2258,10 @@ async function start() {
 try {
 
 
+/*
+NO TOKEN = LOGIN
+*/
+
 if (!accessToken) {
 
 window.location.href =
@@ -1998,11 +2272,65 @@ return;
 }
 
 
+/*
+VERIFY THE ACTUAL
+SUPABASE AUTH ACCOUNT
+*/
+
 currentUser =
 await getCurrentUser();
 
 
-await loadProfile();
+/*
+CHECK URL
+
+profile.html
+= own profile
+
+profile.html?id=123
+= profile by numeric ID
+
+profile.html?username=holiness1357
+= profile by username
+*/
+
+const requestedId =
+getURLParameter("id");
+
+const requestedUsername =
+getURLParameter("username");
+
+
+if (requestedId) {
+
+await loadProfileById(
+requestedId
+);
+
+}
+else if (requestedUsername) {
+
+await loadProfileByUsername(
+requestedUsername
+);
+
+}
+else {
+
+/*
+THIS IS THE IMPORTANT FIX.
+
+No profile ID is required.
+
+Automatically load the
+profile belonging to the
+currently logged-in Auth UUID.
+*/
+
+await loadOwnProfile();
+
+}
+
 
 await loadPosts();
 
