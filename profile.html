@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,322 +9,457 @@
 
 <style>
 
-* {
-  box-sizing: border-box;
+*{
+  box-sizing:border-box;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
-  color: #111827;
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f7fb;
+  color:#111827;
 }
 
-header {
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 14px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+header{
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
+  padding:14px;
+  position:sticky;
+  top:0;
+  z-index:100;
 }
 
-.nav {
-  max-width: 1100px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+.nav{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
 }
 
-.logo {
-  font-size: 25px;
-  font-weight: 800;
-  letter-spacing: 2px;
+.logo{
+  font-size:25px;
+  font-weight:800;
+  letter-spacing:2px;
 }
 
-.nav-links {
-  display: flex;
-  gap: 7px;
-  flex-wrap: wrap;
+.nav-links{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
 }
 
 .nav-links a,
-.nav-links button {
-  text-decoration: none;
-  border: 1px solid #d1d5db;
-  background: white;
-  color: #111827;
-  padding: 8px 11px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
+.nav-links button{
+  text-decoration:none;
+  border:1px solid #d1d5db;
+  background:#fff;
+  color:#111827;
+  padding:8px 11px;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
 }
 
-.nav-links .logout {
-  background: #111827;
-  color: white;
+.nav-links .logout{
+  background:#111827;
+  color:#fff;
 }
 
-main {
-  max-width: 900px;
-  margin: 25px auto;
-  padding: 0 15px;
+main{
+  max-width:900px;
+  margin:25px auto;
+  padding:0 15px;
 }
 
 .loading,
-.error {
-  background: white;
-  border-radius: 16px;
-  padding: 30px;
-  text-align: center;
+.error{
+  background:#fff;
+  border-radius:16px;
+  padding:30px;
+  text-align:center;
 }
 
-.error {
-  display: none;
-  color: #b91c1c;
-  text-align: left;
-  white-space: pre-wrap;
+.error{
+  display:none;
+  color:#b91c1c;
+  text-align:left;
+  white-space:pre-wrap;
 }
 
-.profile {
-  display: none;
+.profile{
+  display:none;
 }
 
-.cover {
-  height: 210px;
-  background: linear-gradient(135deg, #111827, #374151);
-  border-radius: 18px 18px 0 0;
+.cover{
+  height:210px;
+  background:linear-gradient(135deg,#111827,#374151);
+  border-radius:18px 18px 0 0;
 }
 
-.profile-card {
-  background: white;
-  padding: 25px;
-  border-radius: 0 0 18px 18px;
+.profile-card{
+  background:#fff;
+  padding:25px;
+  border-radius:0 0 18px 18px;
 }
 
-.avatar {
-  width: 120px;
-  height: 120px;
-  margin-top: -70px;
-  border-radius: 50%;
-  background: #e5e7eb;
-  border: 5px solid white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 46px;
-  font-weight: bold;
-  overflow: hidden;
+.avatar{
+  width:120px;
+  height:120px;
+  margin-top:-70px;
+  border-radius:50%;
+  background:#e5e7eb;
+  border:5px solid #fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:46px;
+  font-weight:bold;
+  overflow:hidden;
 }
 
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
-h1 {
-  margin: 14px 0 4px;
+h1{
+  margin:14px 0 4px;
 }
 
-.username {
-  color: #6b7280;
+.username{
+  color:#6b7280;
 }
 
-.language {
-  color: #6b7280;
-  margin-top: 7px;
+.language{
+  color:#6b7280;
+  margin-top:7px;
 }
 
-.bio {
-  margin-top: 20px;
-  line-height: 1.6;
-  white-space: pre-wrap;
+.bio{
+  margin-top:20px;
+  line-height:1.6;
+  white-space:pre-wrap;
 }
 
-.stats {
-  display: flex;
-  gap: 35px;
-  margin-top: 25px;
-  flex-wrap: wrap;
+.stats{
+  display:flex;
+  gap:35px;
+  margin-top:25px;
+  flex-wrap:wrap;
 }
 
-.stat {
-  cursor: pointer;
+.stat{
+  cursor:pointer;
+  padding:5px;
+  border-radius:8px;
 }
 
-.stat strong {
-  display: block;
-  font-size: 22px;
+.stat:hover{
+  background:#f3f4f6;
 }
 
-.stat-label {
-  color: #374151;
+.stat strong{
+  display:block;
+  font-size:22px;
 }
 
-.actions {
-  margin-top: 25px;
+.stat-label{
+  color:#374151;
 }
 
-.action {
-  border: 0;
-  border-radius: 8px;
-  padding: 11px 17px;
-  margin-right: 7px;
-  margin-bottom: 7px;
-  font-weight: bold;
-  cursor: pointer;
+.actions{
+  margin-top:25px;
 }
 
-.action:disabled {
-  opacity: 0.6;
-  cursor: wait;
+.action{
+  border:0;
+  border-radius:8px;
+  padding:11px 17px;
+  margin-right:7px;
+  margin-bottom:7px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.primary {
-  background: #111827;
-  color: white;
+.action:disabled{
+  opacity:.6;
+  cursor:wait;
 }
 
-.secondary {
-  background: #e5e7eb;
-  color: #111827;
+.primary{
+  background:#111827;
+  color:#fff;
 }
 
-.follow {
-  background: #111827;
-  color: white;
+.secondary{
+  background:#e5e7eb;
+  color:#111827;
 }
 
-.following {
-  background: #e5e7eb;
-  color: #111827;
+.follow{
+  background:#111827;
+  color:#fff;
 }
 
-.status {
-  margin-top: 12px;
-  font-weight: bold;
+.following{
+  background:#e5e7eb;
+  color:#111827;
 }
 
-.edit-box {
-  display: none;
-  margin-top: 20px;
-  padding: 20px;
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
+.status{
+  margin-top:12px;
+  font-weight:bold;
 }
 
-.edit-box label {
-  display: block;
-  font-weight: bold;
-  margin: 14px 0 6px;
+.edit-box{
+  display:none;
+  margin-top:20px;
+  padding:20px;
+  background:#f9fafb;
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+}
+
+.edit-box label{
+  display:block;
+  font-weight:bold;
+  margin:14px 0 6px;
 }
 
 .edit-box input,
 .edit-box textarea,
-.edit-box select {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 15px;
+.edit-box select{
+  width:100%;
+  padding:12px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  font-size:15px;
 }
 
-.edit-box textarea {
-  min-height: 100px;
-  resize: vertical;
+.edit-box textarea{
+  min-height:100px;
+  resize:vertical;
 }
 
 .save,
-.cancel {
-  margin-top: 15px;
-  padding: 11px 17px;
-  border: 0;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
+.cancel{
+  margin-top:15px;
+  padding:11px 17px;
+  border:0;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.save {
-  background: #111827;
-  color: white;
+.save{
+  background:#111827;
+  color:#fff;
 }
 
-.cancel {
-  background: #e5e7eb;
-  color: #111827;
+.cancel{
+  background:#e5e7eb;
 }
 
-.posts {
-  margin-top: 25px;
-  background: white;
-  padding: 25px;
-  border-radius: 18px;
+.posts{
+  margin-top:25px;
+  background:#fff;
+  padding:25px;
+  border-radius:18px;
 }
 
-.post {
-  padding: 18px 0;
-  border-bottom: 1px solid #e5e7eb;
+.post{
+  padding:18px 0;
+  border-bottom:1px solid #e5e7eb;
 }
 
-.post:last-child {
-  border-bottom: 0;
+.post:last-child{
+  border-bottom:0;
 }
 
-.post-date {
-  color: #6b7280;
-  font-size: 12px;
-  margin-bottom: 9px;
+.post-date{
+  color:#6b7280;
+  font-size:12px;
+  margin-bottom:9px;
 }
 
-.post-content {
-  white-space: pre-wrap;
-  line-height: 1.6;
+.post-content{
+  white-space:pre-wrap;
+  line-height:1.6;
 }
 
-.post-image {
-  width: 100%;
-  max-height: 450px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-top: 12px;
+.post-image{
+  width:100%;
+  max-height:450px;
+  object-fit:cover;
+  border-radius:10px;
+  margin-top:12px;
 }
 
-.like-button {
-  margin-top: 12px;
-  border: 0;
-  background: #f3f4f6;
-  padding: 8px 13px;
-  border-radius: 8px;
-  cursor: pointer;
+.like-button{
+  margin-top:12px;
+  border:0;
+  background:#f3f4f6;
+  padding:8px 13px;
+  border-radius:8px;
+  cursor:pointer;
 }
 
-.empty {
-  text-align: center;
-  color: #6b7280;
-  padding: 30px 10px;
+.empty{
+  text-align:center;
+  color:#6b7280;
+  padding:30px 10px;
 }
 
-@media (max-width: 650px) {
 
-  .nav {
-    align-items: flex-start;
-    flex-direction: column;
+/* =========================================
+   FOLLOWERS / FOLLOWING MODAL
+========================================= */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:500;
+  padding:20px;
+  overflow:auto;
+}
+
+.modal-box{
+  background:#fff;
+  max-width:500px;
+  margin:50px auto;
+  border-radius:18px;
+  overflow:hidden;
+}
+
+.modal-header{
+  padding:18px 20px;
+  border-bottom:1px solid #e5e7eb;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.modal-header h2{
+  margin:0;
+}
+
+.close-button{
+  border:0;
+  background:#f3f4f6;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.modal-content{
+  padding:10px 20px 20px;
+}
+
+.person{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 0;
+  border-bottom:1px solid #e5e7eb;
+}
+
+.person:last-child{
+  border-bottom:0;
+}
+
+.person-avatar{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:#e5e7eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  overflow:hidden;
+  flex-shrink:0;
+}
+
+.person-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.person-info{
+  flex:1;
+  min-width:0;
+}
+
+.person-name{
+  font-weight:bold;
+}
+
+.person-username{
+  color:#6b7280;
+  font-size:14px;
+}
+
+.view-profile{
+  border:0;
+  background:#111827;
+  color:#fff;
+  padding:8px 12px;
+  border-radius:7px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.modal-loading{
+  text-align:center;
+  padding:30px;
+  color:#6b7280;
+}
+
+.modal-empty{
+  text-align:center;
+  padding:30px;
+  color:#6b7280;
+}
+
+.modal-error{
+  color:#b91c1c;
+  padding:20px;
+  text-align:center;
+}
+
+@media(max-width:650px){
+
+  .nav{
+    align-items:flex-start;
+    flex-direction:column;
   }
 
-  .nav-links {
-    width: 100%;
+  .nav-links{
+    width:100%;
   }
 
-  .cover {
-    height: 160px;
+  .cover{
+    height:160px;
   }
 
-  .profile-card {
-    padding: 20px;
+  .profile-card{
+    padding:20px;
+  }
+
+  .modal{
+    padding:10px;
+  }
+
+  .modal-box{
+    margin:20px auto;
   }
 
 }
@@ -334,7 +468,9 @@ h1 {
 
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -359,8 +495,9 @@ BERAKAH
 <a href="messages.html">💬</a>
 
 <button
+id="logoutButton"
 class="logout"
-id="logoutButton">
+type="button">
 Logout
 </button>
 
@@ -373,12 +510,11 @@ Logout
 
 <main>
 
+
 <div
 id="loading"
 class="loading">
-
 Loading profile...
-
 </div>
 
 
@@ -392,9 +528,12 @@ class="error">
 id="profile"
 class="profile">
 
+
 <div class="cover"></div>
 
+
 <div class="profile-card">
+
 
 <div
 id="avatar"
@@ -431,6 +570,7 @@ Connect, share, build, and grow together.
 
 
 <div class="stats">
+
 
 <div
 class="stat"
@@ -474,14 +614,17 @@ Posts
 
 </div>
 
+
 </div>
 
 
 <div class="actions">
 
+
 <button
 id="followButton"
 class="action follow"
+type="button"
 style="display:none;">
 Follow
 </button>
@@ -490,21 +633,24 @@ Follow
 <button
 id="editButton"
 class="action primary"
+type="button"
 style="display:none;">
 EDIT PROFILE
 </button>
 
 
 <button
+id="messagesButton"
 class="action secondary"
-onclick="window.location.href='messages.html'">
+type="button">
 💬 MESSAGES
 </button>
 
 
 <button
+id="notificationsButton"
 class="action secondary"
-onclick="window.location.href='notifications.html'">
+type="button">
 🔔 NOTIFICATIONS
 </button>
 
@@ -578,19 +724,22 @@ Bio
 <textarea
 id="editBio"
 maxlength="500"
-placeholder="Tell people about yourself"></textarea>
+placeholder="Tell people about yourself">
+</textarea>
 
 
 <button
 id="saveButton"
-class="save">
+class="save"
+type="button">
 SAVE PROFILE
 </button>
 
 
 <button
 id="cancelButton"
-class="cancel">
+class="cancel"
+type="button">
 CANCEL
 </button>
 
@@ -617,16 +766,58 @@ Posts
 
 </div>
 
+
 </div>
 
 </main>
 
 
+<!-- =========================================
+     FOLLOWERS / FOLLOWING MODAL
+========================================= -->
+
+<div
+id="peopleModal"
+class="modal">
+
+<div class="modal-box">
+
+<div class="modal-header">
+
+<h2 id="modalTitle">
+Followers
+</h2>
+
+<button
+id="closeModal"
+class="close-button"
+type="button">
+×
+</button>
+
+</div>
+
+
+<div
+id="modalContent"
+class="modal-content">
+
+<div class="modal-loading">
+Loading...
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
 <script>
 
 /* =====================================================
-   BERAKAH SUPABASE CONFIGURATION
-   ===================================================== */
+   SUPABASE
+===================================================== */
 
 const SUPABASE_URL =
 "https://utoyoglycqjmqznczfxa.supabase.co";
@@ -636,13 +827,11 @@ const SUPABASE_KEY =
 
 
 /* =====================================================
-   SESSION
-   ===================================================== */
+   APPLICATION STATE
+===================================================== */
 
 let accessToken =
-localStorage.getItem(
-"berakah_access_token"
-);
+localStorage.getItem("berakah_access_token");
 
 let currentUser = null;
 
@@ -651,22 +840,19 @@ let profile = null;
 
 /* =====================================================
    SUPABASE HEADERS
-   ===================================================== */
+===================================================== */
 
-function supabaseHeaders(extra = {}) {
-
-const headers = {
-
-"apikey": SUPABASE_KEY,
-
-"Authorization":
-"Bearer " + accessToken
-
-};
+function supabaseHeaders(extra = {}){
 
 return {
-...headers,
+
+"apikey":SUPABASE_KEY,
+
+"Authorization":
+"Bearer " + accessToken,
+
 ...extra
+
 };
 
 }
@@ -674,55 +860,25 @@ return {
 
 /* =====================================================
    HTML ESCAPE
-   ===================================================== */
+===================================================== */
 
-function escapeHTML(value) {
+function escapeHTML(value){
 
 return String(value ?? "")
-.replaceAll("&", "&amp;")
-.replaceAll("<", "&lt;")
-.replaceAll(">", "&gt;")
-.replaceAll('"', "&quot;")
-.replaceAll("'", "&#039;");
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
 
 }
 
 
 /* =====================================================
-   SHOW ERROR
-   ===================================================== */
+   CLEAR SESSION
+===================================================== */
 
-function showError(message) {
-
-document.getElementById(
-"loading"
-).style.display =
-"none";
-
-document.getElementById(
-"profile"
-).style.display =
-"none";
-
-const error =
-document.getElementById(
-"error"
-);
-
-error.style.display =
-"block";
-
-error.textContent =
-message;
-
-}
-
-
-/* =====================================================
-   CLEAR BAD SESSION
-   ===================================================== */
-
-function clearSession() {
+function clearSession(){
 
 localStorage.removeItem(
 "berakah_access_token"
@@ -750,34 +906,45 @@ accessToken = null;
 
 
 /* =====================================================
-   GET URL PARAMETER
-   ===================================================== */
+   SESSION EXPIRED
+===================================================== */
 
-function getURLParameter(name) {
+function sessionExpired(){
 
-const params =
-new URLSearchParams(
-window.location.search
+clearSession();
+
+window.location.replace(
+"login.html"
 );
-
-return params.get(name);
 
 }
 
 
 /* =====================================================
-   VERIFY SUPABASE SESSION
-   ===================================================== */
+   URL PARAMETER
+===================================================== */
 
-async function getCurrentUser() {
+function getURLParameter(name){
 
-if (!accessToken) {
-
-throw new Error(
-"NO_SESSION"
-);
+return new URLSearchParams(
+window.location.search
+).get(name);
 
 }
+
+
+/* =====================================================
+   CURRENT USER
+===================================================== */
+
+async function getCurrentUser(){
+
+if(!accessToken){
+
+throw new Error("SESSION_EXPIRED");
+
+}
+
 
 const response =
 await fetch(
@@ -787,7 +954,7 @@ SUPABASE_URL +
 
 {
 
-method: "GET",
+method:"GET",
 
 headers:
 supabaseHeaders()
@@ -801,32 +968,21 @@ const text =
 await response.text();
 
 
-if (!response.ok) {
+if(!response.ok){
 
 console.error(
-"SUPABASE SESSION ERROR:",
+"AUTH ERROR:",
 text
 );
 
-if (
-response.status === 401 ||
-response.status === 403
-) {
-
 throw new Error(
 "SESSION_EXPIRED"
 );
 
 }
 
-throw new Error(
-"Could not verify login."
-);
 
-}
-
-
-if (!text) {
+if(!text){
 
 throw new Error(
 "SESSION_EXPIRED"
@@ -835,12 +991,12 @@ throw new Error(
 }
 
 
-try {
+try{
 
 return JSON.parse(text);
 
 }
-catch(error) {
+catch(error){
 
 throw new Error(
 "SESSION_EXPIRED"
@@ -853,20 +1009,18 @@ throw new Error(
 
 /* =====================================================
    LOAD OWN PROFILE
-   ===================================================== */
+===================================================== */
 
-async function loadOwnProfile() {
-
-const userId =
-currentUser.id;
-
+async function loadOwnProfile(){
 
 const url =
 SUPABASE_URL +
 "/rest/v1/profiles" +
 "?select=*" +
 "&user_id=eq." +
-encodeURIComponent(userId) +
+encodeURIComponent(
+currentUser.id
+) +
 "&limit=1";
 
 
@@ -877,7 +1031,7 @@ url,
 
 {
 
-method: "GET",
+method:"GET",
 
 headers:
 supabaseHeaders()
@@ -891,18 +1045,19 @@ const text =
 await response.text();
 
 
-if (!response.ok) {
-
-if (
+if(
 response.status === 401 ||
 response.status === 403
-) {
+){
 
 throw new Error(
 "SESSION_EXPIRED"
 );
 
 }
+
+
+if(!response.ok){
 
 throw new Error(
 "Could not load your profile."
@@ -917,11 +1072,10 @@ JSON.parse(text) :
 [];
 
 
-if (!rows.length) {
+if(!rows.length){
 
 throw new Error(
-"Your BERAKAH profile was not found.\n\n" +
-"Your account is logged in, but there is no profile row connected to this Auth account."
+"Your BERAKAH profile was not found."
 );
 
 }
@@ -935,11 +1089,11 @@ rows[0];
 
 /* =====================================================
    LOAD PROFILE BY ID
-   ===================================================== */
+===================================================== */
 
-async function loadProfileById(id) {
+async function loadProfileById(id){
 
-if (!/^[0-9]+$/.test(id)) {
+if(!/^[0-9]+$/.test(id)){
 
 throw new Error(
 "Invalid profile ID."
@@ -964,7 +1118,7 @@ url,
 
 {
 
-method: "GET",
+method:"GET",
 
 headers:
 supabaseHeaders()
@@ -978,18 +1132,19 @@ const text =
 await response.text();
 
 
-if (!response.ok) {
-
-if (
+if(
 response.status === 401 ||
 response.status === 403
-) {
+){
 
 throw new Error(
 "SESSION_EXPIRED"
 );
 
 }
+
+
+if(!response.ok){
 
 throw new Error(
 "Could not load profile."
@@ -1004,7 +1159,7 @@ JSON.parse(text) :
 [];
 
 
-if (!rows.length) {
+if(!rows.length){
 
 throw new Error(
 "Profile was not found."
@@ -1021,16 +1176,17 @@ rows[0];
 
 /* =====================================================
    LOAD PROFILE BY USERNAME
-   ===================================================== */
+===================================================== */
 
-async function loadProfileByUsername(username) {
+async function loadProfileByUsername(username){
 
 username =
 String(username || "")
-replaceAtSymbol(username);
+.replace(/^@+/,"")
+.trim();
 
 
-if (!username) {
+if(!username){
 
 throw new Error(
 "Username is empty."
@@ -1055,7 +1211,7 @@ url,
 
 {
 
-method: "GET",
+method:"GET",
 
 headers:
 supabaseHeaders()
@@ -1069,18 +1225,19 @@ const text =
 await response.text();
 
 
-if (!response.ok) {
-
-if (
+if(
 response.status === 401 ||
 response.status === 403
-) {
+){
 
 throw new Error(
 "SESSION_EXPIRED"
 );
 
 }
+
+
+if(!response.ok){
 
 throw new Error(
 "Could not load profile."
@@ -1095,7 +1252,7 @@ JSON.parse(text) :
 [];
 
 
-if (!rows.length) {
+if(!rows.length){
 
 throw new Error(
 "Username @" +
@@ -1113,30 +1270,23 @@ rows[0];
 
 
 /* =====================================================
-   REMOVE @ FROM USERNAME
-   ===================================================== */
-
-function replaceAtSymbol(username) {
-
-return String(username || "")
-.replace(/^@+/, "")
-.trim();
-
-}
-
-
-/* =====================================================
    PROFILE NAME
-   ===================================================== */
+===================================================== */
 
-function getProfileName() {
+function profileName(){
 
 return (
+
 profile["Full name"] ||
+
 profile.full_name ||
+
 profile.name ||
+
 profile.username ||
+
 "BERAKAH"
+
 );
 
 }
@@ -1144,23 +1294,20 @@ profile.username ||
 
 /* =====================================================
    DISPLAY PROFILE
-   ===================================================== */
+===================================================== */
 
-function displayProfile() {
+function displayProfile(){
 
 const fullName =
-getProfileName();
-
+profileName();
 
 const username =
 profile.username ||
 "berakah";
 
-
 const language =
 profile.language ||
 "—";
-
 
 const bio =
 profile.bio ||
@@ -1176,8 +1323,7 @@ fullName;
 document.getElementById(
 "profileUsername"
 ).textContent =
-"@" +
-username;
+"@" + username;
 
 
 document.getElementById(
@@ -1193,17 +1339,13 @@ document.getElementById(
 bio;
 
 
-/* =====================================================
-   AVATAR
-   ===================================================== */
+/* AVATAR */
 
 const avatar =
-document.getElementById(
-"avatar"
-);
+document.getElementById("avatar");
 
 
-if (profile.avatar_url) {
+if(profile.avatar_url){
 
 avatar.innerHTML =
 `<img
@@ -1211,7 +1353,7 @@ src="${escapeHTML(profile.avatar_url)}"
 alt="Profile picture">`;
 
 }
-else {
+else{
 
 avatar.textContent =
 String(fullName)
@@ -1222,77 +1364,79 @@ String(fullName)
 }
 
 
-/* =====================================================
-   EDIT / FOLLOW
-   ===================================================== */
+/* BUTTON PERMISSION */
 
-setupEditPermission();
+setupProfileButtons();
 
 }
 
 
 /* =====================================================
-   CHECK OWN PROFILE
-   ===================================================== */
+   OWN PROFILE CHECK
+===================================================== */
 
-function isOwnProfile() {
+function isOwnProfile(){
 
-if (!currentUser || !profile) {
+if(!currentUser || !profile){
 
 return false;
 
 }
 
 
-if (
+if(
 profile.user_id &&
 String(profile.user_id).toLowerCase() ===
 String(currentUser.id).toLowerCase()
-) {
+){
 
 return true;
 
 }
 
 
-/* OLD PROFILE FALLBACK */
+/* FALLBACK */
 
-if (!profile.user_id) {
+if(!profile.user_id){
 
 const metadata =
 currentUser.user_metadata || {};
 
-
 const loggedUsername =
 String(
+
 metadata.username ||
+
 metadata.user_name ||
+
 metadata.userName ||
+
 localStorage.getItem(
 "berakah_username"
 ) ||
+
 ""
+
 )
-.replace(/^@+/, "")
+.replace(/^@+/,"")
 .toLowerCase()
 .trim();
 
 
-const profileUsername =
+const thisUsername =
 String(
-profile.username ||
-""
+profile.username || ""
 )
-.replace(/^@+/, "")
+.replace(/^@+/,"")
 .toLowerCase()
 .trim();
 
 
-if (
+if(
 loggedUsername &&
-profileUsername &&
-loggedUsername === profileUsername
-) {
+thisUsername &&
+loggedUsername === thisUsername
+){
 
 return true;
 
@@ -1307,10 +1451,10 @@ return false;
 
 
 /* =====================================================
-   SETUP EDIT / FOLLOW
-   ===================================================== */
+   BUTTON SETUP
+===================================================== */
 
-function setupEditPermission() {
+function setupProfileButtons(){
 
 const editButton =
 document.getElementById(
@@ -1323,7 +1467,7 @@ document.getElementById(
 );
 
 
-if (isOwnProfile()) {
+if(isOwnProfile()){
 
 editButton.style.display =
 "inline-block";
@@ -1332,7 +1476,7 @@ followButton.style.display =
 "none";
 
 }
-else {
+else{
 
 editButton.style.display =
 "none";
@@ -1348,12 +1492,12 @@ checkFollowingStatus();
 
 
 /* =====================================================
-   OPEN EDIT
-   ===================================================== */
+   EDIT PROFILE
+===================================================== */
 
-function openEdit() {
+function openEdit(){
 
-if (!isOwnProfile()) {
+if(!isOwnProfile()){
 
 return;
 
@@ -1363,31 +1507,32 @@ return;
 document.getElementById(
 "editFullName"
 ).value =
+
 profile["Full name"] ||
+
 profile.full_name ||
+
 profile.name ||
+
 "";
 
 
 document.getElementById(
 "editUsername"
 ).value =
-profile.username ||
-"";
+profile.username || "";
 
 
 document.getElementById(
 "editLanguage"
 ).value =
-profile.language ||
-"ht";
+profile.language || "en";
 
 
 document.getElementById(
 "editBio"
 ).value =
-profile.bio ||
-"";
+profile.bio || "";
 
 
 document.getElementById(
@@ -1406,9 +1551,9 @@ document.getElementById(
 
 /* =====================================================
    CANCEL EDIT
-   ===================================================== */
+===================================================== */
 
-function cancelEdit() {
+function cancelEdit(){
 
 document.getElementById(
 "editBox"
@@ -1420,11 +1565,11 @@ document.getElementById(
 
 /* =====================================================
    SAVE PROFILE
-   ===================================================== */
+===================================================== */
 
-async function saveProfile() {
+async function saveProfile(){
 
-if (!isOwnProfile()) {
+if(!isOwnProfile()){
 
 return;
 
@@ -1438,11 +1583,11 @@ document.getElementById(
 
 
 const username =
-replaceAtSymbol(
 document.getElementById(
 "editUsername"
 ).value
-);
+.trim()
+.replace(/^@+/,"");
 
 
 const language =
@@ -1462,14 +1607,13 @@ document.getElementById(
 "editStatus"
 );
 
-
 const button =
 document.getElementById(
 "saveButton"
 );
 
 
-if (!fullName) {
+if(!fullName){
 
 status.textContent =
 "Full name is required.";
@@ -1479,7 +1623,7 @@ return;
 }
 
 
-if (!username) {
+if(!username){
 
 status.textContent =
 "Username is required.";
@@ -1496,7 +1640,7 @@ status.textContent =
 "Saving...";
 
 
-try {
+try{
 
 const updateData = {
 
@@ -1527,7 +1671,7 @@ profile.id
 
 {
 
-method: "PATCH",
+method:"PATCH",
 
 headers:
 supabaseHeaders({
@@ -1554,12 +1698,10 @@ const text =
 await response.text();
 
 
-if (!response.ok) {
-
-if (
+if(
 response.status === 401 ||
 response.status === 403
-) {
+){
 
 throw new Error(
 "SESSION_EXPIRED"
@@ -1567,24 +1709,27 @@ throw new Error(
 
 }
 
+
+if(!response.ok){
+
 throw new Error(
-"Profile update failed:\n" +
-text
+text ||
+"Profile update failed."
 );
 
 }
 
 
-const updatedRows =
+const rows =
 text ?
 JSON.parse(text) :
 [];
 
 
-if (updatedRows.length) {
+if(rows.length){
 
 profile =
-updatedRows[0];
+rows[0];
 
 }
 
@@ -1597,13 +1742,12 @@ username
 
 displayProfile();
 
-
 status.textContent =
 "Profile saved successfully!";
 
 
 setTimeout(
-function() {
+function(){
 
 document.getElementById(
 "editBox"
@@ -1618,32 +1762,29 @@ status.textContent =
 );
 
 }
-catch(error) {
+catch(error){
 
-console.error(
-"PROFILE SAVE ERROR:",
-error
-);
-
-if (
+if(
 error.message ===
 "SESSION_EXPIRED"
-) {
+){
 
-clearSession();
-
-window.location.href =
-"login.html";
+sessionExpired();
 
 return;
 
 }
 
+console.error(
+"SAVE PROFILE ERROR:",
+error
+);
+
 status.textContent =
 error.message;
 
 }
-finally {
+finally{
 
 button.disabled =
 false;
@@ -1655,15 +1796,11 @@ false;
 
 /* =====================================================
    LOAD POSTS
-   ===================================================== */
+===================================================== */
 
-async function loadPosts() {
+async function loadPosts(){
 
-const userId =
-profile.user_id;
-
-
-if (!userId) {
+if(!profile.user_id){
 
 displayPosts([]);
 
@@ -1677,7 +1814,9 @@ SUPABASE_URL +
 "/rest/v1/posts" +
 "?select=*" +
 "&user_id=eq." +
-encodeURIComponent(userId) +
+encodeURIComponent(
+profile.user_id
+) +
 "&order=created_at.desc";
 
 
@@ -1688,7 +1827,7 @@ url,
 
 {
 
-method: "GET",
+method:"GET",
 
 headers:
 supabaseHeaders()
@@ -1702,12 +1841,10 @@ const text =
 await response.text();
 
 
-if (!response.ok) {
-
-if (
+if(
 response.status === 401 ||
 response.status === 403
-) {
+){
 
 throw new Error(
 "SESSION_EXPIRED"
@@ -1715,8 +1852,11 @@ throw new Error(
 
 }
 
+
+if(!response.ok){
+
 console.warn(
-"Posts could not be loaded:",
+"POSTS ERROR:",
 text
 );
 
@@ -1740,9 +1880,9 @@ displayPosts(posts);
 
 /* =====================================================
    DISPLAY POSTS
-   ===================================================== */
+===================================================== */
 
-function displayPosts(posts) {
+function displayPosts(posts){
 
 const list =
 document.getElementById(
@@ -1750,8 +1890,7 @@ document.getElementById(
 );
 
 
-list.innerHTML =
-"";
+list.innerHTML = "";
 
 
 document.getElementById(
@@ -1760,7 +1899,7 @@ document.getElementById(
 posts.length;
 
 
-if (!posts.length) {
+if(!posts.length){
 
 list.innerHTML =
 `<div class="empty">
@@ -1776,29 +1915,23 @@ posts.forEach(
 post => {
 
 const div =
-document.createElement(
-"div"
-);
-
+document.createElement("div");
 
 div.className =
 "post";
 
 
-let date =
-"";
+let date = "";
 
 
-if (post.created_at) {
+if(post.created_at){
 
 const d =
 new Date(
 post.created_at
 );
 
-if (!isNaN(
-d.getTime()
-)) {
+if(!isNaN(d.getTime())){
 
 date =
 d.toLocaleString();
@@ -1808,11 +1941,10 @@ d.toLocaleString();
 }
 
 
-let image =
-"";
+let image = "";
 
 
-if (post.image_url) {
+if(post.image_url){
 
 image =
 `<img
@@ -1830,7 +1962,9 @@ ${escapeHTML(date)}
 </div>
 
 <div class="post-content">
-${escapeHTML(post.content || "")}
+${escapeHTML(
+post.content || ""
+)}
 </div>
 
 ${image}
@@ -1838,9 +1972,7 @@ ${image}
 <button
 class="like-button"
 type="button">
-
 ❤️ Like
-
 </button>
 
 `;
@@ -1854,22 +1986,19 @@ list.appendChild(div);
 
 
 /* =====================================================
-   LOAD FOLLOW COUNTS
-   ===================================================== */
+   FOLLOW COUNTS
+===================================================== */
 
-async function loadFollowCounts() {
+async function loadFollowCounts(){
 
-if (!profile ||
-!profile.user_id) {
+if(!profile.user_id){
 
 return;
 
 }
 
 
-/* =====================================================
-   FOLLOWERS
-   ===================================================== */
+/* FOLLOWERS */
 
 const followersURL =
 SUPABASE_URL +
@@ -1888,7 +2017,7 @@ followersURL,
 
 {
 
-method: "GET",
+method:"GET",
 
 headers:
 supabaseHeaders()
@@ -1902,10 +2031,10 @@ const followersText =
 await followersResponse.text();
 
 
-if (
+if(
 followersResponse.status === 401 ||
 followersResponse.status === 403
-) {
+){
 
 throw new Error(
 "SESSION_EXPIRED"
@@ -1914,7 +2043,7 @@ throw new Error(
 }
 
 
-if (followersResponse.ok) {
+if(followersResponse.ok){
 
 const followers =
 followersText ?
@@ -1930,9 +2059,7 @@ followers.length;
 }
 
 
-/* =====================================================
-   FOLLOWING
-   ===================================================== */
+/* FOLLOWING */
 
 const followingURL =
 SUPABASE_URL +
@@ -1951,7 +2078,7 @@ followingURL,
 
 {
 
-method: "GET",
+method:"GET",
 
 headers:
 supabaseHeaders()
@@ -1965,10 +2092,10 @@ const followingText =
 await followingResponse.text();
 
 
-if (
+if(
 followingResponse.status === 401 ||
 followingResponse.status === 403
-) {
+){
 
 throw new Error(
 "SESSION_EXPIRED"
@@ -1977,7 +2104,7 @@ throw new Error(
 }
 
 
-if (followingResponse.ok) {
+if(followingResponse.ok){
 
 const following =
 followingText ?
@@ -1996,26 +2123,23 @@ following.length;
 
 
 /* =====================================================
-   CHECK FOLLOWING STATUS
-   ===================================================== */
+   CHECK FOLLOWING
+===================================================== */
 
-async function checkFollowingStatus() {
+async function checkFollowingStatus(){
 
-if (
+if(
 !currentUser ||
 !profile ||
 !profile.user_id
-) {
+){
 
 return;
 
 }
 
 
-if (
-String(currentUser.id).toLowerCase() ===
-String(profile.user_id).toLowerCase()
-) {
+if(isOwnProfile()){
 
 return;
 
@@ -2036,7 +2160,7 @@ profile.user_id
 );
 
 
-try {
+try{
 
 const response =
 await fetch(
@@ -2044,8 +2168,6 @@ await fetch(
 url,
 
 {
-
-method: "GET",
 
 headers:
 supabaseHeaders()
@@ -2059,10 +2181,10 @@ const text =
 await response.text();
 
 
-if (
+if(
 response.status === 401 ||
 response.status === 403
-) {
+){
 
 throw new Error(
 "SESSION_EXPIRED"
@@ -2071,7 +2193,7 @@ throw new Error(
 }
 
 
-if (!response.ok) {
+if(!response.ok){
 
 return;
 
@@ -2090,7 +2212,7 @@ document.getElementById(
 );
 
 
-if (rows.length) {
+if(rows.length){
 
 button.textContent =
 "Following";
@@ -2099,7 +2221,7 @@ button.className =
 "action following";
 
 }
-else {
+else{
 
 button.textContent =
 "Follow";
@@ -2110,24 +2232,16 @@ button.className =
 }
 
 }
-catch(error) {
+catch(error){
 
-if (
+if(
 error.message ===
 "SESSION_EXPIRED"
-) {
+){
 
-clearSession();
-
-window.location.href =
-"login.html";
+sessionExpired();
 
 }
-
-console.warn(
-"FOLLOW STATUS ERROR:",
-error
-);
 
 }
 
@@ -2136,22 +2250,16 @@ error
 
 /* =====================================================
    FOLLOW / UNFOLLOW
-   ===================================================== */
+===================================================== */
 
-async function followUser() {
+async function followUser(){
 
-if (
+if(
 !currentUser ||
 !profile ||
-!profile.user_id
-) {
-
-return;
-
-}
-
-
-if (isOwnProfile()) {
+!profile.user_id ||
+isOwnProfile()
+){
 
 return;
 
@@ -2163,7 +2271,6 @@ document.getElementById(
 "followButton"
 );
 
-
 const status =
 document.getElementById(
 "status"
@@ -2174,7 +2281,7 @@ button.disabled =
 true;
 
 
-try {
+try{
 
 const checkURL =
 SUPABASE_URL +
@@ -2197,8 +2304,6 @@ checkURL,
 
 {
 
-method: "GET",
-
 headers:
 supabaseHeaders()
 
@@ -2211,10 +2316,10 @@ const checkText =
 await checkResponse.text();
 
 
-if (
+if(
 checkResponse.status === 401 ||
 checkResponse.status === 403
-) {
+){
 
 throw new Error(
 "SESSION_EXPIRED"
@@ -2223,7 +2328,7 @@ throw new Error(
 }
 
 
-if (!checkResponse.ok) {
+if(!checkResponse.ok){
 
 throw new Error(
 "Could not check follow status."
@@ -2238,11 +2343,9 @@ JSON.parse(checkText) :
 [];
 
 
-if (existing.length) {
+if(existing.length){
 
-/* =================================================
-   UNFOLLOW
-   ================================================= */
+/* UNFOLLOW */
 
 const deleteURL =
 SUPABASE_URL +
@@ -2257,14 +2360,14 @@ profile.user_id
 );
 
 
-const deleteResponse =
+const response =
 await fetch(
 
 deleteURL,
 
 {
 
-method: "DELETE",
+method:"DELETE",
 
 headers:
 supabaseHeaders()
@@ -2274,14 +2377,10 @@ supabaseHeaders()
 );
 
 
-const deleteText =
-await deleteResponse.text();
-
-
-if (
-deleteResponse.status === 401 ||
-deleteResponse.status === 403
-) {
+if(
+response.status === 401 ||
+response.status === 403
+){
 
 throw new Error(
 "SESSION_EXPIRED"
@@ -2290,7 +2389,7 @@ throw new Error(
 }
 
 
-if (!deleteResponse.ok) {
+if(!response.ok){
 
 throw new Error(
 "Could not unfollow."
@@ -2309,13 +2408,11 @@ status.textContent =
 "Unfollowed.";
 
 }
-else {
+else{
 
-/* =================================================
-   FOLLOW
-   ================================================= */
+/* FOLLOW */
 
-const followResponse =
+const response =
 await fetch(
 
 SUPABASE_URL +
@@ -2323,7 +2420,7 @@ SUPABASE_URL +
 
 {
 
-method: "POST",
+method:"POST",
 
 headers:
 supabaseHeaders({
@@ -2352,14 +2449,14 @@ profile.user_id
 );
 
 
-const followText =
-await followResponse.text();
+const text =
+await response.text();
 
 
-if (
-followResponse.status === 401 ||
-followResponse.status === 403
-) {
+if(
+response.status === 401 ||
+response.status === 403
+){
 
 throw new Error(
 "SESSION_EXPIRED"
@@ -2368,11 +2465,11 @@ throw new Error(
 }
 
 
-if (!followResponse.ok) {
+if(!response.ok){
 
 throw new Error(
-"Could not follow this user:\n" +
-followText
+text ||
+"Could not follow this user."
 );
 
 }
@@ -2393,33 +2490,29 @@ status.textContent =
 await loadFollowCounts();
 
 }
-catch(error) {
+catch(error){
+
+if(
+error.message ===
+"SESSION_EXPIRED"
+){
+
+sessionExpired();
+
+return;
+
+}
 
 console.error(
 "FOLLOW ERROR:",
 error
 );
 
-if (
-error.message ===
-"SESSION_EXPIRED"
-) {
-
-clearSession();
-
-window.location.href =
-"login.html";
-
-return;
-
-}
-
 status.textContent =
-"Follow error: " +
 error.message;
 
 }
-finally {
+finally{
 
 button.disabled =
 false;
@@ -2430,26 +2523,419 @@ false;
 
 
 /* =====================================================
-   LOGOUT
-   ===================================================== */
+   LOAD PEOPLE
+===================================================== */
 
+async function loadPeople(type){
+
+if(!profile || !profile.user_id){
+
+return;
+
+}
+
+
+const modal =
 document.getElementById(
-"logoutButton"
-).addEventListener(
-"click",
-function() {
+"peopleModal"
+);
 
-clearSession();
+const title =
+document.getElementById(
+"modalTitle"
+);
+
+const content =
+document.getElementById(
+"modalContent"
+);
+
+
+modal.style.display =
+"block";
+
+
+content.innerHTML =
+`<div class="modal-loading">
+Loading ${type}...
+</div>`;
+
+
+title.textContent =
+type === "followers"
+? "Followers"
+: "Following";
+
+
+let url;
+
+
+if(type === "followers"){
+
+url =
+SUPABASE_URL +
+"/rest/v1/follows" +
+"?select=follower_id" +
+"&following_id=eq." +
+encodeURIComponent(
+profile.user_id
+);
+
+}
+else{
+
+url =
+SUPABASE_URL +
+"/rest/v1/follows" +
+"?select=following_id" +
+"&follower_id=eq." +
+encodeURIComponent(
+profile.user_id
+);
+
+}
+
+
+try{
+
+const response =
+await fetch(
+
+url,
+
+{
+
+headers:
+supabaseHeaders()
+
+}
+
+);
+
+
+const text =
+await response.text();
+
+
+if(
+response.status === 401 ||
+response.status === 403
+){
+
+throw new Error(
+"SESSION_EXPIRED"
+);
+
+}
+
+
+if(!response.ok){
+
+throw new Error(
+"Could not load " +
+type +
+"."
+);
+
+}
+
+
+const rows =
+text ?
+JSON.parse(text) :
+[];
+
+
+if(!rows.length){
+
+content.innerHTML =
+`<div class="modal-empty">
+No ${type} yet.
+</div>`;
+
+return;
+
+}
+
+
+const ids =
+rows.map(
+row =>
+type === "followers"
+? row.follower_id
+: row.following_id
+);
+
+
+/*
+Load the profiles belonging
+to those Auth UUIDs.
+*/
+
+const profiles = [];
+
+
+for(
+const userId of ids
+){
+
+const profileURL =
+SUPABASE_URL +
+"/rest/v1/profiles" +
+"?select=*" +
+"&user_id=eq." +
+encodeURIComponent(
+userId
+) +
+"&limit=1";
+
+
+const profileResponse =
+await fetch(
+
+profileURL,
+
+{
+
+headers:
+supabaseHeaders()
+
+}
+
+);
+
+
+const profileText =
+await profileResponse.text();
+
+
+if(
+profileResponse.status === 401 ||
+profileResponse.status === 403
+){
+
+throw new Error(
+"SESSION_EXPIRED"
+);
+
+}
+
+
+if(profileResponse.ok){
+
+const profileRows =
+profileText ?
+JSON.parse(profileText) :
+[];
+
+
+if(profileRows.length){
+
+profiles.push(
+profileRows[0]
+);
+
+}
+
+}
+
+}
+
+
+if(!profiles.length){
+
+content.innerHTML =
+`<div class="modal-empty">
+No profiles found.
+</div>`;
+
+return;
+
+}
+
+
+content.innerHTML = "";
+
+
+profiles.forEach(
+person => {
+
+const name =
+
+person["Full name"] ||
+
+person.full_name ||
+
+person.name ||
+
+person.username ||
+
+"BERAKAH";
+
+
+const username =
+person.username ||
+"berakah";
+
+
+const row =
+document.createElement(
+"div"
+);
+
+row.className =
+"person";
+
+
+let avatarHTML;
+
+
+if(person.avatar_url){
+
+avatarHTML =
+`<img
+src="${escapeHTML(person.avatar_url)}"
+alt="Profile picture">`;
+
+}
+else{
+
+avatarHTML =
+escapeHTML(
+String(name)
+.charAt(0)
+.toUpperCase()
+);
+
+}
+
+
+row.innerHTML = `
+
+<div class="person-avatar">
+${avatarHTML}
+</div>
+
+<div class="person-info">
+
+<div class="person-name">
+${escapeHTML(name)}
+</div>
+
+<div class="person-username">
+@${escapeHTML(username)}
+</div>
+
+</div>
+
+<button
+class="view-profile"
+type="button">
+View
+</button>
+
+`;
+
+
+row
+.querySelector(".view-profile")
+.addEventListener(
+"click",
+function(){
 
 window.location.href =
-"login.html";
+"profile.html?username=" +
+encodeURIComponent(
+username
+);
+
+}
+);
+
+
+content.appendChild(row);
 
 });
+
+}
+catch(error){
+
+if(
+error.message ===
+"SESSION_EXPIRED"
+){
+
+sessionExpired();
+
+return;
+
+}
+
+
+console.error(
+"PEOPLE LIST ERROR:",
+error
+);
+
+content.innerHTML =
+`<div class="modal-error">
+${escapeHTML(
+error.message
+)}
+</div>`;
+
+}
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closePeopleModal(){
+
+document.getElementById(
+"peopleModal"
+).style.display =
+"none";
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+document.getElementById(
+"messagesButton"
+).addEventListener(
+"click",
+function(){
+
+window.location.href =
+"messages.html";
+
+}
+);
+
+
+document.getElementById(
+"notificationsButton"
+).addEventListener(
+"click",
+function(){
+
+window.location.href =
+"notifications.html";
+
+}
+);
 
 
 /* =====================================================
    BUTTON EVENTS
-   ===================================================== */
+===================================================== */
 
 document.getElementById(
 "editButton"
@@ -2483,64 +2969,105 @@ followUser
 );
 
 
+document.getElementById(
+"followersStat"
+).addEventListener(
+"click",
+function(){
+
+loadPeople("followers");
+
+}
+);
+
+
+document.getElementById(
+"followingStat"
+).addEventListener(
+"click",
+function(){
+
+loadPeople("following");
+
+}
+);
+
+
+document.getElementById(
+"closeModal"
+).addEventListener(
+"click",
+closePeopleModal
+);
+
+
+document.getElementById(
+"peopleModal"
+).addEventListener(
+"click",
+function(event){
+
+if(
+event.target ===
+this
+){
+
+closePeopleModal();
+
+}
+
+}
+);
+
+
 /* =====================================================
-   START APPLICATION
-   ===================================================== */
+   LOGOUT
+===================================================== */
 
-async function start() {
+document.getElementById(
+"logoutButton"
+).addEventListener(
+"click",
+function(){
 
-try {
+clearSession();
 
-/* =================================================
-   1. CHECK TOKEN
-   ================================================= */
+window.location.replace(
+"login.html"
+);
 
-if (!accessToken) {
+}
+);
 
-window.location.href =
-"login.html";
+
+/* =====================================================
+   START
+===================================================== */
+
+async function start(){
+
+try{
+
+/* TOKEN */
+
+if(!accessToken){
+
+window.location.replace(
+"login.html"
+);
 
 return;
 
 }
 
 
-/* =================================================
-   2. VERIFY AUTH SESSION
-   ================================================= */
-
-try {
+/* AUTH */
 
 currentUser =
 await getCurrentUser();
 
-}
-catch(error) {
 
-if (
-error.message ===
-"SESSION_EXPIRED" ||
-error.message ===
-"NO_SESSION"
-) {
-
-clearSession();
-
-window.location.href =
-"login.html";
-
-return;
-
-}
-
-throw error;
-
-}
-
-
-/* =================================================
-   3. CHECK REQUESTED PROFILE
-   ================================================= */
+/* PROFILE SELECTION */
 
 const requestedId =
 getURLParameter("id");
@@ -2549,51 +3076,43 @@ const requestedUsername =
 getURLParameter("username");
 
 
-if (requestedId) {
+if(requestedId){
 
 await loadProfileById(
 requestedId
 );
 
 }
-else if (requestedUsername) {
+else if(requestedUsername){
 
 await loadProfileByUsername(
 requestedUsername
 );
 
 }
-else {
+else{
 
 await loadOwnProfile();
 
 }
 
 
-/* =================================================
-   4. DISPLAY PROFILE
-   ================================================= */
+/* DISPLAY */
 
 displayProfile();
 
 
-/* =================================================
-   5. LOAD POSTS
-   ================================================= */
+/* POSTS */
 
 await loadPosts();
 
 
-/* =================================================
-   6. LOAD FOLLOW COUNTS
-   ================================================= */
+/* FOLLOW COUNTS */
 
 await loadFollowCounts();
 
 
-/* =================================================
-   7. SHOW PAGE
-   ================================================= */
+/* SHOW PAGE */
 
 document.getElementById(
 "loading"
@@ -2606,7 +3125,7 @@ document.getElementById(
 "block";
 
 }
-catch(error) {
+catch(error){
 
 console.error(
 "BERAKAH PROFILE ERROR:",
@@ -2614,25 +3133,43 @@ error
 );
 
 
-if (
+if(
 error.message ===
 "SESSION_EXPIRED"
-) {
+){
 
-clearSession();
-
-window.location.href =
-"login.html";
+sessionExpired();
 
 return;
 
 }
 
 
-showError(
-error.message ||
-"Something went wrong while loading your profile."
+document.getElementById(
+"loading"
+).style.display =
+"none";
+
+
+document.getElementById(
+"profile"
+).style.display =
+"none";
+
+
+const errorBox =
+document.getElementById(
+"error"
 );
+
+
+errorBox.style.display =
+"block";
+
+
+errorBox.textContent =
+error.message ||
+"Could not load profile.";
 
 }
 
@@ -2641,7 +3178,7 @@ error.message ||
 
 /* =====================================================
    RUN
-   ===================================================== */
+===================================================== */
 
 start();
 
