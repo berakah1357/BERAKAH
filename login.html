@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>BERAKAH - Login</title>
 
@@ -75,6 +78,7 @@ button {
 
 button:disabled {
   opacity: .6;
+  cursor: not-allowed;
 }
 
 .message {
@@ -109,125 +113,141 @@ button:disabled {
 
 </head>
 
+
 <body>
+
 
 <div class="container">
 
-<div class="card">
+  <div class="card">
 
-<div class="logo">
-BERAKAH
+    <div class="logo">
+      BERAKAH
+    </div>
+
+    <div class="subtitle">
+      Connect. Share. Grow Together.
+    </div>
+
+
+    <form id="loginForm">
+
+      <label for="email">
+        Email
+      </label>
+
+      <input
+        id="email"
+        type="email"
+        autocomplete="email"
+        required
+        placeholder="Enter your email"
+      >
+
+
+      <label for="password">
+        Password
+      </label>
+
+      <input
+        id="password"
+        type="password"
+        autocomplete="current-password"
+        required
+        placeholder="Enter your password"
+      >
+
+
+      <button
+        id="loginButton"
+        type="submit"
+      >
+        LOGIN
+      </button>
+
+    </form>
+
+
+    <div
+      id="message"
+      class="message">
+    </div>
+
+
+    <div class="signup">
+
+      Don't have an account?
+
+      <a href="signup.html">
+        Create Account
+      </a>
+
+    </div>
+
+  </div>
+
 </div>
 
-<div class="subtitle">
-Connect. Share. Grow Together.
-</div>
 
-<form id="loginForm">
-
-<label for="email">
-Email
-</label>
-
-<input
-id="email"
-type="email"
-autocomplete="email"
-required
-placeholder="Enter your email">
-
-<label for="password">
-Password
-</label>
-
-<input
-id="password"
-type="password"
-autocomplete="current-password"
-required
-placeholder="Enter your password">
-
-<button
-id="loginButton"
-type="submit">
-LOGIN
-</button>
-
-</form>
-
-<div
-id="message"
-class="message">
-</div>
-
-<div class="signup">
-
-Don't have an account?
-
-<a href="signup.html">
-Create Account
-</a>
-
-</div>
-
-</div>
-
-</div>
 
 <script>
 
 /* =====================================================
-   BERAKAH SUPABASE
+   BERAKAH SUPABASE CONFIGURATION
    ===================================================== */
 
 const SUPABASE_URL =
-"https://utoyoglycqjmqznczfxa.supabase.co";
+  "https://utoyoglycqjmqznczfxa.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+  "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
 
 /* =====================================================
    ELEMENTS
    ===================================================== */
 
-const form =
-document.getElementById("loginForm");
+const loginForm =
+  document.getElementById("loginForm");
 
 const emailInput =
-document.getElementById("email");
+  document.getElementById("email");
 
 const passwordInput =
-document.getElementById("password");
+  document.getElementById("password");
 
 const loginButton =
-document.getElementById("loginButton");
+  document.getElementById("loginButton");
 
-const message =
-document.getElementById("message");
+const messageBox =
+  document.getElementById("message");
 
 
 /* =====================================================
-   SHOW MESSAGE
+   MESSAGE FUNCTION
    ===================================================== */
 
 function showMessage(text, type) {
 
-  message.style.display = "block";
+  messageBox.style.display = "block";
 
-  message.className =
+  messageBox.className =
     "message " + type;
 
-  message.textContent = text;
+  messageBox.textContent = text;
 
 }
 
 
 /* =====================================================
-   CLEAR OLD BERAKAH SESSION
+   CLEAR OLD SESSION
    ===================================================== */
 
 function clearOldSession() {
+
+  /*
+   Remove BERAKAH session information.
+  */
 
   localStorage.removeItem(
     "berakah_access_token"
@@ -245,6 +265,50 @@ function clearOldSession() {
     "berakah_username"
   );
 
+  localStorage.removeItem(
+    "berakah_profile_id"
+  );
+
+
+  /*
+   Remove old Supabase sessions
+   that may belong to QUICKENETH
+   or another account.
+  */
+
+  const keysToRemove = [];
+
+  for (
+    let i = 0;
+    i < localStorage.length;
+    i++
+  ) {
+
+    const key =
+      localStorage.key(i);
+
+
+    if (
+      key &&
+      (
+        key.toLowerCase().includes("supabase") ||
+        key.toLowerCase().includes("auth-token")
+      )
+    ) {
+
+      keysToRemove.push(key);
+
+    }
+
+  }
+
+
+  keysToRemove.forEach(
+    function(key) {
+      localStorage.removeItem(key);
+    }
+  );
+
 }
 
 
@@ -252,11 +316,12 @@ function clearOldSession() {
    LOGIN
    ===================================================== */
 
-form.addEventListener(
+loginForm.addEventListener(
   "submit",
   async function(event) {
 
     event.preventDefault();
+
 
     const email =
       emailInput.value.trim();
@@ -282,13 +347,14 @@ form.addEventListener(
     loginButton.textContent =
       "LOGGING IN...";
 
-    message.style.display = "none";
+    messageBox.style.display =
+      "none";
 
 
     /*
-      IMPORTANT:
-      Remove the previous user's session
-      before authenticating the new user.
+     VERY IMPORTANT:
+     Remove the old logged-in account
+     before starting the new login.
     */
 
     clearOldSession();
@@ -296,9 +362,9 @@ form.addEventListener(
 
     try {
 
-      /* =============================================
-         SUPABASE PASSWORD LOGIN
-         ============================================= */
+      /* ===============================================
+         SEND LOGIN REQUEST TO SUPABASE
+         =============================================== */
 
       const response =
         await fetch(
@@ -332,20 +398,22 @@ form.addEventListener(
         );
 
 
-      const text =
+      const responseText =
         await response.text();
 
 
-      let data;
+      let data = {};
+
 
       try {
 
         data =
-          text
-          ? JSON.parse(text)
+          responseText
+          ? JSON.parse(responseText)
           : {};
 
       }
+
       catch {
 
         data = {};
@@ -353,9 +421,9 @@ form.addEventListener(
       }
 
 
-      /* =============================================
-         LOGIN ERROR
-         ============================================= */
+      /* ===============================================
+         CHECK LOGIN RESPONSE
+         =============================================== */
 
       if (!response.ok) {
 
@@ -364,7 +432,7 @@ form.addEventListener(
           data.error_description ||
           data.msg ||
           data.message ||
-          "Login failed."
+          "Invalid email or password."
 
         );
 
@@ -374,21 +442,25 @@ form.addEventListener(
       if (!data.access_token) {
 
         throw new Error(
-          "Supabase did not return an access token."
+          "Login succeeded but no access token was returned."
         );
 
       }
 
 
-      /* =============================================
-         SAVE NEW USER SESSION
-         ============================================= */
+      /* ===============================================
+         SAVE ACCESS TOKEN
+         =============================================== */
 
       localStorage.setItem(
         "berakah_access_token",
         data.access_token
       );
 
+
+      /* ===============================================
+         SAVE REFRESH TOKEN
+         =============================================== */
 
       if (data.refresh_token) {
 
@@ -400,6 +472,10 @@ form.addEventListener(
       }
 
 
+      /* ===============================================
+         SAVE AUTH USER
+         =============================================== */
+
       if (data.user) {
 
         localStorage.setItem(
@@ -407,6 +483,25 @@ form.addEventListener(
           JSON.stringify(data.user)
         );
 
+
+        /*
+         The UUID here is the actual
+         Supabase Auth user ID.
+        */
+
+        if (data.user.id) {
+
+          localStorage.setItem(
+            "berakah_auth_user_id",
+            data.user.id
+          );
+
+        }
+
+
+        /* =============================================
+           GET USERNAME FROM USER METADATA
+           ============================================= */
 
         const metadata =
           data.user.user_metadata || {};
@@ -431,21 +526,28 @@ form.addEventListener(
       }
 
 
-      /* =============================================
+      /* ===============================================
          SUCCESS
-         ============================================= */
+         =============================================== */
 
       showMessage(
-        "Login successful! Opening BERAKAH...",
+        "Login successful!\nOpening BERAKAH...",
         "success"
       );
 
 
+      /*
+       IMPORTANT:
+       Send every successfully logged-in
+       account to the BERAKAH FIRST PAGE.
+      */
+
       setTimeout(
         function() {
 
-          window.location.href =
-            "index.html";
+          window.location.replace(
+            "index.html"
+          );
 
         },
         700
@@ -453,6 +555,8 @@ form.addEventListener(
 
 
     }
+
+
     catch(error) {
 
       console.error(
@@ -462,14 +566,15 @@ form.addEventListener(
 
 
       /*
-        Make sure an old user's session
-        is never left behind.
+       Never leave the previous user's
+       session active after a failed login.
       */
 
       clearOldSession();
 
 
       showMessage(
+        "Login failed:\n\n" +
         error.message,
         "error"
       );
@@ -489,4 +594,5 @@ form.addEventListener(
 </script>
 
 </body>
+
 </html>
