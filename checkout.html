@@ -4,907 +4,1147 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>BERAKAH - Checkout</title>
 
 <style>
 
-* {
-  box-sizing: border-box;
+*{
+    box-sizing:border-box;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
-  color: #111827;
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f5f7fb;
+    color:#111827;
 }
 
-header {
-  background: white;
-  padding: 15px 20px;
-  border-bottom: 1px solid #e5e7eb;
+header{
+    background:white;
+    border-bottom:1px solid #e5e7eb;
+    padding:15px 20px;
 }
 
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-  color: #2563eb;
+.header-inner{
+    max-width:1100px;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 }
 
-nav {
-  margin-top: 10px;
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
+.logo{
+    font-size:24px;
+    font-weight:800;
+    letter-spacing:1px;
 }
 
-nav a {
-  text-decoration: none;
-  color: #374151;
-  font-weight: 600;
+nav{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
 }
 
-.container {
-  max-width: 800px;
-  margin: 30px auto;
-  padding: 0 15px;
+nav a{
+    color:#374151;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:bold;
 }
 
-h1 {
-  margin-bottom: 20px;
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:30px 20px 60px;
 }
 
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+.checkout-card{
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+    padding:25px;
+    margin-bottom:20px;
 }
 
-.product {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 15px 0;
+h1{
+    margin-top:0;
 }
 
-.product:last-child {
-  border-bottom: none;
+h2{
+    margin-top:0;
 }
 
-.product-name {
-  font-weight: bold;
+.product-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+
+    padding:15px 0;
+    border-bottom:1px solid #e5e7eb;
 }
 
-.product-info {
-  color: #6b7280;
-  margin-top: 5px;
+.product-name{
+    font-weight:bold;
 }
 
-input,
-textarea {
-  width: 100%;
-  padding: 12px;
-  margin-top: 7px;
-  margin-bottom: 15px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 16px;
+.product-meta{
+    color:#6b7280;
+    font-size:14px;
+    margin-top:5px;
 }
 
-label {
-  font-weight: bold;
+.product-price{
+    font-weight:bold;
+    white-space:nowrap;
 }
 
-.total {
-  font-size: 22px;
-  font-weight: bold;
-  margin-top: 15px;
+.total{
+    display:flex;
+    justify-content:space-between;
+
+    font-size:24px;
+    font-weight:bold;
+
+    padding-top:20px;
 }
 
-button {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  background: #2563eb;
-  color: white;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
+.form-group{
+    margin-bottom:16px;
 }
 
-button:hover {
-  background: #1d4ed8;
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
 }
 
-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+input{
+    width:100%;
+    padding:13px;
+
+    border:1px solid #d1d5db;
+    border-radius:9px;
+
+    font-size:16px;
 }
 
-.message {
-  margin-top: 15px;
-  padding: 12px;
-  border-radius: 8px;
-  display: none;
+input:focus{
+    outline:none;
+    border-color:#2563eb;
 }
 
-.error {
-  background: #fee2e2;
-  color: #991b1b;
+.place-order{
+    width:100%;
+
+    padding:15px;
+
+    border:0;
+    border-radius:9px;
+
+    background:#111827;
+    color:white;
+
+    font-size:17px;
+    font-weight:bold;
+
+    cursor:pointer;
 }
 
-.success {
-  background: #dcfce7;
-  color: #166534;
+.place-order:hover{
+    opacity:.92;
 }
 
-.empty {
-  text-align: center;
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
+.place-order:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.status{
+    display:none;
+
+    padding:14px;
+
+    border-radius:9px;
+
+    margin-bottom:20px;
+
+    line-height:1.5;
+}
+
+.status.error{
+    display:block;
+
+    background:#fef2f2;
+    color:#991b1b;
+
+    border:1px solid #fecaca;
+}
+
+.status.success{
+    display:block;
+
+    background:#f0fdf4;
+    color:#166534;
+
+    border:1px solid #bbf7d0;
+}
+
+.empty{
+    text-align:center;
+    padding:40px;
+}
+
+@media(max-width:600px){
+
+    .product-row{
+        align-items:flex-start;
+    }
+
+    .total{
+        font-size:20px;
+    }
+
 }
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <header>
 
-  <div class="logo">BERAKAH</div>
+<div class="header-inner">
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="marketplace.html">Market</a>
-    <a href="orders.html">My Orders</a>
-    <a href="profile.html">Profile</a>
-  </nav>
+<div class="logo">
+BERAKAH
+</div>
 
-</header>
+<nav>
 
-<div class="container">
+<a href="index.html">Home</a>
 
-  <h1>🛒 Checkout</h1>
+<a href="marketplace.html">Market</a>
 
-  <div id="checkoutContent"></div>
+<a href="orders.html">My Orders</a>
+
+<a href="profile.html">Profile</a>
+
+</nav>
 
 </div>
 
+</header>
+
+
+<main class="container">
+
+
+<div class="checkout-card">
+
+<h1>🛒 Checkout</h1>
+
+<div id="status"
+     class="status">
+</div>
+
+
+<h2>🛍️ Order Summary</h2>
+
+<div id="orderSummary"></div>
+
+<div class="total">
+
+<span>TOTAL</span>
+
+<span id="total">$0.00</span>
+
+</div>
+
+</div>
+
+
+
+<div class="checkout-card">
+
+<h2>👤 Customer Information</h2>
+
+
+<div class="form-group">
+
+<label for="customerName">
+Full Name
+</label>
+
+<input
+    id="customerName"
+    type="text"
+    placeholder="Your full name"
+    autocomplete="name">
+
+</div>
+
+
+<div class="form-group">
+
+<label for="customerEmail">
+Email
+</label>
+
+<input
+    id="customerEmail"
+    type="email"
+    placeholder="Your email"
+    autocomplete="email">
+
+</div>
+
+
+<div class="form-group">
+
+<label for="customerPhone">
+Phone
+</label>
+
+<input
+    id="customerPhone"
+    type="tel"
+    placeholder="Your phone number"
+    autocomplete="tel">
+
+</div>
+
+
+<div class="form-group">
+
+<label for="customerAddress">
+Shipping Address
+</label>
+
+<input
+    id="customerAddress"
+    type="text"
+    placeholder="Your shipping address"
+    autocomplete="street-address">
+
+</div>
+
+
+<button
+    id="placeOrderButton"
+    class="place-order"
+    onclick="placeOrder()">
+
+🛒 PLACE ORDER
+
+</button>
+
+</div>
+
+
+</main>
+
+
 <script>
 
-/* =========================
-   SUPABASE CONFIG
-========================= */
+/* =====================================================
+   BERAKAH SUPABASE
+===================================================== */
 
 const SUPABASE_URL =
-  "https://utoyoglycqjmqznczfxa.supabase.co";
+"https://utoyoglycqjmqznczfxa.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
-const CART_KEY = "berakahCart";
-const ORDERS_KEY = "berakahOrders";
-const LAST_ORDER_KEY = "berakahLastOrder";
 
-let cart = [];
+/* =====================================================
+   SESSION
+===================================================== */
+
+const accessToken =
+localStorage.getItem(
+    "berakah_access_token"
+);
+
+
 let currentUser = null;
 
 
-/* =========================
-   HTML SECURITY
-========================= */
+/* =====================================================
+   CART
+===================================================== */
 
-function escapeHTML(value) {
+let cart = [];
 
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+try{
 
-}
+    cart =
+        JSON.parse(
+            localStorage.getItem(
+                "berakahCart"
+            ) || "[]"
+        );
 
-
-/* =========================
-   LOAD CART
-========================= */
-
-function loadCart() {
-
-  try {
-
-    const saved =
-      localStorage.getItem(CART_KEY);
-
-    cart = saved
-      ? JSON.parse(saved)
-      : [];
-
-    if (!Array.isArray(cart)) {
-      cart = [];
-    }
-
-  } catch (error) {
-
-    console.error(error);
+}catch(error){
 
     cart = [];
 
-  }
+}
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const statusBox =
+document.getElementById(
+    "status"
+);
+
+const summaryBox =
+document.getElementById(
+    "orderSummary"
+);
+
+const totalBox =
+document.getElementById(
+    "total"
+);
+
+const placeOrderButton =
+document.getElementById(
+    "placeOrderButton"
+);
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+function showStatus(message,type){
+
+    statusBox.textContent =
+        message;
+
+    statusBox.className =
+        "status " + type;
 
 }
 
 
-/* =========================
-   LOAD SUPABASE USER
-========================= */
+/* =====================================================
+   SUPABASE REQUEST
+===================================================== */
 
-async function loadCurrentUser() {
+async function supabaseRequest(
+    endpoint,
+    options={}
+){
 
-  const token =
-    localStorage.getItem("berakah_access_token");
+    const response =
+        await fetch(
+            SUPABASE_URL + endpoint,
+            {
 
-  if (!token) {
-    throw new Error(
-      "You must be logged in before placing an order."
-    );
-  }
+                ...options,
 
-  const response =
-    await fetch(
-      SUPABASE_URL + "/auth/v1/user",
-      {
-        headers: {
-          "apikey": SUPABASE_KEY,
-          "Authorization": "Bearer " + token
-        }
-      }
-    );
+                headers:{
 
-  if (!response.ok) {
+                    "apikey":
+                        SUPABASE_KEY,
 
-    throw new Error(
-      "Your login session has expired. Please log in again."
-    );
+                    "Authorization":
+                        "Bearer " +
+                        accessToken,
 
-  }
+                    "Content-Type":
+                        "application/json",
 
-  currentUser =
-    await response.json();
+                    ...(options.headers || {})
 
-}
+                }
 
-
-/* =========================
-   DISPLAY CHECKOUT
-========================= */
-
-function renderCheckout() {
-
-  const container =
-    document.getElementById("checkoutContent");
-
-  if (!cart.length) {
-
-    container.innerHTML = `
-      <div class="empty">
-        <h2>Your cart is empty.</h2>
-        <p>Add a product before checking out.</p>
-        <a href="marketplace.html">
-          Continue Shopping
-        </a>
-      </div>
-    `;
-
-    return;
-
-  }
-
-
-  let total = 0;
-
-
-  const productsHTML =
-    cart.map(product => {
-
-      const price =
-        Number(product.price) || 0;
-
-      const quantity =
-        Math.max(
-          1,
-          Number(product.quantity) || 1
+            }
         );
 
-      const subtotal =
-        price * quantity;
 
-      total += subtotal;
-
-
-      return `
-        <div class="product">
-
-          <div>
-
-            <div class="product-name">
-              ${escapeHTML(product.name)}
-            </div>
-
-            <div class="product-info">
-              Quantity: ${quantity}
-            </div>
-
-          </div>
-
-          <strong>
-            $${subtotal.toFixed(2)}
-          </strong>
-
-        </div>
-      `;
-
-    }).join("");
+    const text =
+        await response.text();
 
 
-  container.innerHTML = `
-
-    <div class="card">
-
-      <h2>🛍️ Order Summary</h2>
-
-      ${productsHTML}
-
-      <div class="total">
-        TOTAL $${total.toFixed(2)}
-      </div>
-
-    </div>
+    let data = null;
 
 
-    <div class="card">
+    try{
 
-      <h2>👤 Customer Information</h2>
+        data =
+            text ?
+            JSON.parse(text) :
+            null;
 
-      <form id="checkoutForm">
+    }catch(error){
 
-        <label>
-          Full Name
-        </label>
+        data = text;
 
-        <input
-          type="text"
-          id="customerName"
-          required
-          placeholder="Your full name"
-        >
+    }
 
 
-        <label>
-          Email
-        </label>
+    if(!response.ok){
 
-        <input
-          type="email"
-          id="customerEmail"
-          required
-          placeholder="your@email.com"
-        >
+        console.error(
+            "SUPABASE ERROR:",
+            data
+        );
 
+        throw new Error(
+            data?.message ||
+            data?.msg ||
+            data?.hint ||
+            data?.details ||
+            "Supabase request failed."
+        );
 
-        <label>
-          Phone
-        </label>
-
-        <input
-          type="tel"
-          id="customerPhone"
-          required
-          placeholder="Phone number"
-        >
+    }
 
 
-        <label>
-          Address
-        </label>
-
-        <textarea
-          id="customerAddress"
-          rows="4"
-          required
-          placeholder="Shipping address"
-        ></textarea>
-
-
-        <button
-          type="submit"
-          id="placeOrderButton"
-        >
-          🛒 PLACE ORDER
-        </button>
-
-        <div
-          id="message"
-          class="message"
-        ></div>
-
-      </form>
-
-    </div>
-
-  `;
-
-
-  document
-    .getElementById("checkoutForm")
-    .addEventListener(
-      "submit",
-      placeOrder
-    );
+    return data;
 
 }
 
 
-/* =========================
-   PLACE ORDER
-========================= */
+/* =====================================================
+   LOAD CURRENT USER
+===================================================== */
 
-async function placeOrder(event) {
+async function loadCurrentUser(){
 
-  event.preventDefault();
+    if(!accessToken){
 
+        window.location.href =
+            "login.html";
 
-  const button =
-    document.getElementById(
-      "placeOrderButton"
-    );
-
-  const message =
-    document.getElementById("message");
-
-
-  button.disabled = true;
-
-  button.textContent =
-    "Processing order...";
-
-  message.style.display = "none";
-
-
-  try {
-
-    if (!currentUser) {
-      await loadCurrentUser();
-    }
-
-
-    if (!cart.length) {
-
-      throw new Error(
-        "Your cart is empty."
-      );
+        return false;
 
     }
 
 
-    const customerName =
-      document
-        .getElementById("customerName")
-        .value
-        .trim();
+    try{
 
-    const customerEmail =
-      document
-        .getElementById("customerEmail")
-        .value
-        .trim();
+        currentUser =
+            await supabaseRequest(
+                "/auth/v1/user"
+            );
 
-    const customerPhone =
-      document
-        .getElementById("customerPhone")
-        .value
-        .trim();
+        return true;
 
-    const customerAddress =
-      document
-        .getElementById("customerAddress")
-        .value
-        .trim();
+    }catch(error){
+
+        console.error(error);
+
+        localStorage.removeItem(
+            "berakah_access_token"
+        );
+
+        localStorage.removeItem(
+            "berakah_refresh_token"
+        );
+
+        window.location.href =
+            "login.html";
+
+        return false;
+
+    }
+
+}
+
+
+/* =====================================================
+   DISPLAY CART
+===================================================== */
+
+function displayCart(){
+
+    if(!cart.length){
+
+        summaryBox.innerHTML = `
+
+            <div class="empty">
+
+                <h3>Your cart is empty.</h3>
+
+                <a href="marketplace.html">
+                    Continue Shopping
+                </a>
+
+            </div>
+
+        `;
+
+        totalBox.textContent =
+            "$0.00";
+
+        placeOrderButton.disabled =
+            true;
+
+        return;
+
+    }
 
 
     let total = 0;
 
 
-    const orderProducts =
-      cart.map(product => {
+    summaryBox.innerHTML =
+        cart.map(function(item){
 
-        const price =
-          Number(product.price) || 0;
+            const quantity =
+                Number(item.quantity || 1);
 
-        const quantity =
-          Math.max(
-            1,
-            Number(product.quantity) || 1
-          );
+            const price =
+                Number(item.price || 0);
 
+            const itemTotal =
+                price * quantity;
 
-        total +=
-          price * quantity;
+            total +=
+                itemTotal;
 
 
-        return {
+            return `
 
-          id: product.id,
+                <div class="product-row">
 
-          name: product.name,
+                    <div>
 
-          price: price,
+                        <div class="product-name">
 
-          image_url:
-            product.image_url || null,
+                            ${escapeHTML(
+                                item.name ||
+                                "Product"
+                            )}
 
-          quantity: quantity,
+                        </div>
 
-          seller_id:
-            product.seller_id || null,
+                        <div class="product-meta">
 
-          seller_name:
-            product.seller_name ||
-            "BERAKAH Seller",
+                            Quantity:
+                            ${quantity}
 
-          seller_email:
-            product.seller_email ||
-            ""
+                        </div>
 
-        };
+                    </div>
 
-      });
+                    <div class="product-price">
 
+                        $${itemTotal.toFixed(2)}
 
-    const timestamp =
-      Date.now();
+                    </div>
 
+                </div>
 
-    const orderNumber =
-      "BRK-" +
-      timestamp
-        .toString()
-        .slice(-8);
+            `;
 
+        }).join("");
 
-    const order = {
 
-      order_number:
-        orderNumber,
-
-      customer_id:
-        currentUser.id,
-
-      customer_name:
-        customerName,
-
-      customer_email:
-        customerEmail,
-
-      customer_phone:
-        customerPhone,
-
-      customer_address:
-        customerAddress,
-
-      products:
-        orderProducts,
-
-      total:
-        Number(total.toFixed(2)),
-
-      status:
-        "NEW"
-
-    };
-
-
-    /* =========================
-       SAVE TO SUPABASE
-    ========================= */
-
-    const response =
-      await fetch(
-        SUPABASE_URL + "/rest/v1/orders",
-        {
-
-          method: "POST",
-
-          headers: {
-
-            "apikey":
-              SUPABASE_KEY,
-
-            "Authorization":
-              "Bearer " +
-              localStorage.getItem(
-                "berakah_access_token"
-              ),
-
-            "Content-Type":
-              "application/json",
-
-            "Prefer":
-              "return=representation"
-
-          },
-
-          body:
-            JSON.stringify(order)
-
-        }
-      );
-
-
-    const responseText =
-      await response.text();
-
-
-    if (!response.ok) {
-
-      console.error(
-        "Supabase order error:",
-        responseText
-      );
-
-      throw new Error(
-        "Could not save the order to Supabase."
-      );
-
-    }
-
-
-    let savedOrder;
-
-    try {
-
-      const parsed =
-        JSON.parse(responseText);
-
-      savedOrder =
-        Array.isArray(parsed)
-          ? parsed[0]
-          : parsed;
-
-    } catch {
-
-      savedOrder =
-        order;
-
-    }
-
-
-    /* =========================
-       LOCAL BACKUP
-    ========================= */
-
-    const localOrder = {
-
-      id: timestamp,
-
-      orderNumber:
-        savedOrder.order_number ||
-        orderNumber,
-
-      createdAt:
-        savedOrder.created_at ||
-        new Date().toISOString(),
-
-      updatedAt:
-        savedOrder.updated_at ||
-        new Date().toISOString(),
-
-      customerId:
-        currentUser.id,
-
-      customerName:
-        customerName,
-
-      customerEmail:
-        customerEmail,
-
-      customerPhone:
-        customerPhone,
-
-      customerAddress:
-        customerAddress,
-
-      products:
-        orderProducts,
-
-      total:
-        Number(total.toFixed(2)),
-
-      status:
-        savedOrder.status ||
-        "NEW"
-
-    };
-
-
-    let orders = [];
-
-    try {
-
-      const existing =
-        localStorage.getItem(
-          ORDERS_KEY
-        );
-
-      orders =
-        existing
-          ? JSON.parse(existing)
-          : [];
-
-      if (!Array.isArray(orders)) {
-        orders = [];
-      }
-
-    } catch {
-
-      orders = [];
-
-    }
-
-
-    orders.unshift(
-      localOrder
-    );
-
-
-    localStorage.setItem(
-      ORDERS_KEY,
-      JSON.stringify(orders)
-    );
-
-
-    localStorage.setItem(
-      LAST_ORDER_KEY,
-      JSON.stringify(localOrder)
-    );
-
-
-    /* =========================
-       CLEAR CART
-    ========================= */
-
-    localStorage.removeItem(
-      CART_KEY
-    );
-
-
-    /* =========================
-       SUCCESS
-    ========================= */
-
-    message.className =
-      "message success";
-
-    message.textContent =
-      "Order placed successfully!";
-
-    message.style.display =
-      "block";
-
-
-    setTimeout(function() {
-
-      window.location.href =
-        "order-confirmation.html";
-
-    }, 700);
-
-
-  } catch (error) {
-
-    console.error(error);
-
-
-    message.className =
-      "message error";
-
-    message.textContent =
-      error.message ||
-      "Something went wrong.";
-
-    message.style.display =
-      "block";
-
-
-    button.disabled =
-      false;
-
-    button.textContent =
-      "🛒 PLACE ORDER";
-
-  }
+    totalBox.textContent =
+        "$" + total.toFixed(2);
 
 }
 
 
-/* =========================
-   START
-========================= */
+/* =====================================================
+   GET PRODUCT FROM SUPABASE
+===================================================== */
 
-async function startCheckout() {
+async function getProduct(productId){
 
-  loadCart();
-
-
-  if (!cart.length) {
-
-    renderCheckout();
-
-    return;
-
-  }
+    const endpoint =
+        "/rest/v1/products" +
+        "?select=*" +
+        "&id=eq." +
+        encodeURIComponent(productId) +
+        "&limit=1";
 
 
-  try {
+    const products =
+        await supabaseRequest(
+            endpoint
+        );
 
-    await loadCurrentUser();
 
-    renderCheckout();
+    if(
+        !products ||
+        !products.length
+    ){
 
-
-    /*
-      Pre-fill email from
-      Supabase account.
-    */
-
-    const emailInput =
-      document.getElementById(
-        "customerEmail"
-      );
-
-    if (
-      emailInput &&
-      currentUser.email
-    ) {
-
-      emailInput.value =
-        currentUser.email;
+        throw new Error(
+            "Product " +
+            productId +
+            " could not be found."
+        );
 
     }
 
 
-  } catch (error) {
+    return products[0];
 
-    document.getElementById(
-      "checkoutContent"
-    ).innerHTML = `
+}
 
-      <div class="empty">
 
-        <h2>🔐 Login Required</h2>
+/* =====================================================
+   GENERATE ORDER NUMBER
+===================================================== */
 
-        <p>
-          Please log in before placing an order.
-        </p>
+function generateOrderNumber(){
 
-        <a href="login.html">
-          Go to Login
-        </a>
+    const random =
+        Math.floor(
+            10000000 +
+            Math.random() *
+            90000000
+        );
 
-      </div>
 
-    `;
+    return "BRK-" + random;
 
-  }
+}
+
+
+/* =====================================================
+   PLACE ORDER
+===================================================== */
+
+async function placeOrder(){
+
+    if(!currentUser){
+
+        showStatus(
+            "Please log in first.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(!cart.length){
+
+        showStatus(
+            "Your cart is empty.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const customerName =
+        document.getElementById(
+            "customerName"
+        ).value.trim();
+
+
+    const customerEmail =
+        document.getElementById(
+            "customerEmail"
+        ).value.trim();
+
+
+    const customerPhone =
+        document.getElementById(
+            "customerPhone"
+        ).value.trim();
+
+
+    const customerAddress =
+        document.getElementById(
+            "customerAddress"
+        ).value.trim();
+
+
+    if(
+        !customerName ||
+        !customerEmail ||
+        !customerPhone ||
+        !customerAddress
+    ){
+
+        showStatus(
+            "Please complete your name, email, phone, and shipping address.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    placeOrderButton.disabled =
+        true;
+
+    placeOrderButton.textContent =
+        "PLACING ORDER...";
+
+
+    showStatus(
+        "Saving your order...",
+        "success"
+    );
+
+
+    try{
+
+        /*
+         * ONE ORDER NUMBER
+         * FOR THE WHOLE CART
+         */
+
+        const orderNumber =
+            generateOrderNumber();
+
+
+        /*
+         * PROCESS EACH CART PRODUCT
+         */
+
+        for(
+            const cartItem of cart
+        ){
+
+            const product =
+                await getProduct(
+                    cartItem.id
+                );
+
+
+            const quantity =
+                Number(
+                    cartItem.quantity || 1
+                );
+
+
+            const price =
+                Number(
+                    product.price || 0
+                );
+
+
+            const itemTotal =
+                price * quantity;
+
+
+            /*
+             * SELLER
+             */
+
+            const sellerId =
+                product.seller_id ||
+                null;
+
+
+            /*
+             * PRODUCT SNAPSHOT
+             */
+
+            const productSnapshot = {
+
+                id:
+                    product.id,
+
+                name:
+                    product.name,
+
+                price:
+                    price,
+
+                quantity:
+                    quantity,
+
+                image_url:
+                    product.image_url,
+
+                seller_id:
+                    sellerId,
+
+                seller_name:
+                    product.seller_name,
+
+                category:
+                    product.category
+
+            };
+
+
+            /*
+             * EXACT COLUMNS
+             * FROM YOUR ORDERS TABLE
+             */
+
+            const order = {
+
+                buyer_id:
+                    currentUser.id,
+
+                seller_id:
+                    sellerId,
+
+                product_id:
+                    product.id,
+
+                product_name:
+                    product.name,
+
+                quantity:
+                    quantity,
+
+                price:
+                    price,
+
+                total:
+                    itemTotal,
+
+                status:
+                    "NEW",
+
+                shipping_name:
+                    customerName,
+
+                shipping_email:
+                    customerEmail,
+
+                shipping_phone:
+                    customerPhone,
+
+                shipping_address:
+                    customerAddress,
+
+                customer_id:
+                    currentUser.id,
+
+                order_number:
+                    orderNumber,
+
+                customer_name:
+                    customerName,
+
+                customer_email:
+                    customerEmail,
+
+                customer_phone:
+                    customerPhone,
+
+                customer_address:
+                    customerAddress,
+
+                products:
+                    productSnapshot
+
+            };
+
+
+            console.log(
+                "ORDER BEING SENT:",
+                order
+            );
+
+
+            await supabaseRequest(
+                "/rest/v1/orders",
+                {
+
+                    method:"POST",
+
+                    headers:{
+
+                        "Prefer":
+                            "return=representation"
+
+                    },
+
+                    body:
+                        JSON.stringify(
+                            order
+                        )
+
+                }
+            );
+
+        }
+
+
+        /*
+         * SUCCESS
+         */
+
+        localStorage.removeItem(
+            "berakahCart"
+        );
+
+
+        showStatus(
+            "Order placed successfully! Redirecting...",
+            "success"
+        );
+
+
+        setTimeout(
+            function(){
+
+                window.location.href =
+                    "orders.html";
+
+            },
+            800
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "CHECKOUT ERROR:",
+            error
+        );
+
+
+        showStatus(
+            "Could not save the order to Supabase.\n\n" +
+            error.message,
+            "error"
+        );
+
+
+        placeOrderButton.disabled =
+            false;
+
+        placeOrderButton.textContent =
+            "🛒 PLACE ORDER";
+
+    }
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value){
+
+    return String(value)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+async function startCheckout(){
+
+    displayCart();
+
+
+    const loggedIn =
+        await loadCurrentUser();
+
+
+    if(!loggedIn){
+
+        return;
+
+    }
+
+
+    /*
+     * PREFILL EMAIL
+     */
+
+    const emailInput =
+        document.getElementById(
+            "customerEmail"
+        );
+
+
+    if(
+        currentUser.email &&
+        !emailInput.value
+    ){
+
+        emailInput.value =
+            currentUser.email;
+
+    }
+
+
+    /*
+     * PREFILL NAME
+     */
+
+    const metadata =
+        currentUser.user_metadata ||
+        {};
+
+
+    const name =
+        metadata.full_name ||
+        metadata.name ||
+        metadata.username ||
+        "";
+
+
+    const nameInput =
+        document.getElementById(
+            "customerName"
+        );
+
+
+    if(
+        name &&
+        !nameInput.value
+    ){
+
+        nameInput.value =
+            name;
+
+    }
 
 }
 
@@ -914,4 +1154,5 @@ startCheckout();
 </script>
 
 </body>
+
 </html>
