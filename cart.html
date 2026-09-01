@@ -23,9 +23,14 @@ body {
     color: #111827;
 }
 
+/* =========================
+   HEADER
+========================= */
+
 header {
     background: white;
     border-bottom: 1px solid #e5e7eb;
+
     padding: 15px 20px;
 
     display: flex;
@@ -62,6 +67,10 @@ nav a:hover {
     color: #2563eb;
 }
 
+/* =========================
+   CONTAINER
+========================= */
+
 .container {
     max-width: 1100px;
     margin: auto;
@@ -71,6 +80,10 @@ nav a:hover {
 h1 {
     margin-top: 0;
 }
+
+/* =========================
+   CART LAYOUT
+========================= */
 
 .cart-layout {
     display: grid;
@@ -84,30 +97,47 @@ h1 {
     gap: 15px;
 }
 
+/* =========================
+   CART ITEM
+========================= */
+
 .cart-item {
     background: white;
+
     border: 1px solid #e5e7eb;
     border-radius: 12px;
+
     padding: 15px;
 
     display: grid;
-    grid-template-columns: 100px 1fr auto;
+
+    grid-template-columns:
+        100px
+        1fr
+        auto;
+
     gap: 15px;
+
     align-items: center;
 }
 
 .cart-image {
     width: 100px;
     height: 100px;
+
     object-fit: cover;
+
     border-radius: 8px;
+
     background: #eef2f7;
 }
 
 .no-image {
     width: 100px;
     height: 100px;
+
     border-radius: 8px;
+
     background: #eef2f7;
 
     display: flex;
@@ -120,12 +150,15 @@ h1 {
 .item-name {
     font-size: 18px;
     font-weight: bold;
+
     margin-bottom: 6px;
 }
 
 .item-seller {
     color: #6b7280;
+
     font-size: 13px;
+
     margin-bottom: 8px;
 }
 
@@ -134,10 +167,17 @@ h1 {
     font-size: 16px;
 }
 
+/* =========================
+   QUANTITY
+========================= */
+
 .quantity {
     display: flex;
+
     align-items: center;
+
     gap: 8px;
+
     margin-top: 12px;
 }
 
@@ -146,6 +186,7 @@ h1 {
     height: 32px;
 
     border: 1px solid #d1d5db;
+
     background: white;
 
     border-radius: 6px;
@@ -161,19 +202,33 @@ h1 {
 
 .quantity span {
     min-width: 30px;
+
     text-align: center;
+
     font-weight: bold;
 }
+
+/* =========================
+   ITEM TOTAL
+========================= */
 
 .item-total {
     font-size: 18px;
+
     font-weight: bold;
+
     text-align: right;
 }
 
+/* =========================
+   REMOVE
+========================= */
+
 .remove-button {
     border: none;
+
     background: #fee2e2;
+
     color: #dc2626;
 
     padding: 8px 10px;
@@ -189,9 +244,15 @@ h1 {
     background: #fecaca;
 }
 
+/* =========================
+   SUMMARY
+========================= */
+
 .summary {
     background: white;
+
     border: 1px solid #e5e7eb;
+
     border-radius: 12px;
 
     padding: 20px;
@@ -199,6 +260,7 @@ h1 {
     height: fit-content;
 
     position: sticky;
+
     top: 90px;
 }
 
@@ -208,28 +270,39 @@ h1 {
 
 .summary-row {
     display: flex;
+
     justify-content: space-between;
+
+    gap: 10px;
 
     margin: 12px 0;
 }
 
 .summary-total {
     border-top: 1px solid #e5e7eb;
+
     padding-top: 15px;
 
     font-size: 22px;
+
     font-weight: bold;
 }
+
+/* =========================
+   BUTTONS
+========================= */
 
 .btn {
     width: 100%;
 
     border: none;
+
     border-radius: 8px;
 
     padding: 12px;
 
     font-size: 15px;
+
     font-weight: bold;
 
     cursor: pointer;
@@ -239,6 +312,7 @@ h1 {
 
 .btn-primary {
     background: #2563eb;
+
     color: white;
 }
 
@@ -248,6 +322,7 @@ h1 {
 
 .btn-success {
     background: #16a34a;
+
     color: white;
 }
 
@@ -257,6 +332,7 @@ h1 {
 
 .btn-danger {
     background: #fee2e2;
+
     color: #dc2626;
 }
 
@@ -264,8 +340,13 @@ h1 {
     background: #fecaca;
 }
 
+/* =========================
+   EMPTY CART
+========================= */
+
 .empty {
     background: white;
+
     border: 1px solid #e5e7eb;
 
     border-radius: 12px;
@@ -287,10 +368,15 @@ h1 {
     color: #6b7280;
 }
 
+/* =========================
+   MOBILE
+========================= */
+
 @media (max-width: 750px) {
 
     header {
         flex-direction: column;
+
         align-items: flex-start;
     }
 
@@ -303,7 +389,9 @@ h1 {
     }
 
     .cart-item {
-        grid-template-columns: 80px 1fr;
+        grid-template-columns:
+            80px
+            1fr;
     }
 
     .cart-image,
@@ -314,6 +402,7 @@ h1 {
 
     .item-total {
         grid-column: 2;
+
         text-align: left;
     }
 
@@ -341,7 +430,13 @@ h1 {
 
 </head>
 
+
 <body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
 
 <header>
 
@@ -353,40 +448,37 @@ h1 {
 
 </a>
 
+
 <nav>
 
 <a href="index.html">
-Home
+    Home
 </a>
 
 <a href="feed.html">
-Feed
+    Feed
 </a>
 
 <a href="people.html">
-👥 People
+    👥 People
 </a>
 
 <a href="marketplace.html">
-Market
+    Market
 </a>
 
 <a href="notifications.html">
-🔔 Notifications
+    🔔 Notifications
 </a>
 
 <a href="messages.html">
-💬 Messages
-</a>
-
-<a href="marketplace.html">
-🛒 Market
+    💬 Messages
 </a>
 
 <a href="#"
-   onclick="logout()">
+   onclick="logout(); return false;">
 
-Logout
+    Logout
 
 </a>
 
@@ -395,14 +487,19 @@ Logout
 </header>
 
 
+<!-- =========================
+     MAIN
+========================= -->
+
 <main class="container">
 
-<h1>🛒 Your Cart</h1>
+<h1>
+    🛒 Your Cart
+</h1>
 
-<div
-    id="cartContent">
 
-</div>
+<div id="cartContent"></div>
+
 
 </main>
 
@@ -410,20 +507,48 @@ Logout
 <script>
 
 /* =====================================================
-   CART
+   BERAKAH CART
+   ONE CART SYSTEM
+   localStorage key: berakahCart
+===================================================== */
+
+
+/* =====================================================
+   GET CART
 ===================================================== */
 
 function getCart() {
 
     try {
 
-        return JSON.parse(
+        const savedCart =
             localStorage.getItem(
                 "berakahCart"
-            )
-        ) || [];
+            );
 
-    } catch {
+        if (!savedCart) {
+
+            return [];
+
+        }
+
+        const cart =
+            JSON.parse(savedCart);
+
+        if (!Array.isArray(cart)) {
+
+            return [];
+
+        }
+
+        return cart;
+
+    } catch (error) {
+
+        console.error(
+            "Could not read cart:",
+            error
+        );
 
         return [];
 
@@ -447,7 +572,7 @@ function saveCart(cart) {
 
 
 /* =====================================================
-   DISPLAY CART
+   RENDER CART
 ===================================================== */
 
 function renderCart() {
@@ -503,25 +628,29 @@ function renderCart() {
     let subtotal = 0;
 
 
-    cart.forEach(
-        item => {
+    cart.forEach(function(item) {
 
-            subtotal +=
-                Number(item.price || 0) *
-                Number(item.quantity || 1);
+        const price =
+            Number(item.price) || 0;
 
-        }
-    );
+        const quantity =
+            Number(item.quantity) || 1;
+
+        subtotal +=
+            price * quantity;
+
+    });
 
 
     const itemsHTML =
-        cart.map(
-            (item, index) =>
-                createCartItem(
-                    item,
-                    index
-                )
-        ).join("");
+        cart.map(function(item, index) {
+
+            return createCartItem(
+                item,
+                index
+            );
+
+        }).join("");
 
 
     container.innerHTML = `
@@ -535,6 +664,7 @@ function renderCart() {
                     ${itemsHTML}
 
                 </div>
+
 
                 <button
                     class="btn btn-danger"
@@ -552,6 +682,7 @@ function renderCart() {
                 <h2>
                     Order Summary
                 </h2>
+
 
                 <div class="summary-row">
 
@@ -592,7 +723,8 @@ function renderCart() {
                 </div>
 
 
-                <div class="summary-row summary-total">
+                <div
+                    class="summary-row summary-total">
 
                     <span>
                         Total
@@ -650,6 +782,7 @@ function createCartItem(
     const seller =
         escapeHTML(
             item.seller_name ||
+            item.sellerName ||
             "BERAKAH Member"
         );
 
@@ -661,8 +794,11 @@ function createCartItem(
 
 
     const quantity =
-        Number(
-            item.quantity || 1
+        Math.max(
+            1,
+            Number(
+                item.quantity || 1
+            )
         );
 
 
@@ -673,14 +809,29 @@ function createCartItem(
     let imageHTML = "";
 
 
-    if (item.image_url) {
+    const image =
+        item.image_url ||
+        item.image ||
+        "";
+
+
+    if (image) {
 
         imageHTML = `
 
             <img
                 class="cart-image"
-                src="${escapeAttribute(item.image_url)}"
-                alt="${name}">
+                src="${escapeAttribute(image)}"
+                alt="${name}"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+
+            <div
+                class="no-image"
+                style="display:none;">
+
+                🛍️
+
+            </div>
 
         `;
 
@@ -689,7 +840,9 @@ function createCartItem(
         imageHTML = `
 
             <div class="no-image">
+
                 🛍️
+
             </div>
 
         `;
@@ -730,6 +883,7 @@ function createCartItem(
                 <div class="quantity">
 
                     <button
+                        type="button"
                         onclick="changeQuantity(${index}, -1)">
 
                         −
@@ -745,6 +899,7 @@ function createCartItem(
 
 
                     <button
+                        type="button"
                         onclick="changeQuantity(${index}, 1)">
 
                         +
@@ -755,6 +910,7 @@ function createCartItem(
 
 
                 <button
+                    type="button"
                     class="remove-button"
                     onclick="removeItem(${index})">
 
@@ -791,19 +947,21 @@ function changeQuantity(
         getCart();
 
 
-    if (
-        !cart[index]
-    ) {
+    if (!cart[index]) {
 
         return;
 
     }
 
 
-    const newQuantity =
+    const currentQuantity =
         Number(
             cart[index].quantity || 1
-        ) + amount;
+        );
+
+
+    const newQuantity =
+        currentQuantity + amount;
 
 
     if (newQuantity <= 0) {
@@ -838,9 +996,7 @@ function removeItem(index) {
         getCart();
 
 
-    if (
-        !cart[index]
-    ) {
+    if (!cart[index]) {
 
         return;
 
@@ -884,6 +1040,7 @@ function clearCart() {
 
 
     if (
+        !cart ||
         cart.length === 0
     ) {
 
@@ -922,11 +1079,17 @@ function clearCart() {
 function getItemCount(cart) {
 
     return cart.reduce(
-        (total, item) =>
-            total +
-            Number(
-                item.quantity || 0
-            ),
+        function(total, item) {
+
+            return total +
+                Math.max(
+                    1,
+                    Number(
+                        item.quantity || 1
+                    )
+                );
+
+        },
         0
     );
 
@@ -946,7 +1109,7 @@ function goShopping() {
 
 
 /* =====================================================
-   CHECKOUT
+   REAL CHECKOUT
 ===================================================== */
 
 function checkout() {
@@ -956,6 +1119,7 @@ function checkout() {
 
 
     if (
+        !cart ||
         cart.length === 0
     ) {
 
@@ -969,14 +1133,12 @@ function checkout() {
 
 
     /*
-       Part 9D will replace this
-       with the real Supabase
-       order/checkout system.
+       Connect to the real
+       BERAKAH checkout page.
     */
 
-    alert(
-        "Checkout is coming next! 🛍️"
-    );
+    window.location.href =
+        "checkout.html";
 
 }
 
@@ -1003,17 +1165,37 @@ function logout() {
 
 
 /* =====================================================
-   ESCAPE HTML
+   SECURITY HELPERS
 ===================================================== */
 
 function escapeHTML(value) {
 
     return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
 
 }
 
@@ -1021,10 +1203,26 @@ function escapeHTML(value) {
 function escapeAttribute(value) {
 
     return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;");
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        );
 
 }
 
@@ -1036,6 +1234,7 @@ function escapeAttribute(value) {
 renderCart();
 
 </script>
+
 
 </body>
 
