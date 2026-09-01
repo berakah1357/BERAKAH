@@ -1,1796 +1,439 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>BERAKAH - My Orders</title><style>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>BERAKAH Orders</title>
-
-<style>
-
-* {
-    box-sizing: border-box;
+*{
+  box-sizing:border-box;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f5f7fb;
-    color: #111827;
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f7fb;
+  color:#111827;
 }
 
-header {
-    background: white;
-    border-bottom: 1px solid #e5e7eb;
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    flex-wrap: wrap;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+header{
+  background:white;
+  padding:15px 20px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
-.logo {
-    font-size: 22px;
-    font-weight: bold;
-    color: #2563eb;
-    text-decoration: none;
+.header-inner{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
 }
 
-nav {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+.logo{
+  font-size:24px;
+  font-weight:bold;
+  text-decoration:none;
+  color:#111827;
 }
 
-nav a {
-    text-decoration: none;
-    color: #374151;
-    padding: 8px 10px;
-    border-radius: 8px;
-    font-size: 14px;
+nav{
+  display:flex;
+  gap:15px;
+  flex-wrap:wrap;
 }
 
-nav a:hover {
-    background: #eff6ff;
-    color: #2563eb;
+nav a{
+  color:#374151;
+  text-decoration:none;
+  font-size:14px;
 }
 
-.container {
-    width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 25px 15px 50px;
+.container{
+  max-width:900px;
+  margin:30px auto;
+  padding:0 15px;
 }
 
-h1 {
-    margin-top: 0;
-    margin-bottom: 20px;
+h1{
+  margin-bottom:25px;
 }
 
-.message {
-    background: white;
-    padding: 18px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+.order{
+  background:white;
+  border-radius:14px;
+  padding:22px;
+  margin-bottom:20px;
+  box-shadow:0 4px 15px rgba(0,0,0,.07);
 }
 
-.error {
-    color: #b91c1c;
-    background: #fef2f2;
-    border: 1px solid #fecaca;
+.order-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+  border-bottom:1px solid #e5e7eb;
+  padding-bottom:15px;
 }
 
-.success {
-    color: #166534;
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
+.order-number{
+  font-weight:bold;
+  font-size:18px;
 }
 
-.login-box {
-    text-align: center;
-    padding: 35px 20px;
+.date{
+  color:#6b7280;
+  font-size:14px;
 }
 
-.login-button {
-    display: inline-block;
-    margin-top: 15px;
-    background: #2563eb;
-    color: white;
-    text-decoration: none;
-    padding: 12px 22px;
-    border-radius: 8px;
-    font-weight: bold;
+.status{
+  display:inline-block;
+  padding:7px 13px;
+  border-radius:20px;
+  background:#fef3c7;
+  color:#92400e;
+  font-weight:bold;
+  font-size:13px;
 }
 
-.tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+.product{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:15px 0;
+  border-bottom:1px solid #f0f0f0;
 }
 
-.tab-button {
-    border: none;
-    background: white;
-    color: #374151;
-    padding: 12px 18px;
-    border-radius: 9px;
-    cursor: pointer;
-    font-weight: bold;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+.product-name{
+  font-weight:bold;
 }
 
-.tab-button.active {
-    background: #2563eb;
-    color: white;
+.quantity{
+  color:#6b7280;
+  font-size:14px;
+  margin-top:5px;
 }
 
-.orders-list {
-    display: grid;
-    gap: 18px;
+.price{
+  font-weight:bold;
 }
 
-.order-card {
-    background: white;
-    border-radius: 14px;
-    padding: 20px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+.order-total{
+  display:flex;
+  justify-content:space-between;
+  font-size:20px;
+  font-weight:bold;
+  padding-top:18px;
 }
 
-.order-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 15px;
-    flex-wrap: wrap;
-    border-bottom: 1px solid #e5e7eb;
-    padding-bottom: 14px;
-    margin-bottom: 15px;
+.customer{
+  margin-top:18px;
+  padding-top:15px;
+  border-top:1px solid #e5e7eb;
+  color:#4b5563;
+  line-height:1.6;
 }
 
-.order-id {
-    font-weight: bold;
-    font-size: 17px;
+.empty{
+  background:white;
+  border-radius:14px;
+  padding:50px 20px;
+  text-align:center;
+  box-shadow:0 4px 15px rgba(0,0,0,.07);
 }
 
-.date {
-    color: #6b7280;
-    font-size: 13px;
-    margin-top: 5px;
+.empty-icon{
+  font-size:55px;
 }
 
-.status {
-    display: inline-block;
-    padding: 7px 12px;
-    border-radius: 20px;
-    background: #eff6ff;
-    color: #1d4ed8;
-    font-size: 13px;
-    font-weight: bold;
-    text-transform: capitalize;
+.empty h2{
+  margin:15px 0 8px;
 }
 
-.product-name {
-    font-size: 19px;
-    font-weight: bold;
-    margin-bottom: 10px;
+.shop-button{
+  display:inline-block;
+  margin-top:15px;
+  padding:13px 20px;
+  background:#111827;
+  color:white;
+  text-decoration:none;
+  border-radius:8px;
+  font-weight:bold;
 }
 
-.info-row {
-    margin: 7px 0;
-    color: #374151;
-}
+@media(max-width:600px){
 
-.info-row strong {
-    color: #111827;
-}
+  .header-inner{
+    flex-direction:column;
+    align-items:flex-start;
+  }
 
-.total {
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid #e5e7eb;
-}
+  nav{
+    gap:10px;
+  }
 
-.shipping {
-    margin-top: 18px;
-    padding: 15px;
-    background: #f9fafb;
-    border-radius: 10px;
-}
-
-.shipping h3 {
-    margin-top: 0;
-    font-size: 16px;
-}
-
-.actions {
-    margin-top: 18px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-button {
-    font-family: inherit;
-}
-
-.cancel-button {
-    background: #dc2626;
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.cancel-button:hover {
-    background: #b91c1c;
-}
-
-.status-select {
-    padding: 10px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    background: white;
-}
-
-.update-button {
-    background: #2563eb;
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.update-button:hover {
-    background: #1d4ed8;
-}
-
-.empty {
-    background: white;
-    text-align: center;
-    padding: 40px 20px;
-    border-radius: 14px;
-    color: #6b7280;
-}
-
-.loading {
-    text-align: center;
-    padding: 30px;
-    color: #6b7280;
-}
-
-@media (max-width: 700px) {
-
-    header {
-        padding: 12px;
-    }
-
-    nav {
-        width: 100%;
-    }
-
-    nav a {
-        font-size: 13px;
-        padding: 7px 8px;
-    }
-
-    .container {
-        padding: 20px 10px 40px;
-    }
-
-    .order-card {
-        padding: 15px;
-    }
+  .product{
+    flex-direction:column;
+  }
 
 }
 
-</style>
-
-</head>
-
-<body>
-
-<header>
-
-<a class="logo" href="index.html">
-    BERAKAH
+</style></head><body><header>  <div class="header-inner"><a class="logo" href="index.html">
+  BERAKAH
 </a>
 
 <nav>
 
-<a href="index.html">Home</a>
+  <a href="index.html">Home</a>
 
-<a href="feed.html">Feed</a>
+  <a href="feed.html">Feed</a>
 
-<a href="people.html">👥 People</a>
+  <a href="people.html">👥 People</a>
 
-<a href="marketplace.html">Market</a>
+  <a href="marketplace.html">Market</a>
 
-<a href="notifications.html">🔔 Notifications</a>
+  <a href="notifications.html">🔔 Notifications</a>
 
-<a href="messages.html">💬 Messages</a>
-
-<a href="cart.html">🛒 Cart</a>
-
-<a href="#" onclick="logout(); return false;">Logout</a>
+  <a href="messages.html">💬 Messages</a>
 
 </nav>
 
-</header>
+  </div></header><div class="container">  <h1>📦 MY ORDERS</h1>  <div id="orders"></div></div><script>
+
+/* =========================
+   GET ORDERS
+========================= */
+
+let orders = JSON.parse(
+  localStorage.getItem("berakahOrders") || "[]"
+);
 
 
-<div class="container">
+/* =========================
+   ORDER CONTAINER
+========================= */
 
-<h1>📦 BERAKAH Orders</h1>
-
-
-<div id="messageArea"></div>
-
-
-<div id="loginRequired" class="message login-box" style="display:none;">
-
-<div style="font-size:40px;">🔐</div>
-
-<h2>Login Required</h2>
-
-<p>Please log in to view your orders.</p>
-
-<a class="login-button" href="login.html">
-    🔑 Login
-</a>
-
-</div>
+let container =
+  document.getElementById("orders");
 
 
-<div id="ordersArea" style="display:none;">
+/* =========================
+   NO ORDERS
+========================= */
 
-<div class="tabs">
+if(orders.length === 0){
 
-<button
-    id="buyerTab"
-    class="tab-button active"
-    onclick="showBuyerOrders()">
-    🛍️ My Purchases
-</button>
+  container.innerHTML = `
 
-<button
-    id="sellerTab"
-    class="tab-button"
-    onclick="showSellerOrders()">
-    🏪 Seller Orders
-</button>
+    <div class="empty">
 
-</div>
+      <div class="empty-icon">
+        📦
+      </div>
 
+      <h2>
+        No orders yet
+      </h2>
 
-<div id="ordersList" class="orders-list">
+      <p>
+        Your purchases will appear here.
+      </p>
 
-<div class="loading">
-    Loading orders...
-</div>
+      <a
+        class="shop-button"
+        href="marketplace.html">
 
-</div>
+        START SHOPPING
 
-</div>
+      </a>
 
-</div>
+    </div>
 
-
-<script>
-
-/* =========================================================
-   BERAKAH SUPABASE CONFIGURATION
-========================================================= */
-
-const SUPABASE_URL =
-    "https://utoyoglycqjmqznczfxa.supabase.co";
-
-const SUPABASE_KEY =
-    "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
-
-
-/* =========================================================
-   GLOBAL VARIABLES
-========================================================= */
-
-let accessToken = null;
-let currentUser = null;
-let currentMode = "buyer";
-
-
-/* =========================================================
-   SUPABASE REQUEST HELPER
-========================================================= */
-
-async function supabaseRequest(
-    endpoint,
-    options = {},
-    retry = true
-) {
-
-    const headers = {
-        "apikey": SUPABASE_KEY,
-        "Authorization": "Bearer " + accessToken,
-        "Content-Type": "application/json",
-        ...(options.headers || {})
-    };
-
-    const response = await fetch(
-        SUPABASE_URL + endpoint,
-        {
-            ...options,
-            headers
-        }
-    );
-
-    /*
-       If the access token expired, refresh it once.
-    */
-
-    if (
-        response.status === 401 &&
-        retry
-    ) {
-
-        const refreshed = await refreshSession();
-
-        if (refreshed) {
-
-            return supabaseRequest(
-                endpoint,
-                options,
-                false
-            );
-
-        }
-
-    }
-
-    return response;
-}
-
-
-/* =========================================================
-   GET STORED ACCESS TOKEN
-========================================================= */
-
-function getStoredAccessToken() {
-
-    return localStorage.getItem(
-        "berakah_access_token"
-    );
+  `;
 
 }
 
 
-/* =========================================================
-   GET STORED REFRESH TOKEN
-========================================================= */
+/* =========================
+   DISPLAY ORDERS
+========================= */
 
-function getStoredRefreshToken() {
+orders
+  .slice()
+  .reverse()
+  .forEach(function(order){
 
-    return localStorage.getItem(
-        "berakah_refresh_token"
-    );
+    let orderCard =
+      document.createElement("div");
 
-}
-
-
-/* =========================================================
-   SAVE SESSION
-========================================================= */
-
-function saveSession(session) {
-
-    if (!session) {
-        return;
-    }
-
-    if (session.access_token) {
-
-        accessToken =
-            session.access_token;
-
-        localStorage.setItem(
-            "berakah_access_token",
-            session.access_token
-        );
-
-    }
-
-    if (session.refresh_token) {
-
-        localStorage.setItem(
-            "berakah_refresh_token",
-            session.refresh_token
-        );
-
-    }
-
-}
+    orderCard.className =
+      "order";
 
 
-/* =========================================================
-   REFRESH SUPABASE SESSION
-========================================================= */
+    /* ORDER DATE */
 
-async function refreshSession() {
+    let date = "";
 
-    const refreshToken =
-        getStoredRefreshToken();
+    if(order.createdAt){
 
-    if (!refreshToken) {
-
-        return false;
-
-    }
-
-    try {
-
-        const response = await fetch(
-            SUPABASE_URL +
-            "/auth/v1/token?grant_type=refresh_token",
-            {
-                method: "POST",
-
-                headers: {
-                    "apikey": SUPABASE_KEY,
-                    "Content-Type":
-                        "application/json"
-                },
-
-                body: JSON.stringify({
-                    refresh_token:
-                        refreshToken
-                })
-            }
-        );
-
-
-        if (!response.ok) {
-
-            console.log(
-                "Session refresh failed."
-            );
-
-            return false;
-
-        }
-
-
-        const data =
-            await response.json();
-
-
-        if (!data.access_token) {
-
-            return false;
-
-        }
-
-
-        saveSession(data);
-
-        return true;
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Refresh error:",
-            error
-        );
-
-        return false;
-
-    }
-
-}
-
-
-/* =========================================================
-   GET CURRENT USER
-========================================================= */
-
-async function getCurrentUser() {
-
-    /*
-       First use stored access token.
-    */
-
-    accessToken =
-        getStoredAccessToken();
-
-
-    /*
-       No access token.
-       Try refresh token.
-    */
-
-    if (!accessToken) {
-
-        const refreshed =
-            await refreshSession();
-
-        if (!refreshed) {
-
-            return null;
-
-        }
+      date =
+        new Date(order.createdAt)
+          .toLocaleString();
 
     }
 
 
-    /*
-       Ask Supabase for current user.
-    */
+    /* PRODUCTS */
 
-    try {
+    let productsHTML = "";
 
-        let response =
-            await fetch(
-                SUPABASE_URL +
-                "/auth/v1/user",
-                {
-                    method: "GET",
+    let products =
+      order.products || [];
 
-                    headers: {
-                        "apikey":
-                            SUPABASE_KEY,
 
-                        "Authorization":
-                            "Bearer " +
-                            accessToken
-                    }
-                }
-            );
+    products.forEach(function(product){
 
+      let name =
+        product.name ||
+        product.productName ||
+        "Product";
 
-        /*
-           Token expired.
-           Refresh and try again.
-        */
+      let price =
+        Number(product.price) || 0;
 
-        if (response.status === 401) {
+      let quantity =
+        Number(product.quantity) || 1;
 
-            const refreshed =
-                await refreshSession();
+      let itemTotal =
+        price * quantity;
 
-            if (!refreshed) {
 
-                return null;
+      productsHTML += `
 
-            }
+        <div class="product">
 
-
-            response =
-                await fetch(
-                    SUPABASE_URL +
-                    "/auth/v1/user",
-                    {
-                        method: "GET",
-
-                        headers: {
-                            "apikey":
-                                SUPABASE_KEY,
-
-                            "Authorization":
-                                "Bearer " +
-                                accessToken
-                        }
-                    }
-                );
-
-        }
-
-
-        if (!response.ok) {
-
-            console.log(
-                "Could not verify login:",
-                await response.text()
-            );
-
-            return null;
-
-        }
-
-
-        const user =
-            await response.json();
-
-
-        return user;
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "User error:",
-            error
-        );
-
-        return null;
-
-    }
-
-}
-
-
-/* =========================================================
-   PAGE INITIALIZATION
-========================================================= */
-
-async function initializePage() {
-
-    showLoading(
-        "Checking your BERAKAH session..."
-    );
-
-
-    currentUser =
-        await getCurrentUser();
-
-
-    /*
-       No valid session.
-    */
-
-    if (!currentUser) {
-
-        document.getElementById(
-            "ordersArea"
-        ).style.display = "none";
-
-
-        document.getElementById(
-            "loginRequired"
-        ).style.display = "block";
-
-
-        return;
-
-    }
-
-
-    /*
-       Valid session.
-    */
-
-    document.getElementById(
-        "loginRequired"
-    ).style.display = "none";
-
-
-    document.getElementById(
-        "ordersArea"
-    ).style.display = "block";
-
-
-    await loadBuyerOrders();
-
-}
-
-
-/* =========================================================
-   SHOW MESSAGE
-========================================================= */
-
-function showMessage(
-    message,
-    type = "message"
-) {
-
-    const area =
-        document.getElementById(
-            "messageArea"
-        );
-
-
-    area.innerHTML = `
-        <div class="message ${type}">
-            ${escapeHtml(message)}
-        </div>
-    `;
-
-}
-
-
-/* =========================================================
-   SHOW LOADING
-========================================================= */
-
-function showLoading(message) {
-
-    document.getElementById(
-        "ordersList"
-    ).innerHTML = `
-        <div class="loading">
-            ${escapeHtml(message)}
-        </div>
-    `;
-
-}
-
-
-/* =========================================================
-   BUYER ORDERS
-========================================================= */
-
-async function showBuyerOrders() {
-
-    currentMode = "buyer";
-
-
-    document.getElementById(
-        "buyerTab"
-    ).classList.add("active");
-
-
-    document.getElementById(
-        "sellerTab"
-    ).classList.remove("active");
-
-
-    await loadBuyerOrders();
-
-}
-
-
-/* =========================================================
-   SELLER ORDERS
-========================================================= */
-
-async function showSellerOrders() {
-
-    currentMode = "seller";
-
-
-    document.getElementById(
-        "sellerTab"
-    ).classList.add("active");
-
-
-    document.getElementById(
-        "buyerTab"
-    ).classList.remove("active");
-
-
-    await loadSellerOrders();
-
-}
-
-
-/* =========================================================
-   LOAD BUYER ORDERS
-========================================================= */
-
-async function loadBuyerOrders() {
-
-    showLoading(
-        "Loading your purchases..."
-    );
-
-
-    const endpoint =
-        "/rest/v1/orders" +
-        "?select=*" +
-        "&buyer_id=eq." +
-        encodeURIComponent(
-            currentUser.id
-        ) +
-        "&order=created_at.desc";
-
-
-    try {
-
-        const response =
-            await supabaseRequest(
-                endpoint
-            );
-
-
-        if (!response.ok) {
-
-            const error =
-                await response.text();
-
-            throw new Error(error);
-
-        }
-
-
-        const orders =
-            await response.json();
-
-
-        renderBuyerOrders(
-            orders
-        );
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Buyer orders error:",
-            error
-        );
-
-
-        showMessage(
-            "Could not load your purchases. " +
-            error.message,
-            "error"
-        );
-
-
-        document.getElementById(
-            "ordersList"
-        ).innerHTML = "";
-
-    }
-
-}
-
-
-/* =========================================================
-   LOAD SELLER ORDERS
-========================================================= */
-
-async function loadSellerOrders() {
-
-    showLoading(
-        "Loading seller orders..."
-    );
-
-
-    const endpoint =
-        "/rest/v1/orders" +
-        "?select=*" +
-        "&seller_id=eq." +
-        encodeURIComponent(
-            currentUser.id
-        ) +
-        "&order=created_at.desc";
-
-
-    try {
-
-        const response =
-            await supabaseRequest(
-                endpoint
-            );
-
-
-        if (!response.ok) {
-
-            const error =
-                await response.text();
-
-            throw new Error(error);
-
-        }
-
-
-        const orders =
-            await response.json();
-
-
-        renderSellerOrders(
-            orders
-        );
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Seller orders error:",
-            error
-        );
-
-
-        showMessage(
-            "Could not load seller orders. " +
-            error.message,
-            "error"
-        );
-
-
-        document.getElementById(
-            "ordersList"
-        ).innerHTML = "";
-
-    }
-
-}
-
-
-/* =========================================================
-   RENDER BUYER ORDERS
-========================================================= */
-
-function renderBuyerOrders(
-    orders
-) {
-
-    const container =
-        document.getElementById(
-            "ordersList"
-        );
-
-
-    if (!orders.length) {
-
-        container.innerHTML = `
-            <div class="empty">
-                <h2>🛍️ No purchases yet</h2>
-
-                <p>
-                    Your purchases will appear here
-                    after you place an order.
-                </p>
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        orders.map(
-            order =>
-                createBuyerOrderCard(
-                    order
-                )
-        ).join("");
-
-}
-
-
-/* =========================================================
-   RENDER SELLER ORDERS
-========================================================= */
-
-function renderSellerOrders(
-    orders
-) {
-
-    const container =
-        document.getElementById(
-            "ordersList"
-        );
-
-
-    if (!orders.length) {
-
-        container.innerHTML = `
-            <div class="empty">
-                <h2>🏪 No seller orders yet</h2>
-
-                <p>
-                    Orders for your products
-                    will appear here.
-                </p>
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        orders.map(
-            order =>
-                createSellerOrderCard(
-                    order
-                )
-        ).join("");
-
-}
-
-
-/* =========================================================
-   BUYER ORDER CARD
-========================================================= */
-
-function createBuyerOrderCard(
-    order
-) {
-
-    const date =
-        formatDate(
-            order.created_at
-        );
-
-
-    const status =
-        order.status || "pending";
-
-
-    const canCancel =
-        status !== "cancelled" &&
-        status !== "delivered";
-
-
-    return `
-        <div class="order-card">
-
-            <div class="order-top">
-
-                <div>
-
-                    <div class="order-id">
-                        Order #${escapeHtml(
-                            String(order.id)
-                        )}
-                    </div>
-
-                    <div class="date">
-                        ${escapeHtml(date)}
-                    </div>
-
-                </div>
-
-                <div class="status">
-                    ${escapeHtml(status)}
-                </div>
-
-            </div>
-
+          <div>
 
             <div class="product-name">
-                ${escapeHtml(
-                    order.product_name ||
-                    "Product"
-                )}
-            </div>
 
-
-            <div class="info-row">
-                <strong>Quantity:</strong>
-                ${escapeHtml(
-                    String(order.quantity || 1)
-                )}
-            </div>
-
-
-            <div class="info-row">
-                <strong>Price:</strong>
-                $${formatMoney(
-                    order.price
-                )}
-            </div>
-
-
-            <div class="total">
-                Total:
-                $${formatMoney(
-                    order.total
-                )}
-            </div>
-
-
-            <div class="shipping">
-
-                <h3>
-                    📦 Shipping Information
-                </h3>
-
-                <div class="info-row">
-                    <strong>Name:</strong>
-                    ${escapeHtml(
-                        order.shipping_name ||
-                        ""
-                    )}
-                </div>
-
-                <div class="info-row">
-                    <strong>Email:</strong>
-                    ${escapeHtml(
-                        order.shipping_email ||
-                        ""
-                    )}
-                </div>
-
-                <div class="info-row">
-                    <strong>Phone:</strong>
-                    ${escapeHtml(
-                        order.shipping_phone ||
-                        ""
-                    )}
-                </div>
-
-                <div class="info-row">
-                    <strong>Address:</strong>
-                    ${escapeHtml(
-                        order.shipping_address ||
-                        ""
-                    )}
-                </div>
+              ${escapeHTML(name)}
 
             </div>
 
+            <div class="quantity">
 
-            ${
-                canCancel
-                ? `
-                    <div class="actions">
+              Quantity: ${quantity}
 
-                        <button
-                            class="cancel-button"
-                            onclick="cancelOrder('${escapeJs(
-                                order.id
-                            )}')"
-                        >
-                            Cancel Order
-                        </button>
+            </div>
 
-                    </div>
-                `
-                : ""
-            }
+          </div>
+
+          <div class="price">
+
+            $${itemTotal.toFixed(2)}
+
+          </div>
 
         </div>
-    `;
 
-}
+      `;
 
-
-/* =========================================================
-   SELLER ORDER CARD
-========================================================= */
-
-function createSellerOrderCard(
-    order
-) {
-
-    const date =
-        formatDate(
-            order.created_at
-        );
+    });
 
 
-    const status =
-        order.status || "pending";
+    /* ORDER CARD */
 
+    orderCard.innerHTML = `
 
-    return `
-        <div class="order-card">
+      <div class="order-header">
 
-            <div class="order-top">
+        <div>
 
-                <div>
+          <div class="order-number">
 
-                    <div class="order-id">
-                        Order #${escapeHtml(
-                            String(order.id)
-                        )}
-                    </div>
+            Order #${escapeHTML(
+              order.orderNumber ||
+              String(order.id || "")
+            )}
 
-                    <div class="date">
-                        ${escapeHtml(date)}
-                    </div>
+          </div>
 
-                </div>
+          <div class="date">
 
-                <div class="status">
-                    ${escapeHtml(status)}
-                </div>
+            ${escapeHTML(date)}
 
-            </div>
-
-
-            <div class="product-name">
-                ${escapeHtml(
-                    order.product_name ||
-                    "Product"
-                )}
-            </div>
-
-
-            <div class="info-row">
-                <strong>Quantity:</strong>
-                ${escapeHtml(
-                    String(order.quantity || 1)
-                )}
-            </div>
-
-
-            <div class="info-row">
-                <strong>Price:</strong>
-                $${formatMoney(
-                    order.price
-                )}
-            </div>
-
-
-            <div class="total">
-                Total:
-                $${formatMoney(
-                    order.total
-                )}
-            </div>
-
-
-            <div class="shipping">
-
-                <h3>
-                    👤 Buyer Information
-                </h3>
-
-                <div class="info-row">
-                    <strong>Name:</strong>
-                    ${escapeHtml(
-                        order.shipping_name ||
-                        ""
-                    )}
-                </div>
-
-                <div class="info-row">
-                    <strong>Email:</strong>
-                    ${escapeHtml(
-                        order.shipping_email ||
-                        ""
-                    )}
-                </div>
-
-                <div class="info-row">
-                    <strong>Phone:</strong>
-                    ${escapeHtml(
-                        order.shipping_phone ||
-                        ""
-                    )}
-                </div>
-
-                <div class="info-row">
-                    <strong>Address:</strong>
-                    ${escapeHtml(
-                        order.shipping_address ||
-                        ""
-                    )}
-                </div>
-
-            </div>
-
-
-            <div class="actions">
-
-                <select
-                    id="status-${escapeHtml(
-                        String(order.id)
-                    )}"
-                    class="status-select"
-                >
-
-                    <option
-                        value="pending"
-                        ${status === "pending"
-                            ? "selected"
-                            : ""}
-                    >
-                        Pending
-                    </option>
-
-                    <option
-                        value="confirmed"
-                        ${status === "confirmed"
-                            ? "selected"
-                            : ""}
-                    >
-                        Confirmed
-                    </option>
-
-                    <option
-                        value="processing"
-                        ${status === "processing"
-                            ? "selected"
-                            : ""}
-                    >
-                        Processing
-                    </option>
-
-                    <option
-                        value="shipped"
-                        ${status === "shipped"
-                            ? "selected"
-                            : ""}
-                    >
-                        Shipped
-                    </option>
-
-                    <option
-                        value="delivered"
-                        ${status === "delivered"
-                            ? "selected"
-                            : ""}
-                    >
-                        Delivered
-                    </option>
-
-                    <option
-                        value="cancelled"
-                        ${status === "cancelled"
-                            ? "selected"
-                            : ""}
-                    >
-                        Cancelled
-                    </option>
-
-                </select>
-
-
-                <button
-                    class="update-button"
-                    onclick="updateOrderStatus('${escapeJs(
-                        order.id
-                    )}')"
-                >
-                    Update Status
-                </button>
-
-            </div>
+          </div>
 
         </div>
+
+        <div class="status">
+
+          ${escapeHTML(
+            order.status || "NEW"
+          )}
+
+        </div>
+
+      </div>
+
+
+      <div>
+
+        ${productsHTML}
+
+      </div>
+
+
+      <div class="order-total">
+
+        <span>TOTAL</span>
+
+        <span>
+
+          $${Number(
+            order.total || 0
+          ).toFixed(2)}
+
+        </span>
+
+      </div>
+
+
+      <div class="customer">
+
+        <strong>Shipping to:</strong>
+
+        ${escapeHTML(
+          order.customerName || ""
+        )}
+
+        <br>
+
+        ${escapeHTML(
+          order.customerAddress || ""
+        )}
+
+      </div>
+
     `;
 
-}
+
+    container.appendChild(orderCard);
+
+  });
 
 
-/* =========================================================
-   CANCEL ORDER
-========================================================= */
+/* =========================
+   SECURITY
+========================= */
 
-async function cancelOrder(
-    orderId
-) {
+function escapeHTML(value){
 
-    const confirmed =
-        confirm(
-            "Are you sure you want to cancel this order?"
-        );
-
-
-    if (!confirmed) {
-        return;
-    }
-
-
-    try {
-
-        const endpoint =
-            "/rest/v1/orders" +
-            "?id=eq." +
-            encodeURIComponent(
-                orderId
-            );
-
-
-        const response =
-            await supabaseRequest(
-                endpoint,
-                {
-                    method: "PATCH",
-
-                    headers: {
-                        "Prefer":
-                            "return=minimal"
-                    },
-
-                    body: JSON.stringify({
-                        status:
-                            "cancelled"
-                    })
-                }
-            );
-
-
-        if (!response.ok) {
-
-            const error =
-                await response.text();
-
-            throw new Error(error);
-
-        }
-
-
-        showMessage(
-            "Order cancelled successfully.",
-            "success"
-        );
-
-
-        await loadBuyerOrders();
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Cancel order error:",
-            error
-        );
-
-
-        showMessage(
-            "Could not cancel the order. " +
-            error.message,
-            "error"
-        );
-
-    }
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
 }
 
-
-/* =========================================================
-   UPDATE SELLER ORDER STATUS
-========================================================= */
-
-async function updateOrderStatus(
-    orderId
-) {
-
-    const select =
-        document.getElementById(
-            "status-" + orderId
-        );
-
-
-    if (!select) {
-        return;
-    }
-
-
-    const newStatus =
-        select.value;
-
-
-    try {
-
-        const endpoint =
-            "/rest/v1/orders" +
-            "?id=eq." +
-            encodeURIComponent(
-                orderId
-            );
-
-
-        const response =
-            await supabaseRequest(
-                endpoint,
-                {
-                    method: "PATCH",
-
-                    headers: {
-                        "Prefer":
-                            "return=minimal"
-                    },
-
-                    body: JSON.stringify({
-                        status:
-                            newStatus
-                    })
-                }
-            );
-
-
-        if (!response.ok) {
-
-            const error =
-                await response.text();
-
-            throw new Error(error);
-
-        }
-
-
-        showMessage(
-            "Order status updated successfully.",
-            "success"
-        );
-
-
-        await loadSellerOrders();
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Update status error:",
-            error
-        );
-
-
-        showMessage(
-            "Could not update order status. " +
-            error.message,
-            "error"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-async function logout() {
-
-    try {
-
-        if (accessToken) {
-
-            await fetch(
-                SUPABASE_URL +
-                "/auth/v1/logout",
-                {
-                    method: "POST",
-
-                    headers: {
-                        "apikey":
-                            SUPABASE_KEY,
-
-                        "Authorization":
-                            "Bearer " +
-                            accessToken
-                    }
-                }
-            );
-
-        }
-
-    }
-
-    catch (error) {
-
-        console.log(
-            "Logout request error:",
-            error
-        );
-
-    }
-
-
-    /*
-       Clear BERAKAH session tokens.
-    */
-
-    localStorage.removeItem(
-        "berakah_access_token"
-    );
-
-    localStorage.removeItem(
-        "berakah_refresh_token"
-    );
-
-
-    /*
-       Redirect to login.
-    */
-
-    window.location.href =
-        "login.html";
-
-}
-
-
-/* =========================================================
-   FORMAT MONEY
-========================================================= */
-
-function formatMoney(
-    value
-) {
-
-    const number =
-        Number(value);
-
-
-    if (Number.isNaN(number)) {
-        return "0.00";
-    }
-
-
-    return number.toFixed(2);
-
-}
-
-
-/* =========================================================
-   FORMAT DATE
-========================================================= */
-
-function formatDate(
-    value
-) {
-
-    if (!value) {
-        return "";
-    }
-
-
-    const date =
-        new Date(value);
-
-
-    if (Number.isNaN(
-        date.getTime()
-    )) {
-
-        return String(value);
-
-    }
-
-
-    return date.toLocaleString();
-
-}
-
-
-/* =========================================================
-   HTML ESCAPE
-========================================================= */
-
-function escapeHtml(
-    value
-) {
-
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-}
-
-
-/* =========================================================
-   JAVASCRIPT STRING ESCAPE
-========================================================= */
-
-function escapeJs(
-    value
-) {
-
-    return String(value ?? "")
-        .replace(/\\/g, "\\\\")
-        .replace(/'/g, "\\'")
-        .replace(/"/g, '\\"')
-        .replace(/\n/g, "\\n")
-        .replace(/\r/g, "\\r");
-
-}
-
-
-/* =========================================================
-   START
-========================================================= */
-
-initializePage();
-
-</script>
-
-</body>
-</html>
+</script></body></html>
