@@ -4,6 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>BERAKAH - Messages</title>
@@ -11,267 +12,379 @@
 <style>
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
-  color: #111827;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #111827;
 }
+
+/* HEADER */
 
 header {
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 15px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 15px 20px;
 
-.nav {
-  max-width: 900px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .logo {
-  font-size: 26px;
-  font-weight: bold;
-  letter-spacing: 3px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #2563eb;
 }
 
-.nav-buttons {
-  display: flex;
-  gap: 7px;
-  flex-wrap: wrap;
+nav {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
-.nav-buttons a,
-.nav-buttons button {
-  border: 1px solid #d1d5db;
-  background: white;
-  color: #111827;
-  padding: 8px 11px;
-  border-radius: 7px;
-  cursor: pointer;
-  text-decoration: none;
-  font-weight: bold;
+nav a {
+    text-decoration: none;
+    color: #374151;
+    font-weight: bold;
 }
 
-.logout {
-  background: #111827 !important;
-  color: white !important;
+nav a:hover {
+    color: #2563eb;
 }
 
-main {
-  max-width: 900px;
-  margin: 25px auto;
-  padding: 0 15px;
+/* MAIN */
+
+.container {
+    max-width: 1200px;
+    margin: 25px auto;
+    padding: 0 15px;
 }
 
-.card {
-  background: white;
-  border-radius: 18px;
-  box-shadow: 0 3px 15px rgba(0,0,0,0.06);
-  overflow: hidden;
+.page-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
-.title {
-  padding: 22px;
-  border-bottom: 1px solid #e5e7eb;
+/* LAYOUT */
+
+.messages-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 20px;
 }
 
-.title h1 {
-  margin: 0;
+/* SIDEBAR */
+
+.sidebar {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
 }
 
-.status {
-  padding: 12px 22px;
-  background: #f3f4f6;
-  white-space: pre-wrap;
+.sidebar-header {
+    padding: 18px;
+    border-bottom: 1px solid #e5e7eb;
 }
 
-.layout {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  min-height: 600px;
+.sidebar-header h2 {
+    margin: 0 0 12px 0;
+    font-size: 20px;
 }
 
-.people {
-  border-right: 1px solid #e5e7eb;
-  padding: 15px;
-  overflow-y: auto;
+.member-select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: white;
+    font-size: 14px;
 }
 
-.people h3 {
-  margin-top: 5px;
+.conversations {
+    max-height: 650px;
+    overflow-y: auto;
 }
 
-.person {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px;
-  border: 1px solid #e5e7eb;
-  background: white;
-  border-radius: 10px;
-  margin-bottom: 8px;
-  cursor: pointer;
-  text-align: left;
+.conversation {
+    padding: 14px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
 }
 
-.person:hover {
-  background: #f9fafb;
+.conversation:hover {
+    background: #f3f4f6;
 }
 
-.person.active {
-  background: #f3f4f6;
+.conversation.active {
+    background: #e8f0ff;
 }
 
-.person-avatar {
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
-  border-radius: 50%;
-  background: #111827;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
+.conversation-name {
+    font-weight: bold;
+    margin-bottom: 4px;
 }
 
-.person-name {
-  font-weight: bold;
+.conversation-username {
+    color: #6b7280;
+    font-size: 13px;
 }
 
-.person-username {
-  color: #6b7280;
-  font-size: 12px;
-  margin-top: 3px;
+.conversation-preview {
+    margin-top: 7px;
+    color: #6b7280;
+    font-size: 13px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
+.no-conversations {
+    padding: 25px;
+    text-align: center;
+    color: #6b7280;
+}
+
+/* CHAT */
 
 .chat {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+
+    min-height: 700px;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .chat-header {
-  padding: 15px 20px;
-  border-bottom: 1px solid #e5e7eb;
-  font-weight: bold;
+    padding: 18px;
+    border-bottom: 1px solid #e5e7eb;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.messages {
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
-  min-height: 430px;
-  max-height: 500px;
+.chat-user {
+    font-weight: bold;
+    font-size: 18px;
 }
+
+.chat-user a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.chat-user small {
+    display: block;
+    color: #6b7280;
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+.refresh-btn {
+    border: none;
+    background: #f3f4f6;
+    padding: 9px 12px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.refresh-btn:hover {
+    background: #e5e7eb;
+}
+
+/* CHAT BODY */
+
+.chat-body {
+    flex: 1;
+    padding: 20px;
+
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    min-height: 520px;
+}
+
+.empty-chat {
+    margin: auto;
+    text-align: center;
+    color: #6b7280;
+}
+
+.empty-chat h2 {
+    color: #374151;
+}
+
+/* MESSAGE */
 
 .message-row {
-  display: flex;
-  margin-bottom: 12px;
+    display: flex;
 }
 
 .message-row.mine {
-  justify-content: flex-end;
+    justify-content: flex-end;
 }
 
-.bubble {
-  max-width: 75%;
-  padding: 11px 14px;
-  border-radius: 14px;
-  background: #f3f4f6;
-  white-space: pre-wrap;
-  word-break: break-word;
-  line-height: 1.4;
+.message-row.theirs {
+    justify-content: flex-start;
 }
 
-.mine .bubble {
-  background: #111827;
-  color: white;
+.message {
+    max-width: 75%;
+    padding: 11px 14px;
+    border-radius: 14px;
 }
 
-.message-time {
-  font-size: 10px;
-  opacity: 0.65;
-  margin-top: 5px;
+.message.mine {
+    background: #2563eb;
+    color: white;
+    border-bottom-right-radius: 4px;
 }
+
+.message.theirs {
+    background: #f3f4f6;
+    color: #111827;
+    border-bottom-left-radius: 4px;
+}
+
+.message-content {
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.message-meta {
+    margin-top: 5px;
+    font-size: 10px;
+    opacity: 0.7;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.delete-message {
+    border: none;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font-size: 10px;
+    padding: 0;
+}
+
+/* COMPOSER */
 
 .composer {
-  display: flex;
-  gap: 8px;
-  padding: 15px;
-  border-top: 1px solid #e5e7eb;
+    border-top: 1px solid #e5e7eb;
+    padding: 15px;
+
+    display: flex;
+    gap: 10px;
 }
 
-.composer textarea {
-  flex: 1;
-  resize: none;
-  min-height: 45px;
-  max-height: 120px;
-  padding: 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  font-family: Arial, sans-serif;
-  font-size: 15px;
+.message-input {
+    flex: 1;
+
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+
+    padding: 12px;
+
+    font-size: 15px;
+
+    resize: none;
+    min-height: 45px;
+    max-height: 120px;
 }
 
-.send-button {
-  border: none;
-  background: #111827;
-  color: white;
-  padding: 0 18px;
-  border-radius: 10px;
-  font-weight: bold;
-  cursor: pointer;
+.send-btn {
+    border: none;
+    background: #2563eb;
+    color: white;
+
+    padding: 0 20px;
+
+    border-radius: 9px;
+
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.send-button:disabled {
-  opacity: 0.6;
-  cursor: wait;
+.send-btn:hover {
+    background: #1d4ed8;
 }
 
-.empty {
-  text-align: center;
-  color: #6b7280;
-  padding: 60px 20px;
+.send-btn:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
 }
 
-@media (max-width: 700px) {
+/* STATUS */
 
-  .nav {
-    align-items: flex-start;
-    flex-direction: column;
-  }
+.status {
+    padding: 10px 15px;
+    font-size: 13px;
+    color: #6b7280;
+}
 
-  .nav-buttons {
-    width: 100%;
-  }
+.error {
+    color: #dc2626;
+}
 
-  .layout {
-    grid-template-columns: 1fr;
-  }
+.success {
+    color: #16a34a;
+}
 
-  .people {
-    border-right: none;
-    border-bottom: 1px solid #e5e7eb;
-    max-height: 230px;
-  }
+/* MOBILE */
 
-  .messages {
-    min-height: 350px;
-    max-height: 450px;
-  }
+@media (max-width: 800px) {
+
+    header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+
+    nav {
+        gap: 10px;
+    }
+
+    .messages-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        order: 2;
+    }
+
+    .chat {
+        order: 1;
+        min-height: 650px;
+    }
+
+    .conversations {
+        max-height: 250px;
+    }
+
+    .message {
+        max-width: 88%;
+    }
 
 }
 
@@ -279,949 +392,1418 @@ main {
 
 </head>
 
-
 <body>
-
 
 <header>
 
-<div class="nav">
+    <div class="logo">
+        BERAKAH
+    </div>
 
-<div class="logo">
-BERAKAH
-</div>
+    <nav>
 
-<div class="nav-buttons">
+        <a href="index.html">Home</a>
 
-<a href="index.html">
-Home
-</a>
+        <a href="feed.html">Feed</a>
 
-<a href="feed.html">
-Feed
-</a>
+        <a href="people.html">👥 People</a>
 
-<a href="people.html">
-👥 People
-</a>
+        <a href="marketplace.html">Market</a>
 
-<a href="marketplace.html">
-Market
-</a>
+        <a href="notifications.html">🔔 Notifications</a>
 
-<a href="notifications.html">
-🔔
-</a>
+        <a href="messages.html">💬 Messages</a>
 
-<button
-class="logout"
-id="logoutButton">
-Logout
-</button>
+        <a href="#" onclick="logout()">Logout</a>
 
-</div>
-
-</div>
+    </nav>
 
 </header>
 
 
-<main>
+<div class="container">
 
-<div class="card">
+    <div class="page-title">
+        💬 Messages
+    </div>
 
-<div class="title">
+    <div id="status" class="status">
+        Loading...
+    </div>
 
-<h1>
-💬 BERAKAH Messages
-</h1>
+    <div class="messages-layout">
+
+        <!-- SIDEBAR -->
+
+        <div class="sidebar">
+
+            <div class="sidebar-header">
+
+                <h2>
+                    New Message
+                </h2>
+
+                <select
+                    id="memberSelect"
+                    class="member-select"
+                >
+
+                    <option value="">
+                        Choose a member...
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div
+                id="conversations"
+                class="conversations"
+            >
+
+                <div class="no-conversations">
+                    No conversations yet.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CHAT -->
+
+        <div class="chat">
+
+            <div class="chat-header">
+
+                <div
+                    id="chatUser"
+                    class="chat-user"
+                >
+                    Select a member
+                </div>
+
+                <button
+                    class="refresh-btn"
+                    onclick="loadCurrentConversation()"
+                >
+                    🔄 Refresh
+                </button>
+
+            </div>
+
+
+            <div
+                id="chatBody"
+                class="chat-body"
+            >
+
+                <div class="empty-chat">
+
+                    <h2>
+                        💬 Your Messages
+                    </h2>
+
+                    <p>
+                        Choose a member to start a conversation.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="composer">
+
+                <textarea
+                    id="messageInput"
+                    class="message-input"
+                    placeholder="Write a message..."
+                    disabled
+                ></textarea>
+
+                <button
+                    id="sendButton"
+                    class="send-btn"
+                    onclick="sendMessage()"
+                    disabled
+                >
+                    Send
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
-
-
-<div
-id="status"
-class="status">
-Loading messages...
-</div>
-
-
-<div class="layout">
-
-
-<!-- PEOPLE -->
-
-<div class="people">
-
-<h3>
-BERAKAH People
-</h3>
-
-<div id="peopleList"></div>
-
-</div>
-
-
-<!-- CHAT -->
-
-<div class="chat">
-
-<div
-id="chatHeader"
-class="chat-header">
-Select a person to start messaging
-</div>
-
-
-<div
-id="messages"
-class="messages">
-
-<div class="empty">
-
-💬
-
-<br><br>
-
-Select a BERAKAH member on the left.
-
-</div>
-
-</div>
-
-
-<div class="composer">
-
-<textarea
-id="messageInput"
-placeholder="Write a message..."
-maxlength="2000"
-disabled></textarea>
-
-<button
-id="sendButton"
-class="send-button"
-disabled>
-SEND
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</main>
 
 
 <script>
 
-/* =========================================
+/* ============================================
    SUPABASE
-========================================= */
+============================================ */
 
 const SUPABASE_URL =
-"https://utoyoglycqjmqznczfxa.supabase.co";
+    "https://utoyoglycqjmqznczfxa.supabase.co";
 
-const SUPABASE_ANON_KEY =
-"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+const SUPABASE_KEY =
+    "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
-const accessToken =
-localStorage.getItem(
-"berakah_access_token"
-);
+
+/* ============================================
+   STATE
+============================================ */
+
+let accessToken =
+    localStorage.getItem(
+        "berakah_access_token"
+    );
 
 let currentUser = null;
-let people = [];
-let selectedPerson = null;
 
+let currentProfile = null;
 
-/* =========================================
-   HEADERS
-========================================= */
+let selectedUser = null;
 
-function headers(extra) {
+let allProfiles = [];
 
-return Object.assign({
+let allMessages = [];
 
-"apikey":
-SUPABASE_ANON_KEY,
+let refreshTimer = null;
 
-"Authorization":
-"Bearer " + accessToken
 
-}, extra || {});
+/* ============================================
+   SUPABASE REQUEST
+============================================ */
 
-}
-
-
-/* =========================================
-   SAFE
-========================================= */
-
-function safe(value) {
-
-return String(value ?? "")
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
-
-}
-
-
-/* =========================================
-   STATUS
-========================================= */
-
-function setStatus(text) {
-
-document.getElementById(
-"status"
-).textContent = text;
-
-}
-
-
-/* =========================================
-   CURRENT USER
-========================================= */
-
-async function getCurrentUser() {
-
-if (!accessToken) {
-
-throw new Error(
-"Your login session is missing. Please log in again."
-);
-
-}
-
-const response =
-await fetch(
-
-SUPABASE_URL +
-"/auth/v1/user",
-
-{
-method: "GET",
-headers: headers()
-}
-
-);
-
-const text =
-await response.text();
-
-if (!response.ok) {
-
-throw new Error(
-"Login session error:\n\n" +
-text
-);
-
-}
-
-return JSON.parse(text);
-
-}
-
-
-/* =========================================
-   LOAD PEOPLE
-========================================= */
-
-async function loadPeople() {
-
-const url =
-SUPABASE_URL +
-"/rest/v1/profiles" +
-"?select=id,\"Full name\",username,avatar_url,user_id" +
-"&order=username.asc";
-
-
-const response =
-await fetch(
-
-url,
-
-{
-method: "GET",
-headers: headers()
-}
-
-);
-
-
-const text =
-await response.text();
-
-
-if (!response.ok) {
-
-throw new Error(
-"Could not load people:\n\n" +
-text
-);
-
-}
-
-
-people =
-text.trim()
-?
-JSON.parse(text)
-:
-[];
-
-
-/*
- Remove current account.
-*/
-
-people =
-people.filter(
-function(person) {
-
-return String(person.user_id) !==
-String(currentUser.id);
-
-}
-);
-
-
-displayPeople();
-
-}
-
-
-/* =========================================
-   DISPLAY PEOPLE
-========================================= */
-
-function displayPeople() {
-
-const container =
-document.getElementById(
-"peopleList"
-);
-
-container.innerHTML =
-"";
-
-
-if (!people.length) {
-
-container.innerHTML = `
-
-<div class="empty">
-
-No other BERAKAH members found.
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-people.forEach(
-function(person) {
-
-const button =
-document.createElement(
-"button"
-);
-
-button.className =
-"person";
-
-
-const name =
-person["Full name"] ||
-person.username ||
-"BERAKAH User";
-
-
-const letter =
-name.charAt(0)
-.toUpperCase();
-
-
-button.innerHTML = `
-
-<div class="person-avatar">
-${safe(letter)}
-</div>
-
-<div>
-
-<div class="person-name">
-${safe(name)}
-</div>
-
-<div class="person-username">
-@${safe(
-(person.username || "")
-.toLowerCase()
-)}
-</div>
-
-</div>
-
-`;
-
-
-button.addEventListener(
-"click",
-function() {
-
-selectPerson(
-person,
-button
-);
-
-});
-
-
-container.appendChild(
-button
-);
-
-});
-
-}
-
-
-/* =========================================
-   SELECT PERSON
-========================================= */
-
-async function selectPerson(
-person,
-button
+async function supabaseRequest(
+    endpoint,
+    options = {}
 ) {
 
-selectedPerson =
-person;
+    const headers = {
 
+        "apikey": SUPABASE_KEY,
+
+        "Authorization":
+            "Bearer " + accessToken,
+
+        "Content-Type":
+            "application/json",
+
+        ...(options.headers || {})
+
+    };
+
+    return fetch(
+        SUPABASE_URL + endpoint,
+        {
+            ...options,
+            headers
+        }
+    );
+
+}
+
+
+/* ============================================
+   STATUS
+============================================ */
+
+function setStatus(
+    message,
+    type = ""
+) {
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+    status.textContent =
+        message;
+
+    status.className =
+        "status " + type;
+
+}
+
+
+/* ============================================
+   ESCAPE HTML
+============================================ */
+
+function escapeHTML(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* ============================================
+   PROFILE NAME
+============================================ */
+
+function getProfileName(profile) {
+
+    return (
+        profile["Full name"] ||
+        profile.full_name ||
+        profile.name ||
+        profile.username ||
+        "BERAKAH Member"
+    );
+
+}
+
+
+/* ============================================
+   FIND PROFILE
+============================================ */
+
+function findProfile(userId) {
+
+    return allProfiles.find(
+        profile =>
+            profile.user_id === userId
+    );
+
+}
+
+
+/* ============================================
+   DATE
+============================================ */
+
+function formatDate(dateString) {
+
+    const date =
+        new Date(dateString);
+
+    return date.toLocaleString(
+        [],
+        {
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit"
+        }
+    );
+
+}
+
+
+/* ============================================
+   LOGOUT
+============================================ */
+
+function logout() {
+
+    localStorage.removeItem(
+        "berakah_access_token"
+    );
+
+    localStorage.removeItem(
+        "berakah_refresh_token"
+    );
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* ============================================
+   LOGIN CHECK
+============================================ */
+
+async function checkLogin() {
+
+    if (!accessToken) {
+
+        window.location.href =
+            "login.html";
+
+        return false;
+
+    }
+
+
+    const response =
+        await supabaseRequest(
+            "/auth/v1/user"
+        );
+
+
+    if (!response.ok) {
+
+        localStorage.removeItem(
+            "berakah_access_token"
+        );
+
+        localStorage.removeItem(
+            "berakah_refresh_token"
+        );
+
+        window.location.href =
+            "login.html";
+
+        return false;
+
+    }
+
+
+    currentUser =
+        await response.json();
+
+    return true;
+
+}
+
+
+/* ============================================
+   LOAD MY PROFILE
+============================================ */
+
+async function loadMyProfile() {
+
+    const response =
+        await supabaseRequest(
+            "/rest/v1/profiles" +
+            "?select=*" +
+            "&user_id=eq." +
+            encodeURIComponent(
+                currentUser.id
+            )
+        );
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            "Could not load your profile."
+        );
+
+    }
+
+
+    const profiles =
+        await response.json();
+
+
+    if (!profiles.length) {
+
+        throw new Error(
+            "Your BERAKAH profile was not found."
+        );
+
+    }
+
+
+    currentProfile =
+        profiles[0];
+
+}
+
+
+/* ============================================
+   LOAD MEMBERS
+============================================ */
+
+async function loadMembers() {
+
+    const response =
+        await supabaseRequest(
+            "/rest/v1/profiles" +
+            "?select=id,user_id,%22Full%20name%22,username,language" +
+            "&order=id.asc"
+        );
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            "Could not load members."
+        );
+
+    }
+
+
+    allProfiles =
+        await response.json();
+
+
+    const select =
+        document.getElementById(
+            "memberSelect"
+        );
+
+
+    select.innerHTML =
+        `<option value="">
+            Choose a member...
+         </option>`;
+
+
+    allProfiles
+        .filter(
+            profile =>
+                profile.user_id !==
+                currentUser.id
+        )
+        .forEach(
+            profile => {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+                option.value =
+                    profile.user_id;
+
+                option.textContent =
+                    getProfileName(
+                        profile
+                    ) +
+                    " @" +
+                    (
+                        profile.username ||
+                        ""
+                    );
+
+                select.appendChild(
+                    option
+                );
+
+            }
+        );
+
+}
+
+
+/* ============================================
+   MEMBER SELECT
+============================================ */
 
 document
-.querySelectorAll(".person")
-.forEach(
-function(item) {
+    .getElementById(
+        "memberSelect"
+    )
+    .addEventListener(
+        "change",
+        async function() {
 
-item.classList.remove(
-"active"
-);
-
-}
-);
-
-
-button.classList.add(
-"active"
-);
+            const userId =
+                this.value;
 
 
-const name =
-person["Full name"] ||
-person.username ||
-"BERAKAH User";
+            if (!userId) {
+                return;
+            }
 
 
-document.getElementById(
-"chatHeader"
-).textContent =
-"💬 " + name;
+            const profile =
+                findProfile(
+                    userId
+                );
 
 
-document.getElementById(
-"messageInput"
-).disabled =
-false;
+            if (!profile) {
+                return;
+            }
 
 
-document.getElementById(
-"sendButton"
-).disabled =
-false;
+            await openConversation(
+                profile
+            );
+
+        }
+    );
 
 
-await loadConversation();
+/* ============================================
+   LOAD MESSAGES
+============================================ */
 
-}
+async function loadAllMessages() {
 
-
-/* =========================================
-   LOAD CONVERSATION
-========================================= */
-
-async function loadConversation() {
-
-if (!selectedPerson) {
-
-return;
-
-}
+    const response =
+        await supabaseRequest(
+            "/rest/v1/messages" +
+            "?select=*" +
+            "&order=%22Created%20time%22.asc"
+        );
 
 
-const otherId =
-selectedPerson.user_id;
+    if (!response.ok) {
+
+        const error =
+            await response.text();
+
+        throw new Error(
+            "Could not load messages: " +
+            error
+        );
+
+    }
 
 
-setStatus(
-"Loading conversation..."
-);
-
-
-/*
- IMPORTANT:
-
- messages.sender_id
- messages.receiver_id
-
- both use Supabase AUTH UUIDs.
-
-*/
-
-const url =
-SUPABASE_URL +
-"/rest/v1/messages" +
-"?select=*" +
-"&or=(" +
-"and(sender_id.eq." +
-encodeURIComponent(currentUser.id) +
-",receiver_id.eq." +
-encodeURIComponent(otherId) +
-")," +
-"and(sender_id.eq." +
-encodeURIComponent(otherId) +
-",receiver_id.eq." +
-encodeURIComponent(currentUser.id) +
-"))" +
-"&order=created_at.asc";
-
-
-console.log(
-"MESSAGES URL:",
-url
-);
-
-
-const response =
-await fetch(
-
-url,
-
-{
-method: "GET",
-headers: headers()
-}
-
-);
-
-
-const text =
-await response.text();
-
-
-if (!response.ok) {
-
-throw new Error(
-"Could not load messages:\n\n" +
-text
-);
+    allMessages =
+        await response.json();
 
 }
 
 
-const messages =
-text.trim()
-?
-JSON.parse(text)
-:
-[];
+/* ============================================
+   GET MESSAGE TIME
+============================================ */
 
+function getMessageTime(message) {
 
-displayMessages(
-messages
-);
-
-
-setStatus(
-"Conversation loaded."
-);
+    return (
+        message["Created time"] ||
+        message.created_time ||
+        message.created_at
+    );
 
 }
 
 
-/* =========================================
-   DISPLAY MESSAGES
-========================================= */
+/* ============================================
+   BUILD CONVERSATIONS
+============================================ */
 
-function displayMessages(
-messages
+function buildConversations() {
+
+    const container =
+        document.getElementById(
+            "conversations"
+        );
+
+
+    const conversationMap =
+        new Map();
+
+
+    allMessages.forEach(
+        message => {
+
+            const otherUser =
+                message.sender_id ===
+                currentUser.id
+
+                ? message.receiver_id
+
+                : message.sender_id;
+
+
+            conversationMap.set(
+                otherUser,
+                message
+            );
+
+        }
+    );
+
+
+    if (
+        conversationMap.size ===
+        0
+    ) {
+
+        container.innerHTML =
+            `<div class="no-conversations">
+                No conversations yet.
+             </div>`;
+
+        return;
+
+    }
+
+
+    const conversations =
+        Array.from(
+            conversationMap.entries()
+        )
+        .sort(
+            (a, b) => {
+
+                return (
+                    new Date(
+                        getMessageTime(
+                            b[1]
+                        )
+                    ) -
+                    new Date(
+                        getMessageTime(
+                            a[1]
+                        )
+                    )
+                );
+
+            }
+        );
+
+
+    container.innerHTML = "";
+
+
+    conversations.forEach(
+        ([userId, latestMessage]) => {
+
+            const profile =
+                findProfile(
+                    userId
+                );
+
+
+            if (!profile) {
+                return;
+            }
+
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "conversation";
+
+
+            if (
+                selectedUser &&
+                selectedUser.user_id ===
+                userId
+            ) {
+
+                div.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            div.innerHTML = `
+
+                <div class="conversation-name">
+                    ${escapeHTML(
+                        getProfileName(
+                            profile
+                        )
+                    )}
+                </div>
+
+                <div class="conversation-username">
+                    @${escapeHTML(
+                        profile.username ||
+                        ""
+                    )}
+                </div>
+
+                <div class="conversation-preview">
+                    ${escapeHTML(
+                        latestMessage.content ||
+                        ""
+                    )}
+                </div>
+
+            `;
+
+
+            div.onclick =
+                () =>
+                    openConversation(
+                        profile
+                    );
+
+
+            container.appendChild(
+                div
+            );
+
+        }
+    );
+
+}
+
+
+/* ============================================
+   OPEN CONVERSATION
+============================================ */
+
+async function openConversation(
+    profile
 ) {
 
-const container =
-document.getElementById(
-"messages"
-);
-
-container.innerHTML =
-"";
+    selectedUser =
+        profile;
 
 
-if (!messages.length) {
-
-container.innerHTML = `
-
-<div class="empty">
-
-💬
-
-<br><br>
-
-No messages yet.
-
-<br>
-
-Send the first message!
-
-</div>
-
-`;
-
-return;
-
-}
+    document
+        .getElementById(
+            "memberSelect"
+        )
+        .value =
+            profile.user_id;
 
 
-messages.forEach(
-function(message) {
-
-const row =
-document.createElement(
-"div"
-);
+    const name =
+        getProfileName(
+            profile
+        );
 
 
-const mine =
-String(message.sender_id) ===
-String(currentUser.id);
+    const username =
+        profile.username ||
+        "";
 
 
-row.className =
-"message-row" +
-(mine ? " mine" : "");
+    document
+        .getElementById(
+            "chatUser"
+        )
+        .innerHTML = `
+
+            <a href="profile.html?id=${encodeURIComponent(
+                profile.id
+            )}">
+                ${escapeHTML(name)}
+            </a>
+
+            <small>
+                @${escapeHTML(username)}
+            </small>
+
+        `;
 
 
-let time =
-"";
+    document
+        .getElementById(
+            "messageInput"
+        )
+        .disabled =
+            false;
 
 
-if (message.created_at) {
+    document
+        .getElementById(
+            "sendButton"
+        )
+        .disabled =
+            false;
 
-const date =
-new Date(
-message.created_at
-);
 
-if (!isNaN(date.getTime())) {
+    renderConversation();
 
-time =
-date.toLocaleString();
-
-}
+    buildConversations();
 
 }
 
 
-row.innerHTML = `
+/* ============================================
+   RENDER CONVERSATION
+============================================ */
 
-<div class="bubble">
+function renderConversation() {
 
-${safe(message.content || "")}
-
-<div class="message-time">
-${safe(time)}
-</div>
-
-</div>
-
-`;
+    const body =
+        document.getElementById(
+            "chatBody"
+        );
 
 
-container.appendChild(
-row
-);
+    if (!selectedUser) {
 
-});
+        body.innerHTML = `
+
+            <div class="empty-chat">
+
+                <h2>
+                    💬 Your Messages
+                </h2>
+
+                <p>
+                    Choose a member to start a conversation.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
 
 
-container.scrollTop =
-container.scrollHeight;
+    const conversationMessages =
+        allMessages.filter(
+            message => {
+
+                return (
+
+                    (
+                        message.sender_id ===
+                        currentUser.id
+
+                        &&
+
+                        message.receiver_id ===
+                        selectedUser.user_id
+                    )
+
+                    ||
+
+                    (
+                        message.sender_id ===
+                        selectedUser.user_id
+
+                        &&
+
+                        message.receiver_id ===
+                        currentUser.id
+                    )
+
+                );
+
+            }
+        );
+
+
+    if (
+        conversationMessages.length ===
+        0
+    ) {
+
+        body.innerHTML = `
+
+            <div class="empty-chat">
+
+                <h2>
+                    👋 Start the conversation
+                </h2>
+
+                <p>
+                    Send a message to
+                    ${escapeHTML(
+                        getProfileName(
+                            selectedUser
+                        )
+                    )}.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    body.innerHTML = "";
+
+
+    conversationMessages.forEach(
+        message => {
+
+            const mine =
+                message.sender_id ===
+                currentUser.id;
+
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "message-row " +
+                (
+                    mine
+                        ? "mine"
+                        : "theirs"
+                );
+
+
+            const bubble =
+                document.createElement(
+                    "div"
+                );
+
+
+            bubble.className =
+                "message " +
+                (
+                    mine
+                        ? "mine"
+                        : "theirs"
+                );
+
+
+            const content =
+                document.createElement(
+                    "div"
+                );
+
+
+            content.className =
+                "message-content";
+
+
+            content.textContent =
+                message.content ||
+                "";
+
+
+            const meta =
+                document.createElement(
+                    "div"
+                );
+
+
+            meta.className =
+                "message-meta";
+
+
+            const time =
+                document.createElement(
+                    "span"
+                );
+
+
+            time.textContent =
+                formatDate(
+                    getMessageTime(
+                        message
+                    )
+                );
+
+
+            meta.appendChild(
+                time
+            );
+
+
+            if (mine) {
+
+                const deleteButton =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                deleteButton.className =
+                    "delete-message";
+
+
+                deleteButton.textContent =
+                    "Delete";
+
+
+                deleteButton.onclick =
+                    () =>
+                        deleteMessage(
+                            message.id
+                        );
+
+
+                meta.appendChild(
+                    deleteButton
+                );
+
+            }
+
+
+            bubble.appendChild(
+                content
+            );
+
+            bubble.appendChild(
+                meta
+            );
+
+            row.appendChild(
+                bubble
+            );
+
+            body.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    body.scrollTop =
+        body.scrollHeight;
 
 }
 
 
-/* =========================================
+/* ============================================
    SEND MESSAGE
-========================================= */
+============================================ */
 
 async function sendMessage() {
 
-if (!selectedPerson) {
+    if (!selectedUser) {
 
-return;
+        alert(
+            "Choose a member first."
+        );
 
-}
+        return;
 
-
-const input =
-document.getElementById(
-"messageInput"
-);
-
-const button =
-document.getElementById(
-"sendButton"
-);
+    }
 
 
-const content =
-input.value.trim();
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
 
 
-if (!content) {
-
-return;
-
-}
-
-
-button.disabled =
-true;
-
-button.textContent =
-"SENDING...";
+    const button =
+        document.getElementById(
+            "sendButton"
+        );
 
 
-try {
+    const content =
+        input.value.trim();
 
 
-const response =
-await fetch(
-
-SUPABASE_URL +
-"/rest/v1/messages",
-
-{
-
-method: "POST",
-
-headers: headers({
-
-"Content-Type":
-"application/json",
-
-"Prefer":
-"return=minimal"
-
-}),
-
-body:
-JSON.stringify({
-
-sender_id:
-currentUser.id,
-
-receiver_id:
-selectedPerson.user_id,
-
-content:
-content
-
-})
-
-}
-
-);
+    if (!content) {
+        return;
+    }
 
 
-const text =
-await response.text();
+    button.disabled =
+        true;
 
 
-if (!response.ok) {
+    const response =
+        await supabaseRequest(
+            "/rest/v1/messages",
+            {
+                method: "POST",
 
-throw new Error(
-"Could not send message:\n\n" +
-text
-);
+                headers: {
+                    "Prefer":
+                        "return=minimal"
+                },
 
-}
+                body:
+                    JSON.stringify({
+
+                        sender_id:
+                            currentUser.id,
+
+                        receiver_id:
+                            selectedUser.user_id,
+
+                        content:
+                            content
+
+                    })
+
+            }
+        );
 
 
-input.value =
-"";
+    if (!response.ok) {
+
+        const error =
+            await response.text();
+
+        console.error(
+            error
+        );
+
+        alert(
+            "Could not send message."
+        );
+
+        button.disabled =
+            false;
+
+        return;
+
+    }
 
 
-await loadConversation();
+    input.value = "";
 
 
-}
-catch(error) {
+    await loadAllMessages();
 
-console.error(
-"SEND MESSAGE ERROR:",
-error
-);
 
-setStatus(
-error.message
-);
+    buildConversations();
 
-}
-finally {
+    renderConversation();
 
-button.disabled =
-false;
 
-button.textContent =
-"SEND";
+    button.disabled =
+        false;
 
-}
+
+    setStatus(
+        "Message sent.",
+        "success"
+    );
 
 }
 
 
-/* =========================================
-   ENTER TO SEND
-========================================= */
+/* ============================================
+   DELETE MESSAGE
+============================================ */
 
-document
-.getElementById(
-"messageInput"
-)
-.addEventListener(
-"keydown",
-function(event) {
-
-if (
-event.key === "Enter" &&
-!event.shiftKey
+async function deleteMessage(
+    messageId
 ) {
 
-event.preventDefault();
+    if (
+        !confirm(
+            "Delete this message?"
+        )
+    ) {
+        return;
+    }
 
-sendMessage();
+
+    const response =
+        await supabaseRequest(
+            "/rest/v1/messages" +
+            "?id=eq." +
+            encodeURIComponent(
+                messageId
+            ),
+            {
+                method:
+                    "DELETE"
+            }
+        );
+
+
+    if (!response.ok) {
+
+        const error =
+            await response.text();
+
+        console.error(
+            error
+        );
+
+        alert(
+            "Could not delete message."
+        );
+
+        return;
+
+    }
+
+
+    await loadAllMessages();
+
+    buildConversations();
+
+    renderConversation();
 
 }
 
+
+/* ============================================
+   REFRESH
+============================================ */
+
+async function loadCurrentConversation() {
+
+    try {
+
+        await loadAllMessages();
+
+        buildConversations();
+
+        renderConversation();
+
+        setStatus(
+            "Messages refreshed.",
+            "success"
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+        setStatus(
+            error.message,
+            "error"
+        );
+
+    }
+
 }
-);
 
 
-/* =========================================
-   SEND BUTTON
-========================================= */
+/* ============================================
+   ENTER TO SEND
+============================================ */
 
 document
-.getElementById(
-"sendButton"
-)
-.addEventListener(
-"click",
-sendMessage
-);
+    .getElementById(
+        "messageInput"
+    )
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key ===
+                "Enter" &&
+                !event.shiftKey
+            ) {
+
+                event.preventDefault();
+
+                sendMessage();
+
+            }
+
+        }
+    );
 
 
-/* =========================================
-   LOGOUT
-========================================= */
+/* ============================================
+   INITIALIZE
+============================================ */
 
-document
-.getElementById(
-"logoutButton"
-)
-.addEventListener(
-"click",
-function() {
+async function initialize() {
 
-localStorage.removeItem(
-"berakah_access_token"
-);
+    try {
 
-localStorage.removeItem(
-"berakah_refresh_token"
-);
+        setStatus(
+            "Checking login..."
+        );
 
-localStorage.removeItem(
-"berakah_user"
-);
 
-location.href =
-"login.html";
+        const loggedIn =
+            await checkLogin();
+
+
+        if (!loggedIn) {
+            return;
+        }
+
+
+        setStatus(
+            "Loading profile..."
+        );
+
+
+        await loadMyProfile();
+
+
+        setStatus(
+            "Loading members..."
+        );
+
+
+        await loadMembers();
+
+
+        setStatus(
+            "Loading messages..."
+        );
+
+
+        await loadAllMessages();
+
+
+        buildConversations();
+
+
+        setStatus(
+            "Messages ready.",
+            "success"
+        );
+
+
+        /*
+         * Automatically refresh every 5 seconds.
+         */
+
+        refreshTimer =
+            setInterval(
+                async function() {
+
+                    try {
+
+                        await loadAllMessages();
+
+                        buildConversations();
+
+                        renderConversation();
+
+                    }
+                    catch (error) {
+
+                        console.error(
+                            "Refresh error:",
+                            error
+                        );
+
+                    }
+
+                },
+                5000
+            );
+
+    }
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+        setStatus(
+            error.message ||
+            "Something went wrong.",
+            "error"
+        );
+
+    }
 
 }
-);
 
 
-/* =========================================
+/* ============================================
    START
-========================================= */
+============================================ */
 
-async function start() {
-
-try {
-
-if (!accessToken) {
-
-location.href =
-"login.html";
-
-return;
-
-}
-
-
-currentUser =
-await getCurrentUser();
-
-
-await loadPeople();
-
-
-setStatus(
-"BERAKAH Messages ready."
-);
-
-}
-catch(error) {
-
-console.error(
-"BERAKAH MESSAGES ERROR:",
-error
-);
-
-setStatus(
-"ERROR:\n\n" +
-error.message
-);
-
-}
-
-}
-
-
-start();
+initialize();
 
 </script>
 
