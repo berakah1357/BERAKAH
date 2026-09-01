@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>BERAKAH - Messages</title>
 
 <style>
-
 * {
     box-sizing: border-box;
 }
@@ -22,529 +18,381 @@ body {
     color: #111827;
 }
 
-/* HEADER */
-
 header {
     background: white;
     border-bottom: 1px solid #e5e7eb;
     padding: 15px 20px;
-
     display: flex;
-    align-items: center;
     justify-content: space-between;
-
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .logo {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
     color: #2563eb;
 }
 
 nav {
     display: flex;
-    gap: 15px;
     flex-wrap: wrap;
+    gap: 8px;
 }
 
 nav a {
     text-decoration: none;
     color: #374151;
-    font-weight: bold;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 14px;
 }
 
 nav a:hover {
+    background: #eff6ff;
     color: #2563eb;
 }
 
-/* MAIN */
-
 .container {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 25px auto;
     padding: 0 15px;
 }
 
-.page-title {
-    font-size: 28px;
-    font-weight: bold;
+h1 {
     margin-bottom: 20px;
 }
 
-/* LAYOUT */
-
-.messages-layout {
-    display: grid;
-    grid-template-columns: 320px 1fr;
-    gap: 20px;
-}
-
-/* SIDEBAR */
-
-.sidebar {
+.card {
     background: white;
     border-radius: 12px;
-    border: 1px solid #e5e7eb;
-    overflow: hidden;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
-.sidebar-header {
-    padding: 18px;
-    border-bottom: 1px solid #e5e7eb;
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
 }
 
-.sidebar-header h2 {
-    margin: 0 0 12px 0;
-    font-size: 20px;
-}
-
-.member-select {
+select,
+textarea {
     width: 100%;
-    padding: 11px;
+    padding: 12px;
     border: 1px solid #d1d5db;
     border-radius: 8px;
-    background: white;
+    font-size: 15px;
+    outline: none;
+}
+
+select:focus,
+textarea:focus {
+    border-color: #2563eb;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+button {
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 11px 18px;
+    border-radius: 8px;
+    cursor: pointer;
     font-size: 14px;
 }
 
-.conversations {
-    max-height: 650px;
+button:hover {
+    background: #1d4ed8;
+}
+
+button.delete {
+    background: #dc2626;
+    padding: 7px 11px;
+    font-size: 12px;
+}
+
+button.delete:hover {
+    background: #b91c1c;
+}
+
+button.refresh {
+    background: #4b5563;
+}
+
+button.refresh:hover {
+    background: #374151;
+}
+
+.status {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: none;
+}
+
+.error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.messages-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 20px;
+}
+
+.members {
+    max-height: 600px;
     overflow-y: auto;
+}
+
+.member {
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.member:hover {
+    background: #f3f4f6;
+}
+
+.member.active {
+    background: #eff6ff;
+}
+
+.member-name {
+    font-weight: bold;
+}
+
+.member-username {
+    color: #6b7280;
+    font-size: 13px;
 }
 
 .conversation {
-    padding: 14px;
-    border-bottom: 1px solid #f0f0f0;
-    cursor: pointer;
-}
-
-.conversation:hover {
-    background: #f3f4f6;
-}
-
-.conversation.active {
-    background: #e8f0ff;
-}
-
-.conversation-name {
-    font-weight: bold;
-    margin-bottom: 4px;
-}
-
-.conversation-username {
-    color: #6b7280;
-    font-size: 13px;
-}
-
-.conversation-preview {
-    margin-top: 7px;
-    color: #6b7280;
-    font-size: 13px;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.no-conversations {
-    padding: 25px;
-    text-align: center;
-    color: #6b7280;
-}
-
-/* CHAT */
-
-.chat {
-    background: white;
-    border-radius: 12px;
-    border: 1px solid #e5e7eb;
-
-    min-height: 700px;
-
+    min-height: 500px;
     display: flex;
     flex-direction: column;
 }
 
-.chat-header {
-    padding: 18px;
+.conversation-header {
     border-bottom: 1px solid #e5e7eb;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
 }
 
-.chat-user {
-    font-weight: bold;
-    font-size: 18px;
+.conversation-header h2 {
+    margin: 0 0 5px;
+    font-size: 20px;
 }
 
-.chat-user a {
+.conversation-header a {
     color: #2563eb;
     text-decoration: none;
+    font-size: 14px;
 }
 
-.chat-user small {
-    display: block;
-    color: #6b7280;
-    font-size: 13px;
-    margin-top: 3px;
-}
-
-.refresh-btn {
-    border: none;
-    background: #f3f4f6;
-    padding: 9px 12px;
-    border-radius: 7px;
-    cursor: pointer;
-}
-
-.refresh-btn:hover {
-    background: #e5e7eb;
-}
-
-/* CHAT BODY */
-
-.chat-body {
+.messages-box {
     flex: 1;
-    padding: 20px;
-
+    min-height: 300px;
+    max-height: 500px;
     overflow-y: auto;
-
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
-    min-height: 520px;
-}
-
-.empty-chat {
-    margin: auto;
-    text-align: center;
-    color: #6b7280;
-}
-
-.empty-chat h2 {
-    color: #374151;
-}
-
-/* MESSAGE */
-
-.message-row {
-    display: flex;
-}
-
-.message-row.mine {
-    justify-content: flex-end;
-}
-
-.message-row.theirs {
-    justify-content: flex-start;
+    padding: 10px;
+    background: #f9fafb;
+    border-radius: 10px;
 }
 
 .message {
-    max-width: 75%;
-    padding: 11px 14px;
-    border-radius: 14px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
 }
 
 .message.mine {
+    align-items: flex-end;
+}
+
+.message.theirs {
+    align-items: flex-start;
+}
+
+.bubble {
+    max-width: 75%;
+    padding: 10px 13px;
+    border-radius: 14px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.mine .bubble {
     background: #2563eb;
     color: white;
     border-bottom-right-radius: 4px;
 }
 
-.message.theirs {
-    background: #f3f4f6;
+.theirs .bubble {
+    background: #e5e7eb;
     color: #111827;
     border-bottom-left-radius: 4px;
 }
 
-.message-content {
-    white-space: pre-wrap;
-    word-break: break-word;
-}
-
-.message-meta {
-    margin-top: 5px;
-    font-size: 10px;
-    opacity: 0.7;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-.delete-message {
-    border: none;
-    background: transparent;
-    color: inherit;
-    cursor: pointer;
-    font-size: 10px;
-    padding: 0;
-}
-
-/* COMPOSER */
-
-.composer {
-    border-top: 1px solid #e5e7eb;
-    padding: 15px;
-
-    display: flex;
-    gap: 10px;
-}
-
-.message-input {
-    flex: 1;
-
-    border: 1px solid #d1d5db;
-    border-radius: 9px;
-
-    padding: 12px;
-
-    font-size: 15px;
-
-    resize: none;
-    min-height: 45px;
-    max-height: 120px;
-}
-
-.send-btn {
-    border: none;
-    background: #2563eb;
-    color: white;
-
-    padding: 0 20px;
-
-    border-radius: 9px;
-
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.send-btn:hover {
-    background: #1d4ed8;
-}
-
-.send-btn:disabled {
-    background: #9ca3af;
-    cursor: not-allowed;
-}
-
-/* STATUS */
-
-.status {
-    padding: 10px 15px;
-    font-size: 13px;
+.message-time {
+    font-size: 11px;
     color: #6b7280;
+    margin-top: 4px;
 }
 
-.error {
-    color: #dc2626;
+.message-actions {
+    margin-top: 4px;
 }
 
-.success {
-    color: #16a34a;
+.send-area {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
 }
 
-/* MOBILE */
+.send-area textarea {
+    flex: 1;
+    min-height: 55px;
+}
 
-@media (max-width: 800px) {
+.send-area button {
+    align-self: flex-end;
+}
 
-    header {
-        flex-direction: column;
-        gap: 12px;
-        align-items: flex-start;
-    }
+.empty {
+    text-align: center;
+    color: #6b7280;
+    padding: 40px 15px;
+}
 
-    nav {
-        gap: 10px;
-    }
+.loading {
+    text-align: center;
+    color: #6b7280;
+    padding: 20px;
+}
 
+@media (max-width: 750px) {
     .messages-layout {
         grid-template-columns: 1fr;
     }
 
-    .sidebar {
-        order: 2;
+    .members {
+        max-height: 220px;
     }
 
-    .chat {
-        order: 1;
-        min-height: 650px;
+    .conversation {
+        min-height: 450px;
     }
 
-    .conversations {
-        max-height: 250px;
+    .bubble {
+        max-width: 85%;
     }
 
-    .message {
-        max-width: 88%;
+    header {
+        align-items: flex-start;
     }
-
 }
-
 </style>
-
 </head>
 
 <body>
 
 <header>
-
-    <div class="logo">
-        BERAKAH
-    </div>
+    <div class="logo">BERAKAH</div>
 
     <nav>
-
         <a href="index.html">Home</a>
-
         <a href="feed.html">Feed</a>
-
         <a href="people.html">👥 People</a>
-
         <a href="marketplace.html">Market</a>
-
         <a href="notifications.html">🔔 Notifications</a>
-
         <a href="messages.html">💬 Messages</a>
-
         <a href="#" onclick="logout()">Logout</a>
-
     </nav>
-
 </header>
-
 
 <div class="container">
 
-    <div class="page-title">
-        💬 Messages
-    </div>
+    <h1>💬 Messages</h1>
 
-    <div id="status" class="status">
-        Loading...
-    </div>
+    <div id="status" class="status"></div>
 
     <div class="messages-layout">
 
-        <!-- SIDEBAR -->
+        <!-- MEMBERS -->
+        <div class="card members">
+            <h2>New Message</h2>
 
-        <div class="sidebar">
+            <select id="memberSelect">
+                <option value="">Choose a member...</option>
+            </select>
 
-            <div class="sidebar-header">
-
-                <h2>
-                    New Message
-                </h2>
-
-                <select
-                    id="memberSelect"
-                    class="member-select"
-                >
-
-                    <option value="">
-                        Choose a member...
-                    </option>
-
-                </select>
-
+            <div id="membersList" style="margin-top:15px;">
+                <div class="loading">Loading members...</div>
             </div>
-
-            <div
-                id="conversations"
-                class="conversations"
-            >
-
-                <div class="no-conversations">
-                    No conversations yet.
-                </div>
-
-            </div>
-
         </div>
 
+        <!-- CONVERSATION -->
+        <div class="card conversation">
 
-        <!-- CHAT -->
+            <div class="conversation-header">
+                <h2 id="conversationTitle">👋 Start the conversation</h2>
 
-        <div class="chat">
-
-            <div class="chat-header">
-
-                <div
-                    id="chatUser"
-                    class="chat-user"
-                >
-                    Select a member
-                </div>
-
-                <button
-                    class="refresh-btn"
-                    onclick="loadCurrentConversation()"
-                >
-                    🔄 Refresh
-                </button>
-
+                <a id="profileLink"
+                   href="#"
+                   style="display:none;">
+                    View Profile
+                </a>
             </div>
 
-
-            <div
-                id="chatBody"
-                class="chat-body"
-            >
-
-                <div class="empty-chat">
-
-                    <h2>
-                        💬 Your Messages
-                    </h2>
-
-                    <p>
-                        Choose a member to start a conversation.
-                    </p>
-
+            <div id="messagesBox" class="messages-box">
+                <div class="empty">
+                    Select a member to start a conversation.
                 </div>
-
             </div>
 
-
-            <div class="composer">
-
+            <div class="send-area">
                 <textarea
                     id="messageInput"
-                    class="message-input"
                     placeholder="Write a message..."
                     disabled
                 ></textarea>
 
-                <button
-                    id="sendButton"
-                    class="send-btn"
-                    onclick="sendMessage()"
-                    disabled
-                >
+                <button id="sendButton"
+                        onclick="sendMessage()"
+                        disabled>
                     Send
                 </button>
-
             </div>
 
         </div>
 
     </div>
 
+    <div style="margin-top:15px;">
+        <button class="refresh" onclick="loadMessages()">
+            🔄 Refresh
+        </button>
+    </div>
+
 </div>
 
-
 <script>
-
-/* ============================================
-   SUPABASE
-============================================ */
 
 const SUPABASE_URL =
     "https://utoyoglycqjmqznczfxa.supabase.co";
@@ -552,165 +400,648 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
-
-/* ============================================
-   STATE
-============================================ */
-
 let accessToken =
-    localStorage.getItem(
-        "berakah_access_token"
-    );
+    localStorage.getItem("berakah_access_token");
 
 let currentUser = null;
-
-let currentProfile = null;
-
-let selectedUser = null;
-
-let allProfiles = [];
-
+let profiles = [];
 let allMessages = [];
+let selectedUserId = null;
 
-let refreshTimer = null;
 
-
-/* ============================================
+/* =========================
    SUPABASE REQUEST
-============================================ */
+========================= */
 
-async function supabaseRequest(
-    endpoint,
-    options = {}
-) {
+async function supabaseFetch(path, options = {}) {
 
     const headers = {
-
         "apikey": SUPABASE_KEY,
-
-        "Authorization":
-            "Bearer " + accessToken,
-
-        "Content-Type":
-            "application/json",
-
+        "Authorization": "Bearer " + accessToken,
+        "Content-Type": "application/json",
         ...(options.headers || {})
-
     };
 
-    return fetch(
-        SUPABASE_URL + endpoint,
+    const response = await fetch(
+        SUPABASE_URL + path,
         {
             ...options,
             headers
         }
     );
 
+    const text = await response.text();
+
+    let data = null;
+
+    try {
+        data = text ? JSON.parse(text) : null;
+    } catch {
+        data = text;
+    }
+
+    if (!response.ok) {
+        throw new Error(
+            typeof data === "object"
+                ? JSON.stringify(data)
+                : data
+        );
+    }
+
+    return data;
 }
 
 
-/* ============================================
+/* =========================
    STATUS
-============================================ */
+========================= */
 
-function setStatus(
-    message,
-    type = ""
-) {
+function showStatus(message, type = "error") {
 
-    const status =
-        document.getElementById(
-            "status"
+    const box = document.getElementById("status");
+
+    box.textContent = message;
+
+    box.className = "status " + type;
+
+    box.style.display = "block";
+
+    setTimeout(() => {
+        box.style.display = "none";
+    }, 5000);
+}
+
+
+/* =========================
+   CHECK LOGIN
+========================= */
+
+async function checkLogin() {
+
+    if (!accessToken) {
+        window.location.href = "login.html";
+        return false;
+    }
+
+    try {
+
+        currentUser = await supabaseFetch(
+            "/auth/v1/user"
         );
 
-    status.textContent =
-        message;
+        return true;
 
-    status.className =
-        "status " + type;
+    } catch (error) {
 
+        console.error(error);
+
+        localStorage.removeItem("berakah_access_token");
+        localStorage.removeItem("berakah_refresh_token");
+
+        window.location.href = "login.html";
+
+        return false;
+    }
 }
 
 
-/* ============================================
-   ESCAPE HTML
-============================================ */
+/* =========================
+   LOAD MEMBERS
+========================= */
 
-function escapeHTML(value) {
+async function loadMembers() {
 
-    if (
-        value === null ||
-        value === undefined
-    ) {
+    const data = await supabaseFetch(
+        "/rest/v1/profiles?select=id,user_id,%22Full%20name%22,username,language&order=id.asc"
+    );
+
+    profiles = data || [];
+
+    profiles = profiles.filter(
+        profile =>
+            profile.user_id !== currentUser.id
+    );
+
+    const select =
+        document.getElementById("memberSelect");
+
+    select.innerHTML =
+        '<option value="">Choose a member...</option>';
+
+    const list =
+        document.getElementById("membersList");
+
+    list.innerHTML = "";
+
+    if (profiles.length === 0) {
+
+        list.innerHTML =
+            '<div class="empty">No members found.</div>';
+
+        return;
+    }
+
+    profiles.forEach(profile => {
+
+        const name =
+            profile["Full name"] ||
+            profile.full_name ||
+            profile.name ||
+            profile.username ||
+            "Member";
+
+        const username =
+            profile.username
+                ? "@" + profile.username
+                : "";
+
+        /* SELECT OPTION */
+
+        const option =
+            document.createElement("option");
+
+        option.value = profile.user_id;
+
+        option.textContent =
+            name + " " + username;
+
+        select.appendChild(option);
+
+
+        /* MEMBER LIST */
+
+        const div =
+            document.createElement("div");
+
+        div.className = "member";
+
+        div.dataset.userid =
+            profile.user_id;
+
+        div.innerHTML = `
+            <div class="member-name">
+                ${escapeHtml(name)}
+            </div>
+
+            <div class="member-username">
+                ${escapeHtml(username)}
+            </div>
+        `;
+
+        div.onclick = () => {
+
+            select.value =
+                profile.user_id;
+
+            select.dispatchEvent(
+                new Event("change")
+            );
+        };
+
+        list.appendChild(div);
+    });
+}
+
+
+/* =========================
+   MEMBER SELECT
+========================= */
+
+document
+    .getElementById("memberSelect")
+    .addEventListener("change", function() {
+
+        selectedUserId = this.value || null;
+
+        document
+            .querySelectorAll(".member")
+            .forEach(member => {
+
+                member.classList.toggle(
+                    "active",
+                    member.dataset.userid === selectedUserId
+                );
+            });
+
+        if (!selectedUserId) {
+
+            document.getElementById(
+                "conversationTitle"
+            ).textContent =
+                "👋 Start the conversation";
+
+            document.getElementById(
+                "profileLink"
+            ).style.display = "none";
+
+            document.getElementById(
+                "messagesBox"
+            ).innerHTML =
+                '<div class="empty">Select a member to start a conversation.</div>';
+
+            document.getElementById(
+                "messageInput"
+            ).disabled = true;
+
+            document.getElementById(
+                "sendButton"
+            ).disabled = true;
+
+            return;
+        }
+
+        const profile =
+            profiles.find(
+                p => p.user_id === selectedUserId
+            );
+
+        if (profile) {
+
+            const name =
+                profile["Full name"] ||
+                profile.full_name ||
+                profile.name ||
+                profile.username ||
+                "Member";
+
+            document.getElementById(
+                "conversationTitle"
+            ).textContent =
+                "💬 " + name;
+
+            const profileLink =
+                document.getElementById(
+                    "profileLink"
+                );
+
+            profileLink.href =
+                "profile.html?id=" + profile.id;
+
+            profileLink.textContent =
+                "View " + name + "'s Profile";
+
+            profileLink.style.display =
+                "inline-block";
+        }
+
+        document.getElementById(
+            "messageInput"
+        ).disabled = false;
+
+        document.getElementById(
+            "sendButton"
+        ).disabled = false;
+
+        renderMessages();
+    });
+
+
+/* =========================
+   LOAD MESSAGES
+========================= */
+
+async function loadMessages() {
+
+    try {
+
+        const data =
+            await supabaseFetch(
+                "/rest/v1/messages?select=*&order=created_at.asc"
+            );
+
+        allMessages = data || [];
+
+        renderMessages();
+
+    } catch (error) {
+
+        console.error(error);
+
+        showStatus(
+            "Could not load messages: " +
+            error.message
+        );
+
+        document.getElementById(
+            "messagesBox"
+        ).innerHTML = `
+            <div class="empty">
+                Could not load messages.
+            </div>
+        `;
+    }
+}
+
+
+/* =========================
+   RENDER MESSAGES
+========================= */
+
+function renderMessages() {
+
+    const box =
+        document.getElementById("messagesBox");
+
+    if (!selectedUserId) {
+        return;
+    }
+
+    const conversation =
+        allMessages.filter(message => {
+
+            return (
+                (
+                    message.sender_id === currentUser.id &&
+                    message.receiver_id === selectedUserId
+                )
+                ||
+                (
+                    message.sender_id === selectedUserId &&
+                    message.receiver_id === currentUser.id
+                )
+            );
+
+        });
+
+    if (conversation.length === 0) {
+
+        const profile =
+            profiles.find(
+                p => p.user_id === selectedUserId
+            );
+
+        const name =
+            profile
+                ? (
+                    profile["Full name"] ||
+                    profile.full_name ||
+                    profile.name ||
+                    profile.username ||
+                    "Member"
+                )
+                : "this member";
+
+        box.innerHTML = `
+            <div class="empty">
+                No messages yet.<br>
+                Send a message to ${escapeHtml(name)}.
+            </div>
+        `;
+
+        return;
+    }
+
+    box.innerHTML = "";
+
+    conversation.forEach(message => {
+
+        const mine =
+            message.sender_id === currentUser.id;
+
+        const wrapper =
+            document.createElement("div");
+
+        wrapper.className =
+            "message " +
+            (mine ? "mine" : "theirs");
+
+        const bubble =
+            document.createElement("div");
+
+        bubble.className = "bubble";
+
+        bubble.textContent =
+            message.content || "";
+
+        wrapper.appendChild(bubble);
+
+        const time =
+            document.createElement("div");
+
+        time.className = "message-time";
+
+        time.textContent =
+            formatTime(message.created_at);
+
+        wrapper.appendChild(time);
+
+        if (mine) {
+
+            const actions =
+                document.createElement("div");
+
+            actions.className =
+                "message-actions";
+
+            const deleteButton =
+                document.createElement("button");
+
+            deleteButton.className =
+                "delete";
+
+            deleteButton.textContent =
+                "Delete";
+
+            deleteButton.onclick =
+                () => deleteMessage(message.id);
+
+            actions.appendChild(
+                deleteButton
+            );
+
+            wrapper.appendChild(actions);
+        }
+
+        box.appendChild(wrapper);
+    });
+
+    box.scrollTop =
+        box.scrollHeight;
+}
+
+
+/* =========================
+   SEND MESSAGE
+========================= */
+
+async function sendMessage() {
+
+    if (!selectedUserId) {
+        showStatus(
+            "Please choose a member first."
+        );
+        return;
+    }
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+    const content =
+        input.value.trim();
+
+    if (!content) {
+        return;
+    }
+
+    const button =
+        document.getElementById(
+            "sendButton"
+        );
+
+    button.disabled = true;
+
+    try {
+
+        await supabaseFetch(
+            "/rest/v1/messages",
+            {
+                method: "POST",
+
+                headers: {
+                    "Prefer": "return=minimal"
+                },
+
+                body: JSON.stringify({
+                    sender_id: currentUser.id,
+                    receiver_id: selectedUserId,
+                    content: content
+                })
+            }
+        );
+
+        input.value = "";
+
+        await loadMessages();
+
+    } catch (error) {
+
+        console.error(error);
+
+        showStatus(
+            "Could not send message: " +
+            error.message
+        );
+
+    } finally {
+
+        button.disabled = false;
+
+        input.focus();
+    }
+}
+
+
+/* =========================
+   DELETE MESSAGE
+========================= */
+
+async function deleteMessage(messageId) {
+
+    if (!confirm(
+        "Delete this message?"
+    )) {
+        return;
+    }
+
+    try {
+
+        await supabaseFetch(
+            "/rest/v1/messages?id=eq." +
+            encodeURIComponent(messageId),
+            {
+                method: "DELETE"
+            }
+        );
+
+        await loadMessages();
+
+        showStatus(
+            "Message deleted.",
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        showStatus(
+            "Could not delete message: " +
+            error.message
+        );
+    }
+}
+
+
+/* =========================
+   TIME
+========================= */
+
+function formatTime(dateString) {
+
+    if (!dateString) {
         return "";
     }
 
-    return String(value)
+    const date =
+        new Date(dateString);
+
+    if (isNaN(date.getTime())) {
+        return "";
+    }
+
+    return date.toLocaleString(
+        [],
+        {
+            dateStyle: "short",
+            timeStyle: "short"
+        }
+    );
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHtml(value) {
+
+    return String(value || "")
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
-
 }
 
 
-/* ============================================
-   PROFILE NAME
-============================================ */
+/* =========================
+   ENTER TO SEND
+========================= */
 
-function getProfileName(profile) {
+document
+    .getElementById("messageInput")
+    .addEventListener(
+        "keydown",
+        function(event) {
 
-    return (
-        profile["Full name"] ||
-        profile.full_name ||
-        profile.name ||
-        profile.username ||
-        "BERAKAH Member"
-    );
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey
+            ) {
 
-}
+                event.preventDefault();
 
-
-/* ============================================
-   FIND PROFILE
-============================================ */
-
-function findProfile(userId) {
-
-    return allProfiles.find(
-        profile =>
-            profile.user_id === userId
-    );
-
-}
-
-
-/* ============================================
-   DATE
-============================================ */
-
-function formatDate(dateString) {
-
-    const date =
-        new Date(dateString);
-
-    return date.toLocaleString(
-        [],
-        {
-            month: "short",
-            day: "numeric",
-            hour: "numeric",
-            minute: "2-digit"
+                sendMessage();
+            }
         }
     );
 
-}
 
-
-/* ============================================
+/* =========================
    LOGOUT
-============================================ */
+========================= */
 
 function logout() {
 
@@ -724,1089 +1055,55 @@ function logout() {
 
     window.location.href =
         "login.html";
-
 }
 
 
-/* ============================================
-   LOGIN CHECK
-============================================ */
+/* =========================
+   AUTO REFRESH
+========================= */
 
-async function checkLogin() {
+setInterval(() => {
 
-    if (!accessToken) {
-
-        window.location.href =
-            "login.html";
-
-        return false;
-
+    if (currentUser) {
+        loadMessages();
     }
 
+}, 5000);
 
-    const response =
-        await supabaseRequest(
-            "/auth/v1/user"
-        );
 
+/* =========================
+   START
+========================= */
 
-    if (!response.ok) {
+async function start() {
 
-        localStorage.removeItem(
-            "berakah_access_token"
-        );
+    const loggedIn =
+        await checkLogin();
 
-        localStorage.removeItem(
-            "berakah_refresh_token"
-        );
-
-        window.location.href =
-            "login.html";
-
-        return false;
-
-    }
-
-
-    currentUser =
-        await response.json();
-
-    return true;
-
-}
-
-
-/* ============================================
-   LOAD MY PROFILE
-============================================ */
-
-async function loadMyProfile() {
-
-    const response =
-        await supabaseRequest(
-            "/rest/v1/profiles" +
-            "?select=*" +
-            "&user_id=eq." +
-            encodeURIComponent(
-                currentUser.id
-            )
-        );
-
-
-    if (!response.ok) {
-
-        throw new Error(
-            "Could not load your profile."
-        );
-
-    }
-
-
-    const profiles =
-        await response.json();
-
-
-    if (!profiles.length) {
-
-        throw new Error(
-            "Your BERAKAH profile was not found."
-        );
-
-    }
-
-
-    currentProfile =
-        profiles[0];
-
-}
-
-
-/* ============================================
-   LOAD MEMBERS
-============================================ */
-
-async function loadMembers() {
-
-    const response =
-        await supabaseRequest(
-            "/rest/v1/profiles" +
-            "?select=id,user_id,%22Full%20name%22,username,language" +
-            "&order=id.asc"
-        );
-
-
-    if (!response.ok) {
-
-        throw new Error(
-            "Could not load members."
-        );
-
-    }
-
-
-    allProfiles =
-        await response.json();
-
-
-    const select =
-        document.getElementById(
-            "memberSelect"
-        );
-
-
-    select.innerHTML =
-        `<option value="">
-            Choose a member...
-         </option>`;
-
-
-    allProfiles
-        .filter(
-            profile =>
-                profile.user_id !==
-                currentUser.id
-        )
-        .forEach(
-            profile => {
-
-                const option =
-                    document.createElement(
-                        "option"
-                    );
-
-                option.value =
-                    profile.user_id;
-
-                option.textContent =
-                    getProfileName(
-                        profile
-                    ) +
-                    " @" +
-                    (
-                        profile.username ||
-                        ""
-                    );
-
-                select.appendChild(
-                    option
-                );
-
-            }
-        );
-
-}
-
-
-/* ============================================
-   MEMBER SELECT
-============================================ */
-
-document
-    .getElementById(
-        "memberSelect"
-    )
-    .addEventListener(
-        "change",
-        async function() {
-
-            const userId =
-                this.value;
-
-
-            if (!userId) {
-                return;
-            }
-
-
-            const profile =
-                findProfile(
-                    userId
-                );
-
-
-            if (!profile) {
-                return;
-            }
-
-
-            await openConversation(
-                profile
-            );
-
-        }
-    );
-
-
-/* ============================================
-   LOAD MESSAGES
-============================================ */
-
-async function loadAllMessages() {
-
-    const response =
-        await supabaseRequest(
-            "/rest/v1/messages" +
-            "?select=*" +
-            "&order=%22Created%20time%22.asc"
-        );
-
-
-    if (!response.ok) {
-
-        const error =
-            await response.text();
-
-        throw new Error(
-            "Could not load messages: " +
-            error
-        );
-
-    }
-
-
-    allMessages =
-        await response.json();
-
-}
-
-
-/* ============================================
-   GET MESSAGE TIME
-============================================ */
-
-function getMessageTime(message) {
-
-    return (
-        message["Created time"] ||
-        message.created_time ||
-        message.created_at
-    );
-
-}
-
-
-/* ============================================
-   BUILD CONVERSATIONS
-============================================ */
-
-function buildConversations() {
-
-    const container =
-        document.getElementById(
-            "conversations"
-        );
-
-
-    const conversationMap =
-        new Map();
-
-
-    allMessages.forEach(
-        message => {
-
-            const otherUser =
-                message.sender_id ===
-                currentUser.id
-
-                ? message.receiver_id
-
-                : message.sender_id;
-
-
-            conversationMap.set(
-                otherUser,
-                message
-            );
-
-        }
-    );
-
-
-    if (
-        conversationMap.size ===
-        0
-    ) {
-
-        container.innerHTML =
-            `<div class="no-conversations">
-                No conversations yet.
-             </div>`;
-
-        return;
-
-    }
-
-
-    const conversations =
-        Array.from(
-            conversationMap.entries()
-        )
-        .sort(
-            (a, b) => {
-
-                return (
-                    new Date(
-                        getMessageTime(
-                            b[1]
-                        )
-                    ) -
-                    new Date(
-                        getMessageTime(
-                            a[1]
-                        )
-                    )
-                );
-
-            }
-        );
-
-
-    container.innerHTML = "";
-
-
-    conversations.forEach(
-        ([userId, latestMessage]) => {
-
-            const profile =
-                findProfile(
-                    userId
-                );
-
-
-            if (!profile) {
-                return;
-            }
-
-
-            const div =
-                document.createElement(
-                    "div"
-                );
-
-
-            div.className =
-                "conversation";
-
-
-            if (
-                selectedUser &&
-                selectedUser.user_id ===
-                userId
-            ) {
-
-                div.classList.add(
-                    "active"
-                );
-
-            }
-
-
-            div.innerHTML = `
-
-                <div class="conversation-name">
-                    ${escapeHTML(
-                        getProfileName(
-                            profile
-                        )
-                    )}
-                </div>
-
-                <div class="conversation-username">
-                    @${escapeHTML(
-                        profile.username ||
-                        ""
-                    )}
-                </div>
-
-                <div class="conversation-preview">
-                    ${escapeHTML(
-                        latestMessage.content ||
-                        ""
-                    )}
-                </div>
-
-            `;
-
-
-            div.onclick =
-                () =>
-                    openConversation(
-                        profile
-                    );
-
-
-            container.appendChild(
-                div
-            );
-
-        }
-    );
-
-}
-
-
-/* ============================================
-   OPEN CONVERSATION
-============================================ */
-
-async function openConversation(
-    profile
-) {
-
-    selectedUser =
-        profile;
-
-
-    document
-        .getElementById(
-            "memberSelect"
-        )
-        .value =
-            profile.user_id;
-
-
-    const name =
-        getProfileName(
-            profile
-        );
-
-
-    const username =
-        profile.username ||
-        "";
-
-
-    document
-        .getElementById(
-            "chatUser"
-        )
-        .innerHTML = `
-
-            <a href="profile.html?id=${encodeURIComponent(
-                profile.id
-            )}">
-                ${escapeHTML(name)}
-            </a>
-
-            <small>
-                @${escapeHTML(username)}
-            </small>
-
-        `;
-
-
-    document
-        .getElementById(
-            "messageInput"
-        )
-        .disabled =
-            false;
-
-
-    document
-        .getElementById(
-            "sendButton"
-        )
-        .disabled =
-            false;
-
-
-    renderConversation();
-
-    buildConversations();
-
-}
-
-
-/* ============================================
-   RENDER CONVERSATION
-============================================ */
-
-function renderConversation() {
-
-    const body =
-        document.getElementById(
-            "chatBody"
-        );
-
-
-    if (!selectedUser) {
-
-        body.innerHTML = `
-
-            <div class="empty-chat">
-
-                <h2>
-                    💬 Your Messages
-                </h2>
-
-                <p>
-                    Choose a member to start a conversation.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    const conversationMessages =
-        allMessages.filter(
-            message => {
-
-                return (
-
-                    (
-                        message.sender_id ===
-                        currentUser.id
-
-                        &&
-
-                        message.receiver_id ===
-                        selectedUser.user_id
-                    )
-
-                    ||
-
-                    (
-                        message.sender_id ===
-                        selectedUser.user_id
-
-                        &&
-
-                        message.receiver_id ===
-                        currentUser.id
-                    )
-
-                );
-
-            }
-        );
-
-
-    if (
-        conversationMessages.length ===
-        0
-    ) {
-
-        body.innerHTML = `
-
-            <div class="empty-chat">
-
-                <h2>
-                    👋 Start the conversation
-                </h2>
-
-                <p>
-                    Send a message to
-                    ${escapeHTML(
-                        getProfileName(
-                            selectedUser
-                        )
-                    )}.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    body.innerHTML = "";
-
-
-    conversationMessages.forEach(
-        message => {
-
-            const mine =
-                message.sender_id ===
-                currentUser.id;
-
-
-            const row =
-                document.createElement(
-                    "div"
-                );
-
-
-            row.className =
-                "message-row " +
-                (
-                    mine
-                        ? "mine"
-                        : "theirs"
-                );
-
-
-            const bubble =
-                document.createElement(
-                    "div"
-                );
-
-
-            bubble.className =
-                "message " +
-                (
-                    mine
-                        ? "mine"
-                        : "theirs"
-                );
-
-
-            const content =
-                document.createElement(
-                    "div"
-                );
-
-
-            content.className =
-                "message-content";
-
-
-            content.textContent =
-                message.content ||
-                "";
-
-
-            const meta =
-                document.createElement(
-                    "div"
-                );
-
-
-            meta.className =
-                "message-meta";
-
-
-            const time =
-                document.createElement(
-                    "span"
-                );
-
-
-            time.textContent =
-                formatDate(
-                    getMessageTime(
-                        message
-                    )
-                );
-
-
-            meta.appendChild(
-                time
-            );
-
-
-            if (mine) {
-
-                const deleteButton =
-                    document.createElement(
-                        "button"
-                    );
-
-
-                deleteButton.className =
-                    "delete-message";
-
-
-                deleteButton.textContent =
-                    "Delete";
-
-
-                deleteButton.onclick =
-                    () =>
-                        deleteMessage(
-                            message.id
-                        );
-
-
-                meta.appendChild(
-                    deleteButton
-                );
-
-            }
-
-
-            bubble.appendChild(
-                content
-            );
-
-            bubble.appendChild(
-                meta
-            );
-
-            row.appendChild(
-                bubble
-            );
-
-            body.appendChild(
-                row
-            );
-
-        }
-    );
-
-
-    body.scrollTop =
-        body.scrollHeight;
-
-}
-
-
-/* ============================================
-   SEND MESSAGE
-============================================ */
-
-async function sendMessage() {
-
-    if (!selectedUser) {
-
-        alert(
-            "Choose a member first."
-        );
-
-        return;
-
-    }
-
-
-    const input =
-        document.getElementById(
-            "messageInput"
-        );
-
-
-    const button =
-        document.getElementById(
-            "sendButton"
-        );
-
-
-    const content =
-        input.value.trim();
-
-
-    if (!content) {
+    if (!loggedIn) {
         return;
     }
-
-
-    button.disabled =
-        true;
-
-
-    const response =
-        await supabaseRequest(
-            "/rest/v1/messages",
-            {
-                method: "POST",
-
-                headers: {
-                    "Prefer":
-                        "return=minimal"
-                },
-
-                body:
-                    JSON.stringify({
-
-                        sender_id:
-                            currentUser.id,
-
-                        receiver_id:
-                            selectedUser.user_id,
-
-                        content:
-                            content
-
-                    })
-
-            }
-        );
-
-
-    if (!response.ok) {
-
-        const error =
-            await response.text();
-
-        console.error(
-            error
-        );
-
-        alert(
-            "Could not send message."
-        );
-
-        button.disabled =
-            false;
-
-        return;
-
-    }
-
-
-    input.value = "";
-
-
-    await loadAllMessages();
-
-
-    buildConversations();
-
-    renderConversation();
-
-
-    button.disabled =
-        false;
-
-
-    setStatus(
-        "Message sent.",
-        "success"
-    );
-
-}
-
-
-/* ============================================
-   DELETE MESSAGE
-============================================ */
-
-async function deleteMessage(
-    messageId
-) {
-
-    if (
-        !confirm(
-            "Delete this message?"
-        )
-    ) {
-        return;
-    }
-
-
-    const response =
-        await supabaseRequest(
-            "/rest/v1/messages" +
-            "?id=eq." +
-            encodeURIComponent(
-                messageId
-            ),
-            {
-                method:
-                    "DELETE"
-            }
-        );
-
-
-    if (!response.ok) {
-
-        const error =
-            await response.text();
-
-        console.error(
-            error
-        );
-
-        alert(
-            "Could not delete message."
-        );
-
-        return;
-
-    }
-
-
-    await loadAllMessages();
-
-    buildConversations();
-
-    renderConversation();
-
-}
-
-
-/* ============================================
-   REFRESH
-============================================ */
-
-async function loadCurrentConversation() {
 
     try {
-
-        await loadAllMessages();
-
-        buildConversations();
-
-        renderConversation();
-
-        setStatus(
-            "Messages refreshed.",
-            "success"
-        );
-
-    }
-    catch (error) {
-
-        console.error(
-            error
-        );
-
-        setStatus(
-            error.message,
-            "error"
-        );
-
-    }
-
-}
-
-
-/* ============================================
-   ENTER TO SEND
-============================================ */
-
-document
-    .getElementById(
-        "messageInput"
-    )
-    .addEventListener(
-        "keydown",
-        function(event) {
-
-            if (
-                event.key ===
-                "Enter" &&
-                !event.shiftKey
-            ) {
-
-                event.preventDefault();
-
-                sendMessage();
-
-            }
-
-        }
-    );
-
-
-/* ============================================
-   INITIALIZE
-============================================ */
-
-async function initialize() {
-
-    try {
-
-        setStatus(
-            "Checking login..."
-        );
-
-
-        const loggedIn =
-            await checkLogin();
-
-
-        if (!loggedIn) {
-            return;
-        }
-
-
-        setStatus(
-            "Loading profile..."
-        );
-
-
-        await loadMyProfile();
-
-
-        setStatus(
-            "Loading members..."
-        );
-
 
         await loadMembers();
 
+        await loadMessages();
 
-        setStatus(
-            "Loading messages..."
+    } catch (error) {
+
+        console.error(error);
+
+        showStatus(
+            "Could not load Messages: " +
+            error.message
         );
-
-
-        await loadAllMessages();
-
-
-        buildConversations();
-
-
-        setStatus(
-            "Messages ready.",
-            "success"
-        );
-
-
-        /*
-         * Automatically refresh every 5 seconds.
-         */
-
-        refreshTimer =
-            setInterval(
-                async function() {
-
-                    try {
-
-                        await loadAllMessages();
-
-                        buildConversations();
-
-                        renderConversation();
-
-                    }
-                    catch (error) {
-
-                        console.error(
-                            "Refresh error:",
-                            error
-                        );
-
-                    }
-
-                },
-                5000
-            );
-
     }
-    catch (error) {
-
-        console.error(
-            error
-        );
-
-        setStatus(
-            error.message ||
-            "Something went wrong.",
-            "error"
-        );
-
-    }
-
 }
 
-
-/* ============================================
-   START
-============================================ */
-
-initialize();
+start();
 
 </script>
 
 </body>
-
 </html>
