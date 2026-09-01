@@ -1,201 +1,762 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<head>
+<title>BERAKAH Checkout</title><style>
 
-<title>BERAKAH Checkout</title>
-
-<style>
+*{
+  box-sizing:border-box;
+}
 
 body{
-  font-family:Arial;
-  background:#f5f5f5;
-  padding:30px;
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f7fb;
+  color:#111827;
 }
 
 .checkout{
   background:white;
-  max-width:500px;
-  margin:auto;
+  max-width:600px;
+  margin:40px auto;
   padding:25px;
+  border-radius:16px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.08);
+}
+
+h1{
+  margin-top:0;
+}
+
+h2{
+  margin-top:25px;
+}
+
+.order-summary{
+  background:#f9fafb;
+  border:1px solid #e5e7eb;
   border-radius:12px;
+  padding:15px;
+  margin:20px 0;
+}
+
+.order-item{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:12px 0;
+  border-bottom:1px solid #e5e7eb;
+}
+
+.order-item:last-child{
+  border-bottom:none;
+}
+
+.item-name{
+  font-weight:bold;
+}
+
+.item-details{
+  color:#6b7280;
+  font-size:14px;
+  margin-top:4px;
+}
+
+.item-price{
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin-top:16px;
+  margin-bottom:7px;
 }
 
 input{
   width:100%;
-  padding:12px;
-  margin:8px 0 15px;
-  box-sizing:border-box;
+  padding:13px;
+  border:1px solid #d1d5db;
+  border-radius:9px;
+  font-size:16px;
+}
+
+input:focus{
+  outline:none;
+  border-color:#2563eb;
 }
 
 .total{
-  font-size:26px;
+  font-size:27px;
   font-weight:bold;
-  margin:20px 0;
+  margin:25px 0;
+  padding-top:20px;
+  border-top:2px solid #e5e7eb;
 }
 
 button{
   width:100%;
-  padding:14px;
+  padding:15px;
   background:#111827;
   color:white;
   border:none;
+  border-radius:9px;
   cursor:pointer;
   font-size:16px;
+  font-weight:bold;
 }
 
-</style>
+button:hover{
+  opacity:.92;
+}
 
-</head>
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
 
-<body>
+.empty{
+  text-align:center;
+  padding:30px;
+}
 
-<div class="checkout">
+.back{
+  display:block;
+  text-align:center;
+  margin-top:18px;
+  color:#2563eb;
+  text-decoration:none;
+  font-weight:bold;
+}
 
-<h1>🛒 BERAKAH CHECKOUT</h1>
+.status{
+  display:none;
+  padding:12px;
+  margin-top:15px;
+  border-radius:8px;
+  line-height:1.5;
+}
 
-<h2>Customer Information</h2>
+.status.error{
+  display:block;
+  background:#fef2f2;
+  color:#991b1b;
+}
 
-<label>Full Name</label>
-<input id="customerName" type="text" placeholder="Your name">
+.status.success{
+  display:block;
+  background:#f0fdf4;
+  color:#166534;
+}
 
-<label>Email</label>
-<input id="customerEmail" type="email" placeholder="Your email">
+</style></head><body><div class="checkout"><h1>🛒 BERAKAH CHECKOUT</h1><p>
+Complete your information to place your order.
+</p><!-- =========================
+     ORDER SUMMARY
+========================= --><h2>Order Summary</h2><div
+  id="orderSummary"
+  class="order-summary">
+</div><!-- =========================
+     CUSTOMER INFORMATION
+========================= --><h2>Customer Information</h2><label for="customerName">
+Full Name
+</label><input
+id="customerName"
+type="text"
+placeholder="Your name"
+autocomplete="name">
 
-<label>Address</label>
-<input id="customerAddress" type="text" placeholder="Your address">
+<label for="customerEmail">
+Email
+</label><input
+id="customerEmail"
+type="email"
+placeholder="Your email"
+autocomplete="email">
 
-<div id="total" class="total"></div>
+<label for="customerPhone">
+Phone
+</label><input
+id="customerPhone"
+type="tel"
+placeholder="Your phone number"
+autocomplete="tel">
 
-<button onclick="placeOrder()">PLACE ORDER</button>
+<label for="customerAddress">
+Address
+</label><input
+id="customerAddress"
+type="text"
+placeholder="Your shipping address"
+autocomplete="street-address">
 
-</div>
+<div
+  id="total"
+  class="total">
+</div><button
+id="placeOrderButton"
+onclick="placeOrder()">
+
+PLACE ORDER
+
+</button><div
+  id="status"
+  class="status">
+</div><a
+href="cart.html"
+class="back">
+
+← Back to Cart
+
+</a></div><script>
+
+/* =====================================================
+   BERAKAH CHECKOUT
+===================================================== */
 
 
-<script>
+/* =========================
+   LOAD CART
+========================= */
 
-let cart = JSON.parse(
-  localStorage.getItem("berakahCart") || "[]"
-);
+let cart = [];
 
-let total = 0;
+try {
 
-cart.forEach(function(product){
+  cart = JSON.parse(
+    localStorage.getItem("berakahCart") || "[]"
+  );
 
-  total += Number(product.price) || 0;
+} catch(error) {
 
-});
+  cart = [];
 
-document.getElementById("total").innerHTML =
-  "TOTAL: $" + total;
+}
 
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const orderSummary =
+  document.getElementById("orderSummary");
+
+const totalBox =
+  document.getElementById("total");
+
+const statusBox =
+  document.getElementById("status");
+
+const placeOrderButton =
+  document.getElementById("placeOrderButton");
+
+
+/* =========================
+   STATUS
+========================= */
+
+function showStatus(message,type){
+
+  statusBox.textContent =
+    message;
+
+  statusBox.className =
+    "status " + type;
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================
+   CALCULATE TOTAL
+========================= */
+
+function calculateTotal(){
+
+  return cart.reduce(
+    function(total,product){
+
+      const price =
+        Number(product.price) || 0;
+
+      const quantity =
+        Math.max(
+          1,
+          Number(product.quantity) || 1
+        );
+
+      return total +
+        (price * quantity);
+
+    },
+    0
+  );
+
+}
+
+
+/* =========================
+   DISPLAY ORDER
+========================= */
+
+function displayOrder(){
+
+  if(!cart.length){
+
+    orderSummary.innerHTML = `
+
+      <div class="empty">
+
+        🛒
+
+        <h3>Your cart is empty</h3>
+
+        <p>
+          Add products before checking out.
+        </p>
+
+      </div>
+
+    `;
+
+    totalBox.textContent =
+      "TOTAL: $0.00";
+
+    placeOrderButton.disabled =
+      true;
+
+    return;
+
+  }
+
+
+  let html = "";
+
+
+  cart.forEach(function(product){
+
+    const name =
+      escapeHTML(
+        product.name ||
+        "Product"
+      );
+
+
+    const quantity =
+      Math.max(
+        1,
+        Number(product.quantity) || 1
+      );
+
+
+    const price =
+      Number(product.price) || 0;
+
+
+    const subtotal =
+      price * quantity;
+
+
+    const seller =
+      escapeHTML(
+        product.seller_name ||
+        "BERAKAH Seller"
+      );
+
+
+    html += `
+
+      <div class="order-item">
+
+        <div>
+
+          <div class="item-name">
+            ${name}
+          </div>
+
+          <div class="item-details">
+
+            Seller: ${seller}<br>
+
+            Quantity: ${quantity}
+
+          </div>
+
+        </div>
+
+
+        <div class="item-price">
+
+          $${subtotal.toFixed(2)}
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+
+  orderSummary.innerHTML =
+    html;
+
+
+  const total =
+    calculateTotal();
+
+
+  totalBox.textContent =
+    "TOTAL: $" +
+    total.toFixed(2);
+
+}
+
+
+/* =========================
+   SAVE LEGACY LOCAL STOCK
+========================= */
+
+function updateLegacyLocalStock(){
+
+  try{
+
+    const products =
+      JSON.parse(
+        localStorage.getItem(
+          "berakahProducts"
+        ) || "[]"
+      );
+
+
+    cart.forEach(function(cartProduct){
+
+      const product =
+        products.find(function(p){
+
+          return String(p.id) ===
+            String(cartProduct.id);
+
+        });
+
+
+      if(product){
+
+        const quantity =
+          Math.max(
+            1,
+            Number(
+              cartProduct.quantity
+            ) || 1
+          );
+
+
+        product.stock =
+          Math.max(
+            0,
+            Number(product.stock || 0) -
+            quantity
+          );
+
+      }
+
+    });
+
+
+    localStorage.setItem(
+      "berakahProducts",
+      JSON.stringify(products)
+    );
+
+  }
+  catch(error){
+
+    console.warn(
+      "Legacy local stock update skipped:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================
+   PLACE ORDER
+========================= */
 
 function placeOrder(){
 
-  let name =
-    document.getElementById("customerName").value.trim();
+  if(!cart.length){
 
-  let email =
-    document.getElementById("customerEmail").value.trim();
-
-  let address =
-    document.getElementById("customerAddress").value.trim();
-
-
-  if(!name || !email || !address){
-
-    alert("PLEASE COMPLETE ALL INFORMATION");
+    alert(
+      "YOUR CART IS EMPTY"
+    );
 
     return;
 
   }
 
 
-  if(cart.length === 0){
+  const name =
+    document.getElementById(
+      "customerName"
+    ).value.trim();
 
-    alert("YOUR CART IS EMPTY");
+
+  const email =
+    document.getElementById(
+      "customerEmail"
+    ).value.trim()
+    .toLowerCase();
+
+
+  const phone =
+    document.getElementById(
+      "customerPhone"
+    ).value.trim();
+
+
+  const address =
+    document.getElementById(
+      "customerAddress"
+    ).value.trim();
+
+
+  /* =========================
+     VALIDATION
+  ========================= */
+
+  if(
+    !name ||
+    !email ||
+    !address
+  ){
+
+    showStatus(
+      "PLEASE COMPLETE YOUR NAME, EMAIL, AND ADDRESS.",
+      "error"
+    );
 
     return;
 
   }
 
 
-  let order = {
+  /* =========================
+     CREATE ORDER NUMBER
+  ========================= */
 
-    id: Date.now(),
+  const orderNumber =
+    "BRK-" +
+    Date.now()
+      .toString()
+      .slice(-8);
 
-    customerName: name,
 
-    customerEmail: email,
+  /* =========================
+     PREPARE PRODUCTS
+  ========================= */
 
-    customerAddress: address,
+  const orderProducts =
+    cart.map(function(product){
 
-    products: cart,
+      return {
 
-    total: total,
+        id:
+          product.id,
 
-    status: "NEW"
+        name:
+          product.name,
+
+        price:
+          Number(product.price) || 0,
+
+        image_url:
+          product.image_url || null,
+
+        quantity:
+          Math.max(
+            1,
+            Number(product.quantity) || 1
+          ),
+
+        seller_id:
+          product.seller_id || null,
+
+        seller_name:
+          product.seller_name ||
+          "BERAKAH Seller",
+
+        seller_email:
+          product.seller_email ||
+          ""
+
+      };
+
+    });
+
+
+  /* =========================
+     TOTAL
+  ========================= */
+
+  const total =
+    calculateTotal();
+
+
+  /* =========================
+     CREATE ORDER
+  ========================= */
+
+  const order = {
+
+    id:
+      Date.now(),
+
+    orderNumber:
+      orderNumber,
+
+    createdAt:
+      new Date().toISOString(),
+
+    customerName:
+      name,
+
+    customerEmail:
+      email,
+
+    customerPhone:
+      phone,
+
+    customerAddress:
+      address,
+
+    products:
+      orderProducts,
+
+    total:
+      Number(
+        total.toFixed(2)
+      ),
+
+    status:
+      "NEW"
 
   };
 
 
-  let orders = JSON.parse(
-    localStorage.getItem("berakahOrders") || "[]"
-  );
+  /* =========================
+     SAVE ORDER
+  ========================= */
 
+  try{
 
-  orders.push(order);
-
-
-  localStorage.setItem(
-    "berakahOrders",
-    JSON.stringify(orders)
-  );
-cart.forEach(function(cartProduct){
-
-  let products = JSON.parse(
-    localStorage.getItem("berakahProducts") || "[]"
-  );
-
-  let product = products.find(function(p){
-    return Number(p.id) === Number(cartProduct.id);
-  });
-
-  if(product){
-
-    product.stock =
-      Math.max(
-        0,
-        Number(product.stock || 0) - 1
+    let orders =
+      JSON.parse(
+        localStorage.getItem(
+          "berakahOrders"
+        ) || "[]"
       );
 
+
+    orders.push(order);
+
+
+    localStorage.setItem(
+      "berakahOrders",
+      JSON.stringify(orders)
+    );
+
+
+    /* =========================
+       SAVE LAST ORDER
+    ========================= */
+
+    localStorage.setItem(
+      "berakahLastOrder",
+      JSON.stringify(order)
+    );
+
+
+    /* =========================
+       UPDATE OLD LOCAL STOCK
+    ========================= */
+
+    updateLegacyLocalStock();
+
+
+    /* =========================
+       CLEAR CART
+    ========================= */
+
+    localStorage.removeItem(
+      "berakahCart"
+    );
+
+
+    /* =========================
+       SUCCESS
+    ========================= */
+
+    showStatus(
+      "ORDER SAVED! Redirecting...",
+      "success"
+    );
+
+
+    placeOrderButton.disabled =
+      true;
+
+
+    setTimeout(
+      function(){
+
+        window.location.href =
+          "order-confirmation.html";
+
+      },
+      500
+    );
+
   }
+  catch(error){
 
-  localStorage.setItem(
-    "berakahProducts",
-    JSON.stringify(products)
-  );
-
-});
-
-  // CLEAR CART AFTER ORDER
-
-  localStorage.removeItem("berakahCart");
+    console.error(
+      "ORDER SAVE ERROR:",
+      error
+    );
 
 
-  alert("ORDER SAVED! 🚀");
+    showStatus(
+      "Could not save your order. Please try again.",
+      "error"
+    );
 
-
-  // GO BACK TO MARKETPLACE
-
-  window.location.href =
-    "marketplace.html";
+  }
 
 }
 
 
-</script>
+/* =========================
+   START
+========================= */
 
-</body>
+displayOrder();
 
-</html>
+</script></body></html>
