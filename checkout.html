@@ -175,6 +175,8 @@ input:focus{
     margin-bottom:20px;
 
     line-height:1.5;
+
+    white-space:pre-line;
 }
 
 .status.error{
@@ -201,6 +203,15 @@ input:focus{
 }
 
 @media(max-width:600px){
+
+    .header-inner{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    nav{
+        justify-content:center;
+    }
 
     .product-row{
         align-items:flex-start;
@@ -260,6 +271,7 @@ BERAKAH
 <h2>🛍️ Order Summary</h2>
 
 <div id="orderSummary"></div>
+
 
 <div class="total">
 
@@ -355,6 +367,7 @@ Shipping Address
 
 <script>
 
+
 /* =====================================================
    BERAKAH SUPABASE
 ===================================================== */
@@ -396,6 +409,11 @@ try{
 
 }catch(error){
 
+    console.error(
+        "CART ERROR:",
+        error
+    );
+
     cart = [];
 
 }
@@ -427,10 +445,13 @@ document.getElementById(
 
 
 /* =====================================================
-   STATUS
+   STATUS MESSAGE
 ===================================================== */
 
-function showStatus(message,type){
+function showStatus(
+    message,
+    type
+){
 
     statusBox.textContent =
         message;
@@ -487,9 +508,9 @@ async function supabaseRequest(
     try{
 
         data =
-            text ?
-            JSON.parse(text) :
-            null;
+            text
+            ? JSON.parse(text)
+            : null;
 
     }catch(error){
 
@@ -505,12 +526,19 @@ async function supabaseRequest(
             data
         );
 
+
         throw new Error(
+
             data?.message ||
+
             data?.msg ||
+
             data?.hint ||
+
             data?.details ||
+
             "Supabase request failed."
+
         );
 
     }
@@ -544,11 +572,16 @@ async function loadCurrentUser(){
                 "/auth/v1/user"
             );
 
+
         return true;
 
     }catch(error){
 
-        console.error(error);
+        console.error(
+            "USER ERROR:",
+            error
+        );
+
 
         localStorage.removeItem(
             "berakah_access_token"
@@ -558,8 +591,10 @@ async function loadCurrentUser(){
             "berakah_refresh_token"
         );
 
+
         window.location.href =
             "login.html";
+
 
         return false;
 
@@ -580,7 +615,9 @@ function displayCart(){
 
             <div class="empty">
 
-                <h3>Your cart is empty.</h3>
+                <h3>
+                    Your cart is empty.
+                </h3>
 
                 <a href="marketplace.html">
                     Continue Shopping
@@ -590,11 +627,14 @@ function displayCart(){
 
         `;
 
+
         totalBox.textContent =
             "$0.00";
 
+
         placeOrderButton.disabled =
             true;
+
 
         return;
 
@@ -605,56 +645,67 @@ function displayCart(){
 
 
     summaryBox.innerHTML =
-        cart.map(function(item){
+        cart.map(
+            function(item){
 
-            const quantity =
-                Number(item.quantity || 1);
-
-            const price =
-                Number(item.price || 0);
-
-            const itemTotal =
-                price * quantity;
-
-            total +=
-                itemTotal;
+                const quantity =
+                    Number(
+                        item.quantity || 1
+                    );
 
 
-            return `
+                const price =
+                    Number(
+                        item.price || 0
+                    );
 
-                <div class="product-row">
 
-                    <div>
+                const itemTotal =
+                    price * quantity;
 
-                        <div class="product-name">
 
-                            ${escapeHTML(
-                                item.name ||
-                                "Product"
-                            )}
+                total +=
+                    itemTotal;
+
+
+                return `
+
+                    <div class="product-row">
+
+                        <div>
+
+                            <div class="product-name">
+
+                                ${escapeHTML(
+                                    item.name ||
+                                    "Product"
+                                )}
+
+                            </div>
+
+
+                            <div class="product-meta">
+
+                                Quantity:
+                                ${quantity}
+
+                            </div>
 
                         </div>
 
-                        <div class="product-meta">
 
-                            Quantity:
-                            ${quantity}
+                        <div class="product-price">
+
+                            $${itemTotal.toFixed(2)}
 
                         </div>
 
                     </div>
 
-                    <div class="product-price">
+                `;
 
-                        $${itemTotal.toFixed(2)}
-
-                    </div>
-
-                </div>
-
-            `;
-
-        }).join("");
+            }
+        ).join("");
 
 
     totalBox.textContent =
@@ -667,7 +718,9 @@ function displayCart(){
    GET PRODUCT FROM SUPABASE
 ===================================================== */
 
-async function getProduct(productId){
+async function getProduct(
+    productId
+){
 
     const endpoint =
         "/rest/v1/products" +
@@ -689,9 +742,11 @@ async function getProduct(productId){
     ){
 
         throw new Error(
+
             "Product " +
             productId +
             " could not be found."
+
         );
 
     }
@@ -783,8 +838,11 @@ async function placeOrder(){
     ){
 
         showStatus(
+
             "Please complete your name, email, phone, and shipping address.",
+
             "error"
+
         );
 
         return;
@@ -794,6 +852,7 @@ async function placeOrder(){
 
     placeOrderButton.disabled =
         true;
+
 
     placeOrderButton.textContent =
         "PLACING ORDER...";
@@ -807,18 +866,18 @@ async function placeOrder(){
 
     try{
 
-        /*
-         * ONE ORDER NUMBER
-         * FOR THE WHOLE CART
-         */
+
+        /* =================================================
+           ONE ORDER NUMBER FOR WHOLE CART
+        ================================================= */
 
         const orderNumber =
             generateOrderNumber();
 
 
-        /*
-         * PROCESS EACH CART PRODUCT
-         */
+        /* =================================================
+           PROCESS EACH CART ITEM
+        ================================================= */
 
         for(
             const cartItem of cart
@@ -846,18 +905,18 @@ async function placeOrder(){
                 price * quantity;
 
 
-            /*
-             * SELLER
-             */
+            /* =================================================
+               SELLER
+            ================================================= */
 
             const sellerId =
                 product.seller_id ||
                 null;
 
 
-            /*
-             * PRODUCT SNAPSHOT
-             */
+            /* =================================================
+               PRODUCT SNAPSHOT
+            ================================================= */
 
             const productSnapshot = {
 
@@ -888,10 +947,14 @@ async function placeOrder(){
             };
 
 
-            /*
-             * EXACT COLUMNS
-             * FROM YOUR ORDERS TABLE
-             */
+            /* =================================================
+               ORDER DATA
+               
+               IMPORTANT:
+               status MUST be "pending"
+               because that is allowed by
+               orders_status_valid.
+            ================================================= */
 
             const order = {
 
@@ -917,7 +980,7 @@ async function placeOrder(){
                     itemTotal,
 
                 status:
-                    "NEW",
+                    "pending",
 
                 shipping_name:
                     customerName,
@@ -961,11 +1024,18 @@ async function placeOrder(){
             );
 
 
+            /* =================================================
+               INSERT ORDER
+            ================================================= */
+
             await supabaseRequest(
+
                 "/rest/v1/orders",
+
                 {
 
-                    method:"POST",
+                    method:
+                        "POST",
 
                     headers:{
 
@@ -980,14 +1050,15 @@ async function placeOrder(){
                         )
 
                 }
+
             );
 
         }
 
 
-        /*
-         * SUCCESS
-         */
+        /* =================================================
+           SUCCESS
+        ================================================= */
 
         localStorage.removeItem(
             "berakahCart"
@@ -995,19 +1066,25 @@ async function placeOrder(){
 
 
         showStatus(
+
             "Order placed successfully! Redirecting...",
+
             "success"
+
         );
 
 
         setTimeout(
+
             function(){
 
                 window.location.href =
                     "orders.html";
 
             },
+
             800
+
         );
 
 
@@ -1020,14 +1097,18 @@ async function placeOrder(){
 
 
         showStatus(
+
             "Could not save the order to Supabase.\n\n" +
             error.message,
+
             "error"
+
         );
 
 
         placeOrderButton.disabled =
             false;
+
 
         placeOrderButton.textContent =
             "🛒 PLACE ORDER";
@@ -1041,7 +1122,9 @@ async function placeOrder(){
    ESCAPE HTML
 ===================================================== */
 
-function escapeHTML(value){
+function escapeHTML(
+    value
+){
 
     return String(value)
 
@@ -1074,7 +1157,7 @@ function escapeHTML(value){
 
 
 /* =====================================================
-   START
+   START CHECKOUT
 ===================================================== */
 
 async function startCheckout(){
@@ -1093,9 +1176,9 @@ async function startCheckout(){
     }
 
 
-    /*
-     * PREFILL EMAIL
-     */
+    /* =================================================
+       PREFILL EMAIL
+    ================================================= */
 
     const emailInput =
         document.getElementById(
@@ -1114,9 +1197,9 @@ async function startCheckout(){
     }
 
 
-    /*
-     * PREFILL NAME
-     */
+    /* =================================================
+       PREFILL NAME
+    ================================================= */
 
     const metadata =
         currentUser.user_metadata ||
@@ -1148,6 +1231,10 @@ async function startCheckout(){
 
 }
 
+
+/* =====================================================
+   START
+===================================================== */
 
 startCheckout();
 
