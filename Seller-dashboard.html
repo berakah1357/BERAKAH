@@ -1,379 +1,1233 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<!DOCTYPE html>
-<html>
+<title>BERAKAH Seller Dashboard</title><style>
 
-<head>
-
-<title>BERAKAH Seller Dashboard</title>
-
-<style>
+*{
+  box-sizing:border-box;
+}
 
 body{
-  font-family:Arial;
-  background:#f5f5f5;
-  padding:20px;
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f7fb;
+  color:#111827;
 }
 
-.dashboard{
-  max-width:700px;
-  margin:auto;
-}
-
-.card{
+header{
   background:white;
-  padding:20px;
-  margin:15px 0;
+  border-bottom:1px solid #e5e7eb;
+  padding:15px 20px;
+}
+
+.header-inner{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:bold;
+  text-decoration:none;
+  color:#111827;
+}
+
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+nav a{
+  text-decoration:none;
+  color:#374151;
+  font-size:14px;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:25px 20px 50px;
+}
+
+h1{
+  margin-top:0;
+}
+
+.subtitle{
+  color:#6b7280;
+  margin-bottom:25px;
+}
+
+.user-box{
+  background:white;
+  border:1px solid #e5e7eb;
   border-radius:12px;
+  padding:15px;
+  margin-bottom:20px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:
+    repeat(4,1fr);
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.stat{
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:18px;
+}
+
+.stat-label{
+  color:#6b7280;
+  font-size:13px;
+}
+
+.stat-number{
+  font-size:28px;
+  font-weight:bold;
+  margin-top:7px;
+}
+
+.section{
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:20px;
+  margin-bottom:25px;
+}
+
+.product-card,
+.order-card{
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  padding:16px;
+  margin-bottom:15px;
+}
+
+.product-card:last-child,
+.order-card:last-child{
+  margin-bottom:0;
+}
+
+.product-card h3,
+.order-card h3{
+  margin-top:0;
+}
+
+.order-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.status-badge{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:20px;
+  background:#eff6ff;
+  color:#2563eb;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.customer{
+  background:#f9fafb;
+  padding:12px;
+  border-radius:8px;
+  margin:12px 0;
+}
+
+.order-item{
+  padding:10px 0;
+  border-bottom:1px solid #e5e7eb;
+}
+
+.order-item:last-child{
+  border-bottom:none;
+}
+
+.status-buttons{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:15px;
 }
 
 button{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
   border:none;
+  border-radius:7px;
+  padding:10px 13px;
   cursor:pointer;
-  background:#111827;
-  color:white;
-  border-radius:6px;
+  font-weight:bold;
 }
 
-select{
-  padding:8px;
-  margin-top:5px;
+.processing{
+  background:#fef3c7;
+  color:#92400e;
 }
 
-</style>
+.shipped{
+  background:#dbeafe;
+  color:#1d4ed8;
+}
 
-</head>
+.delivered{
+  background:#dcfce7;
+  color:#166534;
+}
 
-<body>
+.cancel{
+  background:#fee2e2;
+  color:#991b1b;
+}
 
-<div class="dashboard">
+.empty{
+  text-align:center;
+  padding:30px 10px;
+  color:#6b7280;
+}
 
-<h1>🏪 BERAKAH SELLER DASHBOARD</h1>
+.error{
+  background:#fef2f2;
+  color:#991b1b;
+  border:1px solid #fecaca;
+  padding:15px;
+  border-radius:10px;
+}
 
-<div class="card">
+.loading{
+  color:#6b7280;
+}
 
-<h2>📦 My Products</h2>
+.sales{
+  font-size:30px;
+  font-weight:bold;
+}
 
-<div id="products"></div>
+@media(max-width:700px){
 
-</div>
+  .stats{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
 
-
-<div class="card">
-
-<h2>💰 Sales</h2>
-
-<div id="sales">$0</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>📋 Orders</h2>
-
-<p>
-Total Orders:
-<strong id="ordersCount">0</strong>
-</p>
-
-<div id="orders"></div>
-
-</div>
-
-</div>
-
-
-<script>
-
-let products = JSON.parse(
-  localStorage.getItem("berakahProducts") || "[]"
-);
-
-let orders = JSON.parse(
-  localStorage.getItem("berakahOrders") || "[]"
-);
-
-
-let productsBox =
-  document.getElementById("products");
-
-
-/* PRODUCTS */
-
-if(products.length === 0){
-
-  productsBox.innerHTML =
-    "<p>No products yet.</p>";
-
-}else{
-
-  products.forEach(function(product){
-
-    productsBox.innerHTML += `
-
-      <div>
-
-        <h3>${product.name}</h3>
-
-        <p>Price: $${product.price}</p>
-
-        <p>Stock: ${product.stock ?? 0}</p>
-
-        <p>Seller: ${product.seller || "BERAKAH"}</p>
-
-        <button onclick="editProduct(${product.id})">
-          ✏️ EDIT
-        </button>
-
-        <button onclick="deleteProduct(${product.id})">
-          🗑️ DELETE
-        </button>
-
-      </div>
-
-      <hr>
-
-    `;
-
-  });
+  .header-inner{
+    align-items:flex-start;
+    flex-direction:column;
+  }
 
 }
 
+@media(max-width:450px){
 
-/* ORDERS */
-
-let ordersBox =
-  document.getElementById("orders");
-
-let totalOrders =
-  orders.length;
-
-document.getElementById("ordersCount").innerHTML =
-  totalOrders;
-
-
-let sales = 0;
-
-
-if(orders.length === 0){
-
-  ordersBox.innerHTML =
-    "<p>No orders yet.</p>";
-
-}else{
-
-  orders.forEach(function(order){
-
-    sales += Number(order.total) || 0;
-
-    ordersBox.innerHTML += `
-
-      <div>
-
-        <h3>Order #${order.id}</h3>
-
-        <p>
-          Customer: ${order.customerName}
-        </p>
-
-        <p>
-          Total: $${order.total}
-        </p>
-
-        <p>
-          Status:
-        </p>
-
-        <select
-          onchange="updateOrderStatus(${order.id}, this.value)"
-        >
-
-          <option value="NEW"
-            ${order.status === "NEW" ? "selected" : ""}>
-            NEW
-          </option>
-
-          <option value="PROCESSING"
-            ${order.status === "PROCESSING" ? "selected" : ""}>
-            PROCESSING
-          </option>
-
-          <option value="SHIPPED"
-            ${order.status === "SHIPPED" ? "selected" : ""}>
-            SHIPPED
-          </option>
-
-          <option value="COMPLETED"
-            ${order.status === "COMPLETED" ? "selected" : ""}>
-            COMPLETED
-          </option>
-
-        </select>
-
-      </div>
-
-      <hr>
-
-    `;
-
-  });
+  .stats{
+    grid-template-columns:1fr;
+  }
 
 }
 
+</style></head><body><header><div class="header-inner"><a
+class="logo"
+href="index.html">
 
-document.getElementById("sales").innerHTML =
-  "$" + sales;
+BERAKAH
+
+</a><nav><a href="index.html">
+Home
+</a><a href="marketplace.html">
+Market
+</a><a href="orders.html">
+My Orders
+</a><a href="profile.html">
+Profile
+</a></nav></div></header><main class="container"><h1>
+🏪 SELLER DASHBOARD
+</h1><p class="subtitle">
+Manage your products, sales, and customer orders.
+</p><!-- =========================
+     SELLER INFORMATION
+========================= --><div
+  id="userBox"
+  class="user-box">Loading seller information...
+
+</div><!-- =========================
+     STATS
+========================= --><div class="stats"><div class="stat"><div class="stat-label">
+My Orders
+</div><div
+  id="ordersCount"
+  class="stat-number">0
+
+</div></div><div class="stat"><div class="stat-label">
+New
+</div><div
+  id="newCount"
+  class="stat-number">0
+
+</div></div><div class="stat"><div class="stat-label">
+Processing
+</div><div
+  id="processingCount"
+  class="stat-number">0
+
+</div></div><div class="stat"><div class="stat-label">
+Delivered
+</div><div
+  id="deliveredCount"
+  class="stat-number">0
+
+</div></div></div><!-- =========================
+     SALES
+========================= --><div class="section"><h2>
+💰 My Sales
+</h2><div
+  id="sales"
+  class="sales">$0.00
+
+</div></div><!-- =========================
+     PRODUCTS
+========================= --><div class="section"><h2>
+📦 My Products
+</h2><div
+  id="products"
+  class="loading">Loading products...
+
+</div></div><!-- =========================
+     ORDERS
+========================= --><div class="section"><h2>
+📋 My Customer Orders
+</h2><div
+  id="orders"
+  class="loading">Loading orders...
+
+</div></div></main><script>
+
+/* =====================================================
+   BERAKAH SELLER DASHBOARD
+===================================================== */
 
 
-/* EDIT PRODUCT */
+/* =========================
+   SUPABASE
+========================= */
 
-function editProduct(productId){
+const SUPABASE_URL =
+  "https://utoyoglycqjmqznczfxa.supabase.co";
 
-  let products = JSON.parse(
-    localStorage.getItem("berakahProducts") || "[]"
+const SUPABASE_KEY =
+  "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+
+
+let accessToken =
+  localStorage.getItem(
+    "berakah_access_token"
   );
 
-  let product = products.find(function(p){
+let currentUser = null;
 
-    return Number(p.id) === Number(productId);
+let myProducts = [];
 
-  });
+let myOrders = [];
 
 
-  if(!product){
+/* =========================
+   SUPABASE REQUEST
+========================= */
 
-    alert("PRODUCT NOT FOUND");
+async function supabaseRequest(
+  endpoint,
+  options = {}
+){
+
+  const response =
+    await fetch(
+      SUPABASE_URL + endpoint,
+      {
+        ...options,
+
+        headers:{
+          "apikey":
+            SUPABASE_KEY,
+
+          "Authorization":
+            "Bearer " +
+            accessToken,
+
+          "Content-Type":
+            "application/json",
+
+          ...(options.headers || {})
+        }
+      }
+    );
+
+
+  const text =
+    await response.text();
+
+
+  let data = null;
+
+
+  try{
+
+    data =
+      text ?
+      JSON.parse(text) :
+      null;
+
+  }
+  catch{
+
+    data = text;
+
+  }
+
+
+  if(!response.ok){
+
+    throw new Error(
+      data?.message ||
+      data?.msg ||
+      "Supabase request failed."
+    );
+
+  }
+
+
+  return data;
+
+}
+
+
+/* =========================
+   LOAD CURRENT USER
+========================= */
+
+async function loadCurrentUser(){
+
+  if(!accessToken){
+
+    window.location.href =
+      "login.html";
+
+    return false;
+
+  }
+
+
+  try{
+
+    currentUser =
+      await supabaseRequest(
+        "/auth/v1/user"
+      );
+
+
+    if(!currentUser ||
+       !currentUser.id){
+
+      throw new Error(
+        "No valid seller account found."
+      );
+
+    }
+
+
+    const username =
+      localStorage.getItem(
+        "berakah_username"
+      ) ||
+      currentUser.user_metadata?.username ||
+      currentUser.user_metadata?.full_name ||
+      currentUser.email ||
+      "BERAKAH Seller";
+
+
+    document.getElementById(
+      "userBox"
+    ).innerHTML = `
+
+      <strong>👤 Seller:</strong>
+      ${escapeHTML(username)}
+
+      <br>
+
+      <small>
+        ${escapeHTML(
+          currentUser.email || ""
+        )}
+      </small>
+
+    `;
+
+
+    return true;
+
+  }
+  catch(error){
+
+    console.error(error);
+
+
+    localStorage.removeItem(
+      "berakah_access_token"
+    );
+
+
+    window.location.href =
+      "login.html";
+
+
+    return false;
+
+  }
+
+}
+
+
+/* =========================
+   LOAD SELLER PRODUCTS
+========================= */
+
+async function loadMyProducts(){
+
+  const box =
+    document.getElementById(
+      "products"
+    );
+
+
+  try{
+
+    myProducts =
+      await supabaseRequest(
+
+        "/rest/v1/products" +
+        "?select=*" +
+        "&seller_id=eq." +
+        encodeURIComponent(
+          currentUser.id
+        ) +
+        "&order=created_at.desc"
+
+      );
+
+
+    if(
+      !myProducts ||
+      myProducts.length === 0
+    ){
+
+      box.innerHTML = `
+
+        <div class="empty">
+
+          📦
+
+          <h3>
+            No products yet
+          </h3>
+
+          <p>
+            Go to the marketplace
+            and publish your first product.
+          </p>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    box.innerHTML =
+      myProducts.map(
+        function(product){
+
+          return `
+
+            <div class="product-card">
+
+              <h3>
+                ${escapeHTML(
+                  product.name ||
+                  "Unnamed Product"
+                )}
+              </h3>
+
+              <p>
+                💰 Price:
+                <strong>
+                  $${Number(
+                    product.price || 0
+                  ).toFixed(2)}
+                </strong>
+              </p>
+
+              <p>
+                📦 Stock:
+                <strong>
+                  ${Number(
+                    product.stock || 0
+                  )}
+                </strong>
+              </p>
+
+              <p>
+                🏷️ Category:
+                ${escapeHTML(
+                  product.category ||
+                  "Other"
+                )}
+              </p>
+
+            </div>
+
+          `;
+
+        }
+      ).join("");
+
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    box.innerHTML = `
+
+      <div class="error">
+
+        Could not load your products.
+
+        <br><br>
+
+        ${escapeHTML(
+          error.message
+        )}
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================
+   LOAD SELLER ORDERS
+========================= */
+
+function loadMyOrders(){
+
+  const box =
+    document.getElementById(
+      "orders"
+    );
+
+
+  let allOrders = [];
+
+
+  try{
+
+    allOrders =
+      JSON.parse(
+        localStorage.getItem(
+          "berakahOrders"
+        ) || "[]"
+      );
+
+  }
+  catch{
+
+    allOrders = [];
+
+  }
+
+
+  /*
+   IMPORTANT:
+
+   An order can contain products
+   from different sellers.
+
+   We only keep orders where at least
+   one product belongs to the logged-in
+   seller.
+  */
+
+  myOrders =
+    allOrders.filter(
+      function(order){
+
+        if(
+          !order.products ||
+          !Array.isArray(
+            order.products
+          )
+        ){
+
+          return false;
+
+        }
+
+
+        return order.products.some(
+          function(product){
+
+            return String(
+              product.seller_id || ""
+            ) ===
+            String(
+              currentUser.id
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+  updateStats();
+
+
+  if(myOrders.length === 0){
+
+    box.innerHTML = `
+
+      <div class="empty">
+
+        📋
+
+        <h3>
+          No customer orders yet
+        </h3>
+
+        <p>
+          Orders for your products
+          will appear here.
+        </p>
+
+      </div>
+
+    `;
 
     return;
 
   }
 
 
-  let newName = prompt(
-    "Product name:",
-    product.name
-  );
+  const sorted =
+    [...myOrders].sort(
+      function(a,b){
+
+        return Number(
+          b.id || 0
+        ) -
+        Number(
+          a.id || 0
+        );
+
+      }
+    );
 
 
-  if(newName === null) return;
+  box.innerHTML =
+    sorted.map(
+      function(order){
 
+        return createOrderCard(
+          order
+        );
 
-  let newPrice = prompt(
-    "Price:",
-    product.price
-  );
-
-
-  if(newPrice === null) return;
-
-
-  let newStock = prompt(
-    "Stock:",
-    product.stock ?? 0
-  );
-
-
-  if(newStock === null) return;
-
-
-  product.name =
-    newName.trim();
-
-  product.price =
-    Number(newPrice);
-
-  product.stock =
-    Number(newStock);
-
-
-  localStorage.setItem(
-    "berakahProducts",
-    JSON.stringify(products)
-  );
-
-
-  alert("PRODUCT UPDATED 🚀");
-
-  location.reload();
+      }
+    ).join("");
 
 }
 
 
-/* DELETE PRODUCT */
+/* =========================
+   CREATE ORDER CARD
+========================= */
 
-function deleteProduct(productId){
+function createOrderCard(order){
 
-  let products = JSON.parse(
-    localStorage.getItem("berakahProducts") || "[]"
+  const sellerProducts =
+    (order.products || [])
+    .filter(
+      function(product){
+
+        return String(
+          product.seller_id || ""
+        ) ===
+        String(
+          currentUser.id
+        );
+
+      }
+    );
+
+
+  const sellerTotal =
+    sellerProducts.reduce(
+      function(sum,product){
+
+        const price =
+          Number(
+            product.price || 0
+          );
+
+        const quantity =
+          Math.max(
+            1,
+            Number(
+              product.quantity
+            ) || 1
+          );
+
+
+        return sum +
+          price * quantity;
+
+      },
+      0
+    );
+
+
+  const orderNumber =
+    order.orderNumber ||
+    order.id ||
+    "UNKNOWN";
+
+
+  const status =
+    order.status ||
+    "NEW";
+
+
+  let itemsHTML = "";
+
+
+  sellerProducts.forEach(
+    function(product){
+
+      const quantity =
+        Math.max(
+          1,
+          Number(
+            product.quantity
+          ) || 1
+        );
+
+
+      const price =
+        Number(
+          product.price || 0
+        );
+
+
+      itemsHTML += `
+
+        <div class="order-item">
+
+          <strong>
+            ${escapeHTML(
+              product.name ||
+              "Product"
+            )}
+          </strong>
+
+          <br>
+
+          Quantity:
+          ${quantity}
+
+          <br>
+
+          Price:
+          $${price.toFixed(2)}
+
+          <br>
+
+          Subtotal:
+          $${(
+            price * quantity
+          ).toFixed(2)}
+
+        </div>
+
+      `;
+
+    }
   );
 
 
-  let product = products.find(function(p){
+  return `
 
-    return Number(p.id) === Number(productId);
+    <div class="order-card">
 
-  });
+      <div class="order-header">
+
+        <h3>
+          Order #${escapeHTML(
+            orderNumber
+          )}
+        </h3>
+
+        <span class="status-badge">
+
+          ${escapeHTML(
+            status
+          )}
+
+        </span>
+
+      </div>
 
 
-  if(!product){
+      <div class="customer">
 
-    alert("PRODUCT NOT FOUND");
+        <strong>
+          👤 Customer
+        </strong>
 
-    return;
+        <br><br>
+
+        Name:
+        ${escapeHTML(
+          order.customerName ||
+          ""
+        )}
+
+        <br>
+
+        Email:
+        ${escapeHTML(
+          order.customerEmail ||
+          ""
+        )}
+
+        <br>
+
+        Phone:
+        ${escapeHTML(
+          order.customerPhone ||
+          "Not provided"
+        )}
+
+        <br>
+
+        Address:
+        ${escapeHTML(
+          order.customerAddress ||
+          ""
+        )}
+
+      </div>
+
+
+      <h4>
+        🛍️ Your Products
+      </h4>
+
+
+      ${itemsHTML}
+
+
+      <p>
+
+        <strong>
+          YOUR SALES:
+        $${sellerTotal.toFixed(2)}
+        </strong>
+
+      </p>
+
+
+      <div class="status-buttons">
+
+        <button
+          class="processing"
+          onclick="updateOrderStatus(
+            '${escapeAttribute(
+              orderNumber
+            )}',
+            'PROCESSING'
+          )">
+
+          PROCESSING
+
+        </button>
+
+
+        <button
+          class="shipped"
+          onclick="updateOrderStatus(
+            '${escapeAttribute(
+              orderNumber
+            )}',
+            'SHIPPED'
+          )">
+
+          SHIPPED
+
+        </button>
+
+
+        <button
+          class="delivered"
+          onclick="updateOrderStatus(
+            '${escapeAttribute(
+              orderNumber
+            )}',
+            'DELIVERED'
+          )">
+
+          DELIVERED
+
+        </button>
+
+
+        <button
+          class="cancel"
+          onclick="updateOrderStatus(
+            '${escapeAttribute(
+              orderNumber
+            )}',
+            'CANCELLED'
+          )">
+
+          CANCEL
+
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================
+   UPDATE STATS
+========================= */
+
+function updateStats(){
+
+  let newCount = 0;
+
+  let processingCount = 0;
+
+  let deliveredCount = 0;
+
+  let sales = 0;
+
+
+  myOrders.forEach(
+    function(order){
+
+      const status =
+        order.status ||
+        "NEW";
+
+
+      if(status === "NEW"){
+
+        newCount++;
+
+      }
+
+
+      if(status === "PROCESSING"){
+
+        processingCount++;
+
+      }
+
+
+      if(status === "DELIVERED"){
+
+        deliveredCount++;
+
+      }
+
+
+      const sellerProducts =
+        (order.products || [])
+        .filter(
+          function(product){
+
+            return String(
+              product.seller_id || ""
+            ) ===
+            String(
+              currentUser.id
+            );
+
+          }
+        );
+
+
+      sellerProducts.forEach(
+        function(product){
+
+          sales +=
+            (
+              Number(
+                product.price || 0
+              ) *
+              Math.max(
+                1,
+                Number(
+                  product.quantity
+                ) || 1
+              )
+            );
+
+        }
+      );
+
+    }
+  );
+
+
+  document.getElementById(
+    "ordersCount"
+  ).textContent =
+    myOrders.length;
+
+
+  document.getElementById(
+    "newCount"
+  ).textContent =
+    newCount;
+
+
+  document.getElementById(
+    "processingCount"
+  ).textContent =
+    processingCount;
+
+
+  document.getElementById(
+    "deliveredCount"
+  ).textContent =
+    deliveredCount;
+
+
+  document.getElementById(
+    "sales"
+  ).textContent =
+    "$" +
+    sales.toFixed(2);
+
+}
+
+
+/* =========================
+   UPDATE ORDER STATUS
+========================= */
+
+function updateOrderStatus(
+  orderNumber,
+  newStatus
+){
+
+  let orders = [];
+
+
+  try{
+
+    orders =
+      JSON.parse(
+        localStorage.getItem(
+          "berakahOrders"
+        ) || "[]"
+      );
+
+  }
+  catch{
+
+    orders = [];
 
   }
 
 
-  let confirmed = confirm(
-    "DELETE " + product.name + "?"
-  );
+  const order =
+    orders.find(
+      function(order){
 
+        return String(
+          order.orderNumber ||
+          order.id
+        ) ===
+        String(
+          orderNumber
+        );
 
-  if(!confirmed) return;
-
-
-  products = products.filter(function(p){
-
-    return Number(p.id) !== Number(productId);
-
-  });
-
-
-  localStorage.setItem(
-    "berakahProducts",
-    JSON.stringify(products)
-  );
-
-
-  alert("PRODUCT DELETED 🗑️");
-
-  location.reload();
-
-}
-
-
-/* UPDATE ORDER STATUS */
-
-function updateOrderStatus(orderId, newStatus){
-
-  let orders = JSON.parse(
-    localStorage.getItem("berakahOrders") || "[]"
-  );
-
-
-  let order = orders.find(function(o){
-
-    return Number(o.id) === Number(orderId);
-
-  });
+      }
+    );
 
 
   if(!order){
 
-    alert("ORDER NOT FOUND");
+    alert(
+      "ORDER NOT FOUND"
+    );
+
+    return;
+
+  }
+
+
+  /*
+   SECURITY CHECK:
+
+   The seller can only change an order
+   if one of its products belongs to
+   the logged-in seller.
+  */
+
+  const ownsProduct =
+    (order.products || [])
+    .some(
+      function(product){
+
+        return String(
+          product.seller_id || ""
+        ) ===
+        String(
+          currentUser.id
+        );
+
+      }
+    );
+
+
+  if(!ownsProduct){
+
+    alert(
+      "You can only update orders containing your products."
+    );
 
     return;
 
@@ -384,43 +1238,122 @@ function updateOrderStatus(orderId, newStatus){
     newStatus;
 
 
+  order.updatedAt =
+    new Date().toISOString();
+
+
   localStorage.setItem(
     "berakahOrders",
-    JSON.stringify(orders)
+    JSON.stringify(
+      orders
+    )
   );
 
 
-  alert("ORDER STATUS UPDATED 🚀");
+  /*
+   Keep the confirmation page
+   synchronized with the latest order.
+  */
 
-}
-function updateOrderStatus(orderId, newStatus){
+  const lastOrder =
+    JSON.parse(
+      localStorage.getItem(
+        "berakahLastOrder"
+      ) || "null"
+    );
 
-  let orders = JSON.parse(
-    localStorage.getItem("berakahOrders") || "[]"
-  );
 
-  let order = orders.find(function(order){
-    return Number(order.id) === Number(orderId);
-  });
+  if(
+    lastOrder &&
+    String(
+      lastOrder.orderNumber ||
+      lastOrder.id
+    ) ===
+    String(
+      orderNumber
+    )
+  ){
 
-  if(!order){
-    alert("ORDER NOT FOUND");
-    return;
+    lastOrder.status =
+      newStatus;
+
+    lastOrder.updatedAt =
+      order.updatedAt;
+
+
+    localStorage.setItem(
+      "berakahLastOrder",
+      JSON.stringify(
+        lastOrder
+      )
+    );
+
   }
 
-  order.status = newStatus;
 
-  localStorage.setItem(
-    "berakahOrders",
-    JSON.stringify(orders)
+  alert(
+    "ORDER STATUS UPDATED: " +
+    newStatus
   );
 
-  alert("ORDER STATUS UPDATED: " + newStatus);
 
-  location.reload();
+  loadMyOrders();
+
 }
-</script>
 
-</body>
 
-</html>
+/* =========================
+   ESCAPE
+========================= */
+
+function escapeHTML(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+function escapeAttribute(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("'","&#039;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;");
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+async function startDashboard(){
+
+  const loggedIn =
+    await loadCurrentUser();
+
+
+  if(!loggedIn){
+
+    return;
+
+  }
+
+
+  await loadMyProducts();
+
+  loadMyOrders();
+
+}
+
+
+startDashboard();
+
+</script></body></html>
