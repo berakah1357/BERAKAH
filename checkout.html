@@ -1,295 +1,320 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="en">
 
-<title>BERAKAH Checkout</title><style>
+<head>
 
-*{
-  box-sizing:border-box;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BERAKAH - Checkout</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
 }
 
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f5f7fb;
-  color:#111827;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #111827;
 }
 
-.checkout{
-  background:white;
-  max-width:600px;
-  margin:40px auto;
-  padding:25px;
-  border-radius:16px;
-  box-shadow:0 8px 30px rgba(0,0,0,0.08);
+header {
+  background: white;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-h1{
-  margin-top:0;
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #2563eb;
 }
 
-h2{
-  margin-top:25px;
+nav {
+  margin-top: 10px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
 }
 
-.order-summary{
-  background:#f9fafb;
-  border:1px solid #e5e7eb;
-  border-radius:12px;
-  padding:15px;
-  margin:20px 0;
+nav a {
+  text-decoration: none;
+  color: #374151;
+  font-weight: 600;
 }
 
-.order-item{
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-  padding:12px 0;
-  border-bottom:1px solid #e5e7eb;
+.container {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 0 15px;
 }
 
-.order-item:last-child{
-  border-bottom:none;
+h1 {
+  margin-bottom: 20px;
 }
 
-.item-name{
-  font-weight:bold;
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
 }
 
-.item-details{
-  color:#6b7280;
-  font-size:14px;
-  margin-top:4px;
+.product {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 15px 0;
 }
 
-.item-price{
-  font-weight:bold;
-  white-space:nowrap;
+.product:last-child {
+  border-bottom: none;
 }
 
-label{
-  display:block;
-  font-weight:bold;
-  margin-top:16px;
-  margin-bottom:7px;
+.product-name {
+  font-weight: bold;
 }
 
-input{
-  width:100%;
-  padding:13px;
-  border:1px solid #d1d5db;
-  border-radius:9px;
-  font-size:16px;
+.product-info {
+  color: #6b7280;
+  margin-top: 5px;
 }
 
-input:focus{
-  outline:none;
-  border-color:#2563eb;
+input,
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 7px;
+  margin-bottom: 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 16px;
 }
 
-.total{
-  font-size:27px;
-  font-weight:bold;
-  margin:25px 0;
-  padding-top:20px;
-  border-top:2px solid #e5e7eb;
+label {
+  font-weight: bold;
 }
 
-button{
-  width:100%;
-  padding:15px;
-  background:#111827;
-  color:white;
-  border:none;
-  border-radius:9px;
-  cursor:pointer;
-  font-size:16px;
-  font-weight:bold;
+.total {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 15px;
 }
 
-button:hover{
-  opacity:.92;
+button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-button:disabled{
-  opacity:.6;
-  cursor:not-allowed;
+button:hover {
+  background: #1d4ed8;
 }
 
-.empty{
-  text-align:center;
-  padding:30px;
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-.back{
-  display:block;
-  text-align:center;
-  margin-top:18px;
-  color:#2563eb;
-  text-decoration:none;
-  font-weight:bold;
+.message {
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 8px;
+  display: none;
 }
 
-.status{
-  display:none;
-  padding:12px;
-  margin-top:15px;
-  border-radius:8px;
-  line-height:1.5;
+.error {
+  background: #fee2e2;
+  color: #991b1b;
 }
 
-.status.error{
-  display:block;
-  background:#fef2f2;
-  color:#991b1b;
+.success {
+  background: #dcfce7;
+  color: #166534;
 }
 
-.status.success{
-  display:block;
-  background:#f0fdf4;
-  color:#166534;
+.empty {
+  text-align: center;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
 }
 
-</style></head><body><div class="checkout"><h1>🛒 BERAKAH CHECKOUT</h1><p>
-Complete your information to place your order.
-</p><!-- =========================
-     ORDER SUMMARY
-========================= --><h2>Order Summary</h2><div
-  id="orderSummary"
-  class="order-summary">
-</div><!-- =========================
-     CUSTOMER INFORMATION
-========================= --><h2>Customer Information</h2><label for="customerName">
-Full Name
-</label><input
-id="customerName"
-type="text"
-placeholder="Your name"
-autocomplete="name">
+</style>
 
-<label for="customerEmail">
-Email
-</label><input
-id="customerEmail"
-type="email"
-placeholder="Your email"
-autocomplete="email">
+</head>
 
-<label for="customerPhone">
-Phone
-</label><input
-id="customerPhone"
-type="tel"
-placeholder="Your phone number"
-autocomplete="tel">
+<body>
 
-<label for="customerAddress">
-Address
-</label><input
-id="customerAddress"
-type="text"
-placeholder="Your shipping address"
-autocomplete="street-address">
+<header>
 
-<div
-  id="total"
-  class="total">
-</div><button
-id="placeOrderButton"
-onclick="placeOrder()">
+  <div class="logo">BERAKAH</div>
 
-PLACE ORDER
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="marketplace.html">Market</a>
+    <a href="orders.html">My Orders</a>
+    <a href="profile.html">Profile</a>
+  </nav>
 
-</button><div
-  id="status"
-  class="status">
-</div><a
-href="cart.html"
-class="back">
+</header>
 
-← Back to Cart
+<div class="container">
 
-</a></div><script>
+  <h1>🛒 Checkout</h1>
 
-/* =====================================================
-   BERAKAH CHECKOUT
-===================================================== */
+  <div id="checkoutContent"></div>
+
+</div>
+
+<script>
+
+/* =========================
+   SUPABASE CONFIG
+========================= */
+
+const SUPABASE_URL =
+  "https://utoyoglycqjmqznczfxa.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+
+const CART_KEY = "berakahCart";
+const ORDERS_KEY = "berakahOrders";
+const LAST_ORDER_KEY = "berakahLastOrder";
+
+let cart = [];
+let currentUser = null;
+
+
+/* =========================
+   HTML SECURITY
+========================= */
+
+function escapeHTML(value) {
+
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
 
 
 /* =========================
    LOAD CART
 ========================= */
 
-let cart = [];
+function loadCart() {
 
-try {
+  try {
 
-  cart = JSON.parse(
-    localStorage.getItem("berakahCart") || "[]"
-  );
+    const saved =
+      localStorage.getItem(CART_KEY);
 
-} catch(error) {
+    cart = saved
+      ? JSON.parse(saved)
+      : [];
 
-  cart = [];
+    if (!Array.isArray(cart)) {
+      cart = [];
+    }
 
-}
+  } catch (error) {
 
+    console.error(error);
 
-/* =========================
-   ELEMENTS
-========================= */
+    cart = [];
 
-const orderSummary =
-  document.getElementById("orderSummary");
-
-const totalBox =
-  document.getElementById("total");
-
-const statusBox =
-  document.getElementById("status");
-
-const placeOrderButton =
-  document.getElementById("placeOrderButton");
-
-
-/* =========================
-   STATUS
-========================= */
-
-function showStatus(message,type){
-
-  statusBox.textContent =
-    message;
-
-  statusBox.className =
-    "status " + type;
+  }
 
 }
 
 
 /* =========================
-   ESCAPE HTML
+   LOAD SUPABASE USER
 ========================= */
 
-function escapeHTML(value){
+async function loadCurrentUser() {
 
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+  const token =
+    localStorage.getItem("berakah_access_token");
+
+  if (!token) {
+    throw new Error(
+      "You must be logged in before placing an order."
+    );
+  }
+
+  const response =
+    await fetch(
+      SUPABASE_URL + "/auth/v1/user",
+      {
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + token
+        }
+      }
+    );
+
+  if (!response.ok) {
+
+    throw new Error(
+      "Your login session has expired. Please log in again."
+    );
+
+  }
+
+  currentUser =
+    await response.json();
 
 }
 
 
 /* =========================
-   CALCULATE TOTAL
+   DISPLAY CHECKOUT
 ========================= */
 
-function calculateTotal(){
+function renderCheckout() {
 
-  return cart.reduce(
-    function(total,product){
+  const container =
+    document.getElementById("checkoutContent");
+
+  if (!cart.length) {
+
+    container.innerHTML = `
+      <div class="empty">
+        <h2>Your cart is empty.</h2>
+        <p>Add a product before checking out.</p>
+        <a href="marketplace.html">
+          Continue Shopping
+        </a>
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  let total = 0;
+
+
+  const productsHTML =
+    cart.map(product => {
 
       const price =
         Number(product.price) || 0;
@@ -300,198 +325,131 @@ function calculateTotal(){
           Number(product.quantity) || 1
         );
 
-      return total +
-        (price * quantity);
+      const subtotal =
+        price * quantity;
 
-    },
-    0
-  );
-
-}
+      total += subtotal;
 
 
-/* =========================
-   DISPLAY ORDER
-========================= */
+      return `
+        <div class="product">
 
-function displayOrder(){
+          <div>
 
-  if(!cart.length){
+            <div class="product-name">
+              ${escapeHTML(product.name)}
+            </div>
 
-    orderSummary.innerHTML = `
-
-      <div class="empty">
-
-        🛒
-
-        <h3>Your cart is empty</h3>
-
-        <p>
-          Add products before checking out.
-        </p>
-
-      </div>
-
-    `;
-
-    totalBox.textContent =
-      "TOTAL: $0.00";
-
-    placeOrderButton.disabled =
-      true;
-
-    return;
-
-  }
-
-
-  let html = "";
-
-
-  cart.forEach(function(product){
-
-    const name =
-      escapeHTML(
-        product.name ||
-        "Product"
-      );
-
-
-    const quantity =
-      Math.max(
-        1,
-        Number(product.quantity) || 1
-      );
-
-
-    const price =
-      Number(product.price) || 0;
-
-
-    const subtotal =
-      price * quantity;
-
-
-    const seller =
-      escapeHTML(
-        product.seller_name ||
-        "BERAKAH Seller"
-      );
-
-
-    html += `
-
-      <div class="order-item">
-
-        <div>
-
-          <div class="item-name">
-            ${name}
-          </div>
-
-          <div class="item-details">
-
-            Seller: ${seller}<br>
-
-            Quantity: ${quantity}
+            <div class="product-info">
+              Quantity: ${quantity}
+            </div>
 
           </div>
 
-        </div>
-
-
-        <div class="item-price">
-
-          $${subtotal.toFixed(2)}
+          <strong>
+            $${subtotal.toFixed(2)}
+          </strong>
 
         </div>
+      `;
 
+    }).join("");
+
+
+  container.innerHTML = `
+
+    <div class="card">
+
+      <h2>🛍️ Order Summary</h2>
+
+      ${productsHTML}
+
+      <div class="total">
+        TOTAL $${total.toFixed(2)}
       </div>
 
-    `;
-
-  });
+    </div>
 
 
-  orderSummary.innerHTML =
-    html;
+    <div class="card">
+
+      <h2>👤 Customer Information</h2>
+
+      <form id="checkoutForm">
+
+        <label>
+          Full Name
+        </label>
+
+        <input
+          type="text"
+          id="customerName"
+          required
+          placeholder="Your full name"
+        >
 
 
-  const total =
-    calculateTotal();
+        <label>
+          Email
+        </label>
+
+        <input
+          type="email"
+          id="customerEmail"
+          required
+          placeholder="your@email.com"
+        >
 
 
-  totalBox.textContent =
-    "TOTAL: $" +
-    total.toFixed(2);
+        <label>
+          Phone
+        </label>
 
-}
-
-
-/* =========================
-   SAVE LEGACY LOCAL STOCK
-========================= */
-
-function updateLegacyLocalStock(){
-
-  try{
-
-    const products =
-      JSON.parse(
-        localStorage.getItem(
-          "berakahProducts"
-        ) || "[]"
-      );
+        <input
+          type="tel"
+          id="customerPhone"
+          required
+          placeholder="Phone number"
+        >
 
 
-    cart.forEach(function(cartProduct){
+        <label>
+          Address
+        </label>
 
-      const product =
-        products.find(function(p){
-
-          return String(p.id) ===
-            String(cartProduct.id);
-
-        });
-
-
-      if(product){
-
-        const quantity =
-          Math.max(
-            1,
-            Number(
-              cartProduct.quantity
-            ) || 1
-          );
+        <textarea
+          id="customerAddress"
+          rows="4"
+          required
+          placeholder="Shipping address"
+        ></textarea>
 
 
-        product.stock =
-          Math.max(
-            0,
-            Number(product.stock || 0) -
-            quantity
-          );
+        <button
+          type="submit"
+          id="placeOrderButton"
+        >
+          🛒 PLACE ORDER
+        </button>
 
-      }
+        <div
+          id="message"
+          class="message"
+        ></div>
 
-    });
+      </form>
+
+    </div>
+
+  `;
 
 
-    localStorage.setItem(
-      "berakahProducts",
-      JSON.stringify(products)
+  document
+    .getElementById("checkoutForm")
+    .addEventListener(
+      "submit",
+      placeOrder
     );
-
-  }
-  catch(error){
-
-    console.warn(
-      "Legacy local stock update skipped:",
-      error
-    );
-
-  }
 
 }
 
@@ -500,205 +458,324 @@ function updateLegacyLocalStock(){
    PLACE ORDER
 ========================= */
 
-function placeOrder(){
+async function placeOrder(event) {
 
-  if(!cart.length){
+  event.preventDefault();
 
-    alert(
-      "YOUR CART IS EMPTY"
+
+  const button =
+    document.getElementById(
+      "placeOrderButton"
     );
 
-    return;
-
-  }
-
-
-  const name =
-    document.getElementById(
-      "customerName"
-    ).value.trim();
+  const message =
+    document.getElementById("message");
 
 
-  const email =
-    document.getElementById(
-      "customerEmail"
-    ).value.trim()
-    .toLowerCase();
+  button.disabled = true;
+
+  button.textContent =
+    "Processing order...";
+
+  message.style.display = "none";
 
 
-  const phone =
-    document.getElementById(
-      "customerPhone"
-    ).value.trim();
+  try {
+
+    if (!currentUser) {
+      await loadCurrentUser();
+    }
 
 
-  const address =
-    document.getElementById(
-      "customerAddress"
-    ).value.trim();
+    if (!cart.length) {
+
+      throw new Error(
+        "Your cart is empty."
+      );
+
+    }
 
 
-  /* =========================
-     VALIDATION
-  ========================= */
+    const customerName =
+      document
+        .getElementById("customerName")
+        .value
+        .trim();
 
-  if(
-    !name ||
-    !email ||
-    !address
-  ){
+    const customerEmail =
+      document
+        .getElementById("customerEmail")
+        .value
+        .trim();
 
-    showStatus(
-      "PLEASE COMPLETE YOUR NAME, EMAIL, AND ADDRESS.",
-      "error"
-    );
+    const customerPhone =
+      document
+        .getElementById("customerPhone")
+        .value
+        .trim();
 
-    return;
-
-  }
-
-
-  /* =========================
-     CREATE ORDER NUMBER
-  ========================= */
-
-  const orderNumber =
-    "BRK-" +
-    Date.now()
-      .toString()
-      .slice(-8);
+    const customerAddress =
+      document
+        .getElementById("customerAddress")
+        .value
+        .trim();
 
 
-  /* =========================
-     PREPARE PRODUCTS
-  ========================= */
+    let total = 0;
 
-  const orderProducts =
-    cart.map(function(product){
 
-      return {
+    const orderProducts =
+      cart.map(product => {
 
-        id:
-          product.id,
+        const price =
+          Number(product.price) || 0;
 
-        name:
-          product.name,
-
-        price:
-          Number(product.price) || 0,
-
-        image_url:
-          product.image_url || null,
-
-        quantity:
+        const quantity =
           Math.max(
             1,
             Number(product.quantity) || 1
-          ),
-
-        seller_id:
-          product.seller_id || null,
-
-        seller_name:
-          product.seller_name ||
-          "BERAKAH Seller",
-
-        seller_email:
-          product.seller_email ||
-          ""
-
-      };
-
-    });
+          );
 
 
-  /* =========================
-     TOTAL
-  ========================= */
-
-  const total =
-    calculateTotal();
+        total +=
+          price * quantity;
 
 
-  /* =========================
-     CREATE ORDER
-  ========================= */
+        return {
 
-  const order = {
+          id: product.id,
 
-    id:
-      Date.now(),
+          name: product.name,
 
-    orderNumber:
-      orderNumber,
+          price: price,
 
-    createdAt:
-      new Date().toISOString(),
+          image_url:
+            product.image_url || null,
 
-    customerName:
-      name,
+          quantity: quantity,
 
-    customerEmail:
-      email,
+          seller_id:
+            product.seller_id || null,
 
-    customerPhone:
-      phone,
+          seller_name:
+            product.seller_name ||
+            "BERAKAH Seller",
 
-    customerAddress:
-      address,
+          seller_email:
+            product.seller_email ||
+            ""
 
-    products:
-      orderProducts,
+        };
 
-    total:
-      Number(
-        total.toFixed(2)
-      ),
-
-    status:
-      "NEW"
-
-  };
+      });
 
 
-  /* =========================
-     SAVE ORDER
-  ========================= */
+    const timestamp =
+      Date.now();
 
-  try{
 
-    let orders =
-      JSON.parse(
-        localStorage.getItem(
-          "berakahOrders"
-        ) || "[]"
+    const orderNumber =
+      "BRK-" +
+      timestamp
+        .toString()
+        .slice(-8);
+
+
+    const order = {
+
+      order_number:
+        orderNumber,
+
+      customer_id:
+        currentUser.id,
+
+      customer_name:
+        customerName,
+
+      customer_email:
+        customerEmail,
+
+      customer_phone:
+        customerPhone,
+
+      customer_address:
+        customerAddress,
+
+      products:
+        orderProducts,
+
+      total:
+        Number(total.toFixed(2)),
+
+      status:
+        "NEW"
+
+    };
+
+
+    /* =========================
+       SAVE TO SUPABASE
+    ========================= */
+
+    const response =
+      await fetch(
+        SUPABASE_URL + "/rest/v1/orders",
+        {
+
+          method: "POST",
+
+          headers: {
+
+            "apikey":
+              SUPABASE_KEY,
+
+            "Authorization":
+              "Bearer " +
+              localStorage.getItem(
+                "berakah_access_token"
+              ),
+
+            "Content-Type":
+              "application/json",
+
+            "Prefer":
+              "return=representation"
+
+          },
+
+          body:
+            JSON.stringify(order)
+
+        }
       );
 
 
-    orders.push(order);
+    const responseText =
+      await response.text();
+
+
+    if (!response.ok) {
+
+      console.error(
+        "Supabase order error:",
+        responseText
+      );
+
+      throw new Error(
+        "Could not save the order to Supabase."
+      );
+
+    }
+
+
+    let savedOrder;
+
+    try {
+
+      const parsed =
+        JSON.parse(responseText);
+
+      savedOrder =
+        Array.isArray(parsed)
+          ? parsed[0]
+          : parsed;
+
+    } catch {
+
+      savedOrder =
+        order;
+
+    }
+
+
+    /* =========================
+       LOCAL BACKUP
+    ========================= */
+
+    const localOrder = {
+
+      id: timestamp,
+
+      orderNumber:
+        savedOrder.order_number ||
+        orderNumber,
+
+      createdAt:
+        savedOrder.created_at ||
+        new Date().toISOString(),
+
+      updatedAt:
+        savedOrder.updated_at ||
+        new Date().toISOString(),
+
+      customerId:
+        currentUser.id,
+
+      customerName:
+        customerName,
+
+      customerEmail:
+        customerEmail,
+
+      customerPhone:
+        customerPhone,
+
+      customerAddress:
+        customerAddress,
+
+      products:
+        orderProducts,
+
+      total:
+        Number(total.toFixed(2)),
+
+      status:
+        savedOrder.status ||
+        "NEW"
+
+    };
+
+
+    let orders = [];
+
+    try {
+
+      const existing =
+        localStorage.getItem(
+          ORDERS_KEY
+        );
+
+      orders =
+        existing
+          ? JSON.parse(existing)
+          : [];
+
+      if (!Array.isArray(orders)) {
+        orders = [];
+      }
+
+    } catch {
+
+      orders = [];
+
+    }
+
+
+    orders.unshift(
+      localOrder
+    );
 
 
     localStorage.setItem(
-      "berakahOrders",
+      ORDERS_KEY,
       JSON.stringify(orders)
     );
 
 
-    /* =========================
-       SAVE LAST ORDER
-    ========================= */
-
     localStorage.setItem(
-      "berakahLastOrder",
-      JSON.stringify(order)
+      LAST_ORDER_KEY,
+      JSON.stringify(localOrder)
     );
-
-
-    /* =========================
-       UPDATE OLD LOCAL STOCK
-    ========================= */
-
-    updateLegacyLocalStock();
 
 
     /* =========================
@@ -706,7 +783,7 @@ function placeOrder(){
     ========================= */
 
     localStorage.removeItem(
-      "berakahCart"
+      CART_KEY
     );
 
 
@@ -714,39 +791,45 @@ function placeOrder(){
        SUCCESS
     ========================= */
 
-    showStatus(
-      "ORDER SAVED! Redirecting...",
-      "success"
-    );
+    message.className =
+      "message success";
+
+    message.textContent =
+      "Order placed successfully!";
+
+    message.style.display =
+      "block";
 
 
-    placeOrderButton.disabled =
-      true;
+    setTimeout(function() {
+
+      window.location.href =
+        "order-confirmation.html";
+
+    }, 700);
 
 
-    setTimeout(
-      function(){
+  } catch (error) {
 
-        window.location.href =
-          "order-confirmation.html";
-
-      },
-      500
-    );
-
-  }
-  catch(error){
-
-    console.error(
-      "ORDER SAVE ERROR:",
-      error
-    );
+    console.error(error);
 
 
-    showStatus(
-      "Could not save your order. Please try again.",
-      "error"
-    );
+    message.className =
+      "message error";
+
+    message.textContent =
+      error.message ||
+      "Something went wrong.";
+
+    message.style.display =
+      "block";
+
+
+    button.disabled =
+      false;
+
+    button.textContent =
+      "🛒 PLACE ORDER";
 
   }
 
@@ -757,6 +840,78 @@ function placeOrder(){
    START
 ========================= */
 
-displayOrder();
+async function startCheckout() {
 
-</script></body></html>
+  loadCart();
+
+
+  if (!cart.length) {
+
+    renderCheckout();
+
+    return;
+
+  }
+
+
+  try {
+
+    await loadCurrentUser();
+
+    renderCheckout();
+
+
+    /*
+      Pre-fill email from
+      Supabase account.
+    */
+
+    const emailInput =
+      document.getElementById(
+        "customerEmail"
+      );
+
+    if (
+      emailInput &&
+      currentUser.email
+    ) {
+
+      emailInput.value =
+        currentUser.email;
+
+    }
+
+
+  } catch (error) {
+
+    document.getElementById(
+      "checkoutContent"
+    ).innerHTML = `
+
+      <div class="empty">
+
+        <h2>🔐 Login Required</h2>
+
+        <p>
+          Please log in before placing an order.
+        </p>
+
+        <a href="login.html">
+          Go to Login
+        </a>
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+startCheckout();
+
+</script>
+
+</body>
+</html>
