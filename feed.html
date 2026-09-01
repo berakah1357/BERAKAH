@@ -1,662 +1,1513 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BERAKAH - People</title>
+<title>BERAKAH - Feed</title>
 
 <style>
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
-  color: #111827;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #111827;
 }
 
+/* =========================
+   HEADER
+========================= */
+
 header {
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 15px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .nav {
-  max-width: 900px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
+    max-width: 1100px;
+    margin: auto;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
 }
 
 .logo {
-  font-size: 25px;
-  font-weight: bold;
-  letter-spacing: 2px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #111827;
+    text-decoration: none;
 }
 
-.nav-buttons {
-  display: flex;
-  gap: 7px;
-  flex-wrap: wrap;
+.nav-links {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.nav-buttons button {
-  border: 1px solid #d1d5db;
-  background: white;
-  padding: 8px 11px;
-  border-radius: 7px;
-  cursor: pointer;
+.nav-links a,
+.logout-btn {
+    text-decoration: none;
+    color: #374151;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
 }
 
-.logout {
-  background: #111827 !important;
-  color: white !important;
+.nav-links a:hover,
+.logout-btn:hover {
+    background: #f3f4f6;
 }
 
-main {
-  width: 100%;
-  max-width: 650px;
-  margin: 25px auto;
-  padding: 0 15px;
+.logout-btn {
+    border: none;
+    background: transparent;
+    font-family: inherit;
 }
 
-.box {
-  background: white;
-  border-radius: 14px;
-  padding: 20px;
-  box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+/* =========================
+   PAGE
+========================= */
+
+.container {
+    max-width: 760px;
+    margin: 25px auto;
+    padding: 0 15px;
 }
 
-h1 {
-  margin-top: 0;
+.page-title {
+    font-size: 28px;
+    margin: 0 0 18px;
 }
 
-#loading {
-  text-align: center;
-  padding: 20px;
+/* =========================
+   CREATE POST
+========================= */
+
+.create-post {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
-#message {
-  text-align: center;
-  font-weight: bold;
-  margin: 15px 0;
+.create-post h2 {
+    margin: 0 0 14px;
+    font-size: 18px;
 }
 
-.person {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  padding: 15px 0;
-  border-bottom: 1px solid #eeeeee;
+textarea {
+    width: 100%;
+    min-height: 110px;
+    resize: vertical;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 12px;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    outline: none;
 }
 
-.person:last-child {
-  border-bottom: none;
+textarea:focus {
+    border-color: #2563eb;
+}
+
+.create-bottom {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.file-label {
+    display: inline-block;
+    background: #f3f4f6;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.file-label:hover {
+    background: #e5e7eb;
+}
+
+#postImage {
+    display: none;
+}
+
+#imageName {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 7px;
+}
+
+.post-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.post-btn:hover {
+    background: #1d4ed8;
+}
+
+.post-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status {
+    text-align: center;
+    margin: 15px 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.error {
+    color: #dc2626;
+}
+
+.success {
+    color: #16a34a;
+}
+
+/* =========================
+   POST CARD
+========================= */
+
+.post {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 16px 10px;
+}
+
+.author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
 }
 
 .avatar {
-  width: 52px;
-  height: 52px;
-  min-width: 52px;
-  border-radius: 50%;
-  background: #111827;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: bold;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #374151;
+    overflow: hidden;
 }
 
-.person-info {
-  flex: 1;
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.person-name {
-  font-size: 17px;
-  font-weight: bold;
+.author-name {
+    font-weight: bold;
+    font-size: 15px;
 }
 
-.person-status {
-  color: #6b7280;
-  font-size: 13px;
-  margin-top: 4px;
+.username {
+    color: #6b7280;
+    font-size: 13px;
+    margin-top: 2px;
 }
 
-.profile-button {
-  border: none;
-  background: #111827;
-  color: white;
-  padding: 9px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
+.post-date {
+    color: #9ca3af;
+    font-size: 12px;
 }
+
+.post-content {
+    padding: 5px 16px 15px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.5;
+    font-size: 15px;
+}
+
+.post-image {
+    width: 100%;
+    max-height: 600px;
+    object-fit: cover;
+    display: block;
+}
+
+.post-actions {
+    border-top: 1px solid #f0f0f0;
+    padding: 10px 16px;
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #4b5563;
+    padding: 7px 10px;
+    border-radius: 7px;
+}
+
+.action-btn:hover {
+    background: #f3f4f6;
+}
+
+.delete-btn {
+    margin-left: auto;
+    color: #dc2626;
+}
+
+.delete-btn:hover {
+    background: #fef2f2;
+}
+
+/* =========================
+   EMPTY
+========================= */
 
 .empty {
-  text-align: center;
-  color: #6b7280;
-  padding: 25px 10px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 40px 20px;
+    text-align: center;
+    color: #6b7280;
+}
+
+.refresh-btn {
+    margin-top: 15px;
+    background: #111827;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .nav {
+        padding: 12px;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .nav-links {
+        width: 100%;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+    }
+
+    .nav-links a,
+    .logout-btn {
+        white-space: nowrap;
+    }
+
+    .container {
+        margin-top: 18px;
+        padding: 0 10px;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+
+    .create-bottom {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .post-btn {
+        width: 100%;
+    }
+
 }
 
 </style>
 
 </head>
 
-
 <body>
-
 
 <header>
 
-<div class="nav">
+    <div class="nav">
 
-<div class="logo">
-BERAKAH
-</div>
+        <a class="logo" href="index.html">
+            BERAKAH
+        </a>
 
+        <nav class="nav-links">
 
-<div class="nav-buttons">
+            <a href="index.html">Home</a>
 
-<button onclick="location.href='index.html'">
-Home
-</button>
+            <a href="feed.html">Feed</a>
 
-<button onclick="location.href='feed.html'">
-Feed
-</button>
+            <a href="people.html">👥 People</a>
 
-<button onclick="location.href='marketplace.html'">
-Market
-</button>
+            <a href="marketplace.html">Market</a>
 
-<button onclick="location.href='notifications.html'">
-🔔
-</button>
+            <a href="notifications.html">🔔</a>
 
-<button
-class="logout"
-id="logoutButton"
->
-Logout
-</button>
+            <a href="messages.html">💬</a>
 
-</div>
+            <button class="logout-btn" onclick="logout()">
+                Logout
+            </button>
 
-</div>
+        </nav>
+
+    </div>
 
 </header>
 
 
+<main class="container">
 
-<main>
+    <h1 class="page-title">
+        Feed
+    </h1>
 
-<div class="box">
 
-<h1>👥 People</h1>
+    <!-- CREATE POST -->
 
-<div id="loading">
-Loading people...
-</div>
+    <section class="create-post">
 
-<div id="message"></div>
+        <h2>
+            Create a post
+        </h2>
 
-<div id="people"></div>
+        <textarea
+            id="postContent"
+            placeholder="What's on your mind?"
+        ></textarea>
 
-</div>
+        <div id="imageName"></div>
+
+        <div class="create-bottom">
+
+            <label class="file-label">
+
+                📷 Add Image
+
+                <input
+                    type="file"
+                    id="postImage"
+                    accept="image/*"
+                >
+
+            </label>
+
+            <button
+                class="post-btn"
+                id="publishBtn"
+                onclick="createPost()"
+            >
+                POST
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <div id="status" class="status"></div>
+
+
+    <section id="feed"></section>
 
 </main>
 
 
-
 <script>
 
-
-/* =========================
-   SUPABASE
-========================= */
+/* =========================================================
+   BERAKAH SUPABASE
+========================================================= */
 
 const SUPABASE_URL =
-"https://utoyoglycqjmqznczfxa.supabase.co";
+    "https://utoyoglycqjmqznczfxa.supabase.co";
 
-
-const SUPABASE_ANON_KEY =
-"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+const SUPABASE_KEY =
+    "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
 
 let accessToken =
-localStorage.getItem(
-"berakah_access_token"
-);
-
+    localStorage.getItem("berakah_access_token");
 
 let currentUser = null;
 
 
+/* =========================================================
+   SUPABASE HEADERS
+========================================================= */
 
-/* =========================
-   LOGIN CHECK
-========================= */
+function supabaseHeaders(extra = {}) {
 
-if (!accessToken) {
+    return {
 
-location.href =
-"login.html";
+        "apikey": SUPABASE_KEY,
 
-}
+        "Authorization":
+            "Bearer " + accessToken,
 
+        ...extra
 
-
-/* =========================
-   HEADERS
-========================= */
-
-function headers(extra) {
-
-return Object.assign({
-
-"apikey":
-SUPABASE_ANON_KEY,
-
-"Authorization":
-"Bearer " + accessToken
-
-}, extra || {});
+    };
 
 }
 
 
+/* =========================================================
+   STATUS
+========================================================= */
 
-/* =========================
-   HTML SAFETY
-========================= */
+function showStatus(message, type = "") {
 
-function safe(value) {
+    const status =
+        document.getElementById("status");
 
-return String(value || "")
+    status.textContent = message;
 
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
+    status.className =
+        "status " + type;
 
 }
 
 
-
-/* =========================
-   CURRENT USER
-========================= */
+/* =========================================================
+   GET LOGGED-IN USER
+========================================================= */
 
 async function getCurrentUser() {
 
-const response =
-await fetch(
+    if (!accessToken) {
 
-SUPABASE_URL +
-"/auth/v1/user",
+        window.location.href =
+            "login.html";
 
-{
-headers:
-headers()
-}
-
-);
+        return null;
+    }
 
 
-if (!response.ok) {
+    const response = await fetch(
 
-throw new Error(
-"Your login session has expired. Please login again."
-);
+        SUPABASE_URL +
+        "/auth/v1/user",
 
-}
+        {
+            method: "GET",
 
+            headers:
+                supabaseHeaders()
+        }
 
-currentUser =
-await response.json();
-
-}
-
-
-
-/* =========================
-   LOAD PEOPLE
-========================= */
-
-async function loadPeople() {
+    );
 
 
-const loading =
-document.getElementById(
-"loading"
-);
+    if (!response.ok) {
+
+        localStorage.removeItem(
+            "berakah_access_token"
+        );
+
+        localStorage.removeItem(
+            "berakah_refresh_token"
+        );
+
+        window.location.href =
+            "login.html";
+
+        return null;
+    }
 
 
-const peopleBox =
-document.getElementById(
-"people"
-);
+    currentUser =
+        await response.json();
 
-
-const message =
-document.getElementById(
-"message"
-);
-
-
-try {
-
-
-/* GET CURRENT USER */
-
-await getCurrentUser();
-
-
-
-/* GET POSTS */
-
-const response =
-await fetch(
-
-SUPABASE_URL +
-"/rest/v1/posts" +
-"?select=user_id,username" +
-"&order=created_at.desc",
-
-{
-headers:
-headers()
-}
-
-);
-
-
-const text =
-await response.text();
-
-
-if (!response.ok) {
-
-throw new Error(
-"Could not load people.\n\n" +
-text
-);
+    return currentUser;
 
 }
 
 
-let posts = [];
+/* =========================================================
+   LOAD FEED
+========================================================= */
+
+async function loadFeed() {
+
+    const feed =
+        document.getElementById("feed");
+
+    feed.innerHTML = "";
+
+    showStatus("Loading posts...");
 
 
-if (text.trim()) {
+    try {
 
-posts =
-JSON.parse(text);
+        /*
+         IMPORTANT:
+         posts.user_id is the Supabase Auth UUID.
+        */
+
+        const postsUrl =
+            SUPABASE_URL +
+            "/rest/v1/posts" +
+            "?select=*" +
+            "&order=created_at.desc";
+
+
+        const response =
+            await fetch(
+                postsUrl,
+                {
+                    method: "GET",
+                    headers:
+                        supabaseHeaders()
+                }
+            );
+
+
+        if (!response.ok) {
+
+            const error =
+                await response.text();
+
+            throw new Error(error);
+        }
+
+
+        const posts =
+            await response.json();
+
+
+        if (!posts || posts.length === 0) {
+
+            showEmpty();
+
+            return;
+        }
+
+
+        /*
+         Load profile information for
+         each post author.
+        */
+
+        const userIds = [
+            ...new Set(
+                posts
+                    .map(post => post.user_id)
+                    .filter(Boolean)
+            )
+        ];
+
+
+        let profiles = [];
+
+
+        if (userIds.length > 0) {
+
+            const profileFilter =
+                userIds
+                    .map(id =>
+                        `"${id}"`
+                    )
+                    .join(",");
+
+
+            const profileUrl =
+                SUPABASE_URL +
+                "/rest/v1/profiles" +
+                "?select=*" +
+                "&user_id=in.(" +
+                userIds.join(",") +
+                ")";
+
+
+            const profileResponse =
+                await fetch(
+                    profileUrl,
+                    {
+                        method: "GET",
+                        headers:
+                            supabaseHeaders()
+                    }
+                );
+
+
+            if (profileResponse.ok) {
+
+                profiles =
+                    await profileResponse.json();
+
+            }
+
+        }
+
+
+        const profileMap = {};
+
+        profiles.forEach(profile => {
+
+            profileMap[
+                profile.user_id
+            ] = profile;
+
+        });
+
+
+        posts.forEach(post => {
+
+            const profile =
+                profileMap[post.user_id] || null;
+
+            feed.appendChild(
+                createPostCard(
+                    post,
+                    profile
+                )
+            );
+
+        });
+
+
+        showStatus(
+            posts.length +
+            (posts.length === 1
+                ? " post"
+                : " posts")
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Feed error:",
+            error
+        );
+
+        showStatus(
+            "Could not load the feed.",
+            "error"
+        );
+
+        feed.innerHTML = `
+            <div class="empty">
+                <strong>Something went wrong.</strong>
+                <br><br>
+                Please refresh the page.
+                <br>
+                <button
+                    class="refresh-btn"
+                    onclick="loadFeed()"
+                >
+                    Refresh Feed
+                </button>
+            </div>
+        `;
+
+    }
 
 }
 
 
+/* =========================================================
+   CREATE POST CARD
+========================================================= */
 
-/* =========================
-   FIND UNIQUE USERS
-========================= */
+function createPostCard(post, profile) {
 
-const users = [];
+    const article =
+        document.createElement("article");
 
-const seen = new Set();
-
-
-for (
-const post of posts
-) {
+    article.className = "post";
 
 
-if (!post.user_id) {
-continue;
+    const fullName =
+        profile
+            ? (
+                profile["Full name"] ||
+                profile.full_name ||
+                profile.name ||
+                profile.username ||
+                "BERAKAH Member"
+            )
+            : "BERAKAH Member";
+
+
+    const username =
+        profile && profile.username
+            ? profile.username
+            : "";
+
+
+    const avatarUrl =
+        profile && profile.avatar_url
+            ? profile.avatar_url
+            : "";
+
+
+    const profileId =
+        profile && profile.id
+            ? profile.id
+            : null;
+
+
+    const isOwnPost =
+        currentUser &&
+        post.user_id === currentUser.id;
+
+
+    const formattedDate =
+        formatDate(post.created_at);
+
+
+    let avatarHTML = "";
+
+
+    if (avatarUrl) {
+
+        avatarHTML = `
+            <div class="avatar">
+                <img
+                    src="${escapeAttribute(avatarUrl)}"
+                    alt="Profile"
+                >
+            </div>
+        `;
+
+    } else {
+
+        const firstLetter =
+            escapeHTML(
+                fullName
+                    .charAt(0)
+                    .toUpperCase()
+            );
+
+        avatarHTML = `
+            <div class="avatar">
+                ${firstLetter}
+            </div>
+        `;
+
+    }
+
+
+    let authorHTML;
+
+
+    if (profileId) {
+
+        authorHTML = `
+            <a
+                class="author"
+                href="profile.html?id=${encodeURIComponent(profileId)}"
+            >
+
+                ${avatarHTML}
+
+                <div>
+
+                    <div class="author-name">
+                        ${escapeHTML(fullName)}
+                    </div>
+
+                    ${
+                        username
+                        ? `
+                            <div class="username">
+                                @${escapeHTML(
+                                    username.replace(/^@/, "")
+                                )}
+                            </div>
+                          `
+                        : ""
+                    }
+
+                </div>
+
+            </a>
+        `;
+
+    } else {
+
+        authorHTML = `
+            <div class="author">
+
+                ${avatarHTML}
+
+                <div>
+
+                    <div class="author-name">
+                        ${escapeHTML(fullName)}
+                    </div>
+
+                    ${
+                        username
+                        ? `
+                            <div class="username">
+                                @${escapeHTML(
+                                    username.replace(/^@/, "")
+                                )}
+                            </div>
+                          `
+                        : ""
+                    }
+
+                </div>
+
+            </div>
+        `;
+
+    }
+
+
+    let imageHTML = "";
+
+    const imageUrl =
+        post.image_url ||
+        post.image ||
+        null;
+
+
+    if (imageUrl) {
+
+        imageHTML = `
+            <img
+                class="post-image"
+                src="${escapeAttribute(imageUrl)}"
+                alt="Post image"
+                loading="lazy"
+            >
+        `;
+
+    }
+
+
+    let deleteButton = "";
+
+
+    if (isOwnPost) {
+
+        deleteButton = `
+            <button
+                class="action-btn delete-btn"
+                onclick="deletePost('${escapeAttribute(post.id)}')"
+            >
+                🗑 Delete
+            </button>
+        `;
+
+    }
+
+
+    article.innerHTML = `
+
+        <div class="post-header">
+
+            ${authorHTML}
+
+            <div class="post-date">
+                ${formattedDate}
+            </div>
+
+        </div>
+
+
+        ${
+            post.content
+            ? `
+                <div class="post-content">
+                    ${escapeHTML(post.content)}
+                </div>
+              `
+            : ""
+        }
+
+
+        ${imageHTML}
+
+
+        <div class="post-actions">
+
+            <button
+                class="action-btn"
+                type="button"
+                onclick="showLikeMessage()"
+            >
+                ❤️ Like
+            </button>
+
+            ${deleteButton}
+
+        </div>
+
+    `;
+
+
+    return article;
+
 }
 
 
-/* Don't show myself */
+/* =========================================================
+   CREATE POST
+========================================================= */
 
-if (
-post.user_id ===
-currentUser.id
-) {
+async function createPost() {
 
-continue;
+    const contentInput =
+        document.getElementById(
+            "postContent"
+        );
+
+    const imageInput =
+        document.getElementById(
+            "postImage"
+        );
+
+    const publishBtn =
+        document.getElementById(
+            "publishBtn"
+        );
+
+
+    const content =
+        contentInput.value.trim();
+
+
+    const file =
+        imageInput.files[0] || null;
+
+
+    if (!content && !file) {
+
+        showStatus(
+            "Write something or choose an image.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    publishBtn.disabled = true;
+
+    publishBtn.textContent =
+        "POSTING...";
+
+
+    try {
+
+        let imageUrl = null;
+
+
+        /*
+         If an image is selected,
+         save it as a Data URL.
+
+         This works with the existing
+         image_url text field.
+        */
+
+        if (file) {
+
+            if (!file.type.startsWith("image/")) {
+
+                throw new Error(
+                    "Please select an image file."
+                );
+
+            }
+
+
+            if (file.size > 5 * 1024 * 1024) {
+
+                throw new Error(
+                    "Image must be smaller than 5 MB."
+                );
+
+            }
+
+
+            imageUrl =
+                await fileToDataURL(file);
+
+        }
+
+
+        const postData = {
+
+            user_id:
+                currentUser.id,
+
+            content:
+                content || null,
+
+            image_url:
+                imageUrl
+
+        };
+
+
+        const response =
+            await fetch(
+
+                SUPABASE_URL +
+                "/rest/v1/posts",
+
+                {
+                    method: "POST",
+
+                    headers:
+                        supabaseHeaders({
+                            "Content-Type":
+                                "application/json",
+
+                            "Prefer":
+                                "return=representation"
+                        }),
+
+                    body:
+                        JSON.stringify(
+                            postData
+                        )
+                }
+
+            );
+
+
+        if (!response.ok) {
+
+            const error =
+                await response.text();
+
+            throw new Error(error);
+        }
+
+
+        contentInput.value = "";
+
+        imageInput.value = "";
+
+        document.getElementById(
+            "imageName"
+        ).textContent = "";
+
+
+        showStatus(
+            "Post published successfully! 🎉",
+            "success"
+        );
+
+
+        await loadFeed();
+
+
+    } catch (error) {
+
+        console.error(
+            "Create post error:",
+            error
+        );
+
+        showStatus(
+            error.message ||
+            "Could not publish post.",
+            "error"
+        );
+
+    } finally {
+
+        publishBtn.disabled = false;
+
+        publishBtn.textContent =
+            "POST";
+
+    }
 
 }
 
 
-/* Don't duplicate */
+/* =========================================================
+   DELETE POST
+========================================================= */
 
-if (
-seen.has(post.user_id)
-) {
+async function deletePost(postId) {
 
-continue;
+    if (!postId) {
+
+        return;
+    }
+
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to delete this post?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+
+                SUPABASE_URL +
+                "/rest/v1/posts" +
+                "?id=eq." +
+                encodeURIComponent(postId) +
+                "&user_id=eq." +
+                encodeURIComponent(
+                    currentUser.id
+                ),
+
+                {
+                    method: "DELETE",
+
+                    headers:
+                        supabaseHeaders()
+                }
+
+            );
+
+
+        if (!response.ok) {
+
+            const error =
+                await response.text();
+
+            throw new Error(error);
+        }
+
+
+        showStatus(
+            "Post deleted.",
+            "success"
+        );
+
+
+        await loadFeed();
+
+
+    } catch (error) {
+
+        console.error(
+            "Delete error:",
+            error
+        );
+
+        showStatus(
+            "Could not delete the post.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   IMAGE TO DATA URL
+========================================================= */
+
+function fileToDataURL(file) {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload = () =>
+                resolve(
+                    reader.result
+                );
+
+
+            reader.onerror = () =>
+                reject(
+                    new Error(
+                        "Could not read image."
+                    )
+                );
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
 
 }
 
 
-seen.add(
-post.user_id
-);
-
-
-users.push({
-
-id:
-post.user_id,
-
-username:
-post.username ||
-"BERAKAH User"
-
-});
-
-}
-
-
-
-/* STOP LOADING */
-
-loading.style.display =
-"none";
-
-
-
-/* =========================
-   NO OTHER USERS
-========================= */
-
-if (!users.length) {
-
-peopleBox.innerHTML = `
-
-<div class="empty">
-
-No other BERAKAH users found yet.
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-
-/* =========================
-   DISPLAY USERS
-========================= */
-
-users.forEach(
-function(user) {
-
-
-const div =
-document.createElement(
-"div"
-);
-
-
-div.className =
-"person";
-
-
-const username =
-user.username ||
-"BERAKAH User";
-
-
-const firstLetter =
-username
-.charAt(0)
-.toUpperCase();
-
-
-div.innerHTML = `
-
-<div class="avatar">
-
-${safe(firstLetter)}
-
-</div>
-
-
-<div class="person-info">
-
-<div class="person-name">
-
-${safe(username)}
-
-</div>
-
-
-<div class="person-status">
-
-BERAKAH member
-
-</div>
-
-</div>
-
-
-<button
-class="profile-button"
-onclick="viewProfile('${safe(user.id)}')"
->
-
-View profile
-
-</button>
-
-`;
-
-
-peopleBox.appendChild(
-div
-);
-
-});
-
-
-}
-catch(error) {
-
-
-loading.style.display =
-"none";
-
-
-message.textContent =
-error.message;
-
-
-console.error(
-"PEOPLE ERROR:",
-error
-);
-
-}
-
-}
-
-
-
-/* =========================
-   VIEW PROFILE
-========================= */
-
-function viewProfile(userId) {
-
-location.href =
-"profile.html?id=" +
-encodeURIComponent(userId);
-
-}
-
-
-
-/* =========================
-   LOGOUT
-========================= */
+/* =========================================================
+   IMAGE NAME
+========================================================= */
 
 document
-.getElementById(
-"logoutButton"
-)
-.addEventListener(
-"click",
-function() {
+    .getElementById("postImage")
+    .addEventListener(
+        "change",
+        function () {
+
+            const imageName =
+                document.getElementById(
+                    "imageName"
+                );
 
 
-localStorage.removeItem(
-"berakah_access_token"
-);
+            if (this.files.length > 0) {
+
+                imageName.textContent =
+                    "Selected: " +
+                    this.files[0].name;
+
+            } else {
+
+                imageName.textContent = "";
+
+            }
+
+        }
+    );
 
 
-localStorage.removeItem(
-"berakah_refresh_token"
-);
+/* =========================================================
+   DATE FORMAT
+========================================================= */
+
+function formatDate(dateString) {
+
+    if (!dateString) {
+
+        return "";
+    }
 
 
-localStorage.removeItem(
-"berakah_user"
-);
+    const date =
+        new Date(dateString);
 
 
-location.href =
-"login.html";
+    if (isNaN(date.getTime())) {
 
-});
+        return "";
+    }
 
 
+    return date.toLocaleString(
+        undefined,
+        {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+            hour: "numeric",
+            minute: "2-digit"
+        }
+    );
 
-/* =========================
+}
+
+
+/* =========================================================
+   EMPTY FEED
+========================================================= */
+
+function showEmpty() {
+
+    showStatus("");
+
+    document.getElementById(
+        "feed"
+    ).innerHTML = `
+
+        <div class="empty">
+
+            <h3>No posts yet</h3>
+
+            <p>
+                Be the first person to post
+                something on BERAKAH.
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   LIKE PLACEHOLDER
+========================================================= */
+
+function showLikeMessage() {
+
+    showStatus(
+        "Likes are coming next. ❤️"
+    );
+
+}
+
+
+/* =========================================================
+   HTML SECURITY
+========================================================= */
+
+function escapeHTML(value) {
+
+    if (value === null ||
+        value === undefined) {
+
+        return "";
+    }
+
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+function escapeAttribute(value) {
+
+    return escapeHTML(value);
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout() {
+
+    try {
+
+        if (accessToken) {
+
+            await fetch(
+                SUPABASE_URL +
+                "/auth/v1/logout",
+
+                {
+                    method: "POST",
+
+                    headers:
+                        supabaseHeaders()
+                }
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+    }
+
+
+    localStorage.removeItem(
+        "berakah_access_token"
+    );
+
+    localStorage.removeItem(
+        "berakah_refresh_token"
+    );
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =========================================================
    START
-========================= */
+========================================================= */
 
-loadPeople();
+async function startFeed() {
+
+    const user =
+        await getCurrentUser();
+
+
+    if (!user) {
+
+        return;
+    }
+
+
+    await loadFeed();
+
+}
+
+
+startFeed();
 
 </script>
 
-
 </body>
-
 </html>
