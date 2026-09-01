@@ -114,8 +114,6 @@ button:hover {
     cursor: pointer;
 
     border: 1px solid #e5e7eb;
-
-    transition: 0.15s;
 }
 
 .notification:hover {
@@ -150,7 +148,7 @@ button:hover {
 
 .notification-text {
     font-size: 15px;
-    line-height: 1.4;
+    line-height: 1.5;
 }
 
 .notification-time {
@@ -187,6 +185,17 @@ button:hover {
     padding: 15px;
     border-radius: 10px;
     margin-bottom: 15px;
+}
+
+.actor-link {
+    color: #111827;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.actor-link:hover {
+    color: #2563eb;
+    text-decoration: underline;
 }
 
 @media (max-width: 600px) {
@@ -304,7 +313,6 @@ button:hover {
 const SUPABASE_URL =
     "https://utoyoglycqjmqznczfxa.supabase.co";
 
-
 const SUPABASE_KEY =
     "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
@@ -313,7 +321,6 @@ let accessToken =
     localStorage.getItem(
         "berakah_access_token"
     );
-
 
 let currentUser = null;
 
@@ -474,10 +481,10 @@ async function loadProfiles() {
 
 
 /* =========================================
-   GET PROFILE NAME
+   GET ACTOR
 ========================================= */
 
-function getProfileName(
+function getActor(
     userId
 ) {
 
@@ -487,131 +494,91 @@ function getProfileName(
 
     if (!profile) {
 
-        return "Member";
+        return {
+            name: "Member",
+            id: null
+        };
 
     }
 
 
-    return (
+    const name =
         profile["Full name"] ||
         profile.full_name ||
         profile.name ||
         profile.username ||
-        "Member"
-    );
+        "Member";
+
+
+    return {
+        name: name,
+        id: profile.id
+    };
 
 }
 
 
 
 /* =========================================
-   GET PROFILE ID
-========================================= */
-
-function getProfileId(
-    userId
-) {
-
-    const profile =
-        profiles[userId];
-
-
-    if (!profile) {
-
-        return null;
-
-    }
-
-
-    return profile.id;
-
-}
-
-
-
-/* =========================================
-   GET NOTIFICATION ICON
+   ICON
 ========================================= */
 
 function getNotificationIcon(
     type
 ) {
 
-    switch (type) {
-
-        case "follow":
-            return "👥";
-
-        case "like":
-            return "❤️";
-
-        case "message":
-            return "💬";
-
-        case "comment":
-            return "💬";
-
-        default:
-            return "🔔";
-
+    if (type === "follow") {
+        return "👥";
     }
+
+    if (type === "like") {
+        return "❤️";
+    }
+
+    if (type === "message") {
+        return "💬";
+    }
+
+    if (type === "comment") {
+        return "💬";
+    }
+
+    return "🔔";
 
 }
 
 
 
 /* =========================================
-   GET NOTIFICATION TEXT
+   ACTION TEXT
 ========================================= */
 
-function getNotificationText(
+function getActionText(
     notification
 ) {
 
-    if (
-        notification.type ===
-        "follow"
+    switch (
+        notification.type
     ) {
 
-        return "started following you.";
+        case "follow":
+            return "started following you.";
+
+        case "like":
+            return "liked your post.";
+
+        case "message":
+            return "sent you a message.";
+
+        case "comment":
+            return "commented on your post.";
+
+        default:
+
+            return notification.message ||
+                "sent you a notification.";
 
     }
-
-
-    if (
-        notification.type ===
-        "like"
-    ) {
-
-        return "liked your post.";
-
-    }
-
-
-    if (
-        notification.type ===
-        "message"
-    ) {
-
-        return "sent you a message.";
-
-    }
-
-
-    if (
-        notification.type ===
-        "comment"
-    ) {
-
-        return "commented on your post.";
-
-    }
-
-
-    return (
-        notification.message ||
-        "sent you a notification."
-    );
 
 }
 
@@ -627,7 +594,6 @@ async function loadNotifications() {
         document.getElementById(
             "notificationsList"
         );
-
 
     const errorBox =
         document.getElementById(
@@ -706,13 +672,9 @@ function renderNotifications() {
 
         list.innerHTML = `
             <div class="empty">
-
                 🔔
-
                 <br><br>
-
                 You have no notifications yet.
-
             </div>
         `;
 
@@ -726,6 +688,12 @@ function renderNotifications() {
 
     notifications.forEach(
         notification => {
+
+            const actor =
+                getActor(
+                    notification.actor_id
+                );
+
 
             const item =
                 document.createElement(
@@ -742,40 +710,41 @@ function renderNotifications() {
                 );
 
 
-            const name =
-                getProfileName(
-                    notification.actor_id
-                );
-
-
-            const icon =
-                getNotificationIcon(
-                    notification.type
-                );
-
-
-            const notificationText =
-                getNotificationText(
-                    notification
-                );
+            const profileUrl =
+                actor.id
+                    ? "profile.html?id=" +
+                      encodeURIComponent(
+                          actor.id
+                      )
+                    : "#";
 
 
             item.innerHTML = `
 
                 <div class="icon">
-                    ${icon}
+                    ${getNotificationIcon(
+                        notification.type
+                    )}
                 </div>
 
                 <div class="notification-content">
 
                     <div class="notification-text">
 
-                        <strong>
-                            ${escapeHtml(name)}
-                        </strong>
+                        <a
+                            class="actor-link"
+                            href="${profileUrl}"
+                            onclick="event.stopPropagation()"
+                        >
+                            ${escapeHtml(
+                                actor.name
+                            )}
+                        </a>
 
                         ${escapeHtml(
-                            notificationText
+                            getActionText(
+                                notification
+                            )
                         )}
 
                     </div>
@@ -804,7 +773,7 @@ function renderNotifications() {
 
 
             item.onclick =
-                () => {
+                function() {
 
                     openNotification(
                         notification
@@ -840,17 +809,17 @@ async function openNotification(
         "follow"
     ) {
 
-        const profileId =
-            getProfileId(
+        const actor =
+            getActor(
                 notification.actor_id
             );
 
 
-        if (profileId) {
+        if (actor.id) {
 
             window.location.href =
                 "profile.html?id=" +
-                profileId;
+                actor.id;
 
             return;
 
@@ -1044,7 +1013,7 @@ async function markAllRead() {
 
 
 /* =========================================
-   FORMAT TIME
+   TIME
 ========================================= */
 
 function formatTime(
@@ -1094,7 +1063,7 @@ function escapeHtml(
 ) {
 
     return String(
-        value || ""
+        value ?? ""
     )
     .replace(
         /&/g,
@@ -1148,7 +1117,7 @@ function logout() {
 ========================================= */
 
 setInterval(
-    () => {
+    function() {
 
         if (currentUser) {
 
