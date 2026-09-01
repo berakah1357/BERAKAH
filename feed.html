@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>BERAKAH - Feed</title>
 
@@ -20,9 +25,10 @@ body {
     color: #111827;
 }
 
-/* =========================
+
+/* ==========================================
    HEADER
-========================= */
+========================================== */
 
 header {
     background: white;
@@ -36,9 +42,11 @@ header {
     max-width: 1100px;
     margin: auto;
     padding: 14px 20px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 15px;
 }
 
@@ -51,8 +59,8 @@ header {
 
 .nav-links {
     display: flex;
-    gap: 8px;
     align-items: center;
+    gap: 8px;
     flex-wrap: wrap;
 }
 
@@ -60,9 +68,13 @@ header {
 .logout-btn {
     text-decoration: none;
     color: #374151;
+
     padding: 8px 10px;
+
     border-radius: 8px;
+
     font-size: 14px;
+
     cursor: pointer;
 }
 
@@ -77,48 +89,72 @@ header {
     font-family: inherit;
 }
 
-/* =========================
-   PAGE
-========================= */
+
+/* ==========================================
+   MAIN
+========================================== */
 
 .container {
     max-width: 760px;
+
     margin: 25px auto;
+
     padding: 0 15px;
 }
 
 .page-title {
     font-size: 28px;
-    margin: 0 0 18px;
+
+    margin:
+        0 0 18px;
 }
 
-/* =========================
+
+/* ==========================================
    CREATE POST
-========================= */
+========================================== */
 
 .create-post {
     background: white;
-    border: 1px solid #e5e7eb;
+
+    border:
+        1px solid #e5e7eb;
+
     border-radius: 14px;
+
     padding: 18px;
+
     margin-bottom: 22px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,0.04);
 }
 
 .create-post h2 {
-    margin: 0 0 14px;
+    margin:
+        0 0 14px;
+
     font-size: 18px;
 }
 
 textarea {
     width: 100%;
+
     min-height: 110px;
+
     resize: vertical;
-    border: 1px solid #d1d5db;
+
+    border:
+        1px solid #d1d5db;
+
     border-radius: 10px;
+
     padding: 12px;
+
     font-family: Arial, sans-serif;
+
     font-size: 15px;
+
     outline: none;
 }
 
@@ -128,18 +164,27 @@ textarea:focus {
 
 .create-bottom {
     margin-top: 12px;
+
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
+
     gap: 10px;
 }
 
 .file-label {
     display: inline-block;
+
     background: #f3f4f6;
+
     padding: 10px 14px;
+
     border-radius: 8px;
+
     cursor: pointer;
+
     font-size: 14px;
 }
 
@@ -153,17 +198,25 @@ textarea:focus {
 
 #imageName {
     font-size: 12px;
+
     color: #6b7280;
+
     margin-top: 7px;
 }
 
 .post-btn {
     background: #2563eb;
+
     color: white;
+
     border: none;
+
     padding: 11px 18px;
+
     border-radius: 8px;
+
     cursor: pointer;
+
     font-weight: bold;
 }
 
@@ -173,17 +226,22 @@ textarea:focus {
 
 .post-btn:disabled {
     opacity: 0.6;
+
     cursor: not-allowed;
 }
 
-/* =========================
+
+/* ==========================================
    STATUS
-========================= */
+========================================== */
 
 .status {
     text-align: center;
+
     margin: 15px 0;
+
     color: #6b7280;
+
     font-size: 14px;
 }
 
@@ -195,107 +253,199 @@ textarea:focus {
     color: #16a34a;
 }
 
-/* =========================
-   POST CARD
-========================= */
+
+/* ==========================================
+   POST
+========================================== */
 
 .post {
     background: white;
-    border: 1px solid #e5e7eb;
+
+    border:
+        1px solid #e5e7eb;
+
     border-radius: 14px;
+
     margin-bottom: 18px;
+
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,0.04);
 }
 
 .post-header {
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
-    padding: 15px 16px 10px;
+
+    padding:
+        15px 16px 10px;
 }
 
 .author {
     display: flex;
+
     align-items: center;
+
     gap: 10px;
+
     text-decoration: none;
+
     color: inherit;
 }
 
 .avatar {
     width: 44px;
     height: 44px;
+
     border-radius: 50%;
+
     object-fit: cover;
+
     background: #e5e7eb;
+
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     font-weight: bold;
+
     color: #374151;
+
     overflow: hidden;
+
+    flex-shrink: 0;
 }
 
 .avatar img {
     width: 100%;
     height: 100%;
+
     object-fit: cover;
 }
 
 .author-name {
     font-weight: bold;
+
     font-size: 15px;
 }
 
 .username {
     color: #6b7280;
+
     font-size: 13px;
+
     margin-top: 2px;
 }
 
 .post-date {
     color: #9ca3af;
+
     font-size: 12px;
 }
 
 .post-content {
-    padding: 5px 16px 15px;
+    padding:
+        5px 16px 15px;
+
     white-space: pre-wrap;
+
     word-break: break-word;
+
     line-height: 1.5;
+
     font-size: 15px;
 }
 
 .post-image {
     width: 100%;
+
     max-height: 600px;
+
     object-fit: cover;
+
     display: block;
 }
 
+
+/* ==========================================
+   POST ACTIONS
+========================================== */
+
 .post-actions {
-    border-top: 1px solid #f0f0f0;
-    padding: 10px 16px;
+    border-top:
+        1px solid #f0f0f0;
+
+    padding:
+        10px 16px;
+
     display: flex;
+
+    align-items: center;
+
     gap: 10px;
 }
 
 .action-btn {
     background: transparent;
+
     border: none;
+
     cursor: pointer;
+
     color: #4b5563;
-    padding: 7px 10px;
+
+    padding:
+        7px 10px;
+
     border-radius: 7px;
+
+    font-size: 14px;
 }
 
 .action-btn:hover {
     background: #f3f4f6;
 }
 
+
+/* ==========================================
+   LIKE BUTTON
+========================================== */
+
+.like-btn {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+.like-btn.liked {
+    color: #dc2626;
+
+    font-weight: bold;
+}
+
+.like-count {
+    color: #6b7280;
+
+    font-size: 13px;
+
+    min-width: 10px;
+}
+
+
+/* ==========================================
+   DELETE
+========================================== */
+
 .delete-btn {
     margin-left: auto;
+
     color: #dc2626;
 }
 
@@ -303,44 +453,62 @@ textarea:focus {
     background: #fef2f2;
 }
 
-/* =========================
+
+/* ==========================================
    EMPTY
-========================= */
+========================================== */
 
 .empty {
     background: white;
-    border: 1px solid #e5e7eb;
+
+    border:
+        1px solid #e5e7eb;
+
     border-radius: 14px;
+
     padding: 40px 20px;
+
     text-align: center;
+
     color: #6b7280;
 }
 
 .refresh-btn {
     margin-top: 15px;
+
     background: #111827;
+
     color: white;
+
     border: none;
+
     padding: 10px 16px;
+
     border-radius: 8px;
+
     cursor: pointer;
 }
 
-/* =========================
+
+/* ==========================================
    MOBILE
-========================= */
+========================================== */
 
 @media (max-width: 700px) {
 
     .nav {
         padding: 12px;
+
         align-items: flex-start;
+
         flex-direction: column;
     }
 
     .nav-links {
         width: 100%;
+
         overflow-x: auto;
+
         flex-wrap: nowrap;
     }
 
@@ -351,7 +519,9 @@ textarea:focus {
 
     .container {
         margin-top: 18px;
-        padding: 0 10px;
+
+        padding:
+            0 10px;
     }
 
     .page-title {
@@ -360,11 +530,20 @@ textarea:focus {
 
     .create-bottom {
         align-items: stretch;
+
         flex-direction: column;
     }
 
     .post-btn {
         width: 100%;
+    }
+
+    .post-header {
+        gap: 10px;
+    }
+
+    .post-date {
+        text-align: right;
     }
 
 }
@@ -373,31 +552,52 @@ textarea:focus {
 
 </head>
 
+
 <body>
+
 
 <header>
 
     <div class="nav">
 
-        <a class="logo" href="index.html">
+        <a
+            class="logo"
+            href="index.html"
+        >
             BERAKAH
         </a>
 
+
         <nav class="nav-links">
 
-            <a href="index.html">Home</a>
+            <a href="index.html">
+                Home
+            </a>
 
-            <a href="feed.html">Feed</a>
+            <a href="feed.html">
+                Feed
+            </a>
 
-            <a href="people.html">👥 People</a>
+            <a href="people.html">
+                👥 People
+            </a>
 
-            <a href="marketplace.html">Market</a>
+            <a href="marketplace.html">
+                Market
+            </a>
 
-            <a href="notifications.html">🔔</a>
+            <a href="notifications.html">
+                🔔
+            </a>
 
-            <a href="messages.html">💬</a>
+            <a href="messages.html">
+                💬
+            </a>
 
-            <button class="logout-btn" onclick="logout()">
+            <button
+                class="logout-btn"
+                onclick="logout()"
+            >
                 Logout
             </button>
 
@@ -408,7 +608,9 @@ textarea:focus {
 </header>
 
 
+
 <main class="container">
+
 
     <h1 class="page-title">
         Feed
@@ -423,12 +625,15 @@ textarea:focus {
             Create a post
         </h2>
 
+
         <textarea
             id="postContent"
             placeholder="What's on your mind?"
         ></textarea>
 
+
         <div id="imageName"></div>
+
 
         <div class="create-bottom">
 
@@ -444,6 +649,7 @@ textarea:focus {
 
             </label>
 
+
             <button
                 class="post-btn"
                 id="publishBtn"
@@ -457,18 +663,23 @@ textarea:focus {
     </section>
 
 
-    <div id="status" class="status"></div>
+    <div
+        id="status"
+        class="status"
+    ></div>
 
 
     <section id="feed"></section>
 
+
 </main>
+
 
 
 <script>
 
 /* =========================================================
-   BERAKAH SUPABASE
+   SUPABASE
 ========================================================= */
 
 const SUPABASE_URL =
@@ -479,20 +690,24 @@ const SUPABASE_KEY =
 
 
 let accessToken =
-    localStorage.getItem("berakah_access_token");
+    localStorage.getItem(
+        "berakah_access_token"
+    );
+
 
 let currentUser = null;
 
 
 /* =========================================================
-   SUPABASE HEADERS
+   HEADERS
 ========================================================= */
 
 function supabaseHeaders(extra = {}) {
 
     return {
 
-        "apikey": SUPABASE_KEY,
+        "apikey":
+            SUPABASE_KEY,
 
         "Authorization":
             "Bearer " + accessToken,
@@ -508,12 +723,18 @@ function supabaseHeaders(extra = {}) {
    STATUS
 ========================================================= */
 
-function showStatus(message, type = "") {
+function showStatus(
+    message,
+    type = ""
+) {
 
     const status =
-        document.getElementById("status");
+        document.getElementById(
+            "status"
+        );
 
-    status.textContent = message;
+    status.textContent =
+        message;
 
     status.className =
         "status " + type;
@@ -522,7 +743,7 @@ function showStatus(message, type = "") {
 
 
 /* =========================================================
-   GET LOGGED-IN USER
+   CURRENT USER
 ========================================================= */
 
 async function getCurrentUser() {
@@ -536,19 +757,20 @@ async function getCurrentUser() {
     }
 
 
-    const response = await fetch(
+    const response =
+        await fetch(
 
-        SUPABASE_URL +
-        "/auth/v1/user",
+            SUPABASE_URL +
+            "/auth/v1/user",
 
-        {
-            method: "GET",
+            {
+                method: "GET",
 
-            headers:
-                supabaseHeaders()
-        }
+                headers:
+                    supabaseHeaders()
+            }
 
-    );
+        );
 
 
     if (!response.ok) {
@@ -571,6 +793,7 @@ async function getCurrentUser() {
     currentUser =
         await response.json();
 
+
     return currentUser;
 
 }
@@ -583,19 +806,24 @@ async function getCurrentUser() {
 async function loadFeed() {
 
     const feed =
-        document.getElementById("feed");
+        document.getElementById(
+            "feed"
+        );
+
 
     feed.innerHTML = "";
 
-    showStatus("Loading posts...");
+
+    showStatus(
+        "Loading posts..."
+    );
 
 
     try {
 
-        /*
-         IMPORTANT:
-         posts.user_id is the Supabase Auth UUID.
-        */
+        /* -----------------------------------------
+           LOAD POSTS
+        ----------------------------------------- */
 
         const postsUrl =
             SUPABASE_URL +
@@ -604,31 +832,38 @@ async function loadFeed() {
             "&order=created_at.desc";
 
 
-        const response =
+        const postsResponse =
             await fetch(
+
                 postsUrl,
+
                 {
                     method: "GET",
+
                     headers:
                         supabaseHeaders()
                 }
+
             );
 
 
-        if (!response.ok) {
+        if (!postsResponse.ok) {
 
-            const error =
-                await response.text();
+            throw new Error(
+                await postsResponse.text()
+            );
 
-            throw new Error(error);
         }
 
 
         const posts =
-            await response.json();
+            await postsResponse.json();
 
 
-        if (!posts || posts.length === 0) {
+        if (
+            !posts ||
+            posts.length === 0
+        ) {
 
             showEmpty();
 
@@ -636,16 +871,20 @@ async function loadFeed() {
         }
 
 
-        /*
-         Load profile information for
-         each post author.
-        */
+        /* -----------------------------------------
+           GET UNIQUE USER IDS
+        ----------------------------------------- */
 
         const userIds = [
             ...new Set(
+
                 posts
-                    .map(post => post.user_id)
+                    .map(
+                        post =>
+                            post.user_id
+                    )
                     .filter(Boolean)
+
             )
         ];
 
@@ -653,40 +892,53 @@ async function loadFeed() {
         let profiles = [];
 
 
-        if (userIds.length > 0) {
+        /* -----------------------------------------
+           LOAD PROFILES
+        ----------------------------------------- */
 
-            const profileFilter =
+        if (
+            userIds.length > 0
+        ) {
+
+            const encodedIds =
                 userIds
-                    .map(id =>
-                        `"${id}"`
+                    .map(
+                        id =>
+                            `"${id}"`
                     )
                     .join(",");
 
 
-            const profileUrl =
+            const profilesUrl =
                 SUPABASE_URL +
                 "/rest/v1/profiles" +
                 "?select=*" +
                 "&user_id=in.(" +
-                userIds.join(",") +
+                encodedIds +
                 ")";
 
 
-            const profileResponse =
+            const profilesResponse =
                 await fetch(
-                    profileUrl,
+
+                    profilesUrl,
+
                     {
                         method: "GET",
+
                         headers:
                             supabaseHeaders()
                     }
+
                 );
 
 
-            if (profileResponse.ok) {
+            if (
+                profilesResponse.ok
+            ) {
 
                 profiles =
-                    await profileResponse.json();
+                    await profilesResponse.json();
 
             }
 
@@ -695,35 +947,182 @@ async function loadFeed() {
 
         const profileMap = {};
 
-        profiles.forEach(profile => {
 
-            profileMap[
-                profile.user_id
-            ] = profile;
+        profiles.forEach(
+            profile => {
 
-        });
+                profileMap[
+                    profile.user_id
+                ] = profile;
+
+            }
+        );
 
 
-        posts.forEach(post => {
+        /* -----------------------------------------
+           LOAD LIKES
+        ----------------------------------------- */
 
-            const profile =
-                profileMap[post.user_id] || null;
-
-            feed.appendChild(
-                createPostCard(
-                    post,
-                    profile
+        const postIds =
+            posts
+                .map(
+                    post =>
+                        post.id
                 )
-            );
+                .filter(
+                    id =>
+                        id !== null &&
+                        id !== undefined
+                );
 
-        });
+
+        let likes = [];
+
+
+        if (
+            postIds.length > 0
+        ) {
+
+            const encodedPostIds =
+                postIds
+                    .join(",");
+
+
+            const likesUrl =
+                SUPABASE_URL +
+                "/rest/v1/post_likes" +
+                "?select=post_id,user_id" +
+                "&post_id=in.(" +
+                encodedPostIds +
+                ")";
+
+
+            const likesResponse =
+                await fetch(
+
+                    likesUrl,
+
+                    {
+                        method: "GET",
+
+                        headers:
+                            supabaseHeaders()
+                    }
+
+                );
+
+
+            if (
+                likesResponse.ok
+            ) {
+
+                likes =
+                    await likesResponse.json();
+
+            } else {
+
+                console.error(
+                    "Likes loading error:",
+                    await likesResponse.text()
+                );
+
+            }
+
+        }
+
+
+        /* -----------------------------------------
+           BUILD LIKE DATA
+        ----------------------------------------- */
+
+        const likeMap = {};
+
+
+        likes.forEach(
+            like => {
+
+                const postId =
+                    String(
+                        like.post_id
+                    );
+
+
+                if (
+                    !likeMap[postId]
+                ) {
+
+                    likeMap[postId] = {
+                        count: 0,
+                        liked: false
+                    };
+
+                }
+
+
+                likeMap[
+                    postId
+                ].count++;
+
+
+                if (
+                    currentUser &&
+                    like.user_id ===
+                        currentUser.id
+                ) {
+
+                    likeMap[
+                        postId
+                    ].liked = true;
+
+                }
+
+            }
+        );
+
+
+        /* -----------------------------------------
+           CREATE POSTS
+        ----------------------------------------- */
+
+        posts.forEach(
+            post => {
+
+                const profile =
+                    profileMap[
+                        post.user_id
+                    ] || null;
+
+
+                const postLikes =
+                    likeMap[
+                        String(post.id)
+                    ] || {
+                        count: 0,
+                        liked: false
+                    };
+
+
+                feed.appendChild(
+
+                    createPostCard(
+                        post,
+                        profile,
+                        postLikes
+                    )
+
+                );
+
+            }
+        );
 
 
         showStatus(
             posts.length +
-            (posts.length === 1
+            (
+                posts.length === 1
                 ? " post"
-                : " posts")
+                : " posts"
+            )
         );
 
 
@@ -734,24 +1133,36 @@ async function loadFeed() {
             error
         );
 
+
         showStatus(
             "Could not load the feed.",
             "error"
         );
 
+
         feed.innerHTML = `
+
             <div class="empty">
-                <strong>Something went wrong.</strong>
+
+                <strong>
+                    Something went wrong.
+                </strong>
+
                 <br><br>
+
                 Please refresh the page.
+
                 <br>
+
                 <button
                     class="refresh-btn"
                     onclick="loadFeed()"
                 >
                     Refresh Feed
                 </button>
+
             </div>
+
         `;
 
     }
@@ -763,65 +1174,83 @@ async function loadFeed() {
    CREATE POST CARD
 ========================================================= */
 
-function createPostCard(post, profile) {
+function createPostCard(
+    post,
+    profile,
+    likes
+) {
 
     const article =
-        document.createElement("article");
+        document.createElement(
+            "article"
+        );
 
-    article.className = "post";
+
+    article.className =
+        "post";
 
 
     const fullName =
         profile
-            ? (
-                profile["Full name"] ||
-                profile.full_name ||
-                profile.name ||
-                profile.username ||
-                "BERAKAH Member"
-            )
-            : "BERAKAH Member";
+        ? (
+            profile["Full name"] ||
+            profile.full_name ||
+            profile.name ||
+            profile.username ||
+            "BERAKAH Member"
+        )
+        : "BERAKAH Member";
 
 
     const username =
-        profile && profile.username
-            ? profile.username
-            : "";
+        profile &&
+        profile.username
+        ? profile.username
+        : "";
 
 
     const avatarUrl =
-        profile && profile.avatar_url
-            ? profile.avatar_url
-            : "";
+        profile &&
+        profile.avatar_url
+        ? profile.avatar_url
+        : "";
 
 
     const profileId =
-        profile && profile.id
-            ? profile.id
-            : null;
+        profile &&
+        profile.id
+        ? profile.id
+        : null;
 
 
     const isOwnPost =
         currentUser &&
-        post.user_id === currentUser.id;
+        post.user_id ===
+            currentUser.id;
 
 
     const formattedDate =
-        formatDate(post.created_at);
+        formatDate(
+            post.created_at
+        );
 
 
-    let avatarHTML = "";
+    let avatarHTML;
 
 
     if (avatarUrl) {
 
         avatarHTML = `
+
             <div class="avatar">
+
                 <img
                     src="${escapeAttribute(avatarUrl)}"
                     alt="Profile"
                 >
+
             </div>
+
         `;
 
     } else {
@@ -833,10 +1262,15 @@ function createPostCard(post, profile) {
                     .toUpperCase()
             );
 
+
         avatarHTML = `
+
             <div class="avatar">
+
                 ${firstLetter}
+
             </div>
+
         `;
 
     }
@@ -848,6 +1282,7 @@ function createPostCard(post, profile) {
     if (profileId) {
 
         authorHTML = `
+
             <a
                 class="author"
                 href="profile.html?id=${encodeURIComponent(profileId)}"
@@ -855,20 +1290,33 @@ function createPostCard(post, profile) {
 
                 ${avatarHTML}
 
+
                 <div>
 
                     <div class="author-name">
-                        ${escapeHTML(fullName)}
+
+                        ${escapeHTML(
+                            fullName
+                        )}
+
                     </div>
+
 
                     ${
                         username
                         ? `
+
                             <div class="username">
+
                                 @${escapeHTML(
-                                    username.replace(/^@/, "")
+                                    username.replace(
+                                        /^@/,
+                                        ""
+                                    )
                                 )}
+
                             </div>
+
                           `
                         : ""
                     }
@@ -876,42 +1324,36 @@ function createPostCard(post, profile) {
                 </div>
 
             </a>
+
         `;
 
     } else {
 
         authorHTML = `
+
             <div class="author">
 
                 ${avatarHTML}
 
+
                 <div>
 
                     <div class="author-name">
-                        ${escapeHTML(fullName)}
-                    </div>
 
-                    ${
-                        username
-                        ? `
-                            <div class="username">
-                                @${escapeHTML(
-                                    username.replace(/^@/, "")
-                                )}
-                            </div>
-                          `
-                        : ""
-                    }
+                        ${escapeHTML(
+                            fullName
+                        )}
+
+                    </div>
 
                 </div>
 
             </div>
+
         `;
 
     }
 
-
-    let imageHTML = "";
 
     const imageUrl =
         post.image_url ||
@@ -919,15 +1361,20 @@ function createPostCard(post, profile) {
         null;
 
 
+    let imageHTML = "";
+
+
     if (imageUrl) {
 
         imageHTML = `
+
             <img
                 class="post-image"
                 src="${escapeAttribute(imageUrl)}"
                 alt="Post image"
                 loading="lazy"
             >
+
         `;
 
     }
@@ -939,15 +1386,29 @@ function createPostCard(post, profile) {
     if (isOwnPost) {
 
         deleteButton = `
+
             <button
                 class="action-btn delete-btn"
                 onclick="deletePost('${escapeAttribute(post.id)}')"
             >
                 🗑 Delete
             </button>
+
         `;
 
     }
+
+
+    const likedClass =
+        likes.liked
+        ? "liked"
+        : "";
+
+
+    const likeIcon =
+        likes.liked
+        ? "❤️"
+        : "🤍";
 
 
     article.innerHTML = `
@@ -956,8 +1417,11 @@ function createPostCard(post, profile) {
 
             ${authorHTML}
 
+
             <div class="post-date">
+
                 ${formattedDate}
+
             </div>
 
         </div>
@@ -966,9 +1430,15 @@ function createPostCard(post, profile) {
         ${
             post.content
             ? `
+
                 <div class="post-content">
-                    ${escapeHTML(post.content)}
+
+                    ${escapeHTML(
+                        post.content
+                    )}
+
                 </div>
+
               `
             : ""
         }
@@ -979,15 +1449,37 @@ function createPostCard(post, profile) {
 
         <div class="post-actions">
 
+
             <button
-                class="action-btn"
-                type="button"
-                onclick="showLikeMessage()"
+                class="action-btn like-btn ${likedClass}"
+                id="like-${escapeAttribute(post.id)}"
+                onclick="toggleLike('${escapeAttribute(post.id)}', ${likes.liked})"
             >
-                ❤️ Like
+
+                <span class="like-icon">
+                    ${likeIcon}
+                </span>
+
+                <span>
+                    Like
+                </span>
+
+                <span
+                    class="like-count"
+                    id="count-${escapeAttribute(post.id)}"
+                >
+                    ${
+                        likes.count > 0
+                        ? likes.count
+                        : ""
+                    }
+                </span>
+
             </button>
 
+
             ${deleteButton}
+
 
         </div>
 
@@ -995,6 +1487,238 @@ function createPostCard(post, profile) {
 
 
     return article;
+
+}
+
+
+/* =========================================================
+   LIKE / UNLIKE
+========================================================= */
+
+async function toggleLike(
+    postId,
+    currentlyLiked
+) {
+
+    const button =
+        document.getElementById(
+            "like-" + postId
+        );
+
+
+    const countElement =
+        document.getElementById(
+            "count-" + postId
+        );
+
+
+    if (!button) {
+
+        return;
+    }
+
+
+    button.disabled = true;
+
+
+    try {
+
+        if (currentlyLiked) {
+
+            /* -------------------------------
+               UNLIKE
+            -------------------------------- */
+
+            const deleteUrl =
+                SUPABASE_URL +
+                "/rest/v1/post_likes" +
+                "?post_id=eq." +
+                encodeURIComponent(postId) +
+                "&user_id=eq." +
+                encodeURIComponent(
+                    currentUser.id
+                );
+
+
+            const response =
+                await fetch(
+
+                    deleteUrl,
+
+                    {
+                        method: "DELETE",
+
+                        headers:
+                            supabaseHeaders()
+                    }
+
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    await response.text()
+                );
+
+            }
+
+
+            button.classList.remove(
+                "liked"
+            );
+
+
+            button.querySelector(
+                ".like-icon"
+            ).textContent =
+                "🤍";
+
+
+            let count =
+                parseInt(
+                    countElement.textContent
+                ) || 0;
+
+
+            count =
+                Math.max(
+                    0,
+                    count - 1
+                );
+
+
+            countElement.textContent =
+                count > 0
+                ? count
+                : "";
+
+
+            button.setAttribute(
+                "onclick",
+                `toggleLike('${escapeAttribute(postId)}', false)`
+            );
+
+
+        } else {
+
+            /* -------------------------------
+               LIKE
+            -------------------------------- */
+
+            const response =
+                await fetch(
+
+                    SUPABASE_URL +
+                    "/rest/v1/post_likes",
+
+                    {
+                        method: "POST",
+
+                        headers:
+                            supabaseHeaders({
+                                "Content-Type":
+                                    "application/json",
+
+                                "Prefer":
+                                    "return=minimal"
+                            }),
+
+                        body:
+                            JSON.stringify({
+
+                                post_id:
+                                    postId,
+
+                                user_id:
+                                    currentUser.id
+
+                            })
+                    }
+
+                );
+
+
+            if (!response.ok) {
+
+                const error =
+                    await response.text();
+
+
+                /*
+                 If another request already
+                 created the like, simply
+                 reload the feed.
+                */
+
+                if (
+                    response.status === 409
+                ) {
+
+                    await loadFeed();
+
+                    return;
+
+                }
+
+
+                throw new Error(
+                    error
+                );
+
+            }
+
+
+            button.classList.add(
+                "liked"
+            );
+
+
+            button.querySelector(
+                ".like-icon"
+            ).textContent =
+                "❤️";
+
+
+            let count =
+                parseInt(
+                    countElement.textContent
+                ) || 0;
+
+
+            count++;
+
+
+            countElement.textContent =
+                count;
+
+
+            button.setAttribute(
+                "onclick",
+                `toggleLike('${escapeAttribute(postId)}', true)`
+            );
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Like error:",
+            error
+        );
+
+
+        showStatus(
+            "Could not update like.",
+            "error"
+        );
+
+    } finally {
+
+        button.disabled = false;
+
+    }
 
 }
 
@@ -1010,10 +1734,12 @@ async function createPost() {
             "postContent"
         );
 
+
     const imageInput =
         document.getElementById(
             "postImage"
         );
+
 
     const publishBtn =
         document.getElementById(
@@ -1026,10 +1752,14 @@ async function createPost() {
 
 
     const file =
-        imageInput.files[0] || null;
+        imageInput.files[0] ||
+        null;
 
 
-    if (!content && !file) {
+    if (
+        !content &&
+        !file
+    ) {
 
         showStatus(
             "Write something or choose an image.",
@@ -1051,17 +1781,13 @@ async function createPost() {
         let imageUrl = null;
 
 
-        /*
-         If an image is selected,
-         save it as a Data URL.
-
-         This works with the existing
-         image_url text field.
-        */
-
         if (file) {
 
-            if (!file.type.startsWith("image/")) {
+            if (
+                !file.type.startsWith(
+                    "image/"
+                )
+            ) {
 
                 throw new Error(
                     "Please select an image file."
@@ -1070,7 +1796,10 @@ async function createPost() {
             }
 
 
-            if (file.size > 5 * 1024 * 1024) {
+            if (
+                file.size >
+                5 * 1024 * 1024
+            ) {
 
                 throw new Error(
                     "Image must be smaller than 5 MB."
@@ -1080,7 +1809,9 @@ async function createPost() {
 
 
             imageUrl =
-                await fileToDataURL(file);
+                await fileToDataURL(
+                    file
+                );
 
         }
 
@@ -1110,17 +1841,20 @@ async function createPost() {
 
                     headers:
                         supabaseHeaders({
+
                             "Content-Type":
                                 "application/json",
 
                             "Prefer":
                                 "return=representation"
+
                         }),
 
                     body:
                         JSON.stringify(
                             postData
                         )
+
                 }
 
             );
@@ -1128,20 +1862,25 @@ async function createPost() {
 
         if (!response.ok) {
 
-            const error =
-                await response.text();
+            throw new Error(
+                await response.text()
+            );
 
-            throw new Error(error);
         }
 
 
-        contentInput.value = "";
+        contentInput.value =
+            "";
 
-        imageInput.value = "";
+
+        imageInput.value =
+            "";
+
 
         document.getElementById(
             "imageName"
-        ).textContent = "";
+        ).textContent =
+            "";
 
 
         showStatus(
@@ -1160,15 +1899,19 @@ async function createPost() {
             error
         );
 
+
         showStatus(
             error.message ||
             "Could not publish post.",
             "error"
         );
 
+
     } finally {
 
-        publishBtn.disabled = false;
+        publishBtn.disabled =
+            false;
+
 
         publishBtn.textContent =
             "POST";
@@ -1182,7 +1925,9 @@ async function createPost() {
    DELETE POST
 ========================================================= */
 
-async function deletePost(postId) {
+async function deletePost(
+    postId
+) {
 
     if (!postId) {
 
@@ -1210,7 +1955,9 @@ async function deletePost(postId) {
                 SUPABASE_URL +
                 "/rest/v1/posts" +
                 "?id=eq." +
-                encodeURIComponent(postId) +
+                encodeURIComponent(
+                    postId
+                ) +
                 "&user_id=eq." +
                 encodeURIComponent(
                     currentUser.id
@@ -1228,10 +1975,10 @@ async function deletePost(postId) {
 
         if (!response.ok) {
 
-            const error =
-                await response.text();
+            throw new Error(
+                await response.text()
+            );
 
-            throw new Error(error);
         }
 
 
@@ -1251,6 +1998,7 @@ async function deletePost(postId) {
             error
         );
 
+
         showStatus(
             "Could not delete the post.",
             "error"
@@ -1262,33 +2010,42 @@ async function deletePost(postId) {
 
 
 /* =========================================================
-   IMAGE TO DATA URL
+   IMAGE READER
 ========================================================= */
 
-function fileToDataURL(file) {
+function fileToDataURL(
+    file
+) {
 
     return new Promise(
-        (resolve, reject) => {
+        (
+            resolve,
+            reject
+        ) => {
 
             const reader =
                 new FileReader();
 
 
-            reader.onload = () =>
-                resolve(
-                    reader.result
-                );
+            reader.onload =
+                () =>
+                    resolve(
+                        reader.result
+                    );
 
 
-            reader.onerror = () =>
-                reject(
-                    new Error(
-                        "Could not read image."
-                    )
-                );
+            reader.onerror =
+                () =>
+                    reject(
+                        new Error(
+                            "Could not read image."
+                        )
+                    );
 
 
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(
+                file
+            );
 
         }
     );
@@ -1301,7 +2058,9 @@ function fileToDataURL(file) {
 ========================================================= */
 
 document
-    .getElementById("postImage")
+    .getElementById(
+        "postImage"
+    )
     .addEventListener(
         "change",
         function () {
@@ -1312,7 +2071,9 @@ document
                 );
 
 
-            if (this.files.length > 0) {
+            if (
+                this.files.length > 0
+            ) {
 
                 imageName.textContent =
                     "Selected: " +
@@ -1320,7 +2081,8 @@ document
 
             } else {
 
-                imageName.textContent = "";
+                imageName.textContent =
+                    "";
 
             }
 
@@ -1329,10 +2091,12 @@ document
 
 
 /* =========================================================
-   DATE FORMAT
+   DATE
 ========================================================= */
 
-function formatDate(dateString) {
+function formatDate(
+    dateString
+) {
 
     if (!dateString) {
 
@@ -1341,10 +2105,16 @@ function formatDate(dateString) {
 
 
     const date =
-        new Date(dateString);
+        new Date(
+            dateString
+        );
 
 
-    if (isNaN(date.getTime())) {
+    if (
+        isNaN(
+            date.getTime()
+        )
+    ) {
 
         return "";
     }
@@ -1372,17 +2142,20 @@ function showEmpty() {
 
     showStatus("");
 
+
     document.getElementById(
         "feed"
     ).innerHTML = `
 
         <div class="empty">
 
-            <h3>No posts yet</h3>
+            <h3>
+                No posts yet
+            </h3>
 
             <p>
-                Be the first person to post
-                something on BERAKAH.
+                Be the first person to
+                post something on BERAKAH.
             </p>
 
         </div>
@@ -1393,44 +2166,60 @@ function showEmpty() {
 
 
 /* =========================================================
-   LIKE PLACEHOLDER
-========================================================= */
-
-function showLikeMessage() {
-
-    showStatus(
-        "Likes are coming next. ❤️"
-    );
-
-}
-
-
-/* =========================================================
    HTML SECURITY
 ========================================================= */
 
-function escapeHTML(value) {
+function escapeHTML(
+    value
+) {
 
-    if (value === null ||
-        value === undefined) {
+    if (
+        value === null ||
+        value === undefined
+    ) {
 
         return "";
+
     }
 
 
     return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
 
-function escapeAttribute(value) {
+function escapeAttribute(
+    value
+) {
 
-    return escapeHTML(value);
+    return escapeHTML(
+        value
+    );
 
 }
 
@@ -1446,6 +2235,7 @@ async function logout() {
         if (accessToken) {
 
             await fetch(
+
                 SUPABASE_URL +
                 "/auth/v1/logout",
 
@@ -1455,6 +2245,7 @@ async function logout() {
                     headers:
                         supabaseHeaders()
                 }
+
             );
 
         }
@@ -1473,6 +2264,7 @@ async function logout() {
         "berakah_access_token"
     );
 
+
     localStorage.removeItem(
         "berakah_refresh_token"
     );
@@ -1485,7 +2277,7 @@ async function logout() {
 
 
 /* =========================================================
-   START
+   START FEED
 ========================================================= */
 
 async function startFeed() {
@@ -1510,4 +2302,5 @@ startFeed();
 </script>
 
 </body>
+
 </html>
