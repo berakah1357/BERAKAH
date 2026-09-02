@@ -1,16 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>BERAKAH - Checkout</title>
-
-<style>
+<title>BERAKAH - Checkout</title><style>
 
 *{
     box-sizing:border-box;
@@ -32,7 +23,6 @@ header{
 .header-inner{
     max-width:1100px;
     margin:auto;
-
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -84,7 +74,6 @@ h2{
     justify-content:space-between;
     align-items:center;
     gap:15px;
-
     padding:15px 0;
     border-bottom:1px solid #e5e7eb;
 }
@@ -107,10 +96,8 @@ h2{
 .total{
     display:flex;
     justify-content:space-between;
-
     font-size:24px;
     font-weight:bold;
-
     padding-top:20px;
 }
 
@@ -127,10 +114,8 @@ label{
 input{
     width:100%;
     padding:13px;
-
     border:1px solid #d1d5db;
     border-radius:9px;
-
     font-size:16px;
 }
 
@@ -141,18 +126,13 @@ input:focus{
 
 .place-order{
     width:100%;
-
     padding:15px;
-
     border:0;
     border-radius:9px;
-
     background:#111827;
     color:white;
-
     font-size:17px;
     font-weight:bold;
-
     cursor:pointer;
 }
 
@@ -167,33 +147,24 @@ input:focus{
 
 .status{
     display:none;
-
     padding:14px;
-
     border-radius:9px;
-
     margin-bottom:20px;
-
     line-height:1.5;
-
     white-space:pre-line;
 }
 
 .status.error{
     display:block;
-
     background:#fef2f2;
     color:#991b1b;
-
     border:1px solid #fecaca;
 }
 
 .status.success{
     display:block;
-
     background:#f0fdf4;
     color:#166534;
-
     border:1px solid #bbf7d0;
 }
 
@@ -223,25 +194,9 @@ input:focus{
 
 }
 
-</style>
-
-</head>
-
-
-<body>
-
-
-<header>
-
-<div class="header-inner">
-
-<div class="logo">
+</style></head><body><header><div class="header-inner"><div class="logo">
 BERAKAH
-</div>
-
-<nav>
-
-<a href="index.html">Home</a>
+</div><nav><a href="index.html">Home</a>
 
 <a href="marketplace.html">Market</a>
 
@@ -249,123 +204,52 @@ BERAKAH
 
 <a href="profile.html">Profile</a>
 
-</nav>
-
-</div>
-
-</header>
-
-
-<main class="container">
-
-
-<div class="checkout-card">
-
-<h1>🛒 Checkout</h1>
-
-<div id="status"
+</nav></div></header><main class="container"><div class="checkout-card"><h1>🛒 Checkout</h1><div id="status"
      class="status">
-</div>
-
-
-<h2>🛍️ Order Summary</h2>
-
-<div id="orderSummary"></div>
-
-
-<div class="total">
-
-<span>TOTAL</span>
+</div><h2>🛍️ Order Summary</h2><div id="orderSummary"></div><div class="total"><span>TOTAL</span>
 
 <span id="total">$0.00</span>
 
-</div>
-
-</div>
-
-
-
-<div class="checkout-card">
-
-<h2>👤 Customer Information</h2>
-
-
-<div class="form-group">
-
-<label for="customerName">
+</div></div><div class="checkout-card"><h2>👤 Customer Information</h2><div class="form-group"><label for="customerName">
 Full Name
-</label>
+</label><input
+id="customerName"
+type="text"
+placeholder="Your full name"
+autocomplete="name">
 
-<input
-    id="customerName"
-    type="text"
-    placeholder="Your full name"
-    autocomplete="name">
-
-</div>
-
-
-<div class="form-group">
-
-<label for="customerEmail">
+</div><div class="form-group"><label for="customerEmail">
 Email
-</label>
+</label><input
+id="customerEmail"
+type="email"
+placeholder="Your email"
+autocomplete="email">
 
-<input
-    id="customerEmail"
-    type="email"
-    placeholder="Your email"
-    autocomplete="email">
-
-</div>
-
-
-<div class="form-group">
-
-<label for="customerPhone">
+</div><div class="form-group"><label for="customerPhone">
 Phone
-</label>
+</label><input
+id="customerPhone"
+type="tel"
+placeholder="Your phone number"
+autocomplete="tel">
 
-<input
-    id="customerPhone"
-    type="tel"
-    placeholder="Your phone number"
-    autocomplete="tel">
-
-</div>
-
-
-<div class="form-group">
-
-<label for="customerAddress">
+</div><div class="form-group"><label for="customerAddress">
 Shipping Address
-</label>
+</label><input
+id="customerAddress"
+type="text"
+placeholder="Your shipping address"
+autocomplete="street-address">
 
-<input
-    id="customerAddress"
-    type="text"
-    placeholder="Your shipping address"
-    autocomplete="street-address">
-
-</div>
-
-
-<button
-    id="placeOrderButton"
-    class="place-order"
-    onclick="placeOrder()">
+</div><button
+id="placeOrderButton"
+class="place-order"
+onclick="placeOrder()">
 
 🛒 PLACE ORDER
 
-</button>
-
-</div>
-
-
-</main>
-
-
-<script>
+</button></div></main><script>
 
 
 /* =====================================================
@@ -758,20 +642,28 @@ async function getProduct(
 
 
 /* =====================================================
-   GENERATE ORDER NUMBER
+   GENERATE UNIQUE ORDER NUMBER
 ===================================================== */
 
 function generateOrderNumber(){
 
+    const timestamp =
+        Date.now()
+        .toString()
+        .slice(-8);
+
+
     const random =
         Math.floor(
-            10000000 +
+            1000 +
             Math.random() *
-            90000000
+            9000
         );
 
 
-    return "BRK-" + random;
+    return "BRK-" +
+           timestamp +
+           random;
 
 }
 
@@ -868,15 +760,11 @@ async function placeOrder(){
 
 
         /* =================================================
-           ONE ORDER NUMBER FOR WHOLE CART
-        ================================================= */
-
-        const orderNumber =
-            generateOrderNumber();
-
-
-        /* =================================================
            PROCESS EACH CART ITEM
+           
+           IMPORTANT:
+           A UNIQUE ORDER NUMBER IS GENERATED
+           FOR EVERY ORDER ROW.
         ================================================= */
 
         for(
@@ -915,6 +803,14 @@ async function placeOrder(){
 
 
             /* =================================================
+               UNIQUE ORDER NUMBER
+            ================================================= */
+
+            const orderNumber =
+                generateOrderNumber();
+
+
+            /* =================================================
                PRODUCT SNAPSHOT
             ================================================= */
 
@@ -949,11 +845,6 @@ async function placeOrder(){
 
             /* =================================================
                ORDER DATA
-               
-               IMPORTANT:
-               status MUST be "pending"
-               because that is allowed by
-               orders_status_valid.
             ================================================= */
 
             const order = {
@@ -1238,8 +1129,4 @@ async function startCheckout(){
 
 startCheckout();
 
-</script>
-
-</body>
-
-</html>
+</script></body></html>
