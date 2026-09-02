@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-
-<title>BERAKAH Product</title>
-
-<style>
+<!DOCTYPE html><html>
+<head><title>BERAKAH Product</title><style>
 
 body{
 font-family:Arial;
@@ -28,79 +23,64 @@ color:white;
 border:none;
 margin-top:15px;
 cursor:pointer;
+font-size:16px;
 }
 
-</style>
+</style></head><body><div class="card"><img id="productImage"
+style="width:100%;max-height:350px;object-fit:cover;border-radius:10px;display:none;">
 
-</head>
-
-<body>
-
-<div class="card">
-<img id="productImage"
-     style="width:100%;max-height:350px;object-fit:cover;border-radius:10px;display:none;">
-     <img
-  id="productImage"
-  style="width:100%;max-height:350px;object-fit:cover;border-radius:10px;display:none;"
->
-<h1 id="name">Product</h1>
-
-<h2 id="price"></h2>
-
-<p id="description"></p>
-
-<p>🏪 BERAKAH</p>
-
-<button>
+<h1 id="name">Product</h1><h2 id="price"></h2><p id="description"></p><p>🏪 BERAKAH</p><button onclick="addToCart()">
 ADD TO CART 🛒
-</button>
-
-</div>
-
-
-<script>
+</button></div><script>
 
 let product = JSON.parse(
-localStorage.getItem("berakahProduct")
+  localStorage.getItem("berakahProduct")
 );
-
 
 if(product){
 
-document.getElementById("name").innerHTML = product.name;
-     let image = localStorage.getItem("berakahImage");
+  document.getElementById("name").innerHTML = product.name;
 
-console.log("IMAGE FOUND:", image);
+  document.getElementById("price").innerHTML =
+    "$" + product.price;
 
-if(image){
+  document.getElementById("description").innerHTML =
+    product.description;
 
-let imageBox = document.getElementById("productImage");
+  let image = localStorage.getItem("berakahImage");
 
-imageBox.src = image;
+  if(image){
 
-imageBox.style.display = "block";
+    let imageBox = document.getElementById("productImage");
 
-}
+    imageBox.src = image;
+    imageBox.style.display = "block";
 
-if(image){
-
-let imageBox = document.getElementById("productImage");
-
-imageBox.src = image;
-
-imageBox.style.display = "block";
-
-}
-document.getElementById("price").innerHTML =
-"$" + product.price;
-
-document.getElementById("description").innerHTML =
-product.description;
+  }
 
 }
 
-</script>
+function addToCart(){
 
+  if(!product){
+    alert("Product not found.");
+    return;
+  }
 
-</body>
+  let cart = JSON.parse(
+    localStorage.getItem("berakahCart") || "[]"
+  );
+
+  cart.push(product);
+
+  localStorage.setItem(
+    "berakahCart",
+    JSON.stringify(cart)
+  );
+
+  alert("Product added to cart! 🛒");
+
+}
+
+</script></body>
 </html>
