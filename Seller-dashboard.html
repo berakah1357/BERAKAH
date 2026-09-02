@@ -14,46 +14,42 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f4f6f8;
+  background: #f5f7fb;
   color: #111827;
 }
 
 header {
   background: white;
-  padding: 16px 20px;
   border-bottom: 1px solid #e5e7eb;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  padding: 15px 20px;
 }
 
-.header-inner {
+.header {
   max-width: 1100px;
   margin: auto;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   gap: 15px;
 }
 
 .logo {
   font-size: 24px;
   font-weight: bold;
-  color: #111827;
 }
 
 nav {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 nav a {
   text-decoration: none;
   color: #374151;
-  font-size: 14px;
   padding: 8px 10px;
-  border-radius: 8px;
+  border-radius: 7px;
+  font-size: 14px;
 }
 
 nav a:hover {
@@ -63,223 +59,144 @@ nav a:hover {
 .container {
   max-width: 1100px;
   margin: auto;
-  padding: 25px 16px 50px;
+  padding: 25px 15px 50px;
 }
 
-.title-section {
-  margin-bottom: 25px;
+h1 {
+  margin-bottom: 5px;
 }
 
-.title-section h1 {
-  margin: 0 0 8px;
-  font-size: 30px;
-}
-
-.title-section p {
-  margin: 0;
+.subtitle {
   color: #6b7280;
+  margin-top: 0;
 }
 
 .stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 15px;
-  margin-bottom: 25px;
+  margin: 25px 0;
 }
 
-.stat-card {
+.card {
   background: white;
-  border-radius: 14px;
   padding: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
 }
 
-.stat-icon {
-  font-size: 28px;
-  margin-bottom: 10px;
+.icon {
+  font-size: 27px;
 }
 
-.stat-label {
+.label {
   color: #6b7280;
   font-size: 14px;
-  margin-bottom: 6px;
+  margin-top: 8px;
 }
 
-.stat-value {
+.value {
   font-size: 27px;
   font-weight: bold;
-}
-
-.quick-actions {
-  background: white;
-  border-radius: 14px;
-  padding: 20px;
-  margin-bottom: 25px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-}
-
-.quick-actions h2 {
-  margin-top: 0;
-}
-
-.action-buttons {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.action-button {
-  display: inline-block;
-  text-decoration: none;
-  background: #111827;
-  color: white;
-  padding: 12px 17px;
-  border-radius: 9px;
-  font-weight: bold;
-  font-size: 14px;
-}
-
-.action-button:hover {
-  opacity: 0.9;
+  margin-top: 5px;
 }
 
 .section {
   background: white;
-  border-radius: 14px;
   padding: 20px;
-  margin-bottom: 25px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border-radius: 14px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
 }
 
-.section-header {
+.section-title {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 15px;
+  align-items: center;
 }
 
-.section h2 {
-  margin: 0;
-}
-
-.refresh-button {
-  border: none;
-  background: #f3f4f6;
-  padding: 9px 13px;
+button {
+  border: 0;
+  background: #111827;
+  color: white;
+  padding: 10px 14px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
 }
 
-.orders-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.order-card {
+.order {
   border: 1px solid #e5e7eb;
-  border-radius: 11px;
+  border-radius: 10px;
   padding: 15px;
+  margin-top: 12px;
 }
 
-.order-top {
+.order-header {
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  flex-wrap: wrap;
-}
-
-.order-number {
-  font-weight: bold;
 }
 
 .status {
-  padding: 5px 9px;
-  border-radius: 20px;
-  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
-  background: #f3f4f6;
+  font-size: 12px;
 }
 
 .order-info {
-  margin-top: 10px;
   color: #4b5563;
-  font-size: 14px;
   line-height: 1.7;
+  margin-top: 8px;
 }
 
-.order-total {
-  font-weight: bold;
-  color: #111827;
-}
-
-.products-list {
+.products {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 15px;
 }
 
-.product-card {
+.product {
   border: 1px solid #e5e7eb;
-  border-radius: 11px;
+  border-radius: 10px;
   padding: 15px;
 }
 
-.product-card h3 {
-  margin: 0 0 8px;
-  font-size: 17px;
-}
-
-.product-info {
-  color: #6b7280;
-  font-size: 14px;
-  line-height: 1.6;
+.product h3 {
+  margin-top: 0;
 }
 
 .loading {
-  text-align: center;
-  padding: 25px;
-  color: #6b7280;
-}
-
-.error {
-  background: #fee2e2;
-  color: #991b1b;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  display: none;
-}
-
-.empty {
   color: #6b7280;
   padding: 15px 0;
 }
 
-@media (max-width: 800px) {
+.error {
+  display: none;
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+@media(max-width:800px) {
   .stats {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2,1fr);
   }
 
-  .products-list {
-    grid-template-columns: repeat(2, 1fr);
+  .products {
+    grid-template-columns: repeat(2,1fr);
   }
 }
 
-@media (max-width: 500px) {
+@media(max-width:500px) {
   .stats {
     grid-template-columns: 1fr;
   }
 
-  .products-list {
+  .products {
     grid-template-columns: 1fr;
-  }
-
-  .title-section h1 {
-    font-size: 25px;
   }
 
   nav {
@@ -292,7 +209,7 @@ nav a:hover {
 <body>
 
 <header>
-  <div class="header-inner">
+  <div class="header">
 
     <div class="logo">
       BERAKAH
@@ -300,6 +217,8 @@ nav a:hover {
 
     <nav>
       <a href="index.html">Home</a>
+      <a href="feed.html">Feed</a>
+      <a href="people.html">People</a>
       <a href="marketplace.html">Market</a>
       <a href="orders.html">My Orders</a>
       <a href="seller-orders.html">Seller Orders</a>
@@ -311,10 +230,11 @@ nav a:hover {
 
 <div class="container">
 
-  <div class="title-section">
-    <h1>🏪 Seller Dashboard</h1>
-    <p>Manage your store, orders and sales.</p>
-  </div>
+  <h1>🏪 Seller Dashboard</h1>
+
+  <p class="subtitle">
+    Manage your orders, products and sales.
+  </p>
 
   <div id="errorBox" class="error"></div>
 
@@ -322,71 +242,66 @@ nav a:hover {
 
   <div class="stats">
 
-    <div class="stat-card">
-      <div class="stat-icon">📦</div>
-      <div class="stat-label">Total Orders</div>
-      <div id="totalOrders" class="stat-value">0</div>
+    <div class="card">
+      <div class="icon">📦</div>
+      <div class="label">Total Orders</div>
+      <div class="value" id="totalOrders">0</div>
     </div>
 
-    <div class="stat-card">
-      <div class="stat-icon">🆕</div>
-      <div class="stat-label">New Orders</div>
-      <div id="newOrders" class="stat-value">0</div>
+    <div class="card">
+      <div class="icon">🆕</div>
+      <div class="label">New Orders</div>
+      <div class="value" id="newOrders">0</div>
     </div>
 
-    <div class="stat-card">
-      <div class="stat-icon">🚚</div>
-      <div class="stat-label">Processing</div>
-      <div id="processingOrders" class="stat-value">0</div>
+    <div class="card">
+      <div class="icon">🚚</div>
+      <div class="label">Processing</div>
+      <div class="value" id="processingOrders">0</div>
     </div>
 
-    <div class="stat-card">
-      <div class="stat-icon">💰</div>
-      <div class="stat-label">Sales Value</div>
-      <div id="salesValue" class="stat-value">$0.00</div>
+    <div class="card">
+      <div class="icon">💰</div>
+      <div class="label">Sales Value</div>
+      <div class="value" id="salesValue">$0.00</div>
     </div>
 
   </div>
 
   <!-- QUICK ACTIONS -->
 
-  <div class="quick-actions">
+  <div class="section">
 
     <h2>⚡ Quick Actions</h2>
 
-    <div class="action-buttons">
-
-      <a class="action-button" href="seller-orders.html">
-        📦 Manage Orders
+    <p>
+      <a href="seller-orders.html">
+        <button>📦 Manage Orders</button>
       </a>
 
-      <a class="action-button" href="marketplace.html">
-        🛍️ View Marketplace
+      <a href="marketplace.html">
+        <button>🛍️ Marketplace</button>
       </a>
 
-      <a class="action-button" href="profile.html">
-        👤 My Profile
-      </a>
-
-    </div>
+    </p>
 
   </div>
 
-  <!-- RECENT ORDERS -->
+  <!-- ORDERS -->
 
   <div class="section">
 
-    <div class="section-header">
+    <div class="section-title">
 
       <h2>📦 Recent Orders</h2>
 
-      <button class="refresh-button" onclick="loadDashboard()">
+      <button onclick="loadDashboard()">
         🔄 Refresh
       </button>
 
     </div>
 
-    <div id="ordersList" class="orders-list">
+    <div id="orders">
       <div class="loading">
         Loading orders...
       </div>
@@ -398,13 +313,9 @@ nav a:hover {
 
   <div class="section">
 
-    <div class="section-header">
+    <h2>🛍️ My Products</h2>
 
-      <h2>🛍️ My Products</h2>
-
-    </div>
-
-    <div id="productsList" class="products-list">
+    <div id="products" class="products">
 
       <div class="loading">
         Loading products...
@@ -419,141 +330,132 @@ nav a:hover {
 <script>
 
 const SUPABASE_URL =
-  "https://utoyoglycqjmqznczfxa.supabase.co";
+"https://utoyoglycqjmqznczfxa.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
-const accessToken =
-  localStorage.getItem("berakah_access_token");
+const token =
+localStorage.getItem("berakah_access_token");
 
-let currentUser = null;
-let sellerOrders = [];
-let sellerProducts = [];
+let currentUser;
+let orders = [];
+let products = [];
 
 
 /* =========================
-   AUTH USER
+   GET LOGGED IN USER
 ========================= */
 
-async function getCurrentUser() {
+async function getUser() {
 
-  if (!accessToken) {
-
+  if (!token) {
     throw new Error(
       "You are not logged in. Please log in first."
     );
-
   }
 
   const response = await fetch(
-    `${SUPABASE_URL}/auth/v1/user`,
+    SUPABASE_URL + "/auth/v1/user",
     {
       headers: {
         "apikey": SUPABASE_KEY,
-        "Authorization": `Bearer ${accessToken}`
+        "Authorization": "Bearer " + token
       }
     }
   );
 
   if (!response.ok) {
-
     throw new Error(
-      "Your login session has expired. Please log in again."
+      "Login session expired. Please log in again."
     );
-
   }
 
   currentUser = await response.json();
-
 }
 
 
 /* =========================
-   LOAD ORDERS
+   GET ORDERS
 ========================= */
 
-async function loadOrders() {
+async function getOrders() {
 
-  const response = await fetch(
-    `${SUPABASE_URL}/rest/v1/orders?select=*&seller_id=eq.${currentUser.id}&order=created_at.desc`,
-    {
-      headers: {
-        "apikey": SUPABASE_KEY,
-        "Authorization": `Bearer ${accessToken}`
-      }
+  const url =
+    SUPABASE_URL +
+    "/rest/v1/orders?select=*&seller_id=eq." +
+    currentUser.id +
+    "&order=created_at.desc";
+
+  const response = await fetch(url, {
+    headers: {
+      "apikey": SUPABASE_KEY,
+      "Authorization": "Bearer " + token
     }
-  );
+  });
 
   if (!response.ok) {
-
-    const error = await response.text();
-
     throw new Error(
-      "Could not load orders: " + error
+      "Unable to load seller orders."
     );
-
   }
 
-  sellerOrders = await response.json();
-
+  orders = await response.json();
 }
 
 
 /* =========================
-   LOAD PRODUCTS
+   GET PRODUCTS
 ========================= */
 
-async function loadProducts() {
+async function getProducts() {
 
-  const response = await fetch(
-    `${SUPABASE_URL}/rest/v1/products?select=*&seller_id=eq.${currentUser.id}&order=created_at.desc`,
-    {
-      headers: {
-        "apikey": SUPABASE_KEY,
-        "Authorization": `Bearer ${accessToken}`
-      }
+  const url =
+    SUPABASE_URL +
+    "/rest/v1/products?select=*&seller_id=eq." +
+    currentUser.id +
+    "&order=created_at.desc";
+
+  const response = await fetch(url, {
+    headers: {
+      "apikey": SUPABASE_KEY,
+      "Authorization": "Bearer " + token
     }
-  );
+  });
 
   if (!response.ok) {
-
-    const error = await response.text();
-
     throw new Error(
-      "Could not load products: " + error
+      "Unable to load seller products."
     );
-
   }
 
-  sellerProducts = await response.json();
-
+  products = await response.json();
 }
 
 
 /* =========================
-   UPDATE STATS
+   UPDATE STATISTICS
 ========================= */
 
 function updateStats() {
 
   const total =
-    sellerOrders.length;
+    orders.length;
 
   const newOrders =
-    sellerOrders.filter(order =>
+    orders.filter(order =>
       order.status === "pending" ||
       order.status === "confirmed"
     ).length;
 
   const processing =
-    sellerOrders.filter(order =>
+    orders.filter(order =>
       order.status === "processing" ||
       order.status === "shipped"
     ).length;
 
   const sales =
-    sellerOrders
+    orders
       .filter(order =>
         order.status !== "cancelled"
       )
@@ -579,7 +481,6 @@ function updateStats() {
     "salesValue"
   ).textContent =
     "$" + sales.toFixed(2);
-
 }
 
 
@@ -589,29 +490,22 @@ function updateStats() {
 
 function displayOrders() {
 
-  const container =
-    document.getElementById("ordersList");
+  const box =
+    document.getElementById("orders");
 
-  if (!sellerOrders.length) {
+  if (orders.length === 0) {
 
-    container.innerHTML = `
-      <div class="empty">
-        No orders received yet.
-      </div>
-    `;
+    box.innerHTML =
+      "<div class='loading'>No orders yet.</div>";
 
     return;
   }
 
-  const recentOrders =
-    sellerOrders.slice(0, 5);
+  box.innerHTML =
+    orders.slice(0,5).map(order => {
 
-  container.innerHTML =
-    recentOrders.map(order => {
-
-      const orderNumber =
-        order.order_number ||
-        order.id;
+      const number =
+        order.order_number || order.id;
 
       const customer =
         order.customer_name ||
@@ -632,50 +526,46 @@ function displayOrders() {
 
       const date =
         order.created_at
-          ? new Date(order.created_at)
-              .toLocaleDateString()
+          ? new Date(
+              order.created_at
+            ).toLocaleDateString()
           : "";
 
       return `
 
-        <div class="order-card">
+        <div class="order">
 
-          <div class="order-top">
+          <div class="order-header">
 
-            <div class="order-number">
-              #${escapeHTML(
-                String(orderNumber)
-              )}
-            </div>
+            <strong>
+              #${escapeHTML(number)}
+            </strong>
 
-            <div class="status">
+            <span class="status">
               ${escapeHTML(status)}
-            </div>
+            </span>
 
           </div>
 
           <div class="order-info">
 
-            👤
+            👤 Customer:
             ${escapeHTML(customer)}
             <br>
 
-            🛍️
+            🛍️ Product:
             ${escapeHTML(product)}
             <br>
 
-            🔢
-            Quantity:
+            🔢 Quantity:
             ${Number(order.quantity || 0)}
             <br>
 
-            💰
-            <span class="order-total">
-              $${total}
-            </span>
+            💰 Total:
+            <strong>$${total}</strong>
             <br>
 
-            📅
+            📅 Date:
             ${escapeHTML(date)}
 
           </div>
@@ -685,7 +575,6 @@ function displayOrders() {
       `;
 
     }).join("");
-
 }
 
 
@@ -695,104 +584,90 @@ function displayOrders() {
 
 function displayProducts() {
 
-  const container =
-    document.getElementById("productsList");
+  const box =
+    document.getElementById("products");
 
-  if (!sellerProducts.length) {
+  if (products.length === 0) {
 
-    container.innerHTML = `
-      <div class="empty">
-        No products found.
-      </div>
-    `;
+    box.innerHTML =
+      "<div class='loading'>No products yet.</div>";
 
     return;
   }
 
-  container.innerHTML =
-    sellerProducts
-      .slice(0, 6)
-      .map(product => {
+  box.innerHTML =
+    products.slice(0,6).map(product => {
 
-        const name =
-          product.product_name ||
-          product.name ||
-          "Product";
+      const name =
+        product.product_name ||
+        product.name ||
+        "Product";
 
-        const price =
-          Number(product.price || 0)
-            .toFixed(2);
+      const price =
+        Number(product.price || 0)
+          .toFixed(2);
 
-        const category =
-          product.category ||
-          "No category";
+      const category =
+        product.category ||
+        "No category";
 
-        return `
+      return `
 
-          <div class="product-card">
+        <div class="product">
 
-            <h3>
-              ${escapeHTML(name)}
-            </h3>
+          <h3>
+            ${escapeHTML(name)}
+          </h3>
 
-            <div class="product-info">
-
-              💰 Price:
-              <strong>
-                $${price}
-              </strong>
-
-              <br>
-
-              🏷️ Category:
-              ${escapeHTML(category)}
-
-            </div>
-
+          <div>
+            💰 $${price}
           </div>
 
-        `;
+          <div>
+            🏷️ ${escapeHTML(category)}
+          </div>
 
-      }).join("");
+        </div>
 
+      `;
+
+    }).join("");
 }
 
 
 /* =========================
-   ESCAPE HTML
+   SECURITY
 ========================= */
 
 function escapeHTML(value) {
 
   return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
 
 /* =========================
-   MAIN DASHBOARD
+   LOAD DASHBOARD
 ========================= */
 
 async function loadDashboard() {
 
-  const errorBox =
+  const error =
     document.getElementById("errorBox");
 
-  errorBox.style.display = "none";
+  error.style.display = "none";
 
   try {
 
-    await getCurrentUser();
+    await getUser();
 
-    await Promise.all([
-      loadOrders(),
-      loadProducts()
-    ]);
+    await getOrders();
+
+    await getProducts();
 
     updateStats();
 
@@ -800,39 +675,26 @@ async function loadDashboard() {
 
     displayProducts();
 
-  } catch (error) {
+  } catch (err) {
 
-    console.error(error);
+    console.error(err);
 
-    errorBox.textContent =
-      error.message;
+    error.textContent =
+      err.message;
 
-    errorBox.style.display =
+    error.style.display =
       "block";
 
-    document.getElementById(
-      "ordersList"
-    ).innerHTML = "";
-
-    document.getElementById(
-      "productsList"
-    ).innerHTML = "";
-
   }
-
 }
 
 
-/* =========================
-   START
-========================= */
+/* START */
 
 loadDashboard();
 
 
-/* =========================
-   AUTO REFRESH
-========================= */
+/* AUTO REFRESH */
 
 setInterval(
   loadDashboard,
