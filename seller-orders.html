@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>BERAKAH - Seller Orders</title>
 
 <style>
+
 * {
   box-sizing: border-box;
 }
@@ -20,16 +26,27 @@ body {
 
 header {
   background: white;
-  padding: 15px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 15px 20px;
 }
 
-header h2 {
-  margin: 0 0 12px;
+.header-inner {
+  max-width: 1000px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: 2px;
 }
 
 nav a {
-  margin-right: 10px;
+  margin-left: 12px;
   text-decoration: none;
   color: #2563eb;
   font-size: 14px;
@@ -41,25 +58,40 @@ nav a {
   padding: 15px;
 }
 
+h1 {
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  color: #6b7280;
+  margin-bottom: 25px;
+}
+
 .order {
   background: white;
   padding: 20px;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-.order h3 {
+.order h2 {
   margin-top: 0;
+  font-size: 19px;
+}
+
+.date {
+  color: #6b7280;
+  font-size: 13px;
 }
 
 .status {
   display: inline-block;
-  padding: 6px 10px;
-  border-radius: 6px;
+  padding: 7px 11px;
+  border-radius: 7px;
   font-weight: bold;
   font-size: 13px;
-  margin: 8px 0;
+  margin: 10px 0;
 }
 
 .pending {
@@ -87,9 +119,52 @@ nav a {
   color: #991b1b;
 }
 
+.refunded {
+  background: #f3e8ff;
+  color: #6b21a8;
+}
+
+.product {
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 15px 0;
+  margin: 12px 0;
+}
+
+.product-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.customer {
+  background: #f9fafb;
+  padding: 14px;
+  border-radius: 9px;
+  margin-top: 15px;
+}
+
+.customer-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.customer p {
+  margin: 5px 0;
+}
+
+.buttons {
+  margin-top: 15px;
+}
+
 button {
   border: none;
-  padding: 10px 14px;
+  padding: 11px 15px;
   margin: 5px 5px 0 0;
   border-radius: 7px;
   cursor: pointer;
@@ -97,366 +172,877 @@ button {
 }
 
 button:hover {
-  opacity: .85;
+  opacity: 0.85;
 }
 
-.process-btn {
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.process {
   background: #2563eb;
   color: white;
 }
 
-.ship-btn {
+.ship {
   background: #4f46e5;
   color: white;
 }
 
-.deliver-btn {
+.deliver {
   background: #16a34a;
   color: white;
 }
 
-.cancel-btn {
+.cancel {
   background: #dc2626;
   color: white;
 }
 
 .message {
-  text-align: center;
-  padding: 30px;
   background: white;
+  padding: 30px;
+  text-align: center;
   border-radius: 12px;
 }
 
-.customer {
-  background: #f9fafb;
-  padding: 12px;
-  border-radius: 8px;
-  margin-top: 12px;
+.error {
+  color: #991b1b;
 }
 
-.price {
-  font-size: 18px;
-  font-weight: bold;
+.refresh {
+  background: #111827;
+  color: white;
 }
+
+@media (max-width: 600px) {
+
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav a {
+    margin-left: 0;
+    margin-right: 10px;
+  }
+
+  .container {
+    padding: 12px;
+  }
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <header>
 
-<h2>BERAKAH</h2>
+<div class="header-inner">
+
+<div class="logo">
+BERAKAH
+</div>
 
 <nav>
-<a href="index.html">Home</a>
-<a href="marketplace.html">Market</a>
-<a href="orders.html">My Orders</a>
-<a href="profile.html">Profile</a>
+
+<a href="index.html">
+Home
+</a>
+
+<a href="marketplace.html">
+Market
+</a>
+
+<a href="orders.html">
+My Orders
+</a>
+
+<a href="profile.html">
+Profile
+</a>
+
 </nav>
+
+</div>
 
 </header>
 
+
 <div class="container">
 
-<h1>📦 SELLER ORDERS</h1>
 
-<p>Manage orders for your products.</p>
+<h1>
+📦 SELLER ORDERS
+</h1>
 
-<div id="orders">
-<div class="message">Loading orders...</div>
+
+<p class="subtitle">
+Manage orders for your products.
+</p>
+
+
+<button
+class="refresh"
+onclick="loadOrders()">
+
+🔄 REFRESH ORDERS
+
+</button>
+
+
+<div
+id="orders"
+style="margin-top:20px;">
+
+<div class="message">
+Loading orders...
 </div>
 
 </div>
+
+
+</div>
+
 
 <script>
+
+
+/* =====================================================
+   SUPABASE CONFIGURATION
+   ===================================================== */
 
 const SUPABASE_URL =
 "https://utoyoglycqjmqznczfxa.supabase.co";
 
-const SUPABASE_KEY =
-"YOUR_SUPABASE_ANON_KEY";
 
-const TOKEN =
-localStorage.getItem("berakah_access_token");
+const SUPABASE_KEY =
+"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+
+
+/* =====================================================
+   GET ACCESS TOKEN
+   ===================================================== */
+
+function getAccessToken() {
+
+return localStorage.getItem(
+"berakah_access_token"
+);
+
+}
+
+
+/* =====================================================
+   LOAD SELLER ORDERS
+   ===================================================== */
 
 async function loadOrders() {
 
-    const container =
-        document.getElementById("orders");
 
-    if (!TOKEN) {
+const container =
+document.getElementById("orders");
 
-        container.innerHTML =
-        '<div class="message">Please log in first.</div>';
 
-        return;
-    }
+const token =
+getAccessToken();
 
-    try {
 
-        const userResponse =
-            await fetch(
-                SUPABASE_URL +
-                "/auth/v1/user",
-                {
-                    headers: {
-                        "apikey": SUPABASE_KEY,
-                        "Authorization":
-                        "Bearer " + TOKEN
-                    }
-                }
-            );
+/*
+Check login session.
+*/
 
-        if (!userResponse.ok) {
+if (!token) {
 
-            container.innerHTML =
-            '<div class="message">Session expired. Please log in again.</div>';
+container.innerHTML = `
+<div class="message">
+<strong>Session expired.</strong>
+<br><br>
+Please log in again.
+<br><br>
+<a href="login.html">
+LOG IN
+</a>
+</div>
+`;
 
-            return;
-        }
+return;
 
-        const user =
-            await userResponse.json();
-
-        const sellerId =
-            user.id;
-
-        const response =
-            await fetch(
-                SUPABASE_URL +
-                "/rest/v1/orders?select=*&seller_id=eq." +
-                encodeURIComponent(sellerId) +
-                "&order=created_at.desc",
-                {
-                    headers: {
-                        "apikey": SUPABASE_KEY,
-                        "Authorization":
-                        "Bearer " + TOKEN
-                    }
-                }
-            );
-
-        if (!response.ok) {
-
-            const error =
-                await response.text();
-
-            throw new Error(error);
-        }
-
-        const orders =
-            await response.json();
-
-        if (!orders.length) {
-
-            container.innerHTML =
-            '<div class="message">No seller orders yet.</div>';
-
-            return;
-        }
-
-        container.innerHTML = "";
-
-        orders.forEach(order => {
-
-            const status =
-                String(
-                    order.status || "pending"
-                ).toLowerCase();
-
-            const div =
-                document.createElement("div");
-
-            div.className = "order";
-
-            let buttons = "";
-
-            if (status === "pending") {
-
-                buttons +=
-                '<button class="process-btn" onclick="updateStatus(' +
-                order.id +
-                ', \'processing\')">' +
-                'START PROCESSING' +
-                '</button>';
-
-                buttons +=
-                '<button class="cancel-btn" onclick="updateStatus(' +
-                order.id +
-                ', \'cancelled\')">' +
-                'CANCEL' +
-                '</button>';
-            }
-
-            if (status === "processing") {
-
-                buttons +=
-                '<button class="ship-btn" onclick="updateStatus(' +
-                order.id +
-                ', \'shipped\')">' +
-                'MARK SHIPPED' +
-                '</button>';
-            }
-
-            if (status === "shipped") {
-
-                buttons +=
-                '<button class="deliver-btn" onclick="updateStatus(' +
-                order.id +
-                ', \'delivered\')">' +
-                'MARK DELIVERED' +
-                '</button>';
-            }
-
-            div.innerHTML = `
-
-                <h3>
-                    Order #${order.order_number || order.id}
-                </h3>
-
-                <div class="status ${status}">
-                    ${status.toUpperCase()}
-                </div>
-
-                <p>
-                    <strong>${order.product_name || "Product"}</strong>
-                </p>
-
-                <p>
-                    Quantity: ${order.quantity || 1}
-                </p>
-
-                <p class="price">
-                    $${Number(order.total || 0).toFixed(2)}
-                </p>
-
-                <div class="customer">
-
-                    <strong>Customer</strong>
-
-                    <p>
-                        ${order.customer_name || ""}
-                    </p>
-
-                    <p>
-                        ${order.customer_email || ""}
-                    </p>
-
-                    <p>
-                        ${order.customer_phone || ""}
-                    </p>
-
-                    <p>
-                        ${order.customer_address || ""}
-                    </p>
-
-                </div>
-
-                <div>
-                    ${buttons}
-                </div>
-            `;
-
-            container.appendChild(div);
-
-        });
-
-    } catch (error) {
-
-        console.error(error);
-
-        container.innerHTML =
-        '<div class="message">Could not load seller orders.</div>';
-    }
 }
 
 
-async function updateStatus(orderId, newStatus) {
+try {
 
-    if (!TOKEN) {
 
-        alert("Please log in first.");
+/* =====================================================
+   VERIFY CURRENT USER
+   ===================================================== */
 
-        return;
-    }
+const userResponse =
+await fetch(
 
-    try {
+SUPABASE_URL +
+"/auth/v1/user",
 
-        const response =
-            await fetch(
-                SUPABASE_URL +
-                "/rest/v1/orders?id=eq." +
-                encodeURIComponent(orderId),
-                {
-                    method: "PATCH",
+{
 
-                    headers: {
-                        "apikey": SUPABASE_KEY,
-                        "Authorization":
-                        "Bearer " + TOKEN,
-                        "Content-Type":
-                        "application/json",
-                        "Prefer":
-                        "return=minimal"
-                    },
+method: "GET",
 
-                    body: JSON.stringify({
-                        status: newStatus,
-                        updated_at:
-                            new Date().toISOString()
-                    })
-                }
-            );
+headers: {
 
-        if (!response.ok) {
+"apikey":
+SUPABASE_KEY,
 
-            const error =
-                await response.text();
+"Authorization":
+"Bearer " + token
 
-            console.error(error);
-
-            alert(
-                "Could not update order status."
-            );
-
-            return;
-        }
-
-        await loadOrders();
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert(
-            "Could not update order status."
-        );
-    }
 }
 
+}
+
+);
+
+
+if (!userResponse.ok) {
+
+localStorage.removeItem(
+"berakah_access_token"
+);
+
+localStorage.removeItem(
+"berakah_refresh_token"
+);
+
+container.innerHTML = `
+<div class="message">
+<strong>Session expired.</strong>
+<br><br>
+Please log in again.
+<br><br>
+<a href="login.html">
+LOG IN
+</a>
+</div>
+`;
+
+return;
+
+}
+
+
+const user =
+await userResponse.json();
+
+
+if (!user || !user.id) {
+
+throw new Error(
+"Could not identify the logged-in user."
+);
+
+}
+
+
+const sellerId =
+user.id;
+
+
+/* =====================================================
+   GET SELLER ORDERS
+   ===================================================== */
+
+const ordersUrl =
+SUPABASE_URL +
+"/rest/v1/orders" +
+"?select=*" +
+"&seller_id=eq." +
+encodeURIComponent(sellerId) +
+"&order=created_at.desc";
+
+
+const response =
+await fetch(
+
+ordersUrl,
+
+{
+
+method: "GET",
+
+headers: {
+
+"apikey":
+SUPABASE_KEY,
+
+"Authorization":
+"Bearer " + token,
+
+"Content-Type":
+"application/json"
+
+}
+
+);
+
+
+const responseText =
+await response.text();
+
+
+if (!response.ok) {
+
+console.error(
+"SELLER ORDERS ERROR:",
+responseText
+);
+
+throw new Error(
+"Could not load seller orders."
+);
+
+}
+
+
+let orders = [];
+
+
+try {
+
+orders =
+responseText ?
+JSON.parse(responseText) :
+[];
+
+}
+catch(error) {
+
+throw new Error(
+"Invalid response from Supabase."
+);
+
+}
+
+
+/* =====================================================
+   NO ORDERS
+   ===================================================== */
+
+if (!orders.length) {
+
+container.innerHTML = `
+<div class="message">
+📦 No seller orders yet.
+</div>
+`;
+
+return;
+
+}
+
+
+/* =====================================================
+   RENDER ORDERS
+   ===================================================== */
+
+container.innerHTML = "";
+
+
+orders.forEach(
+function(order) {
+
+
+const status =
+String(
+order.status || "pending"
+).toLowerCase();
+
+
+const safeStatus =
+[
+"pending",
+"processing",
+"shipped",
+"delivered",
+"cancelled",
+"refunded"
+].includes(status)
+?
+status
+:
+"pending";
+
+
+const orderNumber =
+order.order_number ||
+order.id;
+
+
+const createdAt =
+order.created_at
+?
+new Date(
+order.created_at
+).toLocaleString()
+:
+"";
+
+
+const productName =
+order.product_name ||
+"Product";
+
+
+const quantity =
+order.quantity ||
+1;
+
+
+const price =
+Number(
+order.price || 0
+).toFixed(2);
+
+
+const total =
+Number(
+order.total || 0
+).toFixed(2);
+
+
+const customerName =
+order.customer_name ||
+order.shipping_name ||
+"";
+
+
+const customerEmail =
+order.customer_email ||
+order.shipping_email ||
+"";
+
+
+const customerPhone =
+order.customer_phone ||
+order.shipping_phone ||
+"";
+
+
+const customerAddress =
+order.customer_address ||
+order.shipping_address ||
+"";
+
+
+const orderBox =
+document.createElement("div");
+
+
+orderBox.className =
+"order";
+
+
+/* =====================================================
+   STATUS BUTTONS
+   ===================================================== */
+
+let buttons = "";
+
+
+if (
+safeStatus === "pending"
+) {
+
+buttons += `
+
+<button
+class="process"
+onclick="updateStatus(${order.id}, 'processing')">
+
+START PROCESSING
+
+</button>
+
+`;
+
+
+buttons += `
+
+<button
+class="cancel"
+onclick="updateStatus(${order.id}, 'cancelled')">
+
+CANCEL ORDER
+
+</button>
+
+`;
+
+}
+
+
+else if (
+safeStatus === "processing"
+) {
+
+buttons += `
+
+<button
+class="ship"
+onclick="updateStatus(${order.id}, 'shipped')">
+
+📦 MARK SHIPPED
+
+</button>
+
+`;
+
+}
+
+
+else if (
+safeStatus === "shipped"
+) {
+
+buttons += `
+
+<button
+class="deliver"
+onclick="updateStatus(${order.id}, 'delivered')">
+
+✅ MARK DELIVERED
+
+</button>
+
+`;
+
+}
+
+
+/* =====================================================
+   ORDER HTML
+   ===================================================== */
+
+orderBox.innerHTML = `
+
+<h2>
+Order #${escapeHTML(orderNumber)}
+</h2>
+
+<div class="date">
+${escapeHTML(createdAt)}
+</div>
+
+<div class="status ${safeStatus}">
+${safeStatus.toUpperCase()}
+</div>
+
+
+<div class="product">
+
+<div class="product-name">
+${escapeHTML(productName)}
+</div>
+
+<p>
+Quantity: ${quantity}
+</p>
+
+<p>
+Price: $${price}
+</p>
+
+<div class="price">
+TOTAL: $${total}
+</div>
+
+</div>
+
+
+<div class="customer">
+
+<div class="customer-title">
+👤 CUSTOMER
+</div>
+
+<p>
+<strong>Name:</strong>
+${escapeHTML(customerName)}
+</p>
+
+<p>
+<strong>Email:</strong>
+${escapeHTML(customerEmail)}
+</p>
+
+<p>
+<strong>Phone:</strong>
+${escapeHTML(customerPhone)}
+</p>
+
+<p>
+<strong>Shipping:</strong>
+${escapeHTML(customerAddress)}
+</p>
+
+</div>
+
+
+<div class="buttons">
+
+${buttons}
+
+</div>
+
+`;
+
+
+container.appendChild(
+orderBox
+);
+
+});
+
+}
+catch(error) {
+
+
+console.error(
+"BERAKAH SELLER ORDERS ERROR:",
+error
+);
+
+
+container.innerHTML = `
+
+<div class="message error">
+
+<strong>
+Could not load seller orders.
+</strong>
+
+<br><br>
+
+${escapeHTML(
+error.message
+)}
+
+<br><br>
+
+<button
+class="refresh"
+onclick="loadOrders()">
+
+TRY AGAIN
+
+</button>
+
+</div>
+
+`;
+
+}
+
+}
+
+
+/* =====================================================
+   UPDATE ORDER STATUS
+   ===================================================== */
+
+async function updateStatus(
+orderId,
+newStatus
+) {
+
+
+const token =
+getAccessToken();
+
+
+if (!token) {
+
+alert(
+"Please log in again."
+);
+
+return;
+
+}
+
+
+try {
+
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/orders" +
+"?id=eq." +
+encodeURIComponent(orderId),
+
+{
+
+method: "PATCH",
+
+headers: {
+
+"apikey":
+SUPABASE_KEY,
+
+"Authorization":
+"Bearer " + token,
+
+"Content-Type":
+"application/json",
+
+"Prefer":
+"return=minimal"
+
+},
+
+body:
+JSON.stringify({
+
+status:
+newStatus,
+
+updated_at:
+new Date().toISOString()
+
+})
+
+}
+
+);
+
+
+const text =
+await response.text();
+
+
+if (!response.ok) {
+
+console.error(
+"STATUS UPDATE ERROR:",
+text
+);
+
+alert(
+"Could not update order status."
+);
+
+return;
+
+}
+
+
+await loadOrders();
+
+
+}
+catch(error) {
+
+console.error(error);
+
+alert(
+"Could not update order status."
+);
+
+}
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+   ===================================================== */
+
+function escapeHTML(value) {
+
+return String(
+value ?? ""
+)
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
+
+}
+
+
+/* =====================================================
+   INITIAL LOAD
+   ===================================================== */
 
 loadOrders();
 
+
+/* =====================================================
+   AUTO REFRESH
+   ===================================================== */
+
 setInterval(
-    loadOrders,
-    5000
+function() {
+
+loadOrders();
+
+},
+5000
 );
+
+
+/* =====================================================
+   REFRESH WHEN PAGE BECOMES VISIBLE
+   ===================================================== */
 
 document.addEventListener(
-    "visibilitychange",
-    function() {
+"visibilitychange",
+function() {
 
-        if (
-            document.visibilityState ===
-            "visible"
-        ) {
-            loadOrders();
-        }
+if (
+document.visibilityState ===
+"visible"
+) {
 
-    }
+loadOrders();
+
+}
+
+}
 );
+
 
 </script>
 
+
 </body>
+
 </html>
