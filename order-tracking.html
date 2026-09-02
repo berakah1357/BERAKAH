@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BERAKAH - Order Tracking</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #111827;
+}
+
+header {
+  background: white;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #2563eb;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #374151;
+  font-size: 14px;
+  padding: 8px 10px;
+  border-radius: 7px;
+}
+
+nav a:hover {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 0 15px;
+}
+
+h1 {
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #6b7280;
+  margin-top: 0;
+}
+
+.order-card {
+  background: white;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  padding: 22px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+
+.order-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.order-number {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.order-date {
+  color: #6b7280;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.current-status {
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.status-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-confirmed {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.status-processing {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.status-shipped {
+  background: #cffafe;
+  color: #155e75;
+}
+
+.status-delivered {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-cancelled {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.product-section {
+  padding: 18px 0;
+}
+
+.product-name {
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.product-info {
+  color: #6b7280;
+  margin-top: 7px;
+  font-size: 14px;
+}
+
+.total {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.tracking {
+  margin-top: 20px;
+  padding: 20px 5px 5px;
+}
+
+.tracking-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.progress {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.progress-line {
+  position: absolute;
+  top: 17px;
+  left: 8%;
+  right: 8%;
+  height: 4px;
+  background: #e5e7eb;
+  z-index: 0;
+}
+
+.progress-fill {
+  position: absolute;
+  top: 17px;
+  left: 8%;
+  height: 4px;
+  background: #2563eb;
+  z-index: 1;
+  transition: width 0.3s ease;
+}
+
+.step {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  width: 20%;
+}
+
+.circle {
+  width: 36px;
+  height: 36px;
+  margin: auto;
+  border-radius: 50%;
+  background: #e5e7eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.step.active .circle {
+  background: #2563eb;
+  color: white;
+}
+
+.step.completed .circle {
+  background: #16a34a;
+  color: white;
+}
+
+.step-label {
+  margin-top: 9px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.step.active .step-label,
+.step.completed .step-label {
+  color: #111827;
+  font-weight: bold;
+}
+
+.shipping {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.shipping-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.shipping p {
+  margin: 4px 0;
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.empty {
+  background: white;
+  padding: 40px 20px;
+  border-radius: 12px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #6b7280;
+}
+
+.error {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.refresh-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.refresh-btn:hover {
+  background: #1d4ed8;
+}
+
+@media (max-width: 650px) {
+
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .order-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .progress {
+    overflow-x: auto;
+  }
+
+  .step {
+    min-width: 90px;
+  }
+
+  .progress-line,
+  .progress-fill {
+    display: none;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+  <div class="header-inner">
+
+    <div class="logo">
+      BERAKAH
+    </div>
+
+    <nav>
+
+      <a href="index.html">Home</a>
+
+      <a href="marketplace.html">Market</a>
+
+      <a href="seller-dashboard.html">
+        Dashboard
+      </a>
+
+      <a href="seller-orders.html">
+        Seller Orders
+      </a>
+
+      <a href="product-management.html">
+        Products
+      </a>
+
+      <a href="inventory.html">
+        Inventory
+      </a>
+
+      <a href="orders.html">
+        My Orders
+      </a>
+
+      <a href="profile.html">
+        Profile
+      </a>
+
+    </nav>
+
+  </div>
+
+</header>
+
+
+<div class="container">
+
+  <h1>Order Tracking 🚚</h1>
+
+  <p class="subtitle">
+    Track your BERAKAH orders from purchase to delivery.
+  </p>
+
+
+  <button
+    class="refresh-btn"
+    onclick="loadOrders()"
+  >
+    🔄 Refresh Orders
+  </button>
+
+
+  <div id="ordersContainer">
+
+    <div class="loading">
+      Loading your orders...
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const SUPABASE_URL =
+  "https://utoyoglycqjmqznczfxa.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+
+const ACCESS_TOKEN =
+  localStorage.getItem(
+    "berakah_access_token"
+  );
+
+let currentUser = null;
+
+
+// =====================================
+// SUPABASE HEADERS
+// =====================================
+
+function headers() {
+
+  return {
+
+    "apikey": SUPABASE_KEY,
+
+    "Authorization":
+      "Bearer " + ACCESS_TOKEN,
+
+    "Content-Type":
+      "application/json"
+
+  };
+
+}
+
+
+// =====================================
+// ESCAPE HTML
+// =====================================
+
+function escapeHTML(value) {
+
+  if (
+    value === null ||
+    value === undefined
+  ) {
+    return "";
+  }
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+// =====================================
+// GET CURRENT USER
+// =====================================
+
+async function getCurrentUser() {
+
+  if (!ACCESS_TOKEN) {
+
+    window.location.href =
+      "login.html";
+
+    return null;
+
+  }
+
+
+  const response =
+    await fetch(
+      SUPABASE_URL +
+      "/auth/v1/user",
+      {
+        headers: headers()
+      }
+    );
+
+
+  if (!response.ok) {
+
+    localStorage.removeItem(
+      "berakah_access_token"
+    );
+
+    window.location.href =
+      "login.html";
+
+    return null;
+
+  }
+
+
+  return await response.json();
+
+}
+
+
+// =====================================
+// FORMAT DATE
+// =====================================
+
+function formatDate(date) {
+
+  if (!date) {
+    return "";
+  }
+
+  const d =
+    new Date(date);
+
+  return d.toLocaleDateString(
+    "en-US",
+    {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    }
+  );
+
+}
+
+
+// =====================================
+// FORMAT MONEY
+// =====================================
+
+function money(value) {
+
+  return "$" +
+    Number(value || 0)
+      .toFixed(2);
+
+}
+
+
+// =====================================
+// ORDER STATUS
+// =====================================
+
+const statuses = [
+  "pending",
+  "confirmed",
+  "processing",
+  "shipped",
+  "delivered"
+];
+
+
+// =====================================
+// STATUS LABEL
+// =====================================
+
+function statusLabel(status) {
+
+  const labels = {
+
+    pending:
+      "Pending",
+
+    confirmed:
+      "Confirmed",
+
+    processing:
+      "Processing",
+
+    shipped:
+      "Shipped",
+
+    delivered:
+      "Delivered",
+
+    cancelled:
+      "Cancelled"
+
+  };
+
+  return labels[status] ||
+    status;
+
+}
+
+
+// =====================================
+// STATUS CLASS
+// =====================================
+
+function statusClass(status) {
+
+  return (
+    "current-status status-" +
+    status
+  );
+
+}
+
+
+// =====================================
+// GET PROGRESS POSITION
+// =====================================
+
+function getProgress(status) {
+
+  if (status === "cancelled") {
+    return -1;
+  }
+
+  const index =
+    statuses.indexOf(status);
+
+  if (index < 0) {
+    return 0;
+  }
+
+  return index;
+
+}
+
+
+// =====================================
+// CREATE TRACKING
+// =====================================
+
+function createTracking(status) {
+
+  if (status === "cancelled") {
+
+    return `
+
+      <div class="tracking">
+
+        <div class="tracking-title">
+          Order Tracking
+        </div>
+
+        <div class="error">
+          ❌ This order has been cancelled.
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  const current =
+    getProgress(status);
+
+
+  let fillWidth = 0;
+
+  if (current > 0) {
+
+    fillWidth =
+      (current / 4) * 84;
+
+  }
+
+
+  const steps = [
+
+    {
+      key: "pending",
+      icon: "1",
+      label: "Pending"
+    },
+
+    {
+      key: "confirmed",
+      icon: "2",
+      label: "Confirmed"
+    },
+
+    {
+      key: "processing",
+      icon: "3",
+      label: "Processing"
+    },
+
+    {
+      key: "shipped",
+      icon: "4",
+      label: "Shipped"
+    },
+
+    {
+      key: "delivered",
+      icon: "✓",
+      label: "Delivered"
+    }
+
+  ];
+
+
+  return `
+
+    <div class="tracking">
+
+      <div class="tracking-title">
+        Order Tracking
+      </div>
+
+      <div class="progress">
+
+        <div class="progress-line"></div>
+
+        <div
+          class="progress-fill"
+          style="width:${fillWidth}%"
+        ></div>
+
+
+        ${steps.map(
+          (step, index) => {
+
+            let className = "";
+
+            if (index < current) {
+              className =
+                "completed";
+            }
+
+            if (index === current) {
+              className =
+                "active";
+            }
+
+
+            return `
+
+              <div
+                class="step ${className}"
+              >
+
+                <div class="circle">
+                  ${step.icon}
+                </div>
+
+                <div class="step-label">
+                  ${step.label}
+                </div>
+
+              </div>
+
+            `;
+
+          }
+        ).join("")}
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+// =====================================
+// CREATE ORDER CARD
+// =====================================
+
+function createOrderCard(order) {
+
+  const status =
+    String(
+      order.status || "pending"
+    ).toLowerCase();
+
+
+  const orderNumber =
+    order.order_number ||
+    (
+      "BRK-" +
+      String(order.id)
+    );
+
+
+  const productName =
+    order.product_name ||
+    "Product";
+
+
+  const quantity =
+    order.quantity || 1;
+
+
+  const price =
+    order.price || 0;
+
+
+  const total =
+    order.total ||
+    (
+      Number(price) *
+      Number(quantity)
+    );
+
+
+  const shippingName =
+    order.shipping_name ||
+    order.customer_name ||
+    "";
+
+
+  const shippingEmail =
+    order.shipping_email ||
+    order.customer_email ||
+    "";
+
+
+  const shippingPhone =
+    order.shipping_phone ||
+    order.customer_phone ||
+    "";
+
+
+  const shippingAddress =
+    order.shipping_address ||
+    order.customer_address ||
+    "";
+
+
+  return `
+
+    <div class="order-card">
+
+
+      <div class="order-top">
+
+        <div>
+
+          <div class="order-number">
+
+            #${escapeHTML(
+              orderNumber
+            )}
+
+          </div>
+
+          <div class="order-date">
+
+            Ordered:
+            ${formatDate(
+              order.created_at
+            )}
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="${statusClass(status)}"
+        >
+
+          ${statusLabel(status)}
+
+        </div>
+
+      </div>
+
+
+      <div class="product-section">
+
+        <div class="product-name">
+
+          ${escapeHTML(
+            productName
+          )}
+
+        </div>
+
+
+        <div class="product-info">
+
+          Quantity:
+          ${escapeHTML(
+            quantity
+          )}
+
+          &nbsp; • &nbsp;
+
+          Price:
+          ${money(price)}
+
+        </div>
+
+
+        <div class="total">
+
+          Total:
+          ${money(total)}
+
+        </div>
+
+      </div>
+
+
+      ${createTracking(status)}
+
+
+      <div class="shipping">
+
+        <div class="shipping-title">
+          Shipping Information
+        </div>
+
+
+        ${
+          shippingName
+          ? `<p><strong>Name:</strong>
+             ${escapeHTML(
+               shippingName
+             )}</p>`
+          : ""
+        }
+
+
+        ${
+          shippingEmail
+          ? `<p><strong>Email:</strong>
+             ${escapeHTML(
+               shippingEmail
+             )}</p>`
+          : ""
+        }
+
+
+        ${
+          shippingPhone
+          ? `<p><strong>Phone:</strong>
+             ${escapeHTML(
+               shippingPhone
+             )}</p>`
+          : ""
+        }
+
+
+        ${
+          shippingAddress
+          ? `<p><strong>Address:</strong>
+             ${escapeHTML(
+               shippingAddress
+             )}</p>`
+          : ""
+        }
+
+      </div>
+
+
+    </div>
+
+  `;
+
+}
+
+
+// =====================================
+// LOAD ORDERS
+// =====================================
+
+async function loadOrders() {
+
+  const container =
+    document.getElementById(
+      "ordersContainer"
+    );
+
+
+  container.innerHTML = `
+
+    <div class="loading">
+      Loading your orders...
+    </div>
+
+  `;
+
+
+  try {
+
+    if (!currentUser) {
+
+      currentUser =
+        await getCurrentUser();
+
+    }
+
+
+    if (!currentUser) {
+      return;
+    }
+
+
+    const url =
+      SUPABASE_URL +
+      "/rest/v1/orders" +
+      "?select=*" +
+      "&buyer_id=eq." +
+      encodeURIComponent(
+        currentUser.id
+      ) +
+      "&order=created_at.desc";
+
+
+    const response =
+      await fetch(
+        url,
+        {
+          headers: headers()
+        }
+      );
+
+
+    if (!response.ok) {
+
+      const error =
+        await response.text();
+
+      throw new Error(error);
+
+    }
+
+
+    const orders =
+      await response.json();
+
+
+    if (!orders.length) {
+
+      container.innerHTML = `
+
+        <div class="empty">
+
+          <h3>
+            No orders yet 🛍️
+          </h3>
+
+          <p>
+            Your purchases will appear here.
+          </p>
+
+          <a href="marketplace.html">
+            Browse Marketplace
+          </a>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    container.innerHTML =
+      orders
+        .map(
+          createOrderCard
+        )
+        .join("");
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    container.innerHTML = `
+
+      <div class="error">
+
+        Unable to load your orders.
+
+        <br><br>
+
+        Please refresh the page.
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+// =====================================
+// START
+// =====================================
+
+async function start() {
+
+  currentUser =
+    await getCurrentUser();
+
+  if (!currentUser) {
+    return;
+  }
+
+  await loadOrders();
+
+}
+
+
+// =====================================
+// AUTO REFRESH
+// =====================================
+
+setInterval(
+  () => {
+
+    if (currentUser) {
+      loadOrders();
+    }
+
+  },
+  30000
+);
+
+
+start();
+
+</script>
+
+</body>
+</html>
