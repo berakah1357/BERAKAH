@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BERAKAH - Inventory</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #111827;
+}
+
+header {
+  background: white;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #2563eb;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #374151;
+  font-size: 14px;
+  padding: 8px 10px;
+  border-radius: 7px;
+}
+
+nav a:hover {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0 15px;
+}
+
+h1 {
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #6b7280;
+  margin-top: 0;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 25px 0;
+}
+
+.summary-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.summary-card h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.summary-number {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.inventory-box {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+
+.inventory-header {
+  padding: 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.inventory-header h2 {
+  margin: 0;
+}
+
+.product-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.2fr 1.5fr 1.5fr;
+  gap: 15px;
+  align-items: center;
+  padding: 18px 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.product-row:last-child {
+  border-bottom: none;
+}
+
+.product-name {
+  font-weight: bold;
+}
+
+.price {
+  color: #374151;
+}
+
+.stock-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stock-controls button {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 6px;
+  background: #e5e7eb;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.stock-controls button:hover {
+  background: #d1d5db;
+}
+
+.stock-input {
+  width: 75px;
+  height: 34px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.status {
+  display: inline-block;
+  padding: 7px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.in-stock {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.low-stock {
+  background: #ffedd5;
+  color: #9a3412;
+}
+
+.out-stock {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.update-btn {
+  border: none;
+  background: #2563eb;
+  color: white;
+  padding: 9px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.update-btn:hover {
+  background: #1d4ed8;
+}
+
+.update-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.loading,
+.empty,
+.error {
+  padding: 30px;
+  text-align: center;
+}
+
+.error {
+  color: #b91c1c;
+}
+
+@media (max-width: 800px) {
+
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .summary {
+    grid-template-columns: 1fr;
+  }
+
+  .product-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .inventory-header {
+    padding: 15px;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+  <div class="header-inner">
+
+    <div class="logo">
+      BERAKAH
+    </div>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="marketplace.html">Market</a>
+      <a href="seller-dashboard.html">Dashboard</a>
+      <a href="seller-orders.html">Seller Orders</a>
+      <a href="product-management.html">Products</a>
+      <a href="inventory.html">Inventory</a>
+      <a href="orders.html">My Orders</a>
+      <a href="profile.html">Profile</a>
+    </nav>
+
+  </div>
+
+</header>
+
+
+<div class="container">
+
+  <h1>Inventory 📊</h1>
+
+  <p class="subtitle">
+    Manage your product stock in real time.
+  </p>
+
+
+  <div class="summary">
+
+    <div class="summary-card">
+      <h3>Total Products</h3>
+      <div class="summary-number" id="totalProducts">
+        0
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <h3>Low Stock</h3>
+      <div class="summary-number" id="lowStock">
+        0
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <h3>Out of Stock</h3>
+      <div class="summary-number" id="outStock">
+        0
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="inventory-box">
+
+    <div class="inventory-header">
+      <h2>My Inventory</h2>
+    </div>
+
+    <div id="inventoryList">
+
+      <div class="loading">
+        Loading inventory...
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const SUPABASE_URL =
+  "https://utoyoglycqjmqznczfxa.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+
+const ACCESS_TOKEN =
+  localStorage.getItem("berakah_access_token");
+
+
+let currentUser = null;
+let products = [];
+
+
+// ================================
+// HTML SECURITY
+// ================================
+
+function escapeHTML(value) {
+
+  if (value === null || value === undefined) {
+    return "";
+  }
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+
+// ================================
+// SUPABASE HEADERS
+// ================================
+
+function headers() {
+
+  return {
+
+    "apikey": SUPABASE_KEY,
+
+    "Authorization":
+      "Bearer " + ACCESS_TOKEN,
+
+    "Content-Type":
+      "application/json"
+
+  };
+
+}
+
+
+// ================================
+// GET CURRENT USER
+// ================================
+
+async function getCurrentUser() {
+
+  if (!ACCESS_TOKEN) {
+
+    window.location.href = "login.html";
+
+    return;
+
+  }
+
+  const response =
+    await fetch(
+      SUPABASE_URL +
+      "/auth/v1/user",
+      {
+        headers: headers()
+      }
+    );
+
+  if (!response.ok) {
+
+    localStorage.removeItem(
+      "berakah_access_token"
+    );
+
+    window.location.href =
+      "login.html";
+
+    return;
+
+  }
+
+  currentUser =
+    await response.json();
+
+}
+
+
+// ================================
+// LOAD PRODUCTS
+// ================================
+
+async function loadProducts() {
+
+  const list =
+    document.getElementById(
+      "inventoryList"
+    );
+
+  try {
+
+    const url =
+      SUPABASE_URL +
+      "/rest/v1/products" +
+      "?select=*" +
+      "&seller_id=eq." +
+      encodeURIComponent(
+        currentUser.id
+      ) +
+      "&order=created_at.desc";
+
+    const response =
+      await fetch(
+        url,
+        {
+          headers: headers()
+        }
+      );
+
+    if (!response.ok) {
+
+      const error =
+        await response.text();
+
+      throw new Error(error);
+
+    }
+
+    products =
+      await response.json();
+
+    renderInventory();
+
+  } catch (error) {
+
+    console.error(error);
+
+    list.innerHTML = `
+      <div class="error">
+        Unable to load inventory.
+      </div>
+    `;
+
+  }
+
+}
+
+
+// ================================
+// INVENTORY STATUS
+// ================================
+
+function getStatus(stock) {
+
+  stock =
+    Number(stock) || 0;
+
+  if (stock <= 0) {
+
+    return {
+      text: "🔴 Out of Stock",
+      className: "out-stock"
+    };
+
+  }
+
+  if (stock <= 10) {
+
+    return {
+      text: "🟠 Low Stock",
+      className: "low-stock"
+    };
+
+  }
+
+  return {
+    text: "🟢 In Stock",
+    className: "in-stock"
+  };
+
+}
+
+
+// ================================
+// RENDER INVENTORY
+// ================================
+
+function renderInventory() {
+
+  const list =
+    document.getElementById(
+      "inventoryList"
+    );
+
+  document.getElementById(
+    "totalProducts"
+  ).textContent =
+    products.length;
+
+
+  let low =
+    0;
+
+  let out =
+    0;
+
+
+  products.forEach(product => {
+
+    const stock =
+      Number(product.stock) || 0;
+
+    if (stock <= 10 && stock > 0) {
+      low++;
+    }
+
+    if (stock <= 0) {
+      out++;
+    }
+
+  });
+
+
+  document.getElementById(
+    "lowStock"
+  ).textContent = low;
+
+
+  document.getElementById(
+    "outStock"
+  ).textContent = out;
+
+
+  if (!products.length) {
+
+    list.innerHTML = `
+      <div class="empty">
+        No products found.
+        <br><br>
+        <a href="product-management.html">
+          Add your first product
+        </a>
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  list.innerHTML = products.map(product => {
+
+    const stock =
+      Number(product.stock) || 0;
+
+    const status =
+      getStatus(stock);
+
+
+    return `
+
+      <div class="product-row">
+
+        <div>
+          <div class="product-name">
+            ${escapeHTML(
+              product.product_name
+            )}
+          </div>
+
+          <small>
+            ${escapeHTML(
+              product.category || "Other"
+            )}
+          </small>
+        </div>
+
+
+        <div class="price">
+          $${Number(
+            product.price || 0
+          ).toFixed(2)}
+        </div>
+
+
+        <div class="stock-controls">
+
+          <button
+            onclick="changeStock('${product.id}', -1)"
+          >
+            −
+          </button>
+
+          <input
+            class="stock-input"
+            id="stock-${product.id}"
+            type="number"
+            min="0"
+            value="${stock}"
+          >
+
+          <button
+            onclick="changeStock('${product.id}', 1)"
+          >
+            +
+          </button>
+
+        </div>
+
+
+        <div>
+
+          <span
+            id="status-${product.id}"
+            class="status ${status.className}"
+          >
+            ${status.text}
+          </span>
+
+        </div>
+
+
+        <div>
+
+          <button
+            class="update-btn"
+            id="update-${product.id}"
+            onclick="updateStock('${product.id}')"
+          >
+            Update Stock
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }).join("");
+
+}
+
+
+// ================================
+// CHANGE STOCK
+// ================================
+
+function changeStock(productId, amount) {
+
+  const input =
+    document.getElementById(
+      "stock-" + productId
+    );
+
+  if (!input) return;
+
+
+  let value =
+    Number(input.value) || 0;
+
+  value += amount;
+
+
+  if (value < 0) {
+    value = 0;
+  }
+
+
+  input.value = value;
+
+
+  updateStatusPreview(
+    productId,
+    value
+  );
+
+}
+
+
+// ================================
+// LIVE STATUS PREVIEW
+// ================================
+
+function updateStatusPreview(
+  productId,
+  stock
+) {
+
+  const status =
+    getStatus(stock);
+
+  const element =
+    document.getElementById(
+      "status-" + productId
+    );
+
+  if (!element) return;
+
+
+  element.className =
+    "status " +
+    status.className;
+
+  element.textContent =
+    status.text;
+
+}
+
+
+// ================================
+// UPDATE STOCK IN SUPABASE
+// ================================
+
+async function updateStock(productId) {
+
+  const input =
+    document.getElementById(
+      "stock-" + productId
+    );
+
+  const button =
+    document.getElementById(
+      "update-" + productId
+    );
+
+
+  if (!input) return;
+
+
+  let stock =
+    Number(input.value);
+
+
+  if (!Number.isFinite(stock) ||
+      stock < 0) {
+
+    alert(
+      "Please enter a valid stock number."
+    );
+
+    return;
+
+  }
+
+
+  stock =
+    Math.floor(stock);
+
+
+  button.disabled = true;
+
+  button.textContent =
+    "Updating...";
+
+
+  try {
+
+    const url =
+      SUPABASE_URL +
+      "/rest/v1/products" +
+      "?id=eq." +
+      encodeURIComponent(productId) +
+      "&seller_id=eq." +
+      encodeURIComponent(
+        currentUser.id
+      );
+
+
+    const response =
+      await fetch(
+        url,
+        {
+          method: "PATCH",
+
+          headers: {
+            ...headers(),
+
+            "Prefer":
+              "return=representation"
+          },
+
+          body:
+            JSON.stringify({
+              stock: stock
+            })
+
+        }
+      );
+
+
+    if (!response.ok) {
+
+      const error =
+        await response.text();
+
+      throw new Error(error);
+
+    }
+
+
+    const updated =
+      await response.json();
+
+
+    if (!updated.length) {
+
+      throw new Error(
+        "Product was not updated."
+      );
+
+    }
+
+
+    const product =
+      products.find(
+        p => p.id === productId
+      );
+
+
+    if (product) {
+
+      product.stock =
+        stock;
+
+    }
+
+
+    updateStatusPreview(
+      productId,
+      stock
+    );
+
+
+    updateSummary();
+
+
+    button.textContent =
+      "Updated ✓";
+
+
+    setTimeout(() => {
+
+      button.textContent =
+        "Update Stock";
+
+      button.disabled =
+        false;
+
+    }, 1500);
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      "Could not update stock."
+    );
+
+
+    button.textContent =
+      "Update Stock";
+
+    button.disabled =
+      false;
+
+  }
+
+}
+
+
+// ================================
+// UPDATE SUMMARY
+// ================================
+
+function updateSummary() {
+
+  let low = 0;
+  let out = 0;
+
+
+  products.forEach(product => {
+
+    const stock =
+      Number(product.stock) || 0;
+
+    if (stock > 0 && stock <= 10) {
+      low++;
+    }
+
+    if (stock <= 0) {
+      out++;
+    }
+
+  });
+
+
+  document.getElementById(
+    "totalProducts"
+  ).textContent =
+    products.length;
+
+
+  document.getElementById(
+    "lowStock"
+  ).textContent =
+    low;
+
+
+  document.getElementById(
+    "outStock"
+  ).textContent =
+    out;
+
+}
+
+
+// ================================
+// START
+// ================================
+
+async function start() {
+
+  await getCurrentUser();
+
+  if (!currentUser) return;
+
+  await loadProducts();
+
+}
+
+
+// ================================
+// AUTO REFRESH
+// ================================
+
+setInterval(() => {
+
+  if (currentUser) {
+    loadProducts();
+  }
+
+}, 30000);
+
+
+start();
+
+</script>
+
+</body>
+</html>
