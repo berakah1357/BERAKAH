@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BERAKAH - Seller Dashboard</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #111827;
+}
+
+header {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 15px 20px;
+}
+
+.header {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  text-decoration: none;
+  color: #374151;
+  padding: 8px 10px;
+  border-radius: 7px;
+  font-size: 14px;
+}
+
+nav a:hover {
+  background: #f3f4f6;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 25px 15px 50px;
+}
+
+h1 {
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  color: #6b7280;
+  margin-top: 0;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin: 25px 0;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.icon {
+  font-size: 27px;
+}
+
+.label {
+  color: #6b7280;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.value {
+  font-size: 27px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.section {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  border: 0;
+  background: #111827;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.order {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 12px;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.status {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.order-info {
+  color: #4b5563;
+  line-height: 1.7;
+  margin-top: 8px;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.product {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.product h3 {
+  margin-top: 0;
+}
+
+.loading {
+  color: #6b7280;
+  padding: 15px 0;
+}
+
+.error {
+  display: none;
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+@media(max-width:800px) {
+  .stats {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .products {
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+
+@media(max-width:500px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .products {
+    grid-template-columns: 1fr;
+  }
+
+  nav {
+    display: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header">
+
+    <div class="logo">
+      BERAKAH
+    </div>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="feed.html">Feed</a>
+      <a href="people.html">People</a>
+      <a href="marketplace.html">Market</a>
+      <a href="orders.html">My Orders</a>
+      <a href="seller-orders.html">Seller Orders</a>
+      <a href="profile.html">Profile</a>
+    </nav>
+
+  </div>
+</header>
+
+<div class="container">
+
+  <h1>🏪 Seller Dashboard</h1>
+
+  <p class="subtitle">
+    Manage your orders, products and sales.
+  </p>
+
+  <div id="errorBox" class="error"></div>
+
+  <!-- STATS -->
+
+  <div class="stats">
+
+    <div class="card">
+      <div class="icon">📦</div>
+      <div class="label">Total Orders</div>
+      <div class="value" id="totalOrders">0</div>
+    </div>
+
+    <div class="card">
+      <div class="icon">🆕</div>
+      <div class="label">New Orders</div>
+      <div class="value" id="newOrders">0</div>
+    </div>
+
+    <div class="card">
+      <div class="icon">🚚</div>
+      <div class="label">Processing</div>
+      <div class="value" id="processingOrders">0</div>
+    </div>
+
+    <div class="card">
+      <div class="icon">💰</div>
+      <div class="label">Sales Value</div>
+      <div class="value" id="salesValue">$0.00</div>
+    </div>
+
+  </div>
+
+  <!-- QUICK ACTIONS -->
+
+  <div class="section">
+
+    <h2>⚡ Quick Actions</h2>
+
+    <p>
+      <a href="seller-orders.html">
+        <button>📦 Manage Orders</button>
+      </a>
+
+      <a href="marketplace.html">
+        <button>🛍️ Marketplace</button>
+      </a>
+
+    </p>
+
+  </div>
+
+  <!-- ORDERS -->
+
+  <div class="section">
+
+    <div class="section-title">
+
+      <h2>📦 Recent Orders</h2>
+
+      <button onclick="loadDashboard()">
+        🔄 Refresh
+      </button>
+
+    </div>
+
+    <div id="orders">
+      <div class="loading">
+        Loading orders...
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PRODUCTS -->
+
+  <div class="section">
+
+    <h2>🛍️ My Products</h2>
+
+    <div id="products" class="products">
+
+      <div class="loading">
+        Loading products...
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+const SUPABASE_URL =
+"https://utoyoglycqjmqznczfxa.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+
+const token =
+localStorage.getItem("berakah_access_token");
+
+let currentUser;
+let orders = [];
+let products = [];
+
+
+/* =========================
+   GET LOGGED IN USER
+========================= */
+
+async function getUser() {
+
+  if (!token) {
+    throw new Error(
+      "You are not logged in. Please log in first."
+    );
+  }
+
+  const response = await fetch(
+    SUPABASE_URL + "/auth/v1/user",
+    {
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + token
+      }
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      "Login session expired. Please log in again."
+    );
+  }
+
+  currentUser = await response.json();
+}
+
+
+/* =========================
+   GET ORDERS
+========================= */
+
+async function getOrders() {
+
+  const url =
+    SUPABASE_URL +
+    "/rest/v1/orders?select=*&seller_id=eq." +
+    currentUser.id +
+    "&order=created_at.desc";
+
+  const response = await fetch(url, {
+    headers: {
+      "apikey": SUPABASE_KEY,
+      "Authorization": "Bearer " + token
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      "Unable to load seller orders."
+    );
+  }
+
+  orders = await response.json();
+}
+
+
+/* =========================
+   GET PRODUCTS
+========================= */
+
+async function getProducts() {
+
+  const url =
+    SUPABASE_URL +
+    "/rest/v1/products?select=*&seller_id=eq." +
+    currentUser.id +
+    "&order=created_at.desc";
+
+  const response = await fetch(url, {
+    headers: {
+      "apikey": SUPABASE_KEY,
+      "Authorization": "Bearer " + token
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      "Unable to load seller products."
+    );
+  }
+
+  products = await response.json();
+}
+
+
+/* =========================
+   UPDATE STATISTICS
+========================= */
+
+function updateStats() {
+
+  const total =
+    orders.length;
+
+  const newOrders =
+    orders.filter(order =>
+      order.status === "pending" ||
+      order.status === "confirmed"
+    ).length;
+
+  const processing =
+    orders.filter(order =>
+      order.status === "processing" ||
+      order.status === "shipped"
+    ).length;
+
+  const sales =
+    orders
+      .filter(order =>
+        order.status !== "cancelled"
+      )
+      .reduce(
+        (sum, order) =>
+          sum + Number(order.total || 0),
+        0
+      );
+
+  document.getElementById(
+    "totalOrders"
+  ).textContent = total;
+
+  document.getElementById(
+    "newOrders"
+  ).textContent = newOrders;
+
+  document.getElementById(
+    "processingOrders"
+  ).textContent = processing;
+
+  document.getElementById(
+    "salesValue"
+  ).textContent =
+    "$" + sales.toFixed(2);
+}
+
+
+/* =========================
+   DISPLAY ORDERS
+========================= */
+
+function displayOrders() {
+
+  const box =
+    document.getElementById("orders");
+
+  if (orders.length === 0) {
+
+    box.innerHTML =
+      "<div class='loading'>No orders yet.</div>";
+
+    return;
+  }
+
+  box.innerHTML =
+    orders.slice(0,5).map(order => {
+
+      const number =
+        order.order_number || order.id;
+
+      const customer =
+        order.customer_name ||
+        order.shipping_name ||
+        "Customer";
+
+      const product =
+        order.product_name ||
+        "Product";
+
+      const status =
+        order.status ||
+        "pending";
+
+      const total =
+        Number(order.total || 0)
+          .toFixed(2);
+
+      const date =
+        order.created_at
+          ? new Date(
+              order.created_at
+            ).toLocaleDateString()
+          : "";
+
+      return `
+
+        <div class="order">
+
+          <div class="order-header">
+
+            <strong>
+              #${escapeHTML(number)}
+            </strong>
+
+            <span class="status">
+              ${escapeHTML(status)}
+            </span>
+
+          </div>
+
+          <div class="order-info">
+
+            👤 Customer:
+            ${escapeHTML(customer)}
+            <br>
+
+            🛍️ Product:
+            ${escapeHTML(product)}
+            <br>
+
+            🔢 Quantity:
+            ${Number(order.quantity || 0)}
+            <br>
+
+            💰 Total:
+            <strong>$${total}</strong>
+            <br>
+
+            📅 Date:
+            ${escapeHTML(date)}
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+}
+
+
+/* =========================
+   DISPLAY PRODUCTS
+========================= */
+
+function displayProducts() {
+
+  const box =
+    document.getElementById("products");
+
+  if (products.length === 0) {
+
+    box.innerHTML =
+      "<div class='loading'>No products yet.</div>";
+
+    return;
+  }
+
+  box.innerHTML =
+    products.slice(0,6).map(product => {
+
+      const name =
+        product.product_name ||
+        product.name ||
+        "Product";
+
+      const price =
+        Number(product.price || 0)
+          .toFixed(2);
+
+      const category =
+        product.category ||
+        "No category";
+
+      return `
+
+        <div class="product">
+
+          <h3>
+            ${escapeHTML(name)}
+          </h3>
+
+          <div>
+            💰 $${price}
+          </div>
+
+          <div>
+            🏷️ ${escapeHTML(category)}
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+}
+
+
+/* =========================
+   SECURITY
+========================= */
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+/* =========================
+   LOAD DASHBOARD
+========================= */
+
+async function loadDashboard() {
+
+  const error =
+    document.getElementById("errorBox");
+
+  error.style.display = "none";
+
+  try {
+
+    await getUser();
+
+    await getOrders();
+
+    await getProducts();
+
+    updateStats();
+
+    displayOrders();
+
+    displayProducts();
+
+  } catch (err) {
+
+    console.error(err);
+
+    error.textContent =
+      err.message;
+
+    error.style.display =
+      "block";
+
+  }
+}
+
+
+/* START */
+
+loadDashboard();
+
+
+/* AUTO REFRESH */
+
+setInterval(
+  loadDashboard,
+  30000
+);
+
+</script>
+
+</body>
+</html>
