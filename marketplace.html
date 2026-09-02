@@ -1,16 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>BERAKAH - Marketplace</title>
-
-<style>
+<title>BERAKAH - Marketplace</title><style>
 
 * {
     box-sizing: border-box;
@@ -23,21 +14,14 @@ body {
     color: #111827;
 }
 
-/* =========================
-   HEADER
-========================= */
-
 header {
     background: white;
     border-bottom: 1px solid #e5e7eb;
     padding: 15px 20px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 15px;
-
     position: sticky;
     top: 0;
     z-index: 100;
@@ -66,10 +50,6 @@ nav a:hover {
     color: #2563eb;
 }
 
-/* =========================
-   MAIN
-========================= */
-
 .container {
     max-width: 1200px;
     margin: auto;
@@ -90,20 +70,14 @@ nav a:hover {
     color: #6b7280;
 }
 
-/* =========================
-   ACTION BAR
-========================= */
-
 .market-actions {
     background: white;
     border: 1px solid #e5e7eb;
     border-radius: 12px;
     padding: 15px;
-
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-
     margin-bottom: 25px;
 }
 
@@ -116,10 +90,8 @@ nav a:hover {
 .category-select {
     width: 100%;
     padding: 12px;
-
     border: 1px solid #d1d5db;
     border-radius: 8px;
-
     font-size: 15px;
 }
 
@@ -131,10 +103,8 @@ nav a:hover {
     border: none;
     border-radius: 8px;
     padding: 12px 18px;
-
     font-size: 14px;
     font-weight: bold;
-
     cursor: pointer;
 }
 
@@ -156,17 +126,11 @@ nav a:hover {
     background: #15803d;
 }
 
-/* =========================
-   ADD PRODUCT
-========================= */
-
 .add-product-box {
     display: none;
-
     background: white;
     border: 1px solid #e5e7eb;
     border-radius: 12px;
-
     padding: 20px;
     margin-bottom: 25px;
 }
@@ -205,10 +169,8 @@ nav a:hover {
 .form-group select {
     width: 100%;
     padding: 11px;
-
     border: 1px solid #d1d5db;
     border-radius: 8px;
-
     font-size: 14px;
 }
 
@@ -219,14 +181,9 @@ nav a:hover {
 
 .form-buttons {
     margin-top: 15px;
-
     display: flex;
     gap: 10px;
 }
-
-/* =========================
-   STATUS
-========================= */
 
 .status {
     margin-bottom: 20px;
@@ -241,37 +198,26 @@ nav a:hover {
     color: #16a34a;
 }
 
-/* =========================
-   PRODUCTS
-========================= */
-
 .products-grid {
     display: grid;
-
     grid-template-columns:
         repeat(auto-fill, minmax(230px, 1fr));
-
     gap: 20px;
 }
 
 .product-card {
     background: white;
-
     border: 1px solid #e5e7eb;
     border-radius: 12px;
-
     overflow: hidden;
-
     display: flex;
     flex-direction: column;
-
     transition: transform 0.15s ease,
                 box-shadow 0.15s ease;
 }
 
 .product-card:hover {
     transform: translateY(-3px);
-
     box-shadow:
         0 8px 20px rgba(0,0,0,0.08);
 }
@@ -279,93 +225,70 @@ nav a:hover {
 .product-image {
     width: 100%;
     height: 210px;
-
     object-fit: cover;
-
     background: #eef2f7;
 }
 
 .no-image {
     width: 100%;
     height: 210px;
-
     background: #eef2f7;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     font-size: 50px;
 }
 
 .product-info {
     padding: 15px;
-
     display: flex;
     flex-direction: column;
-
     flex: 1;
 }
 
 .product-category {
     display: inline-block;
-
     width: fit-content;
-
     background: #eff6ff;
     color: #2563eb;
-
     padding: 5px 9px;
-
     border-radius: 20px;
-
     font-size: 11px;
     font-weight: bold;
-
     margin-bottom: 8px;
 }
 
 .product-name {
     margin: 0 0 8px;
-
     font-size: 18px;
 }
 
 .product-description {
     color: #6b7280;
-
     font-size: 14px;
-
     line-height: 1.4;
-
     margin-bottom: 10px;
-
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-
     overflow: hidden;
 }
 
 .product-price {
     font-size: 21px;
     font-weight: bold;
-
     color: #111827;
-
     margin-bottom: 8px;
 }
 
 .product-seller {
     font-size: 13px;
     color: #6b7280;
-
     margin-bottom: 6px;
 }
 
 .product-stock {
     font-size: 13px;
-
     margin-bottom: 15px;
 }
 
@@ -379,7 +302,6 @@ nav a:hover {
 
 .product-buttons {
     margin-top: auto;
-
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
@@ -405,27 +327,14 @@ nav a:hover {
     color: #dc2626;
 }
 
-/* =========================
-   EMPTY
-========================= */
-
 .empty {
     background: white;
-
     border: 1px solid #e5e7eb;
-
     border-radius: 12px;
-
     padding: 50px 20px;
-
     text-align: center;
-
     color: #6b7280;
 }
-
-/* =========================
-   CART
-========================= */
 
 .cart-button {
     position: relative;
@@ -434,26 +343,16 @@ nav a:hover {
 .cart-count {
     background: #dc2626;
     color: white;
-
     border-radius: 50%;
-
     min-width: 18px;
     height: 18px;
-
     display: inline-flex;
-
     align-items: center;
     justify-content: center;
-
     font-size: 10px;
-
     position: relative;
     top: -2px;
 }
-
-/* =========================
-   RESPONSIVE
-========================= */
 
 @media (max-width: 700px) {
 
@@ -489,27 +388,13 @@ nav a:hover {
 
 }
 
-</style>
-
-</head>
-
-<body>
-
-<!-- =========================
-     HEADER
-========================= -->
-
-<header>
-
-<a
-    class="logo"
-    href="index.html">
-    BERAKAH
+</style></head><body><header><a
+class="logo"
+href="index.html">
+BERAKAH
 </a>
 
-<nav>
-
-<a href="index.html">Home</a>
+<nav><a href="index.html">Home</a>
 
 <a href="feed.html">Feed</a>
 
@@ -523,307 +408,114 @@ nav a:hover {
 
 <a href="#" onclick="logout()">Logout</a>
 
-</nav>
-
-</header>
-
-
-<!-- =========================
-     MAIN
-========================= -->
-
-<main class="container">
-
-<div class="page-title">
-
-<h1>🛒 BERAKAH Marketplace</h1>
-
-<p>
+</nav></header><main class="container"><div class="page-title"><h1>🛒 BERAKAH Marketplace</h1><p>
 Buy and sell products with the BERAKAH community.
-</p>
+</p></div><div class="market-actions"><div class="search-box"><input
+type="text"
+id="searchInput"
+placeholder="🔎 Search products..."
+oninput="filterProducts()">
 
-</div>
-
-
-<!-- =========================
-     ACTIONS
-========================= -->
-
-<div class="market-actions">
-
-<div class="search-box">
-
-<input
-    type="text"
-    id="searchInput"
-    placeholder="🔎 Search products..."
-    oninput="filterProducts()">
-
-</div>
-
-
-<div>
-
-<select
-    id="categoryFilter"
-    class="category-select"
-    onchange="filterProducts()">
+</div><div><select
+id="categoryFilter"
+class="category-select"
+onchange="filterProducts()">
 
 <option value="">All Categories</option>
-
-<option value="Electronics">
-Electronics
-</option>
-
-<option value="Fashion">
-Fashion
-</option>
-
-<option value="Home">
-Home
-</option>
-
-<option value="Beauty">
-Beauty
-</option>
-
-<option value="Food">
-Food
-</option>
-
-<option value="Services">
-Services
-</option>
-
-<option value="Other">
-Other
-</option>
-
-</select>
-
-</div>
-
-
-<button
-    class="btn btn-success"
-    onclick="toggleAddProduct()">
+<option value="Electronics">Electronics</option>
+<option value="Fashion">Fashion</option>
+<option value="Home">Home</option>
+<option value="Beauty">Beauty</option>
+<option value="Food">Food</option>
+<option value="Services">Services</option>
+<option value="Other">Other</option></select></div><button
+class="btn btn-success"
+onclick="toggleAddProduct()">
 
 ➕ Add Product
 
-</button>
-
-
-<button
-    class="btn btn-primary cart-button"
-    onclick="openCart()">
+</button><button
+class="btn btn-primary cart-button"
+onclick="openCart()">
 
 🛒 Cart
 <span
-    id="cartCount"
-    class="cart-count">
+id="cartCount"
+class="cart-count">
 0
 </span>
 
-</button>
-
-</div>
-
-
-<!-- =========================
-     ADD PRODUCT FORM
-========================= -->
-
-<div
+</button></div><div
     id="addProductBox"
-    class="add-product-box">
-
-<h2>➕ Add Product</h2>
-
-<div class="form-grid">
-
-
-<div class="form-group">
-
-<label>
-Product Name
-</label>
+    class="add-product-box"><h2>➕ Add Product</h2><div class="form-grid"><div class="form-group"><label>Product Name</label>
 
 <input
-    id="productName"
-    type="text"
-    placeholder="Product name">
+id="productName"
+type="text"
+placeholder="Product name">
 
-</div>
-
-
-<div class="form-group">
-
-<label>
-Price
-</label>
+</div><div class="form-group"><label>Price</label>
 
 <input
-    id="productPrice"
-    type="number"
-    min="0"
-    step="0.01"
-    placeholder="0.00">
+id="productPrice"
+type="number"
+min="0"
+step="0.01"
+placeholder="0.00">
 
-</div>
+</div><div class="form-group"><label>Category</label>
 
-
-<div class="form-group">
-
-<label>
-Category
-</label>
-
-<select id="productCategory">
-
-<option value="">
-Select Category
-</option>
-
-<option value="Electronics">
-Electronics
-</option>
-
-<option value="Fashion">
-Fashion
-</option>
-
-<option value="Home">
-Home
-</option>
-
-<option value="Beauty">
-Beauty
-</option>
-
-<option value="Food">
-Food
-</option>
-
-<option value="Services">
-Services
-</option>
-
-<option value="Other">
-Other
-</option>
-
-</select>
-
-</div>
-
-
-<div class="form-group">
-
-<label>
-Stock
-</label>
+<select id="productCategory"><option value="">Select Category</option>
+<option value="Electronics">Electronics</option>
+<option value="Fashion">Fashion</option>
+<option value="Home">Home</option>
+<option value="Beauty">Beauty</option>
+<option value="Food">Food</option>
+<option value="Services">Services</option>
+<option value="Other">Other</option></select></div><div class="form-group"><label>Stock</label>
 
 <input
-    id="productStock"
-    type="number"
-    min="0"
-    value="1">
+id="productStock"
+type="number"
+min="0"
+value="1">
 
-</div>
-
-
-<div class="form-group full">
-
-<label>
-Description
-</label>
+</div><div class="form-group full"><label>Description</label>
 
 <textarea
     id="productDescription"
-    placeholder="Describe your product..."></textarea>
-
-</div>
-
-
-<div class="form-group full">
-
-<label>
-Product Image
-</label>
+    placeholder="Describe your product..."></textarea></div><div class="form-group full"><label>Product Image</label>
 
 <input
-    id="productImage"
-    type="file"
-    accept="image/*">
+id="productImage"
+type="file"
+accept="image/*">
 
-</div>
-
-
-</div>
-
-
-<div class="form-buttons">
-
-<button
-    class="btn btn-success"
-    onclick="addProduct()">
+</div></div><div class="form-buttons"><button
+class="btn btn-success"
+onclick="addProduct()">
 
 🛍️ Publish Product
 
-</button>
-
-
-<button
-    class="btn btn-view"
-    onclick="toggleAddProduct()">
+</button><button
+class="btn btn-view"
+onclick="toggleAddProduct()">
 
 Cancel
 
-</button>
-
-</div>
-
-</div>
-
-
-<!-- =========================
-     STATUS
-========================= -->
-
-<div
+</button></div></div><div
     id="status"
-    class="status">
+    class="status">Loading marketplace...
 
-Loading marketplace...
-
-</div>
-
-
-<!-- =========================
-     PRODUCTS
-========================= -->
-
-<div
+</div><div
     id="productsGrid"
-    class="products-grid">
-
-</div>
-
-</main>
-
-
-<script>
-
-/* =====================================================
-   SUPABASE
-===================================================== */
+    class="products-grid"></div></main><script>
 
 const SUPABASE_URL =
     "https://utoyoglycqjmqznczfxa.supabase.co";
 
 const SUPABASE_KEY =
     "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
-
 
 let accessToken =
     localStorage.getItem("berakah_access_token");
@@ -833,9 +525,9 @@ let currentUser = null;
 let allProducts = [];
 
 
-/* =====================================================
+/* =========================
    SUPABASE REQUEST
-===================================================== */
+========================= */
 
 async function supabaseRequest(
     endpoint,
@@ -866,9 +558,16 @@ async function supabaseRequest(
     let data = null;
 
     try {
-        data = text ? JSON.parse(text) : null;
+
+        data =
+            text ?
+            JSON.parse(text) :
+            null;
+
     } catch {
+
         data = text;
+
     }
 
     if (!response.ok) {
@@ -886,9 +585,9 @@ async function supabaseRequest(
 }
 
 
-/* =====================================================
+/* =========================
    LOAD USER
-===================================================== */
+========================= */
 
 async function loadUser() {
 
@@ -928,9 +627,9 @@ async function loadUser() {
 }
 
 
-/* =====================================================
+/* =========================
    LOAD PRODUCTS
-===================================================== */
+========================= */
 
 async function loadProducts() {
 
@@ -972,9 +671,9 @@ async function loadProducts() {
 }
 
 
-/* =====================================================
+/* =========================
    RENDER PRODUCTS
-===================================================== */
+========================= */
 
 function renderProducts(products) {
 
@@ -1010,24 +709,25 @@ function renderProducts(products) {
 
     }
 
-
     grid.innerHTML =
         products.map(
-            product => createProductCard(product)
+            product =>
+                createProductCard(product)
         ).join("");
 
 }
 
 
-/* =====================================================
+/* =========================
    PRODUCT CARD
-===================================================== */
+========================= */
 
 function createProductCard(product) {
 
     const name =
         escapeHTML(
-            product.name || "Unnamed Product"
+            product.name ||
+            "Unnamed Product"
         );
 
     const description =
@@ -1048,15 +748,12 @@ function createProductCard(product) {
             "Other"
         );
 
-
     const price =
         Number(product.price || 0)
             .toFixed(2);
 
-
     const stock =
         Number(product.stock ?? 1);
-
 
     let imageHTML = "";
 
@@ -1092,7 +789,6 @@ function createProductCard(product) {
 
     }
 
-
     let stockHTML;
 
     if (stock > 0) {
@@ -1121,7 +817,6 @@ function createProductCard(product) {
 
     }
 
-
     let deleteButton = "";
 
     if (
@@ -1143,7 +838,6 @@ function createProductCard(product) {
 
     }
 
-
     return `
 
         <div class="product-card">
@@ -1153,43 +847,27 @@ function createProductCard(product) {
             <div class="product-info">
 
                 <div class="product-category">
-
                     ${category}
-
                 </div>
-
 
                 <h3 class="product-name">
-
                     ${name}
-
                 </h3>
 
-
                 <div class="product-description">
-
                     ${description}
-
                 </div>
-
 
                 <div class="product-price">
-
                     $${price}
-
                 </div>
-
 
                 <div class="product-seller">
-
                     👤 Seller:
                     <strong>${seller}</strong>
-
                 </div>
 
-
                 ${stockHTML}
-
 
                 <div class="product-buttons">
 
@@ -1201,7 +879,6 @@ function createProductCard(product) {
 
                     </button>
 
-
                     <button
                         class="btn btn-cart"
                         ${stock <= 0 ? "disabled" : ""}
@@ -1210,7 +887,6 @@ function createProductCard(product) {
                         🛒 Add
 
                     </button>
-
 
                     ${deleteButton}
 
@@ -1225,9 +901,9 @@ function createProductCard(product) {
 }
 
 
-/* =====================================================
-   SEARCH + CATEGORY FILTER
-===================================================== */
+/* =========================
+   SEARCH
+========================= */
 
 function filterProducts() {
 
@@ -1238,12 +914,10 @@ function filterProducts() {
          .trim()
          .toLowerCase();
 
-
     const category =
         document.getElementById(
             "categoryFilter"
         ).value;
-
 
     const filtered =
         allProducts.filter(
@@ -1254,24 +928,21 @@ function filterProducts() {
                         product.name || ""
                     ).toLowerCase();
 
-
                 const description =
                     String(
                         product.description || ""
                     ).toLowerCase();
-
 
                 const seller =
                     String(
                         product.seller_name || ""
                     ).toLowerCase();
 
-
                 const productCategory =
                     String(
-                        product.category || "Other"
+                        product.category ||
+                        "Other"
                     );
-
 
                 const matchesSearch =
                     !search ||
@@ -1279,11 +950,9 @@ function filterProducts() {
                     description.includes(search) ||
                     seller.includes(search);
 
-
                 const matchesCategory =
                     !category ||
                     productCategory === category;
-
 
                 return (
                     matchesSearch &&
@@ -1293,9 +962,7 @@ function filterProducts() {
             }
         );
 
-
     renderProducts(filtered);
-
 
     document.getElementById(
         "status"
@@ -1305,9 +972,9 @@ function filterProducts() {
 }
 
 
-/* =====================================================
+/* =========================
    ADD PRODUCT FORM
-===================================================== */
+========================= */
 
 function toggleAddProduct() {
 
@@ -1321,9 +988,9 @@ function toggleAddProduct() {
 }
 
 
-/* =====================================================
+/* =========================
    ADD PRODUCT
-===================================================== */
+========================= */
 
 async function addProduct() {
 
@@ -1337,42 +1004,35 @@ async function addProduct() {
 
     }
 
-
     const name =
         document.getElementById(
             "productName"
         ).value.trim();
-
 
     const price =
         document.getElementById(
             "productPrice"
         ).value;
 
-
     const category =
         document.getElementById(
             "productCategory"
         ).value;
-
 
     const description =
         document.getElementById(
             "productDescription"
         ).value.trim();
 
-
     const stock =
         document.getElementById(
             "productStock"
         ).value;
 
-
     const imageInput =
         document.getElementById(
             "productImage"
         );
-
 
     if (!name) {
 
@@ -1383,7 +1043,6 @@ async function addProduct() {
         return;
 
     }
-
 
     if (
         price === "" ||
@@ -1398,7 +1057,6 @@ async function addProduct() {
 
     }
 
-
     if (!category) {
 
         alert(
@@ -1408,7 +1066,6 @@ async function addProduct() {
         return;
 
     }
-
 
     if (
         stock === "" ||
@@ -1423,13 +1080,7 @@ async function addProduct() {
 
     }
 
-
     let imageURL = null;
-
-
-    /* =========================
-       IMAGE
-    ========================= */
 
     if (
         imageInput.files &&
@@ -1438,7 +1089,6 @@ async function addProduct() {
 
         const file =
             imageInput.files[0];
-
 
         if (
             !file.type.startsWith("image/")
@@ -1451,7 +1101,6 @@ async function addProduct() {
             return;
 
         }
-
 
         if (
             file.size >
@@ -1466,12 +1115,10 @@ async function addProduct() {
 
         }
 
-
         imageURL =
             await fileToDataURL(file);
 
     }
-
 
     try {
 
@@ -1480,7 +1127,6 @@ async function addProduct() {
             currentUser.user_metadata?.name ||
             currentUser.email ||
             "BERAKAH Member";
-
 
         const product = {
 
@@ -1509,7 +1155,6 @@ async function addProduct() {
 
         };
 
-
         await supabaseRequest(
             "/rest/v1/products",
             {
@@ -1525,49 +1170,39 @@ async function addProduct() {
             }
         );
 
-
         alert(
             "Product published successfully! 🛍️"
         );
-
 
         document.getElementById(
             "productName"
         ).value = "";
 
-
         document.getElementById(
             "productPrice"
         ).value = "";
-
 
         document.getElementById(
             "productCategory"
         ).value = "";
 
-
         document.getElementById(
             "productDescription"
         ).value = "";
-
 
         document.getElementById(
             "productStock"
         ).value = "1";
 
-
         document.getElementById(
             "productImage"
         ).value = "";
-
 
         document.getElementById(
             "addProductBox"
         ).classList.remove("show");
 
-
         await loadProducts();
-
 
     } catch (error) {
 
@@ -1583,9 +1218,9 @@ async function addProduct() {
 }
 
 
-/* =====================================================
+/* =========================
    FILE TO DATA URL
-===================================================== */
+========================= */
 
 function fileToDataURL(file) {
 
@@ -1595,12 +1230,10 @@ function fileToDataURL(file) {
             const reader =
                 new FileReader();
 
-
             reader.onload =
                 () => resolve(
                     reader.result
                 );
-
 
             reader.onerror =
                 () => reject(
@@ -1608,7 +1241,6 @@ function fileToDataURL(file) {
                         "Could not read image."
                     )
                 );
-
 
             reader.readAsDataURL(file);
 
@@ -1618,17 +1250,49 @@ function fileToDataURL(file) {
 }
 
 
-/* =====================================================
+/* =========================
    VIEW PRODUCT
-===================================================== */
+   FIXED
+========================= */
 
 function viewProduct(productId) {
 
+    const product =
+        allProducts.find(
+            item =>
+                String(item.id) ===
+                String(productId)
+        );
+
+    if (!product) {
+
+        alert(
+            "Product not found."
+        );
+
+        return;
+
+    }
+
     localStorage.setItem(
         "berakahProduct",
-        productId
+        JSON.stringify(product)
     );
 
+    if (product.image_url) {
+
+        localStorage.setItem(
+            "berakahImage",
+            product.image_url
+        );
+
+    } else {
+
+        localStorage.removeItem(
+            "berakahImage"
+        );
+
+    }
 
     window.location.href =
         "product.html?id=" +
@@ -1637,9 +1301,9 @@ function viewProduct(productId) {
 }
 
 
-/* =====================================================
+/* =========================
    CART
-===================================================== */
+========================= */
 
 function getCart() {
 
@@ -1659,11 +1323,6 @@ function getCart() {
 
 }
 
-
-/* =====================================================
-   SAVE CART
-===================================================== */
-
 function saveCart(cart) {
 
     localStorage.setItem(
@@ -1676,9 +1335,9 @@ function saveCart(cart) {
 }
 
 
-/* =====================================================
+/* =========================
    ADD TO CART
-===================================================== */
+========================= */
 
 function addToCart(productId) {
 
@@ -1688,7 +1347,6 @@ function addToCart(productId) {
                 String(item.id) ===
                 String(productId)
         );
-
 
     if (!product) {
 
@@ -1700,10 +1358,8 @@ function addToCart(productId) {
 
     }
 
-
     const stock =
         Number(product.stock ?? 1);
-
 
     if (stock <= 0) {
 
@@ -1715,10 +1371,8 @@ function addToCart(productId) {
 
     }
 
-
     const cart =
         getCart();
-
 
     const existing =
         cart.find(
@@ -1726,7 +1380,6 @@ function addToCart(productId) {
                 String(item.id) ===
                 String(product.id)
         );
-
 
     if (existing) {
 
@@ -1741,7 +1394,6 @@ function addToCart(productId) {
             return;
 
         }
-
 
         existing.quantity += 1;
 
@@ -1771,9 +1423,7 @@ function addToCart(productId) {
 
     }
 
-
     saveCart(cart);
-
 
     alert(
         product.name +
@@ -1783,15 +1433,14 @@ function addToCart(productId) {
 }
 
 
-/* =====================================================
+/* =========================
    CART COUNT
-===================================================== */
+========================= */
 
 function updateCartCount() {
 
     const cart =
         getCart();
-
 
     const count =
         cart.reduce(
@@ -1801,7 +1450,6 @@ function updateCartCount() {
             0
         );
 
-
     document.getElementById(
         "cartCount"
     ).textContent =
@@ -1810,9 +1458,9 @@ function updateCartCount() {
 }
 
 
-/* =====================================================
+/* =========================
    OPEN CART
-===================================================== */
+========================= */
 
 function openCart() {
 
@@ -1822,9 +1470,9 @@ function openCart() {
 }
 
 
-/* =====================================================
+/* =========================
    DELETE PRODUCT
-===================================================== */
+========================= */
 
 async function deleteProduct(productId) {
 
@@ -1834,7 +1482,6 @@ async function deleteProduct(productId) {
 
     }
 
-
     const product =
         allProducts.find(
             item =>
@@ -1842,13 +1489,11 @@ async function deleteProduct(productId) {
                 String(productId)
         );
 
-
     if (!product) {
 
         return;
 
     }
-
 
     if (
         product.seller_id !==
@@ -1863,19 +1508,16 @@ async function deleteProduct(productId) {
 
     }
 
-
     const confirmed =
         confirm(
             "Delete this product?"
         );
-
 
     if (!confirmed) {
 
         return;
 
     }
-
 
     try {
 
@@ -1889,14 +1531,11 @@ async function deleteProduct(productId) {
             }
         );
 
-
         alert(
             "Product deleted."
         );
 
-
         await loadProducts();
-
 
     } catch (error) {
 
@@ -1912,9 +1551,9 @@ async function deleteProduct(productId) {
 }
 
 
-/* =====================================================
+/* =========================
    ESCAPE HTML
-===================================================== */
+========================= */
 
 function escapeHTML(value) {
 
@@ -1927,7 +1566,6 @@ function escapeHTML(value) {
 
 }
 
-
 function escapeAttribute(value) {
 
     return String(value)
@@ -1939,9 +1577,9 @@ function escapeAttribute(value) {
 }
 
 
-/* =====================================================
+/* =========================
    LOGOUT
-===================================================== */
+========================= */
 
 function logout() {
 
@@ -1959,15 +1597,14 @@ function logout() {
 }
 
 
-/* =====================================================
+/* =========================
    START
-===================================================== */
+========================= */
 
 async function startMarketplace() {
 
     const loggedIn =
         await loadUser();
-
 
     if (!loggedIn) {
 
@@ -1975,20 +1612,12 @@ async function startMarketplace() {
 
     }
 
-
     updateCartCount();
 
     await loadProducts();
 
 }
 
-
-/* START */
-
 startMarketplace();
 
-</script>
-
-</body>
-
-</html>
+</script></body></html>
