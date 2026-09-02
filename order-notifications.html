@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BERAKAH - Notifications</title>
+<title>BERAKAH - Order Notifications</title>
 
 <style>
 
@@ -48,7 +48,7 @@ header {
 nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 6px;
 }
 
 nav a {
@@ -70,12 +70,12 @@ nav a:hover {
   padding: 0 15px;
 }
 
-.page-title {
+.title-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 h1 {
@@ -101,30 +101,25 @@ button {
   font-weight: bold;
 }
 
-.refresh-btn {
+.refresh {
   background: #2563eb;
   color: white;
 }
 
-.read-btn {
+.read {
   background: #e5e7eb;
   color: #374151;
-}
-
-.notification-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
 }
 
 .notification {
   background: white;
   border-radius: 12px;
   padding: 18px;
+  margin-bottom: 12px;
   display: flex;
   gap: 15px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   border-left: 4px solid #2563eb;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .notification.unread {
@@ -132,32 +127,32 @@ button {
 }
 
 .icon {
-  width: 45px;
-  height: 45px;
-  min-width: 45px;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
   border-radius: 50%;
   background: #dbeafe;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 22px;
+  font-size: 23px;
 }
 
 .content {
   flex: 1;
 }
 
-.title {
+.notification-title {
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
-.message {
+.notification-message {
   color: #4b5563;
   line-height: 1.5;
 }
 
-.time {
+.notification-time {
   color: #9ca3af;
   font-size: 12px;
   margin-top: 8px;
@@ -165,7 +160,7 @@ button {
 
 .badge {
   display: inline-block;
-  margin-left: 8px;
+  margin-left: 7px;
   padding: 3px 7px;
   border-radius: 10px;
   background: #2563eb;
@@ -173,26 +168,31 @@ button {
   font-size: 10px;
 }
 
-.empty {
+.order-link {
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.empty,
+.loading,
+.error {
   background: white;
   border-radius: 12px;
-  padding: 45px 20px;
+  padding: 40px 20px;
   text-align: center;
-  color: #6b7280;
 }
 
 .loading {
-  text-align: center;
-  padding: 40px;
   color: #6b7280;
 }
 
 .error {
-  background: #fee2e2;
   color: #991b1b;
-  border-radius: 10px;
-  padding: 20px;
-  text-align: center;
+  background: #fee2e2;
 }
 
 @media (max-width: 700px) {
@@ -202,7 +202,7 @@ button {
     align-items: flex-start;
   }
 
-  .page-title {
+  .title-row {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -229,22 +229,18 @@ button {
 
       <a href="index.html">Home</a>
 
+      <a href="feed.html">Feed</a>
+
+      <a href="people.html">👥 People</a>
+
       <a href="marketplace.html">Market</a>
 
-      <a href="seller-dashboard.html">
-        Dashboard
+      <a href="notifications.html">
+        🔔 Notifications
       </a>
 
-      <a href="seller-orders.html">
-        Seller Orders
-      </a>
-
-      <a href="product-management.html">
-        Products
-      </a>
-
-      <a href="inventory.html">
-        Inventory
+      <a href="messages.html">
+        💬 Messages
       </a>
 
       <a href="orders.html">
@@ -252,11 +248,7 @@ button {
       </a>
 
       <a href="order-tracking.html">
-        Tracking
-      </a>
-
-      <a href="notifications.html">
-        🔔 Notifications
+        🚚 Tracking
       </a>
 
       <a href="profile.html">
@@ -273,16 +265,16 @@ button {
 <div class="container">
 
 
-  <div class="page-title">
+  <div class="title-row">
 
     <div>
 
       <h1>
-        Notifications 🔔
+        🛍️ Order Notifications
       </h1>
 
       <div class="subtitle">
-        Stay updated with your BERAKAH activity.
+        Updates about your BERAKAH purchases.
       </div>
 
     </div>
@@ -291,14 +283,14 @@ button {
     <div class="actions">
 
       <button
-        class="refresh-btn"
+        class="refresh"
         onclick="loadNotifications()"
       >
         🔄 Refresh
       </button>
 
       <button
-        class="read-btn"
+        class="read"
         onclick="markAllRead()"
       >
         ✓ Mark All Read
@@ -312,7 +304,7 @@ button {
   <div id="notificationList">
 
     <div class="loading">
-      Loading notifications...
+      Loading order notifications...
     </div>
 
   </div>
@@ -341,7 +333,7 @@ let notifications = [];
 
 
 // =====================================
-// SUPABASE HEADERS
+// HEADERS
 // =====================================
 
 function headers() {
@@ -431,164 +423,94 @@ async function getCurrentUser() {
 
 
 // =====================================
-// DATE FORMAT
+// DATE
 // =====================================
 
 function formatDate(date) {
 
-  if (!date) {
-    return "";
-  }
+  if (!date) return "";
 
-  const d =
-    new Date(date);
+  return new Date(date)
+    .toLocaleString(
+      "en-US",
+      {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      }
+    );
 
-  return d.toLocaleString(
-    "en-US",
-    {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-      hour: "numeric",
-      minute: "2-digit"
+}
+
+
+// =====================================
+// STATUS INFORMATION
+// =====================================
+
+function getStatusInfo(status) {
+
+  const data = {
+
+    pending: {
+      icon: "🛍️",
+      title: "Order Received",
+      message:
+        "Your order has been received and is waiting for confirmation."
+    },
+
+    confirmed: {
+      icon: "✅",
+      title: "Order Confirmed",
+      message:
+        "Your order has been confirmed by the seller."
+    },
+
+    processing: {
+      icon: "⚙️",
+      title: "Order Processing",
+      message:
+        "Your order is now being prepared."
+    },
+
+    shipped: {
+      icon: "🚚",
+      title: "Order Shipped",
+      message:
+        "Your order has been shipped."
+    },
+
+    delivered: {
+      icon: "🎉",
+      title: "Order Delivered",
+      message:
+        "Your order has been delivered."
+    },
+
+    cancelled: {
+      icon: "❌",
+      title: "Order Cancelled",
+      message:
+        "Your order has been cancelled."
     }
+
+  };
+
+
+  return (
+    data[status] ||
+    data.pending
   );
 
 }
 
 
 // =====================================
-// STATUS MESSAGE
+// LOAD ORDERS
 // =====================================
 
-function createOrderNotification(order) {
-
-  const status =
-    String(
-      order.status || "pending"
-    ).toLowerCase();
-
-
-  const orderNumber =
-    order.order_number ||
-    ("BRK-" + order.id);
-
-
-  const product =
-    order.product_name ||
-    "your product";
-
-
-  const messages = {
-
-    pending: {
-
-      icon: "🛍️",
-
-      title: "New Order",
-
-      message:
-        `Your order #${orderNumber} for ${product} has been placed and is waiting for confirmation.`
-
-    },
-
-    confirmed: {
-
-      icon: "✅",
-
-      title: "Order Confirmed",
-
-      message:
-        `Your order #${orderNumber} for ${product} has been confirmed.`
-
-    },
-
-    processing: {
-
-      icon: "⚙️",
-
-      title: "Order Processing",
-
-      message:
-        `Your order #${orderNumber} for ${product} is now being processed.`
-
-    },
-
-    shipped: {
-
-      icon: "🚚",
-
-      title: "Order Shipped",
-
-      message:
-        `Your order #${orderNumber} for ${product} has been shipped.`
-
-    },
-
-    delivered: {
-
-      icon: "🎉",
-
-      title: "Order Delivered",
-
-      message:
-        `Your order #${orderNumber} for ${product} has been delivered.`
-
-    },
-
-    cancelled: {
-
-      icon: "❌",
-
-      title: "Order Cancelled",
-
-      message:
-        `Your order #${orderNumber} for ${product} has been cancelled.`
-
-    }
-
-  };
-
-
-  const data =
-    messages[status] ||
-    messages.pending;
-
-
-  return {
-
-    id:
-      "order-" +
-      order.id,
-
-    icon:
-      data.icon,
-
-    title:
-      data.title,
-
-    message:
-      data.message,
-
-    date:
-      order.created_at,
-
-    unread:
-      true,
-
-    orderId:
-      order.id
-
-  };
-
-}
-
-
-// =====================================
-// LOAD CUSTOMER ORDERS
-// =====================================
-
-async function loadOrdersForNotifications() {
+async function loadOrders() {
 
   const url =
     SUPABASE_URL +
@@ -626,7 +548,7 @@ async function loadOrdersForNotifications() {
 
 
 // =====================================
-// LOCAL READ STATE
+// READ STATE
 // =====================================
 
 function getReadState() {
@@ -635,7 +557,7 @@ function getReadState() {
 
     return JSON.parse(
       localStorage.getItem(
-        "berakah_read_notifications"
+        "berakah_order_notifications_read"
       ) || "{}"
     );
 
@@ -651,7 +573,7 @@ function getReadState() {
 function saveReadState(state) {
 
   localStorage.setItem(
-    "berakah_read_notifications",
+    "berakah_order_notifications_read",
     JSON.stringify(state)
   );
 
@@ -659,94 +581,71 @@ function saveReadState(state) {
 
 
 // =====================================
-// LOAD NOTIFICATIONS
+// CREATE NOTIFICATIONS
 // =====================================
 
-async function loadNotifications() {
+function createNotifications(orders) {
 
-  const container =
-    document.getElementById(
-      "notificationList"
-    );
+  const readState =
+    getReadState();
 
 
-  container.innerHTML = `
+  return orders.map(order => {
 
-    <div class="loading">
-      Loading notifications...
-    </div>
-
-  `;
-
-
-  try {
-
-    if (!currentUser) {
-
-      currentUser =
-        await getCurrentUser();
-
-    }
+    const status =
+      String(
+        order.status || "pending"
+      ).toLowerCase();
 
 
-    if (!currentUser) {
-      return;
-    }
+    const info =
+      getStatusInfo(status);
 
 
-    const orders =
-      await loadOrdersForNotifications();
+    const orderNumber =
+      order.order_number ||
+      "BRK-" + order.id;
 
 
-    const readState =
-      getReadState();
+    const product =
+      order.product_name ||
+      "your product";
 
 
-    notifications =
-      orders.map(
-        order =>
-          createOrderNotification(
-            order
-          )
-      );
+    const notificationId =
+      "order-" +
+      order.id +
+      "-" +
+      status;
 
 
-    notifications =
-      notifications.map(
-        notification => {
+    return {
 
-          notification.unread =
-            !readState[
-              notification.id
-            ];
+      id:
+        notificationId,
 
-          return notification;
+      icon:
+        info.icon,
 
-        }
-      );
+      title:
+        info.title,
 
+      message:
+        `${info.message} Order #${orderNumber} for ${product}.`,
 
-    renderNotifications();
+      date:
+        order.updated_at ||
+        order.created_at,
 
-  } catch (error) {
+      unread:
+        !readState[notificationId],
 
-    console.error(error);
+      orderId:
+        order.id
 
-    container.innerHTML = `
+    };
 
-      <div class="error">
-
-        Unable to load notifications.
-
-        <br><br>
-
-        Please refresh the page.
-
-      </div>
-
-    `;
-
-  }
+  });
 
 }
 
@@ -770,12 +669,19 @@ function renderNotifications() {
       <div class="empty">
 
         <h3>
-          No notifications yet 🔔
+          No order notifications yet 🛍️
         </h3>
 
         <p>
-          Your BERAKAH updates will appear here.
+          Updates about your purchases will appear here.
         </p>
+
+        <a
+          href="marketplace.html"
+          class="order-link"
+        >
+          Browse Marketplace
+        </a>
 
       </div>
 
@@ -787,71 +693,147 @@ function renderNotifications() {
 
 
   container.innerHTML =
-    notifications
-      .map(notification => `
+    notifications.map(notification => `
 
-        <div
-          class="notification ${
-            notification.unread
-              ? "unread"
-              : ""
-          }"
-          onclick="
-            markNotificationRead(
-              '${notification.id}'
-            )
-          "
-        >
+      <div
+        class="notification ${
+          notification.unread
+            ? "unread"
+            : ""
+        }"
+        onclick="
+          markRead('${notification.id}')
+        "
+      >
 
-          <div class="icon">
+        <div class="icon">
 
-            ${notification.icon}
-
-          </div>
-
-
-          <div class="content">
-
-            <div class="title">
-
-              ${escapeHTML(
-                notification.title
-              )}
-
-              ${
-                notification.unread
-                ? `<span class="badge">
-                     NEW
-                   </span>`
-                : ""
-              }
-
-            </div>
-
-
-            <div class="message">
-
-              ${escapeHTML(
-                notification.message
-              )}
-
-            </div>
-
-
-            <div class="time">
-
-              ${formatDate(
-                notification.date
-              )}
-
-            </div>
-
-          </div>
+          ${notification.icon}
 
         </div>
 
-      `)
-      .join("");
+
+        <div class="content">
+
+          <div class="notification-title">
+
+            ${escapeHTML(
+              notification.title
+            )}
+
+            ${
+              notification.unread
+              ? `<span class="badge">
+                   NEW
+                 </span>`
+              : ""
+            }
+
+          </div>
+
+
+          <div class="notification-message">
+
+            ${escapeHTML(
+              notification.message
+            )}
+
+          </div>
+
+
+          <div class="notification-time">
+
+            ${formatDate(
+              notification.date
+            )}
+
+          </div>
+
+
+          <a
+            href="order-tracking.html"
+            class="order-link"
+            onclick="event.stopPropagation()"
+          >
+            🚚 Track Order
+          </a>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+// =====================================
+// LOAD NOTIFICATIONS
+// =====================================
+
+async function loadNotifications() {
+
+  const container =
+    document.getElementById(
+      "notificationList"
+    );
+
+
+  container.innerHTML = `
+
+    <div class="loading">
+      Loading order notifications...
+    </div>
+
+  `;
+
+
+  try {
+
+    if (!currentUser) {
+
+      currentUser =
+        await getCurrentUser();
+
+    }
+
+
+    if (!currentUser) return;
+
+
+    const orders =
+      await loadOrders();
+
+
+    notifications =
+      createNotifications(
+        orders
+      );
+
+
+    renderNotifications();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+
+    container.innerHTML = `
+
+      <div class="error">
+
+        Unable to load order notifications.
+
+        <br><br>
+
+        Please refresh the page.
+
+      </div>
+
+    `;
+
+  }
 
 }
 
@@ -860,7 +842,7 @@ function renderNotifications() {
 // MARK ONE READ
 // =====================================
 
-function markNotificationRead(id) {
+function markRead(id) {
 
   const state =
     getReadState();
@@ -936,9 +918,9 @@ async function start() {
   currentUser =
     await getCurrentUser();
 
-  if (!currentUser) {
-    return;
-  }
+
+  if (!currentUser) return;
+
 
   await loadNotifications();
 
@@ -966,7 +948,6 @@ setInterval(
 start();
 
 </script>
-
 
 </body>
 </html>
