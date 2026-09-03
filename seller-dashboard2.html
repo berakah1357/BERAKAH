@@ -272,7 +272,10 @@ td {
 <body>
 
 <header>
-    <div class="logo">🛍️ BERAKAH</div>
+
+    <div class="logo">
+        🛍️ BERAKAH
+    </div>
 
     <nav>
         <a href="index.html">Home</a>
@@ -280,13 +283,20 @@ td {
         <a href="seller-dashboard.html">Seller Dashboard</a>
         <a href="profile.html">Profile</a>
     </nav>
+
 </header>
 
 <div class="container">
 
     <div class="welcome">
+
         <h1>Seller Dashboard</h1>
-        <p>Welcome back, <strong id="sellerName">EPHPhAVORA</strong> 👋</p>
+
+        <p>
+            Welcome back,
+            <strong id="sellerName">EPHPhAVORA</strong> 👋
+        </p>
+
     </div>
 
     <div id="message" class="message"></div>
@@ -294,34 +304,66 @@ td {
     <div class="stats">
 
         <div class="card">
-            <div class="stat-title">Total Orders</div>
-            <div class="stat-value" id="totalOrders">0</div>
+            <div class="stat-title">
+                Total Orders
+            </div>
+
+            <div
+                class="stat-value"
+                id="totalOrders">
+                0
+            </div>
         </div>
 
         <div class="card">
-            <div class="stat-title">Products</div>
-            <div class="stat-value" id="totalProducts">0</div>
+            <div class="stat-title">
+                Products
+            </div>
+
+            <div
+                class="stat-value"
+                id="totalProducts">
+                0
+            </div>
         </div>
 
         <div class="card">
-            <div class="stat-title">Paid Orders</div>
-            <div class="stat-value" id="paidOrders">0</div>
+            <div class="stat-title">
+                Paid Orders
+            </div>
+
+            <div
+                class="stat-value"
+                id="paidOrders">
+                0
+            </div>
         </div>
 
         <div class="card">
-            <div class="stat-title">Sales</div>
-            <div class="stat-value" id="salesTotal">$0.00</div>
+            <div class="stat-title">
+                Sales
+            </div>
+
+            <div
+                class="stat-value"
+                id="salesTotal">
+                $0.00
+            </div>
         </div>
 
     </div>
 
     <div class="actions">
 
-        <a class="action-link" href="marketplace.html">
+        <a
+            class="action-link"
+            href="marketplace.html">
             🛒 Marketplace
         </a>
 
-        <a class="action-link" href="add-product.html">
+        <a
+            class="action-link"
+            href="add-product.html">
             ➕ Add Product
         </a>
 
@@ -331,23 +373,23 @@ td {
 
     </div>
 
-    <!-- ORDERS -->
-
     <div class="section">
 
         <div class="section-header">
             <h2>📦 Recent Orders</h2>
         </div>
 
-        <div class="orders" id="ordersContainer">
+        <div
+            class="orders"
+            id="ordersContainer">
+
             <div class="empty">
                 Loading orders...
             </div>
+
         </div>
 
     </div>
-
-    <!-- PRODUCTS -->
 
     <div class="section">
 
@@ -355,10 +397,14 @@ td {
             <h2>🛍️ My Products</h2>
         </div>
 
-        <div class="products" id="productsContainer">
+        <div
+            class="products"
+            id="productsContainer">
+
             <div class="empty">
                 Loading products...
             </div>
+
         </div>
 
     </div>
@@ -373,46 +419,51 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
-/*
-    CURRENT SELLER
+const SELLER_NAME =
+"EPHPhAVORA";
 
-    Your products table currently stores:
-
-    seller = EPHPhAVORA
-
-    So we use that exact value.
-*/
-
-const SELLER_NAME = "EPHPhAVORA";
 
 function showMessage(text, type = "error") {
 
-    const box = document.getElementById("message");
+    const box =
+        document.getElementById("message");
 
     box.textContent = text;
 
-    box.className = "message " + type;
+    box.className =
+        "message " + type;
 
-    box.style.display = "block";
+    box.style.display =
+        "block";
 }
+
 
 function hideMessage() {
 
-    document.getElementById("message").style.display = "none";
+    const box =
+        document.getElementById("message");
 
+    box.style.display =
+        "none";
 }
+
 
 function money(value) {
 
-    const number = Number(value || 0);
+    const number =
+        Number(value || 0);
 
-    return "$" + number.toFixed(2);
-
+    return "$" +
+        number.toFixed(2);
 }
+
 
 function escapeHTML(value) {
 
-    if (value === null || value === undefined) {
+    if (
+        value === null ||
+        value === undefined
+    ) {
         return "";
     }
 
@@ -424,221 +475,310 @@ function escapeHTML(value) {
         .replace(/'/g, "&#039;");
 }
 
+
 async function supabaseFetch(endpoint) {
 
-    const response = await fetch(
-        SUPABASE_URL + endpoint,
-        {
-            headers: {
-                "apikey": SUPABASE_KEY,
-                "Authorization": "Bearer " + SUPABASE_KEY,
-                "Content-Type": "application/json"
+    const response =
+        await fetch(
+            SUPABASE_URL + endpoint,
+            {
+                method: "GET",
+
+                headers: {
+                    "apikey":
+                        SUPABASE_KEY,
+
+                    "Authorization":
+                        "Bearer " +
+                        SUPABASE_KEY,
+
+                    "Content-Type":
+                        "application/json"
+                }
             }
-        }
-    );
+        );
 
     if (!response.ok) {
 
-        const errorText = await response.text();
+        const errorText =
+            await response.text();
 
-        throw new Error(errorText);
-
+        throw new Error(
+            errorText
+        );
     }
 
     return await response.json();
 }
 
 
-/* =========================
-   LOAD PRODUCTS
-========================= */
+/* ==========================
+   GET SELLER PRODUCTS
+========================== */
 
 async function getProducts() {
 
     const seller =
-        encodeURIComponent(SELLER_NAME);
+        encodeURIComponent(
+            SELLER_NAME
+        );
 
     const endpoint =
         "/rest/v1/products" +
         "?select=*" +
-        "&seller=eq." + seller +
+        "&seller=eq." +
+        seller +
         "&order=created.desc";
 
-    return await supabaseFetch(endpoint);
-
+    return await supabaseFetch(
+        endpoint
+    );
 }
 
 
-/* =========================
-   LOAD ORDERS
-========================= */
+/* ==========================
+   GET ORDERS
+========================== */
 
 async function getOrders() {
 
-    /*
-       Orders use seller_id.
-
-       We first load all orders and then
-       match them against this seller's
-       products using product_id.
-    */
+    const endpoint =
+        "/rest/v1/orders" +
+        "?select=*" +
+        "&order=created_at.desc";
 
     return await supabaseFetch(
-        "/rest/v1/orders?select=*&order=created_at.desc"
+        endpoint
     );
-
 }
 
 
-/* =========================
+/* ==========================
    DISPLAY PRODUCTS
-========================= */
+========================== */
 
-function displayProducts(products) {
+function displayProducts(
+    products
+) {
 
     const container =
-        document.getElementById("productsContainer");
+        document.getElementById(
+            "productsContainer"
+        );
 
-    document.getElementById("totalProducts")
-        .textContent = products.length;
+    document.getElementById(
+        "totalProducts"
+    ).textContent =
+        products.length;
+
 
     if (!products.length) {
 
         container.innerHTML = `
+
             <div class="empty">
-                You don't have any products yet.
+
+                You don't have
+                any products yet.
+
                 <br><br>
-                <a class="action-link" href="add-product.html">
-                    Add Your First Product
+
+                <a
+                    class="action-link"
+                    href="add-product.html">
+
+                    ➕ Add Your First Product
+
                 </a>
+
             </div>
+
         `;
 
         return;
     }
 
+
     container.innerHTML =
-        products.map(product => {
+        products.map(
+            product => {
 
-            const image =
-                product.image ||
-                "https://via.placeholder.com/500x350?text=Product";
+                const image =
+                    product.image ||
+                    "https://via.placeholder.com/500x350?text=Product";
 
-            return `
 
-                <div class="product">
+                return `
 
-                    <img
-                        src="${escapeHTML(image)}"
-                        alt="${escapeHTML(product.name)}"
-                    >
+                    <div class="product">
 
-                    <div class="product-body">
+                        <img
+                            src="${escapeHTML(image)}"
+                            alt="${escapeHTML(
+                                product.name
+                            )}"
+                        >
 
-                        <div class="product-name">
-                            ${escapeHTML(product.name)}
-                        </div>
+                        <div class="product-body">
 
-                        <div class="price">
-                            ${money(product.price)}
-                        </div>
+                            <div class="product-name">
 
-                        <div class="category">
-                            ${escapeHTML(product.category || "Other")}
-                        </div>
+                                ${escapeHTML(
+                                    product.name
+                                )}
 
-                        <div class="stock">
-                            Stock:
-                            <strong>
-                                ${escapeHTML(product.stock ?? 0)}
-                            </strong>
+                            </div>
+
+                            <div class="price">
+
+                                ${money(
+                                    product.price
+                                )}
+
+                            </div>
+
+                            <div class="category">
+
+                                ${escapeHTML(
+                                    product.category ||
+                                    "Other"
+                                )}
+
+                            </div>
+
+                            <div class="stock">
+
+                                Stock:
+
+                                <strong>
+
+                                    ${escapeHTML(
+                                        product.stock ??
+                                        0
+                                    )}
+
+                                </strong>
+
+                            </div>
+
                         </div>
 
                     </div>
 
-                </div>
+                `;
 
-            `;
-
-        }).join("");
-
+            }
+        ).join("");
 }
 
 
-/* =========================
+/* ==========================
    DISPLAY ORDERS
-========================= */
+========================== */
 
-function displayOrders(orders, products) {
+function displayOrders(
+    orders,
+    products
+) {
 
     const container =
-        document.getElementById("ordersContainer");
+        document.getElementById(
+            "ordersContainer"
+        );
 
-    /*
-       Get the product IDs belonging
-       to this seller.
-    */
 
     const sellerProductIds =
         new Set(
-            products.map(product =>
-                String(product.id)
+            products.map(
+                product =>
+                    String(product.id)
             )
         );
 
-    /*
-       Match orders to this seller's
-       products.
-    */
 
     const sellerOrders =
-        orders.filter(order =>
-            sellerProductIds.has(
-                String(order.product_id)
-            )
+        orders.filter(
+            order =>
+                sellerProductIds.has(
+                    String(
+                        order.product_id
+                    )
+                )
         );
 
-    document.getElementById("totalOrders")
-        .textContent = sellerOrders.length;
 
-    const paid =
-        sellerOrders.filter(order =>
-            String(order.payment_status || "")
-                .toLowerCase() === "paid"
+    document.getElementById(
+        "totalOrders"
+    ).textContent =
+        sellerOrders.length;
+
+
+    const paidOrders =
+        sellerOrders.filter(
+            order =>
+                String(
+                    order.payment_status ||
+                    ""
+                ).toLowerCase() ===
+                "paid"
         );
 
-    document.getElementById("paidOrders")
-        .textContent = paid.length;
+
+    document.getElementById(
+        "paidOrders"
+    ).textContent =
+        paidOrders.length;
+
 
     const sales =
-        paid.reduce(
-            (total, order) => {
+        paidOrders.reduce(
+            (
+                total,
+                order
+            ) => {
 
                 const price =
-                    Number(order.price || 0);
+                    Number(
+                        order.price || 0
+                    );
 
                 const quantity =
-                    Number(order.quantity || 0);
+                    Number(
+                        order.quantity || 0
+                    );
 
-                return total + (price * quantity);
+                return total +
+                    (
+                        price *
+                        quantity
+                    );
 
             },
             0
         );
 
-    document.getElementById("salesTotal")
-        .textContent = money(sales);
+
+    document.getElementById(
+        "salesTotal"
+    ).textContent =
+        money(sales);
+
 
     if (!sellerOrders.length) {
 
         container.innerHTML = `
+
             <div class="empty">
-                No orders yet.
+
+                📦 No orders yet.
+
             </div>
+
         `;
 
         return;
     }
+
 
     container.innerHTML = `
 
@@ -649,10 +789,15 @@ function displayOrders(orders, products) {
                 <tr>
 
                     <th>Product</th>
+
                     <th>Quantity</th>
+
                     <th>Price</th>
+
                     <th>Payment</th>
+
                     <th>Paid At</th>
+
                     <th>Order Date</th>
 
                 </tr>
@@ -662,25 +807,36 @@ function displayOrders(orders, products) {
             <tbody>
 
                 ${
-                    sellerOrders.map(order => `
+                    sellerOrders
+                    .map(
+                        order => `
 
                         <tr>
 
                             <td>
+
                                 ${escapeHTML(
                                     order.product_name ||
                                     "Product"
                                 )}
+
                             </td>
 
                             <td>
+
                                 ${escapeHTML(
-                                    order.quantity || 0
+                                    order.quantity ||
+                                    0
                                 )}
+
                             </td>
 
                             <td>
-                                ${money(order.price)}
+
+                                ${money(
+                                    order.price
+                                )}
+
                             </td>
 
                             <td>
@@ -697,28 +853,38 @@ function displayOrders(orders, products) {
                             </td>
 
                             <td>
+
                                 ${
                                     order.paid_at
-                                    ? new Date(
+                                    ?
+                                    new Date(
                                         order.paid_at
-                                      ).toLocaleString()
-                                    : "-"
+                                    ).toLocaleString()
+                                    :
+                                    "-"
                                 }
+
                             </td>
 
                             <td>
+
                                 ${
                                     order.created_at
-                                    ? new Date(
+                                    ?
+                                    new Date(
                                         order.created_at
-                                      ).toLocaleString()
-                                    : "-"
+                                    ).toLocaleString()
+                                    :
+                                    "-"
                                 }
+
                             </td>
 
                         </tr>
 
-                    `).join("")
+                    `
+                    )
+                    .join("")
                 }
 
             </tbody>
@@ -726,62 +892,83 @@ function displayOrders(orders, products) {
         </table>
 
     `;
-
 }
 
 
-/* =========================
+/* ==========================
    LOAD DASHBOARD
-========================= */
+========================== */
 
 async function loadDashboard() {
 
     hideMessage();
 
-    document.getElementById("sellerName")
-        .textContent = SELLER_NAME;
+    document.getElementById(
+        "sellerName"
+    ).textContent =
+        SELLER_NAME;
+
 
     try {
 
         const products =
             await getProducts();
 
+
         const orders =
             await getOrders();
 
-        displayProducts(products);
+
+        displayProducts(
+            products
+        );
+
 
         displayOrders(
             orders,
             products
         );
 
-    }
 
-    catch(error) {
+    } catch (error) {
 
-        console.error(error);
-
-        showMessage(
-            "Could not load dashboard data. Check the browser console for details."
+        console.error(
+            "DASHBOARD ERROR:",
+            error
         );
 
-        document.getElementById("ordersContainer")
-            .innerHTML = `
-                <div class="empty">
-                    Unable to load orders.
-                </div>
-            `;
 
-        document.getElementById("productsContainer")
-            .innerHTML = `
-                <div class="empty">
-                    Unable to load products.
-                </div>
-            `;
+        showMessage(
+            "Could not load dashboard data. " +
+            "Please check your Supabase settings."
+        );
 
+
+        document.getElementById(
+            "ordersContainer"
+        ).innerHTML = `
+
+            <div class="empty">
+
+                Unable to load orders.
+
+            </div>
+
+        `;
+
+
+        document.getElementById(
+            "productsContainer"
+        ).innerHTML = `
+
+            <div class="empty">
+
+                Unable to load products.
+
+            </div>
+
+        `;
     }
-
 }
 
 
