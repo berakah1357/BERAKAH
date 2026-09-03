@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>BERAKAH - Seller Dashboard</title>
 
 <style>
+
 * {
   box-sizing: border-box;
 }
@@ -79,6 +82,18 @@ h1 {
   padding: 14px;
   border-radius: 10px;
   margin: 20px 0;
+}
+
+.message.error {
+  color: #b91c1c;
+  border-color: #fecaca;
+  background: #fef2f2;
+}
+
+.message.success {
+  color: #047857;
+  border-color: #a7f3d0;
+  background: #ecfdf5;
 }
 
 .stats {
@@ -191,17 +206,29 @@ button:hover,
   padding: 10px 0;
 }
 
-.error {
-  color: #b91c1c;
+.login-required {
+  text-align: center;
+  padding: 30px;
+}
+
+.login-required h2 {
+  margin-top: 0;
+}
+
+.logout {
+  background: #b91c1c;
 }
 
 @media (max-width: 800px) {
+
   .stats {
     grid-template-columns: repeat(2, 1fr);
   }
+
 }
 
 @media (max-width: 500px) {
+
   .stats {
     grid-template-columns: 1fr 1fr;
   }
@@ -214,97 +241,237 @@ button:hover,
   nav {
     width: 100%;
   }
+
+  .product {
+    align-items: flex-start;
+  }
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <header>
+
   <div class="header-inner">
 
-    <div class="logo">🛍️ BERAKAH</div>
+    <div class="logo">
+      🛍️ BERAKAH
+    </div>
 
     <nav>
-      <a href="index.html">Home</a>
-      <a href="marketplace.html">Market</a>
-      <a href="seller-dashboard.html">Seller Dashboard</a>
-      <a href="profile.html">Profile</a>
+
+      <a href="index.html">
+        Home
+      </a>
+
+      <a href="marketplace.html">
+        Market
+      </a>
+
+      <a href="seller-dashboard.html">
+        Seller Dashboard
+      </a>
+
+      <a href="profile.html">
+        Profile
+      </a>
+
+      <button
+        class="logout"
+        onclick="logout()">
+        Logout
+      </button>
+
     </nav>
 
   </div>
+
 </header>
+
 
 <div class="container">
 
-  <h1>Seller Dashboard</h1>
-  <p class="welcome">
-    Welcome back, <strong>EPHPhAVORA</strong> 👋
-  </p>
 
-  <div id="message" class="message">
-    Loading dashboard...
-  </div>
+  <div id="loginRequired"
+       class="section login-required"
+       style="display:none;">
 
-  <div class="stats">
+    <h2>
+      Seller Login Required
+    </h2>
 
-    <div class="stat">
-      <div class="stat-title">Total Orders</div>
-      <div id="totalOrders" class="stat-value">0</div>
-    </div>
+    <p>
+      Please log in to your BERAKAH account before opening your Seller Dashboard.
+    </p>
 
-    <div class="stat">
-      <div class="stat-title">Products</div>
-      <div id="totalProducts" class="stat-value">0</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-title">Paid Orders</div>
-      <div id="paidOrders" class="stat-value">0</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-title">Sales</div>
-      <div id="sales" class="stat-value">$0.00</div>
-    </div>
-
-  </div>
-
-  <div class="actions">
-    <a class="action-link" href="marketplace.html">Marketplace</a>
-
-    <a class="action-link" href="seller-add-product.html">
-      Add Product
+    <a
+      class="action-link"
+      href="login.html">
+      Go to Login
     </a>
 
-    <button onclick="loadDashboard()">
-      Refresh
-    </button>
   </div>
 
-  <div class="section">
 
-    <h2>Recent Orders</h2>
+  <div id="dashboardContent">
 
-    <div id="orders">
-      Loading orders...
+
+    <h1>
+      Seller Dashboard
+    </h1>
+
+
+    <p class="welcome">
+      Welcome back,
+      <strong id="sellerName">
+        Seller
+      </strong>
+      👋
+    </p>
+
+
+    <div
+      id="message"
+      class="message">
+
+      Loading dashboard...
+
     </div>
 
-  </div>
 
-  <div class="section">
+    <div class="stats">
 
-    <h2>My Products</h2>
 
-    <div id="products">
-      Loading products...
+      <div class="stat">
+
+        <div class="stat-title">
+          Total Orders
+        </div>
+
+        <div
+          id="totalOrders"
+          class="stat-value">
+          0
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-title">
+          Products
+        </div>
+
+        <div
+          id="totalProducts"
+          class="stat-value">
+          0
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-title">
+          Paid Orders
+        </div>
+
+        <div
+          id="paidOrders"
+          class="stat-value">
+          0
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-title">
+          Sales
+        </div>
+
+        <div
+          id="sales"
+          class="stat-value">
+          $0.00
+        </div>
+
+      </div>
+
+
     </div>
+
+
+    <div class="actions">
+
+      <a
+        class="action-link"
+        href="marketplace.html">
+        Marketplace
+      </a>
+
+      <a
+        class="action-link"
+        href="seller-add-product.html">
+        Add Product
+      </a>
+
+      <button
+        onclick="loadDashboard()">
+        Refresh
+      </button>
+
+    </div>
+
+
+    <div class="section">
+
+      <h2>
+        Recent Orders
+      </h2>
+
+      <div id="orders">
+        Loading orders...
+      </div>
+
+    </div>
+
+
+    <div class="section">
+
+      <h2>
+        My Products
+      </h2>
+
+      <div id="products">
+        Loading products...
+      </div>
+
+    </div>
+
 
   </div>
 
 </div>
 
+
 <script>
+
+
+/*
+==================================================
+BERAKAH SUPABASE
+==================================================
+*/
 
 const SUPABASE_URL =
   "https://utoyoglycqjmqznczfxa.supabase.co";
@@ -312,56 +479,173 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
   "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
+
 /*
-  This MUST match seller_name in Supabase.
+==================================================
+GET LOGGED-IN USER
+==================================================
 */
-const SELLER_NAME = "EPHPHAVORA";
 
-
-async function supabaseFetch(table, query = "") {
-
-  const response = await fetch(
-    `${SUPABASE_URL}/rest/v1/${table}${query}`,
-    {
-      method: "GET",
-
-      headers: {
-        "apikey": SUPABASE_KEY,
-        "Authorization": `Bearer ${SUPABASE_KEY}`,
-        "Content-Type": "application/json"
-      }
-    }
+const accessToken =
+  localStorage.getItem(
+    "berakah_access_token"
   );
+
+const authUserId =
+  localStorage.getItem(
+    "berakah_auth_user_id"
+  );
+
+let sellerName =
+  localStorage.getItem(
+    "berakah_username"
+  );
+
+
+/*
+==================================================
+ELEMENTS
+==================================================
+*/
+
+const dashboardContent =
+  document.getElementById(
+    "dashboardContent"
+  );
+
+const loginRequired =
+  document.getElementById(
+    "loginRequired"
+  );
+
+const sellerNameBox =
+  document.getElementById(
+    "sellerName"
+  );
+
+const message =
+  document.getElementById(
+    "message"
+  );
+
+const productsBox =
+  document.getElementById(
+    "products"
+  );
+
+const ordersBox =
+  document.getElementById(
+    "orders"
+  );
+
+
+/*
+==================================================
+CHECK LOGIN
+==================================================
+*/
+
+if (!accessToken || !authUserId) {
+
+  dashboardContent.style.display =
+    "none";
+
+  loginRequired.style.display =
+    "block";
+
+}
+else {
+
+  sellerName =
+    sellerName ||
+    "BERAKAH Seller";
+
+  sellerNameBox.textContent =
+    sellerName;
+
+  loadDashboard();
+
+}
+
+
+/*
+==================================================
+SUPABASE GET
+==================================================
+*/
+
+async function supabaseFetch(
+  table,
+  query = ""
+) {
+
+  const token =
+    localStorage.getItem(
+      "berakah_access_token"
+    );
+
+  const response =
+    await fetch(
+      `${SUPABASE_URL}/rest/v1/${table}${query}`,
+      {
+
+        method: "GET",
+
+        headers: {
+
+          "apikey":
+            SUPABASE_KEY,
+
+          "Authorization":
+            `Bearer ${token}`,
+
+          "Content-Type":
+            "application/json"
+
+        }
+
+      }
+    );
+
 
   if (!response.ok) {
 
-    const errorText = await response.text();
+    const errorText =
+      await response.text();
 
     throw new Error(
       `${table}: ${response.status} ${errorText}`
     );
+
   }
 
+
   return await response.json();
+
 }
 
 
+/*
+==================================================
+LOAD DASHBOARD
+==================================================
+*/
+
 async function loadDashboard() {
 
-  const message =
-    document.getElementById("message");
+  if (!accessToken || !authUserId) {
 
-  const productsBox =
-    document.getElementById("products");
+    return;
 
-  const ordersBox =
-    document.getElementById("orders");
+  }
+
 
   message.textContent =
     "Loading dashboard...";
 
   message.className =
     "message";
+
 
   productsBox.innerHTML =
     "Loading products...";
@@ -372,30 +656,59 @@ async function loadDashboard() {
 
   try {
 
+
     /*
-      IMPORTANT:
-      These are the REAL columns in your products table:
-      name
-      price
-      image_url
-      seller_name
-      created_at
-      seller_id
-      category
-      stock
+    ------------------------------------------------
+    LOAD SELLER PRODUCTS
+    ------------------------------------------------
+
+    We use seller_name because that is
+    the field currently used by your
+    products table.
     */
 
     const products =
       await supabaseFetch(
+
         "products",
-        `?select=*&seller_name=eq.${encodeURIComponent(SELLER_NAME)}&order=created_at.desc`
+
+        `?select=*&seller_name=eq.${encodeURIComponent(
+          sellerName
+        )}&order=created_at.desc`
+
       );
 
 
     /*
-      Orders table is currently empty,
-      but we still load it so the dashboard
-      is ready when the first order arrives.
+    ------------------------------------------------
+    PRODUCT COUNT
+    ------------------------------------------------
+    */
+
+    document.getElementById(
+      "totalProducts"
+    ).textContent =
+      products.length;
+
+
+    /*
+    ------------------------------------------------
+    GET PRODUCT IDS
+    ------------------------------------------------
+    */
+
+    const productIds =
+      new Set(
+        products.map(
+          product => product.id
+        )
+      );
+
+
+    /*
+    ------------------------------------------------
+    LOAD ORDERS
+    ------------------------------------------------
     */
 
     const orders =
@@ -406,104 +719,126 @@ async function loadDashboard() {
 
 
     /*
-      PRODUCT COUNT
+    ------------------------------------------------
+    FILTER SELLER ORDERS
+    ------------------------------------------------
     */
-
-    document.getElementById(
-      "totalProducts"
-    ).textContent = products.length;
-
-
-    /*
-      FIND THIS SELLER'S ORDERS.
-
-      We use product IDs first because
-      the products table already gives us
-      the seller's products.
-    */
-
-    const productIds =
-      new Set(products.map(product => product.id));
-
 
     const sellerOrders =
-      orders.filter(order =>
-        productIds.has(order.product_id)
+      orders.filter(
+        order =>
+          productIds.has(
+            order.product_id
+          )
       );
 
 
     /*
-      ORDER STATS
+    ------------------------------------------------
+    TOTAL ORDERS
+    ------------------------------------------------
     */
 
     document.getElementById(
       "totalOrders"
-    ).textContent = sellerOrders.length;
+    ).textContent =
+      sellerOrders.length;
 
+
+    /*
+    ------------------------------------------------
+    PAID ORDERS
+    ------------------------------------------------
+    */
 
     const paidOrders =
-      sellerOrders.filter(order =>
-        String(order.payment_status || "").toLowerCase() === "paid"
+      sellerOrders.filter(
+        order =>
+          String(
+            order.payment_status || ""
+          ).toLowerCase() ===
+          "paid"
       );
 
 
     document.getElementById(
       "paidOrders"
-    ).textContent = paidOrders.length;
+    ).textContent =
+      paidOrders.length;
 
 
     /*
-      SALES
+    ------------------------------------------------
+    SALES
+    ------------------------------------------------
     */
 
     let totalSales = 0;
 
-    paidOrders.forEach(order => {
 
-      const price =
-        Number(order.price || 0);
+    paidOrders.forEach(
+      order => {
 
-      const quantity =
-        Number(order.quantity || 1);
+        const price =
+          Number(
+            order.price || 0
+          );
 
-      totalSales += price * quantity;
+        const quantity =
+          Number(
+            order.quantity || 1
+          );
 
-    });
+        totalSales +=
+          price * quantity;
+
+      }
+    );
 
 
     document.getElementById(
       "sales"
     ).textContent =
-      "$" + totalSales.toFixed(2);
+      "$" +
+      totalSales.toFixed(2);
 
 
     /*
-      DISPLAY PRODUCTS
+    ------------------------------------------------
+    DISPLAY PRODUCTS
+    ------------------------------------------------
     */
 
     if (products.length === 0) {
 
       productsBox.innerHTML =
         `<div class="empty">
-          No products found for ${SELLER_NAME}.
+          You have no products yet.
         </div>`;
 
-    } else {
+    }
+    else {
 
       productsBox.innerHTML =
-        products.map(product => {
+        products.map(
+          product => {
 
-          const image =
-            product.image_url || "";
+            const image =
+              product.image_url ||
+              "";
 
-          return `
+            return `
 
-            <div class="product">
+              <div class="product">
 
-              ${
-                image
-                ? `<img src="${image}" alt="">`
-                : `<div style="
+                ${
+                  image
+                  ?
+                  `<img
+                    src="${escapeHtml(image)}"
+                    alt="">`
+                  :
+                  `<div style="
                     width:80px;
                     height:80px;
                     border-radius:10px;
@@ -511,104 +846,180 @@ async function loadDashboard() {
                     display:flex;
                     align-items:center;
                     justify-content:center;
-                  ">📦</div>`
-              }
+                  ">
+                    📦
+                  </div>`
+                }
 
-              <div class="product-info">
 
-                <div class="product-name">
-                  ${escapeHtml(product.name || "Unnamed Product")}
-                </div>
+                <div class="product-info">
 
-                <div class="product-meta">
-                  Price: $${Number(product.price || 0).toFixed(2)}
-                  &nbsp; • &nbsp;
-                  Stock: ${Number(product.stock || 0)}
-                </div>
+                  <div class="product-name">
+                    ${escapeHtml(
+                      product.name ||
+                      "Unnamed Product"
+                    )}
+                  </div>
 
-                <div class="product-meta">
-                  Category:
-                  ${escapeHtml(product.category || "Uncategorized")}
+
+                  <div class="product-meta">
+
+                    Price:
+                    $${Number(
+                      product.price || 0
+                    ).toFixed(2)}
+
+                    &nbsp; • &nbsp;
+
+                    Stock:
+                    ${Number(
+                      product.stock || 0
+                    )}
+
+                  </div>
+
+
+                  <div class="product-meta">
+
+                    Category:
+                    ${escapeHtml(
+                      product.category ||
+                      "Uncategorized"
+                    )}
+
+                  </div>
+
+
+                  ${
+                    product.description
+                    ?
+                    `<div class="product-meta">
+                      ${escapeHtml(
+                        product.description
+                      )}
+                    </div>`
+                    :
+                    ""
+                  }
+
                 </div>
 
               </div>
 
-            </div>
+            `;
 
-          `;
-
-        }).join("");
+          }
+        ).join("");
 
     }
 
 
     /*
-      DISPLAY ORDERS
+    ------------------------------------------------
+    DISPLAY ORDERS
+    ------------------------------------------------
     */
 
-    if (sellerOrders.length === 0) {
+    if (
+      sellerOrders.length === 0
+    ) {
 
       ordersBox.innerHTML =
         `<div class="empty">
           No orders yet.
         </div>`;
 
-    } else {
+    }
+    else {
 
       ordersBox.innerHTML =
         sellerOrders
+
         .sort(
           (a, b) =>
-            new Date(b.created_at) -
-            new Date(a.created_at)
+            new Date(
+              b.created_at
+            ) -
+            new Date(
+              a.created_at
+            )
         )
+
         .slice(0, 10)
-        .map(order => {
 
-          return `
+        .map(
+          order => {
 
-            <div class="order">
+            return `
 
-              <strong>
-                ${escapeHtml(
-                  order.product_name || "Product"
-                )}
-              </strong>
+              <div class="order">
 
-              <div class="product-meta">
-                Quantity:
-                ${Number(order.quantity || 0)}
-                &nbsp; • &nbsp;
-                Price:
-                $${Number(order.price || 0).toFixed(2)}
+                <strong>
+                  ${escapeHtml(
+                    order.product_name ||
+                    "Product"
+                  )}
+                </strong>
+
+
+                <div class="product-meta">
+
+                  Quantity:
+                  ${Number(
+                    order.quantity || 0
+                  )}
+
+                  &nbsp; • &nbsp;
+
+                  Price:
+                  $${Number(
+                    order.price || 0
+                  ).toFixed(2)}
+
+                </div>
+
+
+                <div class="product-meta">
+
+                  Payment:
+                  ${escapeHtml(
+                    order.payment_status ||
+                    "Unknown"
+                  )}
+
+                </div>
+
               </div>
 
-              <div class="product-meta">
-                Payment:
-                ${escapeHtml(
-                  order.payment_status || "Unknown"
-                )}
-              </div>
+            `;
 
-            </div>
-
-          `;
-
-        }).join("");
+          }
+        ).join("");
 
     }
 
 
     /*
-      SUCCESS
+    ------------------------------------------------
+    SUCCESS
+    ------------------------------------------------
     */
 
     message.textContent =
-      `Dashboard loaded successfully. ${products.length} product(s) found.`;
+      `Dashboard loaded successfully for ${sellerName}.`;
 
-  } catch (error) {
+    message.className =
+      "message success";
 
-    console.error(error);
+
+  }
+  catch (error) {
+
+    console.error(
+      "BERAKAH DASHBOARD ERROR:",
+      error
+    );
+
 
     message.textContent =
       "Could not load dashboard data: " +
@@ -617,13 +1028,15 @@ async function loadDashboard() {
     message.className =
       "message error";
 
+
     productsBox.innerHTML =
-      `<div class="empty error">
+      `<div class="empty">
         Unable to load products.
       </div>`;
 
+
     ordersBox.innerHTML =
-      `<div class="empty error">
+      `<div class="empty">
         Unable to load orders.
       </div>`;
 
@@ -633,28 +1046,79 @@ async function loadDashboard() {
 
 
 /*
-  Prevent database text from becoming HTML.
+==================================================
+ESCAPE HTML
+==================================================
 */
 
 function escapeHtml(value) {
 
   return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
 
 /*
-  Start dashboard automatically.
+==================================================
+LOGOUT
+==================================================
 */
 
-loadDashboard();
+function logout() {
+
+  localStorage.removeItem(
+    "berakah_access_token"
+  );
+
+  localStorage.removeItem(
+    "berakah_refresh_token"
+  );
+
+  localStorage.removeItem(
+    "berakah_user"
+  );
+
+  localStorage.removeItem(
+    "berakah_username"
+  );
+
+  localStorage.removeItem(
+    "berakah_auth_user_id"
+  );
+
+
+  window.location.href =
+    "login.html";
+
+}
 
 </script>
 
 </body>
+
 </html>
