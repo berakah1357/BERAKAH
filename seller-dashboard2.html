@@ -8,200 +8,263 @@
 
 <style>
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
-  color: #111827;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #111827;
 }
 
 header {
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 15px 20px;
-}
-
-.header {
-  max-width: 1100px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-nav {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 nav a {
-  text-decoration: none;
-  color: #374151;
-  padding: 8px 10px;
-  border-radius: 7px;
-  font-size: 14px;
+    text-decoration: none;
+    color: #374151;
+    margin-left: 15px;
+    font-size: 14px;
 }
 
 nav a:hover {
-  background: #f3f4f6;
+    color: #2563eb;
 }
 
 .container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 25px 15px 50px;
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px 20px;
 }
 
-h1 {
-  margin-bottom: 5px;
+.welcome {
+    margin-bottom: 25px;
 }
 
-.subtitle {
-  color: #6b7280;
-  margin-top: 0;
+.welcome h1 {
+    margin: 0 0 8px;
+}
+
+.welcome p {
+    margin: 0;
+    color: #6b7280;
 }
 
 .stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-  margin: 25px 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 30px;
 }
 
 .card {
-  background: white;
-  padding: 20px;
-  border-radius: 14px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    background: white;
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
 }
 
-.icon {
-  font-size: 27px;
+.stat-title {
+    color: #6b7280;
+    font-size: 14px;
 }
 
-.label {
-  color: #6b7280;
-  font-size: 14px;
-  margin-top: 8px;
+.stat-value {
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 8px;
 }
 
-.value {
-  font-size: 27px;
-  font-weight: bold;
-  margin-top: 5px;
+.actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+button,
+.action-link {
+    border: 0;
+    background: #2563eb;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+button:hover,
+.action-link:hover {
+    opacity: .9;
 }
 
 .section {
-  background: white;
-  padding: 20px;
-  border-radius: 14px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    margin-bottom: 30px;
 }
 
-.section-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
-button {
-  border: 0;
-  background: #111827;
-  color: white;
-  padding: 10px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
+.section-header h2 {
+    margin: 0;
 }
 
-.order {
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 15px;
-  margin-top: 12px;
+.orders {
+    overflow-x: auto;
 }
 
-.order-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+th,
+td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+th {
+    background: #f9fafb;
+    font-size: 13px;
+}
+
+td {
+    font-size: 14px;
 }
 
 .status {
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 12px;
-}
-
-.order-info {
-  color: #4b5563;
-  line-height: 1.7;
-  margin-top: 8px;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    background: #eef2ff;
 }
 
 .products {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
 }
 
 .product {
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 15px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
 }
 
-.product h3 {
-  margin-top: 0;
+.product img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    background: #f3f4f6;
 }
 
-.loading {
-  color: #6b7280;
-  padding: 15px 0;
+.product-body {
+    padding: 15px;
+}
+
+.product-name {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.category {
+    color: #6b7280;
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.stock {
+    font-size: 13px;
+}
+
+.empty {
+    background: white;
+    padding: 30px;
+    text-align: center;
+    border-radius: 12px;
+    color: #6b7280;
+}
+
+.message {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: none;
 }
 
 .error {
-  display: none;
-  background: #fee2e2;
-  color: #991b1b;
-  padding: 15px;
-  border-radius: 10px;
-  margin: 20px 0;
+    background: #fee2e2;
+    color: #991b1b;
 }
 
-@media(max-width:800px) {
-  .stats {
-    grid-template-columns: repeat(2,1fr);
-  }
-
-  .products {
-    grid-template-columns: repeat(2,1fr);
-  }
+.success {
+    background: #dcfce7;
+    color: #166534;
 }
 
-@media(max-width:500px) {
-  .stats {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 900px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
-  .products {
-    grid-template-columns: 1fr;
-  }
+    .products {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
-  nav {
-    display: none;
-  }
+    nav {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .products {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        padding: 15px;
+    }
+
+    .container {
+        padding: 20px 12px;
+    }
 }
 </style>
 </head>
@@ -209,121 +272,96 @@ button {
 <body>
 
 <header>
-  <div class="header">
-
-    <div class="logo">
-      BERAKAH
-    </div>
+    <div class="logo">🛍️ BERAKAH</div>
 
     <nav>
-      <a href="index.html">Home</a>
-      <a href="feed.html">Feed</a>
-      <a href="people.html">People</a>
-      <a href="marketplace.html">Market</a>
-      <a href="orders.html">My Orders</a>
-      <a href="seller-orders.html">Seller Orders</a>
-      <a href="profile.html">Profile</a>
+        <a href="index.html">Home</a>
+        <a href="marketplace.html">Market</a>
+        <a href="seller-dashboard.html">Seller Dashboard</a>
+        <a href="profile.html">Profile</a>
     </nav>
-
-  </div>
 </header>
 
 <div class="container">
 
-  <h1>🏪 Seller Dashboard</h1>
-
-  <p class="subtitle">
-    Manage your orders, products and sales.
-  </p>
-
-  <div id="errorBox" class="error"></div>
-
-  <!-- STATS -->
-
-  <div class="stats">
-
-    <div class="card">
-      <div class="icon">📦</div>
-      <div class="label">Total Orders</div>
-      <div class="value" id="totalOrders">0</div>
+    <div class="welcome">
+        <h1>Seller Dashboard</h1>
+        <p>Welcome back, <strong id="sellerName">EPHPhAVORA</strong> 👋</p>
     </div>
 
-    <div class="card">
-      <div class="icon">🆕</div>
-      <div class="label">New Orders</div>
-      <div class="value" id="newOrders">0</div>
-    </div>
+    <div id="message" class="message"></div>
 
-    <div class="card">
-      <div class="icon">🚚</div>
-      <div class="label">Processing</div>
-      <div class="value" id="processingOrders">0</div>
-    </div>
+    <div class="stats">
 
-    <div class="card">
-      <div class="icon">💰</div>
-      <div class="label">Sales Value</div>
-      <div class="value" id="salesValue">$0.00</div>
-    </div>
+        <div class="card">
+            <div class="stat-title">Total Orders</div>
+            <div class="stat-value" id="totalOrders">0</div>
+        </div>
 
-  </div>
+        <div class="card">
+            <div class="stat-title">Products</div>
+            <div class="stat-value" id="totalProducts">0</div>
+        </div>
 
-  <!-- QUICK ACTIONS -->
+        <div class="card">
+            <div class="stat-title">Paid Orders</div>
+            <div class="stat-value" id="paidOrders">0</div>
+        </div>
 
-  <div class="section">
-
-    <h2>⚡ Quick Actions</h2>
-
-    <p>
-      <a href="seller-orders.html">
-        <button>📦 Manage Orders</button>
-      </a>
-
-      <a href="marketplace.html">
-        <button>🛍️ Marketplace</button>
-      </a>
-
-    </p>
-
-  </div>
-
-  <!-- ORDERS -->
-
-  <div class="section">
-
-    <div class="section-title">
-
-      <h2>📦 Recent Orders</h2>
-
-      <button onclick="loadDashboard()">
-        🔄 Refresh
-      </button>
+        <div class="card">
+            <div class="stat-title">Sales</div>
+            <div class="stat-value" id="salesTotal">$0.00</div>
+        </div>
 
     </div>
 
-    <div id="orders">
-      <div class="loading">
-        Loading orders...
-      </div>
-    </div>
+    <div class="actions">
 
-  </div>
+        <a class="action-link" href="marketplace.html">
+            🛒 Marketplace
+        </a>
 
-  <!-- PRODUCTS -->
+        <a class="action-link" href="add-product.html">
+            ➕ Add Product
+        </a>
 
-  <div class="section">
-
-    <h2>🛍️ My Products</h2>
-
-    <div id="products" class="products">
-
-      <div class="loading">
-        Loading products...
-      </div>
+        <button onclick="loadDashboard()">
+            🔄 Refresh
+        </button>
 
     </div>
 
-  </div>
+    <!-- ORDERS -->
+
+    <div class="section">
+
+        <div class="section-header">
+            <h2>📦 Recent Orders</h2>
+        </div>
+
+        <div class="orders" id="ordersContainer">
+            <div class="empty">
+                Loading orders...
+            </div>
+        </div>
+
+    </div>
+
+    <!-- PRODUCTS -->
+
+    <div class="section">
+
+        <div class="section-header">
+            <h2>🛍️ My Products</h2>
+        </div>
+
+        <div class="products" id="productsContainer">
+            <div class="empty">
+                Loading products...
+            </div>
+        </div>
+
+    </div>
 
 </div>
 
@@ -335,246 +373,120 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
-const token =
-localStorage.getItem("berakah_access_token");
+/*
+    CURRENT SELLER
 
-let currentUser;
-let orders = [];
-let products = [];
+    Your products table currently stores:
 
+    seller = EPHPhAVORA
 
-/* =========================
-   GET LOGGED IN USER
-========================= */
+    So we use that exact value.
+*/
 
-async function getUser() {
+const SELLER_NAME = "EPHPhAVORA";
 
-  if (!token) {
-    throw new Error(
-      "You are not logged in. Please log in first."
-    );
-  }
+function showMessage(text, type = "error") {
 
-  const response = await fetch(
-    SUPABASE_URL + "/auth/v1/user",
-    {
-      headers: {
-        "apikey": SUPABASE_KEY,
-        "Authorization": "Bearer " + token
-      }
+    const box = document.getElementById("message");
+
+    box.textContent = text;
+
+    box.className = "message " + type;
+
+    box.style.display = "block";
+}
+
+function hideMessage() {
+
+    document.getElementById("message").style.display = "none";
+
+}
+
+function money(value) {
+
+    const number = Number(value || 0);
+
+    return "$" + number.toFixed(2);
+
+}
+
+function escapeHTML(value) {
+
+    if (value === null || value === undefined) {
+        return "";
     }
-  );
 
-  if (!response.ok) {
-    throw new Error(
-      "Login session expired. Please log in again."
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+async function supabaseFetch(endpoint) {
+
+    const response = await fetch(
+        SUPABASE_URL + endpoint,
+        {
+            headers: {
+                "apikey": SUPABASE_KEY,
+                "Authorization": "Bearer " + SUPABASE_KEY,
+                "Content-Type": "application/json"
+            }
+        }
     );
-  }
 
-  currentUser = await response.json();
+    if (!response.ok) {
+
+        const errorText = await response.text();
+
+        throw new Error(errorText);
+
+    }
+
+    return await response.json();
 }
 
 
 /* =========================
-   GET ORDERS
-========================= */
-
-async function getOrders() {
-
-  const url =
-    SUPABASE_URL +
-    "/rest/v1/orders?select=*&seller_id=eq." +
-    currentUser.id +
-    "&order=created_at.desc";
-
-  const response = await fetch(url, {
-    headers: {
-      "apikey": SUPABASE_KEY,
-      "Authorization": "Bearer " + token
-    }
-  });
-
-  if (!response.ok) {
-    throw new Error(
-      "Unable to load seller orders."
-    );
-  }
-
-  orders = await response.json();
-}
-
-
-/* =========================
-   GET PRODUCTS
+   LOAD PRODUCTS
 ========================= */
 
 async function getProducts() {
 
-  const url =
-    SUPABASE_URL +
-    "/rest/v1/products?select=*&seller_id=eq." +
-    currentUser.id +
-    "&order=created_at.desc";
+    const seller =
+        encodeURIComponent(SELLER_NAME);
 
-  const response = await fetch(url, {
-    headers: {
-      "apikey": SUPABASE_KEY,
-      "Authorization": "Bearer " + token
-    }
-  });
+    const endpoint =
+        "/rest/v1/products" +
+        "?select=*" +
+        "&seller=eq." + seller +
+        "&order=created.desc";
 
-  if (!response.ok) {
-    throw new Error(
-      "Unable to load seller products."
+    return await supabaseFetch(endpoint);
+
+}
+
+
+/* =========================
+   LOAD ORDERS
+========================= */
+
+async function getOrders() {
+
+    /*
+       Orders use seller_id.
+
+       We first load all orders and then
+       match them against this seller's
+       products using product_id.
+    */
+
+    return await supabaseFetch(
+        "/rest/v1/orders?select=*&order=created_at.desc"
     );
-  }
 
-  products = await response.json();
-}
-
-
-/* =========================
-   UPDATE STATISTICS
-========================= */
-
-function updateStats() {
-
-  const total =
-    orders.length;
-
-  const newOrders =
-    orders.filter(order =>
-      order.status === "pending" ||
-      order.status === "confirmed"
-    ).length;
-
-  const processing =
-    orders.filter(order =>
-      order.status === "processing" ||
-      order.status === "shipped"
-    ).length;
-
-  const sales =
-    orders
-      .filter(order =>
-        order.status !== "cancelled"
-      )
-      .reduce(
-        (sum, order) =>
-          sum + Number(order.total || 0),
-        0
-      );
-
-  document.getElementById(
-    "totalOrders"
-  ).textContent = total;
-
-  document.getElementById(
-    "newOrders"
-  ).textContent = newOrders;
-
-  document.getElementById(
-    "processingOrders"
-  ).textContent = processing;
-
-  document.getElementById(
-    "salesValue"
-  ).textContent =
-    "$" + sales.toFixed(2);
-}
-
-
-/* =========================
-   DISPLAY ORDERS
-========================= */
-
-function displayOrders() {
-
-  const box =
-    document.getElementById("orders");
-
-  if (orders.length === 0) {
-
-    box.innerHTML =
-      "<div class='loading'>No orders yet.</div>";
-
-    return;
-  }
-
-  box.innerHTML =
-    orders.slice(0,5).map(order => {
-
-      const number =
-        order.order_number || order.id;
-
-      const customer =
-        order.customer_name ||
-        order.shipping_name ||
-        "Customer";
-
-      const product =
-        order.product_name ||
-        "Product";
-
-      const status =
-        order.status ||
-        "pending";
-
-      const total =
-        Number(order.total || 0)
-          .toFixed(2);
-
-      const date =
-        order.created_at
-          ? new Date(
-              order.created_at
-            ).toLocaleDateString()
-          : "";
-
-      return `
-
-        <div class="order">
-
-          <div class="order-header">
-
-            <strong>
-              #${escapeHTML(number)}
-            </strong>
-
-            <span class="status">
-              ${escapeHTML(status)}
-            </span>
-
-          </div>
-
-          <div class="order-info">
-
-            👤 Customer:
-            ${escapeHTML(customer)}
-            <br>
-
-            🛍️ Product:
-            ${escapeHTML(product)}
-            <br>
-
-            🔢 Quantity:
-            ${Number(order.quantity || 0)}
-            <br>
-
-            💰 Total:
-            <strong>$${total}</strong>
-            <br>
-
-            📅 Date:
-            ${escapeHTML(date)}
-
-          </div>
-
-        </div>
-
-      `;
-
-    }).join("");
 }
 
 
@@ -582,71 +494,239 @@ function displayOrders() {
    DISPLAY PRODUCTS
 ========================= */
 
-function displayProducts() {
+function displayProducts(products) {
 
-  const box =
-    document.getElementById("products");
+    const container =
+        document.getElementById("productsContainer");
 
-  if (products.length === 0) {
+    document.getElementById("totalProducts")
+        .textContent = products.length;
 
-    box.innerHTML =
-      "<div class='loading'>No products yet.</div>";
+    if (!products.length) {
 
-    return;
-  }
+        container.innerHTML = `
+            <div class="empty">
+                You don't have any products yet.
+                <br><br>
+                <a class="action-link" href="add-product.html">
+                    Add Your First Product
+                </a>
+            </div>
+        `;
 
-  box.innerHTML =
-    products.slice(0,6).map(product => {
+        return;
+    }
 
-      const name =
-        product.product_name ||
-        product.name ||
-        "Product";
+    container.innerHTML =
+        products.map(product => {
 
-      const price =
-        Number(product.price || 0)
-          .toFixed(2);
+            const image =
+                product.image ||
+                "https://via.placeholder.com/500x350?text=Product";
 
-      const category =
-        product.category ||
-        "No category";
+            return `
 
-      return `
+                <div class="product">
 
-        <div class="product">
+                    <img
+                        src="${escapeHTML(image)}"
+                        alt="${escapeHTML(product.name)}"
+                    >
 
-          <h3>
-            ${escapeHTML(name)}
-          </h3>
+                    <div class="product-body">
 
-          <div>
-            💰 $${price}
-          </div>
+                        <div class="product-name">
+                            ${escapeHTML(product.name)}
+                        </div>
 
-          <div>
-            🏷️ ${escapeHTML(category)}
-          </div>
+                        <div class="price">
+                            ${money(product.price)}
+                        </div>
 
-        </div>
+                        <div class="category">
+                            ${escapeHTML(product.category || "Other")}
+                        </div>
 
-      `;
+                        <div class="stock">
+                            Stock:
+                            <strong>
+                                ${escapeHTML(product.stock ?? 0)}
+                            </strong>
+                        </div>
 
-    }).join("");
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
 }
 
 
 /* =========================
-   SECURITY
+   DISPLAY ORDERS
 ========================= */
 
-function escapeHTML(value) {
+function displayOrders(orders, products) {
 
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+    const container =
+        document.getElementById("ordersContainer");
+
+    /*
+       Get the product IDs belonging
+       to this seller.
+    */
+
+    const sellerProductIds =
+        new Set(
+            products.map(product =>
+                String(product.id)
+            )
+        );
+
+    /*
+       Match orders to this seller's
+       products.
+    */
+
+    const sellerOrders =
+        orders.filter(order =>
+            sellerProductIds.has(
+                String(order.product_id)
+            )
+        );
+
+    document.getElementById("totalOrders")
+        .textContent = sellerOrders.length;
+
+    const paid =
+        sellerOrders.filter(order =>
+            String(order.payment_status || "")
+                .toLowerCase() === "paid"
+        );
+
+    document.getElementById("paidOrders")
+        .textContent = paid.length;
+
+    const sales =
+        paid.reduce(
+            (total, order) => {
+
+                const price =
+                    Number(order.price || 0);
+
+                const quantity =
+                    Number(order.quantity || 0);
+
+                return total + (price * quantity);
+
+            },
+            0
+        );
+
+    document.getElementById("salesTotal")
+        .textContent = money(sales);
+
+    if (!sellerOrders.length) {
+
+        container.innerHTML = `
+            <div class="empty">
+                No orders yet.
+            </div>
+        `;
+
+        return;
+    }
+
+    container.innerHTML = `
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Payment</th>
+                    <th>Paid At</th>
+                    <th>Order Date</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                ${
+                    sellerOrders.map(order => `
+
+                        <tr>
+
+                            <td>
+                                ${escapeHTML(
+                                    order.product_name ||
+                                    "Product"
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeHTML(
+                                    order.quantity || 0
+                                )}
+                            </td>
+
+                            <td>
+                                ${money(order.price)}
+                            </td>
+
+                            <td>
+
+                                <span class="status">
+
+                                    ${escapeHTML(
+                                        order.payment_status ||
+                                        "pending"
+                                    )}
+
+                                </span>
+
+                            </td>
+
+                            <td>
+                                ${
+                                    order.paid_at
+                                    ? new Date(
+                                        order.paid_at
+                                      ).toLocaleString()
+                                    : "-"
+                                }
+                            </td>
+
+                            <td>
+                                ${
+                                    order.created_at
+                                    ? new Date(
+                                        order.created_at
+                                      ).toLocaleString()
+                                    : "-"
+                                }
+                            </td>
+
+                        </tr>
+
+                    `).join("")
+                }
+
+            </tbody>
+
+        </table>
+
+    `;
+
 }
 
 
@@ -656,50 +736,58 @@ function escapeHTML(value) {
 
 async function loadDashboard() {
 
-  const error =
-    document.getElementById("errorBox");
+    hideMessage();
 
-  error.style.display = "none";
+    document.getElementById("sellerName")
+        .textContent = SELLER_NAME;
 
-  try {
+    try {
 
-    await getUser();
+        const products =
+            await getProducts();
 
-    await getOrders();
+        const orders =
+            await getOrders();
 
-    await getProducts();
+        displayProducts(products);
 
-    updateStats();
+        displayOrders(
+            orders,
+            products
+        );
 
-    displayOrders();
+    }
 
-    displayProducts();
+    catch(error) {
 
-  } catch (err) {
+        console.error(error);
 
-    console.error(err);
+        showMessage(
+            "Could not load dashboard data. Check the browser console for details."
+        );
 
-    error.textContent =
-      err.message;
+        document.getElementById("ordersContainer")
+            .innerHTML = `
+                <div class="empty">
+                    Unable to load orders.
+                </div>
+            `;
 
-    error.style.display =
-      "block";
+        document.getElementById("productsContainer")
+            .innerHTML = `
+                <div class="empty">
+                    Unable to load products.
+                </div>
+            `;
 
-  }
+    }
+
 }
 
 
 /* START */
 
 loadDashboard();
-
-
-/* AUTO REFRESH */
-
-setInterval(
-  loadDashboard,
-  30000
-);
 
 </script>
 
