@@ -1,705 +1,373 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BERAKAH - Seller Dashboard</title>
+  <title>EPHPhAVORA Seller Dashboard</title>
 
-<style>
-* {
-  box-sizing: border-box;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
-  color: #111827;
-}
+    body {
+      background: #f4f6f8;
+      color: #222;
+    }
 
-header {
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 15px 20px;
-}
+    header {
+      background: #111;
+      color: white;
+      padding: 18px;
+      text-align: center;
+    }
 
-.header {
-  max-width: 1100px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-}
+    header h1 {
+      font-size: 24px;
+    }
 
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-}
+    header p {
+      margin-top: 6px;
+      color: #ccc;
+    }
 
-nav {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
+    nav {
+      background: white;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
 
-nav a {
-  text-decoration: none;
-  color: #374151;
-  padding: 8px 10px;
-  border-radius: 7px;
-  font-size: 14px;
-}
+    nav a {
+      text-decoration: none;
+      color: #222;
+      font-weight: bold;
+      padding: 9px 14px;
+      border-radius: 8px;
+    }
 
-nav a:hover {
-  background: #f3f4f6;
-}
+    nav a:hover {
+      background: #eee;
+    }
 
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 25px 15px 50px;
-}
+    .container {
+      max-width: 1100px;
+      margin: 25px auto;
+      padding: 15px;
+    }
 
-h1 {
-  margin-bottom: 5px;
-}
+    .welcome {
+      background: white;
+      padding: 22px;
+      border-radius: 14px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
 
-.subtitle {
-  color: #6b7280;
-  margin-top: 0;
-}
+    .welcome h2 {
+      margin-bottom: 8px;
+    }
 
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-  margin: 25px 0;
-}
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
 
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 14px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.06);
-}
+    .card {
+      background: white;
+      padding: 22px;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
 
-.icon {
-  font-size: 27px;
-}
+    .card h3 {
+      margin-bottom: 12px;
+    }
 
-.label {
-  color: #6b7280;
-  font-size: 14px;
-  margin-top: 8px;
-}
+    .number {
+      font-size: 28px;
+      font-weight: bold;
+    }
 
-.value {
-  font-size: 27px;
-  font-weight: bold;
-  margin-top: 5px;
-}
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
 
-.section {
-  background: white;
-  padding: 20px;
-  border-radius: 14px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.06);
-}
+    .action {
+      background: white;
+      padding: 20px;
+      border-radius: 14px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
 
-.section-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    .action h3 {
+      margin-bottom: 10px;
+    }
 
-button {
-  border: 0;
-  background: #111827;
-  color: white;
-  padding: 10px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
+    .button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 11px 18px;
+      border: none;
+      border-radius: 8px;
+      background: #111;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-.order {
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 15px;
-  margin-top: 12px;
-}
+    .button:hover {
+      opacity: 0.85;
+    }
 
-.order-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
+    .section {
+      background: white;
+      margin-top: 25px;
+      padding: 22px;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
 
-.status {
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 12px;
-}
+    .section h2 {
+      margin-bottom: 15px;
+    }
 
-.order-info {
-  color: #4b5563;
-  line-height: 1.7;
-  margin-top: 8px;
-}
+    .empty {
+      color: #777;
+      padding: 10px 0;
+    }
 
-.products {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-}
-
-.product {
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 15px;
-}
-
-.product h3 {
-  margin-top: 0;
-}
-
-.loading {
-  color: #6b7280;
-  padding: 15px 0;
-}
-
-.error {
-  display: none;
-  background: #fee2e2;
-  color: #991b1b;
-  padding: 15px;
-  border-radius: 10px;
-  margin: 20px 0;
-}
-
-@media(max-width:800px) {
-  .stats {
-    grid-template-columns: repeat(2,1fr);
-  }
-
-  .products {
-    grid-template-columns: repeat(2,1fr);
-  }
-}
-
-@media(max-width:500px) {
-  .stats {
-    grid-template-columns: 1fr;
-  }
-
-  .products {
-    grid-template-columns: 1fr;
-  }
-
-  nav {
-    display: none;
-  }
-}
-</style>
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #777;
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-  <div class="header">
-
-    <div class="logo">
-      BERAKAH
-    </div>
-
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="feed.html">Feed</a>
-      <a href="people.html">People</a>
-      <a href="marketplace.html">Market</a>
-      <a href="orders.html">My Orders</a>
-      <a href="seller-orders.html">Seller Orders</a>
-      <a href="profile.html">Profile</a>
-    </nav>
-
-  </div>
+  <h1>🏪 EPHPhAVORA Seller Dashboard</h1>
+  <p>Manage your store, products, orders and sales</p>
 </header>
+
+<nav>
+  <a href="index.html">🏠 Home</a>
+  <a href="marketplace.html">🛍️ Market</a>
+  <a href="profile.html">👤 Profile</a>
+</nav>
 
 <div class="container">
 
-  <h1>🏪 Seller Dashboard</h1>
+  <div class="welcome">
+    <h2>Welcome to your Seller Center 👋</h2>
+    <p>Manage your EPHPhAVORA business from one place.</p>
+  </div>
 
-  <p class="subtitle">
-    Manage your orders, products and sales.
-  </p>
+  <!-- STORE STATISTICS -->
 
-  <div id="errorBox" class="error"></div>
-
-  <!-- STATS -->
-
-  <div class="stats">
+  <div class="cards">
 
     <div class="card">
-      <div class="icon">📦</div>
-      <div class="label">Total Orders</div>
-      <div class="value" id="totalOrders">0</div>
+      <h3>📦 Products</h3>
+      <div class="number" id="productCount">0</div>
+      <p>Your products</p>
     </div>
 
     <div class="card">
-      <div class="icon">🆕</div>
-      <div class="label">New Orders</div>
-      <div class="value" id="newOrders">0</div>
+      <h3>🛒 Orders</h3>
+      <div class="number" id="orderCount">0</div>
+      <p>Total orders</p>
     </div>
 
     <div class="card">
-      <div class="icon">🚚</div>
-      <div class="label">Processing</div>
-      <div class="value" id="processingOrders">0</div>
+      <h3>💰 Sales</h3>
+      <div class="number" id="salesTotal">$0.00</div>
+      <p>Total sales</p>
     </div>
 
     <div class="card">
-      <div class="icon">💰</div>
-      <div class="label">Sales Value</div>
-      <div class="value" id="salesValue">$0.00</div>
+      <h3>💳 Payouts</h3>
+      <div class="number">Stripe</div>
+      <p>Payment system</p>
     </div>
 
   </div>
 
   <!-- QUICK ACTIONS -->
 
-  <div class="section">
+  <div class="actions">
 
-    <h2>⚡ Quick Actions</h2>
+    <div class="action">
+      <h3>🏪 My Store</h3>
+      <p>Manage your store.</p>
+      <a class="button" href="profile.html">OPEN STORE</a>
+    </div>
 
-    <p>
-      <a href="seller-orders.html">
-        <button>📦 Manage Orders</button>
-      </a>
+    <div class="action">
+      <h3>➕ Add Product</h3>
+      <p>Add a new product for customers.</p>
+      <a class="button" href="add-product.html">ADD PRODUCT</a>
+    </div>
 
-      <a href="marketplace.html">
-        <button>🛍️ Marketplace</button>
-      </a>
+    <div class="action">
+      <h3>📦 My Products</h3>
+      <p>View products you are selling.</p>
+      <a class="button" href="marketplace.html">VIEW PRODUCTS</a>
+    </div>
 
-    </p>
+    <div class="action">
+      <h3>🛒 Orders</h3>
+      <p>Manage customer orders.</p>
+      <button class="button" onclick="showOrders()">VIEW ORDERS</button>
+    </div>
+
+    <div class="action">
+      <h3>💰 Sales</h3>
+      <p>Track your sales.</p>
+      <button class="button" onclick="showSales()">VIEW SALES</button>
+    </div>
+
+    <div class="action">
+      <h3>💳 Stripe</h3>
+      <p>Connect your seller payment account.</p>
+      <button class="button" onclick="stripeSetup()">STRIPE SETUP</button>
+    </div>
 
   </div>
 
   <!-- ORDERS -->
 
   <div class="section">
-
-    <div class="section-title">
-
-      <h2>📦 Recent Orders</h2>
-
-      <button onclick="loadDashboard()">
-        🔄 Refresh
-      </button>
-
-    </div>
-
+    <h2>🛒 Recent Orders</h2>
     <div id="orders">
-      <div class="loading">
-        Loading orders...
-      </div>
+      <p class="empty">No orders yet.</p>
     </div>
-
   </div>
 
   <!-- PRODUCTS -->
 
   <div class="section">
-
-    <h2>🛍️ My Products</h2>
-
-    <div id="products" class="products">
-
-      <div class="loading">
-        Loading products...
-      </div>
-
+    <h2>📦 Your Products</h2>
+    <div id="products">
+      <p class="empty">Loading products...</p>
     </div>
-
   </div>
 
 </div>
 
+<footer>
+  © 2026 EPHPhAVORA — Seller Center
+</footer>
+
+
 <script>
 
-const SUPABASE_URL =
-"https://utoyoglycqjmqznczfxa.supabase.co";
+  /*
+    LOAD PRODUCTS
+    Uses the existing marketplace storage:
+    berakahProducts
+  */
 
-const SUPABASE_KEY =
-"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+  function loadProducts() {
 
-const token =
-localStorage.getItem("berakah_access_token");
-
-let currentUser;
-let orders = [];
-let products = [];
-
-
-/* =========================
-   GET LOGGED IN USER
-========================= */
-
-async function getUser() {
-
-  if (!token) {
-    throw new Error(
-      "You are not logged in. Please log in first."
+    let products = JSON.parse(
+      localStorage.getItem("berakahProducts") || "[]"
     );
-  }
 
-  const response = await fetch(
-    SUPABASE_URL + "/auth/v1/user",
-    {
-      headers: {
-        "apikey": SUPABASE_KEY,
-        "Authorization": "Bearer " + token
-      }
+    document.getElementById("productCount").textContent =
+      products.length;
+
+    const container = document.getElementById("products");
+
+    if (products.length === 0) {
+
+      container.innerHTML =
+        '<p class="empty">You have no products yet.</p>';
+
+      return;
     }
-  );
 
-  if (!response.ok) {
-    throw new Error(
-      "Login session expired. Please log in again."
-    );
-  }
+    container.innerHTML = "";
 
-  currentUser = await response.json();
-}
+    products.forEach(function(product) {
 
+      const item = document.createElement("div");
 
-/* =========================
-   GET ORDERS
-========================= */
+      item.style.padding = "12px 0";
+      item.style.borderBottom = "1px solid #ddd";
 
-async function getOrders() {
-
-  const url =
-    SUPABASE_URL +
-    "/rest/v1/orders?select=*&seller_id=eq." +
-    currentUser.id +
-    "&order=created_at.desc";
-
-  const response = await fetch(url, {
-    headers: {
-      "apikey": SUPABASE_KEY,
-      "Authorization": "Bearer " + token
-    }
-  });
-
-  if (!response.ok) {
-    throw new Error(
-      "Unable to load seller orders."
-    );
-  }
-
-  orders = await response.json();
-}
-
-
-/* =========================
-   GET PRODUCTS
-========================= */
-
-async function getProducts() {
-
-  const url =
-    SUPABASE_URL +
-    "/rest/v1/products?select=*&seller_id=eq." +
-    currentUser.id +
-    "&order=created_at.desc";
-
-  const response = await fetch(url, {
-    headers: {
-      "apikey": SUPABASE_KEY,
-      "Authorization": "Bearer " + token
-    }
-  });
-
-  if (!response.ok) {
-    throw new Error(
-      "Unable to load seller products."
-    );
-  }
-
-  products = await response.json();
-}
-
-
-/* =========================
-   UPDATE STATISTICS
-========================= */
-
-function updateStats() {
-
-  const total =
-    orders.length;
-
-  const newOrders =
-    orders.filter(order =>
-      order.status === "pending" ||
-      order.status === "confirmed"
-    ).length;
-
-  const processing =
-    orders.filter(order =>
-      order.status === "processing" ||
-      order.status === "shipped"
-    ).length;
-
-  const sales =
-    orders
-      .filter(order =>
-        order.status !== "cancelled"
-      )
-      .reduce(
-        (sum, order) =>
-          sum + Number(order.total || 0),
-        0
-      );
-
-  document.getElementById(
-    "totalOrders"
-  ).textContent = total;
-
-  document.getElementById(
-    "newOrders"
-  ).textContent = newOrders;
-
-  document.getElementById(
-    "processingOrders"
-  ).textContent = processing;
-
-  document.getElementById(
-    "salesValue"
-  ).textContent =
-    "$" + sales.toFixed(2);
-}
-
-
-/* =========================
-   DISPLAY ORDERS
-========================= */
-
-function displayOrders() {
-
-  const box =
-    document.getElementById("orders");
-
-  if (orders.length === 0) {
-
-    box.innerHTML =
-      "<div class='loading'>No orders yet.</div>";
-
-    return;
-  }
-
-  box.innerHTML =
-    orders.slice(0,5).map(order => {
-
-      const number =
-        order.order_number || order.id;
-
-      const customer =
-        order.customer_name ||
-        order.shipping_name ||
-        "Customer";
-
-      const product =
-        order.product_name ||
-        "Product";
-
-      const status =
-        order.status ||
-        "pending";
-
-      const total =
-        Number(order.total || 0)
-          .toFixed(2);
-
-      const date =
-        order.created_at
-          ? new Date(
-              order.created_at
-            ).toLocaleDateString()
-          : "";
-
-      return `
-
-        <div class="order">
-
-          <div class="order-header">
-
-            <strong>
-              #${escapeHTML(number)}
-            </strong>
-
-            <span class="status">
-              ${escapeHTML(status)}
-            </span>
-
-          </div>
-
-          <div class="order-info">
-
-            👤 Customer:
-            ${escapeHTML(customer)}
-            <br>
-
-            🛍️ Product:
-            ${escapeHTML(product)}
-            <br>
-
-            🔢 Quantity:
-            ${Number(order.quantity || 0)}
-            <br>
-
-            💰 Total:
-            <strong>$${total}</strong>
-            <br>
-
-            📅 Date:
-            ${escapeHTML(date)}
-
-          </div>
-
-        </div>
-
+      item.innerHTML = `
+        <strong>${product.name || product.productName || "Product"}</strong>
+        <br>
+        $${Number(product.price || 0).toFixed(2)}
       `;
 
-    }).join("");
-}
+      container.appendChild(item);
 
-
-/* =========================
-   DISPLAY PRODUCTS
-========================= */
-
-function displayProducts() {
-
-  const box =
-    document.getElementById("products");
-
-  if (products.length === 0) {
-
-    box.innerHTML =
-      "<div class='loading'>No products yet.</div>";
-
-    return;
-  }
-
-  box.innerHTML =
-    products.slice(0,6).map(product => {
-
-      const name =
-        product.product_name ||
-        product.name ||
-        "Product";
-
-      const price =
-        Number(product.price || 0)
-          .toFixed(2);
-
-      const category =
-        product.category ||
-        "No category";
-
-      return `
-
-        <div class="product">
-
-          <h3>
-            ${escapeHTML(name)}
-          </h3>
-
-          <div>
-            💰 $${price}
-          </div>
-
-          <div>
-            🏷️ ${escapeHTML(category)}
-          </div>
-
-        </div>
-
-      `;
-
-    }).join("");
-}
-
-
-/* =========================
-   SECURITY
-========================= */
-
-function escapeHTML(value) {
-
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-
-/* =========================
-   LOAD DASHBOARD
-========================= */
-
-async function loadDashboard() {
-
-  const error =
-    document.getElementById("errorBox");
-
-  error.style.display = "none";
-
-  try {
-
-    await getUser();
-
-    await getOrders();
-
-    await getProducts();
-
-    updateStats();
-
-    displayOrders();
-
-    displayProducts();
-
-  } catch (err) {
-
-    console.error(err);
-
-    error.textContent =
-      err.message;
-
-    error.style.display =
-      "block";
+    });
 
   }
-}
 
 
-/* START */
+  /*
+    ORDERS
+  */
 
-loadDashboard();
+  function showOrders() {
+
+    alert(
+      "Orders system is ready for the next development step. 🛒"
+    );
+
+  }
 
 
-/* AUTO REFRESH */
+  /*
+    SALES
+  */
 
-setInterval(
-  loadDashboard,
-  30000
-);
+  function showSales() {
+
+    alert(
+      "Sales tracking will be connected to completed orders. 💰"
+    );
+
+  }
+
+
+  /*
+    STRIPE
+  */
+
+  function stripeSetup() {
+
+    alert(
+      "Stripe Connect will be connected here for seller payments and payouts. 💳"
+    );
+
+  }
+
+
+  /*
+    LOAD DASHBOARD
+  */
+
+  loadProducts();
 
 </script>
 
