@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BERAKAH - Add Product</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #111827;
+}
+
+header {
+  background: white;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  text-decoration: none;
+  color: #374151;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+nav a:hover {
+  background: #f3f4f6;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 30px 18px 60px;
+}
+
+h1 {
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  color: #6b7280;
+  margin-top: 0;
+}
+
+.form-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 25px;
+  margin-top: 25px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: Arial, sans-serif;
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #111827;
+}
+
+.help {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 5px;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 25px;
+}
+
+button,
+.action-link {
+  border: none;
+  background: #111827;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+button:hover,
+.action-link:hover {
+  opacity: .9;
+}
+
+.cancel {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.message {
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: none;
+}
+
+.message.success {
+  display: block;
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.message.error {
+  display: block;
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.preview {
+  margin-top: 10px;
+  display: none;
+}
+
+.preview img {
+  max-width: 220px;
+  max-height: 220px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid #e5e7eb;
+}
+
+.seller-box {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+}
+
+.seller-box strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.loading {
+  opacity: .7;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav {
+    width: 100%;
+  }
+
+  .form-card {
+    padding: 18px;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+  <div class="header-inner">
+
+    <div class="logo">
+      🛍️ BERAKAH
+    </div>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="marketplace.html">Market</a>
+      <a href="seller-dashboard.html">Dashboard</a>
+      <a href="profile.html">Profile</a>
+    </nav>
+
+  </div>
+
+</header>
+
+
+<div class="container">
+
+  <h1>Add Product</h1>
+
+  <p class="subtitle">
+    Create a product and make it available in the BERAKAH marketplace.
+  </p>
+
+
+  <div id="message" class="message"></div>
+
+
+  <div class="seller-box">
+
+    <strong>Seller</strong>
+
+    <span id="sellerDisplay">
+      EPHPHAVORA
+    </span>
+
+  </div>
+
+
+  <div class="form-card">
+
+    <form id="productForm">
+
+      <!-- PRODUCT NAME -->
+
+      <div class="form-group">
+
+        <label for="name">
+          Product Name *
+        </label>
+
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Example: BERAKAH T-Shirt"
+          maxlength="150"
+          required
+        >
+
+      </div>
+
+
+      <!-- PRICE -->
+
+      <div class="form-group">
+
+        <label for="price">
+          Price *
+        </label>
+
+        <input
+          type="number"
+          id="price"
+          name="price"
+          placeholder="0.00"
+          min="0"
+          step="0.01"
+          required
+        >
+
+        <div class="help">
+          Enter the selling price in USD.
+        </div>
+
+      </div>
+
+
+      <!-- CATEGORY -->
+
+      <div class="form-group">
+
+        <label for="category">
+          Category *
+        </label>
+
+        <select
+          id="category"
+          name="category"
+          required
+        >
+
+          <option value="">
+            Select a category
+          </option>
+
+          <option value="Clothing">
+            Clothing
+          </option>
+
+          <option value="Electronics">
+            Electronics
+          </option>
+
+          <option value="Beauty">
+            Beauty
+          </option>
+
+          <option value="Home">
+            Home
+          </option>
+
+          <option value="Food">
+            Food
+          </option>
+
+          <option value="Services">
+            Services
+          </option>
+
+          <option value="Books">
+            Books
+          </option>
+
+          <option value="Other">
+            Other
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- STOCK -->
+
+      <div class="form-group">
+
+        <label for="stock">
+          Stock *
+        </label>
+
+        <input
+          type="number"
+          id="stock"
+          name="stock"
+          placeholder="0"
+          min="0"
+          step="1"
+          required
+        >
+
+        <div class="help">
+          Number of items currently available.
+        </div>
+
+      </div>
+
+
+      <!-- DESCRIPTION -->
+
+      <div class="form-group">
+
+        <label for="description">
+          Description
+        </label>
+
+        <textarea
+          id="description"
+          name="description"
+          placeholder="Describe your product..."
+          maxlength="2000"
+        ></textarea>
+
+      </div>
+
+
+      <!-- IMAGE URL -->
+
+      <div class="form-group">
+
+        <label for="image_url">
+          Product Image URL
+        </label>
+
+        <input
+          type="url"
+          id="image_url"
+          name="image_url"
+          placeholder="https://example.com/product-image.jpg"
+        >
+
+        <div class="help">
+          Paste a publicly accessible image URL.
+        </div>
+
+
+        <div
+          id="imagePreview"
+          class="preview"
+        >
+
+          <img
+            id="previewImage"
+            src=""
+            alt="Product preview"
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- BUTTONS -->
+
+      <div class="buttons">
+
+        <button
+          type="submit"
+          id="submitButton"
+        >
+          Add Product
+        </button>
+
+        <a
+          class="action-link cancel"
+          href="seller-dashboard.html"
+        >
+          Cancel
+        </a>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/*
+==================================================
+BERAKAH SUPABASE CONFIGURATION
+==================================================
+*/
+
+const SUPABASE_URL =
+  "https://utoyoglycqjmqznczfxa.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+
+
+/*
+==================================================
+CURRENT SELLER
+==================================================
+
+For now this matches the Seller Dashboard.
+
+Later we will replace this with the
+REAL logged-in Supabase user.
+*/
+
+const SELLER_NAME =
+  "EPHPHAVORA";
+
+
+/*
+==================================================
+ELEMENTS
+==================================================
+*/
+
+const form =
+  document.getElementById("productForm");
+
+const submitButton =
+  document.getElementById("submitButton");
+
+const message =
+  document.getElementById("message");
+
+const imageUrl =
+  document.getElementById("image_url");
+
+const imagePreview =
+  document.getElementById("imagePreview");
+
+const previewImage =
+  document.getElementById("previewImage");
+
+
+/*
+==================================================
+SHOW MESSAGE
+==================================================
+*/
+
+function showMessage(text, type) {
+
+  message.textContent = text;
+
+  message.className =
+    "message " + type;
+
+}
+
+
+/*
+==================================================
+ESCAPE HTML
+==================================================
+*/
+
+function escapeHtml(value) {
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/*
+==================================================
+IMAGE PREVIEW
+==================================================
+*/
+
+imageUrl.addEventListener(
+  "input",
+  function() {
+
+    const url =
+      imageUrl.value.trim();
+
+    if (!url) {
+
+      imagePreview.style.display =
+        "none";
+
+      previewImage.src = "";
+
+      return;
+    }
+
+    previewImage.src = url;
+
+    imagePreview.style.display =
+      "block";
+
+  }
+);
+
+
+/*
+==================================================
+IMAGE ERROR
+==================================================
+*/
+
+previewImage.addEventListener(
+  "error",
+  function() {
+
+    imagePreview.style.display =
+      "none";
+
+  }
+);
+
+
+/*
+==================================================
+CREATE PRODUCT
+==================================================
+*/
+
+form.addEventListener(
+  "submit",
+  async function(event) {
+
+    event.preventDefault();
+
+
+    /*
+    Read form values
+    */
+
+    const name =
+      document.getElementById("name")
+        .value
+        .trim();
+
+    const price =
+      Number(
+        document.getElementById("price")
+          .value
+      );
+
+    const category =
+      document.getElementById("category")
+        .value
+        .trim();
+
+    const stock =
+      Number(
+        document.getElementById("stock")
+          .value
+      );
+
+    const description =
+      document.getElementById("description")
+        .value
+        .trim();
+
+    const image_url =
+      document.getElementById("image_url")
+        .value
+        .trim();
+
+
+    /*
+    Validation
+    */
+
+    if (!name) {
+
+      showMessage(
+        "Please enter a product name.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if (
+      Number.isNaN(price) ||
+      price < 0
+    ) {
+
+      showMessage(
+        "Please enter a valid price.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if (!category) {
+
+      showMessage(
+        "Please select a category.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if (
+      Number.isNaN(stock) ||
+      stock < 0 ||
+      !Number.isInteger(stock)
+    ) {
+
+      showMessage(
+        "Please enter a valid whole-number stock quantity.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    /*
+    Disable button
+    */
+
+    submitButton.disabled =
+      true;
+
+    submitButton.textContent =
+      "Adding Product...";
+
+
+    try {
+
+      /*
+      Product data
+
+      These fields match the
+      products table used by
+      seller-dashboard.html.
+      */
+
+      const productData = {
+
+        name: name,
+
+        price: price,
+
+        category: category,
+
+        stock: stock,
+
+        description:
+          description || null,
+
+        image_url:
+          image_url || null,
+
+        seller_name:
+          SELLER_NAME
+
+      };
+
+
+      /*
+      Send product to Supabase
+      */
+
+      const response =
+        await fetch(
+          `${SUPABASE_URL}/rest/v1/products`,
+          {
+
+            method: "POST",
+
+            headers: {
+
+              "apikey":
+                SUPABASE_KEY,
+
+              "Authorization":
+                `Bearer ${SUPABASE_KEY}`,
+
+              "Content-Type":
+                "application/json",
+
+              "Prefer":
+                "return=representation"
+
+            },
+
+            body:
+              JSON.stringify(productData)
+
+          }
+        );
+
+
+      /*
+      Handle Supabase error
+      */
+
+      if (!response.ok) {
+
+        const errorText =
+          await response.text();
+
+        throw new Error(
+          `${response.status}: ${errorText}`
+        );
+
+      }
+
+
+      /*
+      Read created product
+      */
+
+      const createdProduct =
+        await response.json();
+
+
+      console.log(
+        "Created product:",
+        createdProduct
+      );
+
+
+      /*
+      SUCCESS
+      */
+
+      showMessage(
+        "Product added successfully! Redirecting to your Seller Dashboard...",
+        "success"
+      );
+
+
+      /*
+      Clear form
+      */
+
+      form.reset();
+
+      imagePreview.style.display =
+        "none";
+
+
+      /*
+      Go to dashboard
+      */
+
+      setTimeout(
+        function() {
+
+          window.location.href =
+            "seller-dashboard.html";
+
+        },
+        1200
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        "Add product error:",
+        error
+      );
+
+
+      showMessage(
+        "Could not add product: " +
+        error.message,
+        "error"
+      );
+
+
+    } finally {
+
+      submitButton.disabled =
+        false;
+
+      submitButton.textContent =
+        "Add Product";
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
