@@ -1,275 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BERAKAH - Add Product</title>
 
-<title>BERAKAH - Add Product</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-<style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #111827;
+    }
 
-* {
-  box-sizing: border-box;
-}
+    header {
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
-  color: #111827;
-}
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #111827;
+      text-decoration: none;
+    }
 
-header {
-  background: white;
-  padding: 16px 20px;
-  border-bottom: 1px solid #e5e7eb;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
+    nav {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-.header-inner {
-  max-width: 1100px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-}
+    nav a,
+    nav button {
+      text-decoration: none;
+      border: none;
+      background: #f3f4f6;
+      color: #111827;
+      padding: 9px 13px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
 
-.logo {
-  font-size: 22px;
-  font-weight: bold;
-}
+    nav a:hover,
+    nav button:hover {
+      background: #e5e7eb;
+    }
 
-nav {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
+    .container {
+      width: 100%;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
 
-nav a {
-  text-decoration: none;
-  color: #374151;
-  padding: 8px 10px;
-  border-radius: 8px;
-}
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+    }
 
-nav a:hover {
-  background: #f3f4f6;
-}
+    h1 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
 
-.container {
-  max-width: 800px;
-  margin: auto;
-  padding: 30px 18px 60px;
-}
+    .subtitle {
+      color: #6b7280;
+      margin-bottom: 25px;
+    }
 
-h1 {
-  margin-bottom: 5px;
-}
+    .seller-box {
+      background: #f3f4f6;
+      padding: 14px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+    }
 
-.subtitle {
-  color: #6b7280;
-  margin-top: 0;
-}
+    .seller-box strong {
+      color: #111827;
+    }
 
-.form-card {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  padding: 25px;
-  margin-top: 25px;
-}
+    .form-group {
+      margin-bottom: 20px;
+    }
 
-.form-group {
-  margin-bottom: 20px;
-}
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
 
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 7px;
-}
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 9px;
+      font-size: 16px;
+      background: white;
+    }
 
-input,
-textarea,
-select {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 15px;
-  font-family: Arial, sans-serif;
-}
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
 
-textarea {
-  min-height: 110px;
-  resize: vertical;
-}
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #2563eb;
+    }
 
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-  border-color: #111827;
-}
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
 
-.help {
-  font-size: 13px;
-  color: #6b7280;
-  margin-top: 5px;
-}
+    .button-area {
+      margin-top: 25px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
 
-.buttons {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 25px;
-}
+    .btn {
+      border: none;
+      padding: 13px 20px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
 
-button,
-.action-link {
-  border: none;
-  background: #111827;
-  color: white;
-  padding: 12px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  text-decoration: none;
-  font-size: 14px;
-}
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
 
-button:hover,
-.action-link:hover {
-  opacity: .9;
-}
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
 
-.cancel {
-  background: #e5e7eb;
-  color: #111827;
-}
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
 
-.message {
-  padding: 14px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  display: none;
-}
+    .btn-secondary:hover {
+      background: #d1d5db;
+    }
 
-.message.success {
-  display: block;
-  background: #ecfdf5;
-  color: #047857;
-  border: 1px solid #a7f3d0;
-}
+    .status {
+      display: none;
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: 9px;
+      font-weight: bold;
+    }
 
-.message.error {
-  display: block;
-  background: #fef2f2;
-  color: #b91c1c;
-  border: 1px solid #fecaca;
-}
+    .success {
+      display: block;
+      background: #dcfce7;
+      color: #166534;
+    }
 
-.preview {
-  margin-top: 10px;
-  display: none;
-}
+    .error {
+      display: block;
+      background: #fee2e2;
+      color: #991b1b;
+    }
 
-.preview img {
-  max-width: 220px;
-  max-height: 220px;
-  border-radius: 10px;
-  object-fit: cover;
-  border: 1px solid #e5e7eb;
-}
+    .loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
 
-.seller-box {
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  padding: 14px;
-  border-radius: 10px;
-  margin-bottom: 25px;
-}
+    .login-required {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
 
-.seller-box strong {
-  display: block;
-  margin-bottom: 4px;
-}
+    .login-required h2 {
+      margin-bottom: 10px;
+    }
 
-.loading {
-  opacity: .7;
-  pointer-events: none;
-}
+    .login-required p {
+      color: #6b7280;
+      margin-bottom: 20px;
+    }
 
-@media (max-width: 600px) {
+    .login-link {
+      display: inline-block;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 9px;
+      font-weight: bold;
+    }
 
-  .header-inner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+    @media (max-width: 600px) {
+      header {
+        align-items: flex-start;
+        gap: 10px;
+        flex-direction: column;
+      }
 
-  nav {
-    width: 100%;
-  }
+      nav {
+        width: 100%;
+      }
 
-  .form-card {
-    padding: 18px;
-  }
+      nav a,
+      nav button {
+        flex: 1;
+        text-align: center;
+      }
 
-}
+      .row {
+        grid-template-columns: 1fr;
+      }
 
-</style>
-
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
 
-  <div class="header-inner">
+  <a href="index.html" class="logo">BERAKAH</a>
 
-    <div class="logo">
-      🛍️ BERAKAH
-    </div>
-
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="marketplace.html">Market</a>
-      <a href="seller-dashboard.html">Dashboard</a>
-      <a href="profile.html">Profile</a>
-    </nav>
-
-  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="marketplace.html">Market</a>
+    <a href="seller-dashboard.html">Dashboard</a>
+    <a href="profile.html">Profile</a>
+    <button onclick="logout()">Logout</button>
+  </nav>
 
 </header>
 
 
 <div class="container">
 
-  <h1>Add Product</h1>
+  <!-- LOGIN REQUIRED -->
 
-  <p class="subtitle">
-    Create a product and make it available in the BERAKAH marketplace.
-  </p>
+  <div class="card login-required" id="loginRequired">
 
+    <h2>Seller Login Required</h2>
 
-  <div id="message" class="message"></div>
+    <p>
+      Please log in to your BERAKAH account before adding a product.
+    </p>
 
-
-  <div class="seller-box">
-
-    <strong>Seller</strong>
-
-    <span id="sellerDisplay">
-      EPHPHAVORA
-    </span>
+    <a href="login.html" class="login-link">
+      Go to Login
+    </a>
 
   </div>
 
 
-  <div class="form-card">
+  <!-- PRODUCT FORM -->
+
+  <div class="card" id="productCard">
+
+    <h1>Add Product</h1>
+
+    <p class="subtitle">
+      Add a product to your BERAKAH marketplace.
+    </p>
+
+
+    <div class="seller-box">
+
+      Seller:
+      <strong id="sellerDisplay">ephphavora</strong>
+
+    </div>
+
 
     <form id="productForm">
 
@@ -278,15 +309,13 @@ button:hover,
       <div class="form-group">
 
         <label for="name">
-          Product Name *
+          Product Name
         </label>
 
         <input
           type="text"
           id="name"
-          name="name"
-          placeholder="Example: BERAKAH T-Shirt"
-          maxlength="150"
+          placeholder="Enter product name"
           required
         >
 
@@ -295,24 +324,44 @@ button:hover,
 
       <!-- PRICE -->
 
-      <div class="form-group">
+      <div class="row">
 
-        <label for="price">
-          Price *
-        </label>
+        <div class="form-group">
 
-        <input
-          type="number"
-          id="price"
-          name="price"
-          placeholder="0.00"
-          min="0"
-          step="0.01"
-          required
-        >
+          <label for="price">
+            Price
+          </label>
 
-        <div class="help">
-          Enter the selling price in USD.
+          <input
+            type="number"
+            id="price"
+            placeholder="0.00"
+            min="0"
+            step="0.01"
+            required
+          >
+
+        </div>
+
+
+        <!-- STOCK -->
+
+        <div class="form-group">
+
+          <label for="stock">
+            Stock
+          </label>
+
+          <input
+            type="number"
+            id="stock"
+            placeholder="0"
+            min="0"
+            step="1"
+            value="1"
+            required
+          >
+
         </div>
 
       </div>
@@ -323,17 +372,13 @@ button:hover,
       <div class="form-group">
 
         <label for="category">
-          Category *
+          Category
         </label>
 
-        <select
-          id="category"
-          name="category"
-          required
-        >
+        <select id="category" required>
 
           <option value="">
-            Select a category
+            Select category
           </option>
 
           <option value="Clothing">
@@ -348,20 +393,16 @@ button:hover,
             Beauty
           </option>
 
-          <option value="Home">
-            Home
-          </option>
-
           <option value="Food">
             Food
           </option>
 
-          <option value="Services">
-            Services
+          <option value="Home">
+            Home
           </option>
 
-          <option value="Books">
-            Books
+          <option value="Services">
+            Services
           </option>
 
           <option value="Other">
@@ -369,31 +410,6 @@ button:hover,
           </option>
 
         </select>
-
-      </div>
-
-
-      <!-- STOCK -->
-
-      <div class="form-group">
-
-        <label for="stock">
-          Stock *
-        </label>
-
-        <input
-          type="number"
-          id="stock"
-          name="stock"
-          placeholder="0"
-          min="0"
-          step="1"
-          required
-        >
-
-        <div class="help">
-          Number of items currently available.
-        </div>
 
       </div>
 
@@ -408,9 +424,7 @@ button:hover,
 
         <textarea
           id="description"
-          name="description"
           placeholder="Describe your product..."
-          maxlength="2000"
         ></textarea>
 
       </div>
@@ -427,50 +441,39 @@ button:hover,
         <input
           type="url"
           id="image_url"
-          name="image_url"
           placeholder="https://example.com/product-image.jpg"
         >
-
-        <div class="help">
-          Paste a publicly accessible image URL.
-        </div>
-
-
-        <div
-          id="imagePreview"
-          class="preview"
-        >
-
-          <img
-            id="previewImage"
-            src=""
-            alt="Product preview"
-          >
-
-        </div>
 
       </div>
 
 
       <!-- BUTTONS -->
 
-      <div class="buttons">
+      <div class="button-area">
 
         <button
           type="submit"
+          class="btn btn-primary"
           id="submitButton"
         >
           Add Product
         </button>
 
         <a
-          class="action-link cancel"
           href="seller-dashboard.html"
+          class="btn btn-secondary"
+          style="text-decoration:none;"
         >
           Cancel
         </a>
 
       </div>
+
+
+      <div
+        id="status"
+        class="status"
+      ></div>
 
     </form>
 
@@ -481,199 +484,164 @@ button:hover,
 
 <script>
 
-/*
-==================================================
-BERAKAH SUPABASE CONFIGURATION
-==================================================
-*/
+  /*
+   * ==========================================
+   * BERAKAH SUPABASE CONFIGURATION
+   * ==========================================
+   */
 
-const SUPABASE_URL =
-  "https://utoyoglycqjmqznczfxa.supabase.co";
+  const SUPABASE_URL =
+    "https://utoyoglycqjmqznczfxa.supabase.co";
 
-const SUPABASE_KEY =
-  "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
-
-
-/*
-==================================================
-CURRENT SELLER
-==================================================
-
-For now this matches the Seller Dashboard.
-
-Later we will replace this with the
-REAL logged-in Supabase user.
-*/
-
-const SELLER_NAME =
-  "EPHPHAVORA";
+  const SUPABASE_KEY =
+    "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
 
-/*
-==================================================
-ELEMENTS
-==================================================
-*/
+  /*
+   * ==========================================
+   * GET LOGIN SESSION
+   * ==========================================
+   */
 
-const form =
-  document.getElementById("productForm");
+  const accessToken =
+    localStorage.getItem("berakah_access_token");
 
-const submitButton =
-  document.getElementById("submitButton");
-
-const message =
-  document.getElementById("message");
-
-const imageUrl =
-  document.getElementById("image_url");
-
-const imagePreview =
-  document.getElementById("imagePreview");
-
-const previewImage =
-  document.getElementById("previewImage");
+  const authUserId =
+    localStorage.getItem("berakah_auth_user_id");
 
 
-/*
-==================================================
-SHOW MESSAGE
-==================================================
-*/
+  /*
+   * ==========================================
+   * SELLER NAME
+   *
+   * IMPORTANT:
+   * Always lowercase.
+   * ==========================================
+   */
 
-function showMessage(text, type) {
-
-  message.textContent = text;
-
-  message.className =
-    "message " + type;
-
-}
-
-
-/*
-==================================================
-ESCAPE HTML
-==================================================
-*/
-
-function escapeHtml(value) {
-
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-}
+  const sellerName =
+    (
+      localStorage.getItem("berakah_username")
+      || "ephphavora"
+    ).toLowerCase();
 
 
-/*
-==================================================
-IMAGE PREVIEW
-==================================================
-*/
+  /*
+   * ==========================================
+   * ELEMENTS
+   * ==========================================
+   */
 
-imageUrl.addEventListener(
-  "input",
-  function() {
+  const productCard =
+    document.getElementById("productCard");
 
-    const url =
-      imageUrl.value.trim();
+  const loginRequired =
+    document.getElementById("loginRequired");
 
-    if (!url) {
+  const sellerDisplay =
+    document.getElementById("sellerDisplay");
 
-      imagePreview.style.display =
-        "none";
+  const productForm =
+    document.getElementById("productForm");
 
-      previewImage.src = "";
+  const statusBox =
+    document.getElementById("status");
 
-      return;
-    }
+  const submitButton =
+    document.getElementById("submitButton");
 
-    previewImage.src = url;
 
-    imagePreview.style.display =
-      "block";
+  /*
+   * ==========================================
+   * CHECK LOGIN
+   * ==========================================
+   */
+
+  if (!accessToken || !authUserId) {
+
+    productCard.style.display = "none";
+
+    loginRequired.style.display = "block";
+
+  } else {
+
+    sellerDisplay.textContent = sellerName;
 
   }
-);
 
 
-/*
-==================================================
-IMAGE ERROR
-==================================================
-*/
+  /*
+   * ==========================================
+   * SHOW STATUS
+   * ==========================================
+   */
 
-previewImage.addEventListener(
-  "error",
-  function() {
+  function showStatus(message, type) {
 
-    imagePreview.style.display =
-      "none";
+    statusBox.textContent = message;
+
+    statusBox.className =
+      "status " + type;
 
   }
-);
 
 
-/*
-==================================================
-CREATE PRODUCT
-==================================================
-*/
+  /*
+   * ==========================================
+   * ADD PRODUCT
+   * ==========================================
+   */
 
-form.addEventListener(
-  "submit",
-  async function(event) {
+  productForm.addEventListener("submit", async function(event) {
 
     event.preventDefault();
 
 
-    /*
-    Read form values
-    */
+    if (!accessToken || !authUserId) {
+
+      showStatus(
+        "You must be logged in first.",
+        "error"
+      );
+
+      return;
+
+    }
+
 
     const name =
-      document.getElementById("name")
-        .value
-        .trim();
+      document.getElementById("name").value.trim();
 
     const price =
-      Number(
-        document.getElementById("price")
-          .value
+      parseFloat(
+        document.getElementById("price").value
+      );
+
+    const stock =
+      parseInt(
+        document.getElementById("stock").value,
+        10
       );
 
     const category =
-      document.getElementById("category")
-        .value
-        .trim();
-
-    const stock =
-      Number(
-        document.getElementById("stock")
-          .value
-      );
+      document.getElementById("category").value;
 
     const description =
-      document.getElementById("description")
-        .value
-        .trim();
+      document.getElementById("description").value.trim();
 
-    const image_url =
-      document.getElementById("image_url")
-        .value
-        .trim();
+    const imageUrl =
+      document.getElementById("image_url").value.trim();
 
 
     /*
-    Validation
-    */
+     * ========================================
+     * VALIDATION
+     * ========================================
+     */
 
     if (!name) {
 
-      showMessage(
+      showStatus(
         "Please enter a product name.",
         "error"
       );
@@ -683,13 +651,22 @@ form.addEventListener(
     }
 
 
-    if (
-      Number.isNaN(price) ||
-      price < 0
-    ) {
+    if (isNaN(price) || price < 0) {
 
-      showMessage(
+      showStatus(
         "Please enter a valid price.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if (isNaN(stock) || stock < 0) {
+
+      showStatus(
+        "Please enter a valid stock quantity.",
         "error"
       );
 
@@ -700,7 +677,7 @@ form.addEventListener(
 
     if (!category) {
 
-      showMessage(
+      showStatus(
         "Please select a category.",
         "error"
       );
@@ -710,68 +687,57 @@ form.addEventListener(
     }
 
 
-    if (
-      Number.isNaN(stock) ||
-      stock < 0 ||
-      !Number.isInteger(stock)
-    ) {
+    /*
+     * ========================================
+     * PRODUCT DATA
+     * ========================================
+     *
+     * These are the known columns:
+     *
+     * name
+     * price
+     * image_url
+     * seller_name
+     * seller_id
+     * category
+     * stock
+     *
+     * created_at is automatically handled
+     * by Supabase if configured as default.
+     */
 
-      showMessage(
-        "Please enter a valid whole-number stock quantity.",
-        "error"
-      );
+    const productData = {
 
-      return;
+      name: name,
 
-    }
+      price: price,
+
+      image_url: imageUrl || null,
+
+      seller_name: sellerName,
+
+      seller_id: authUserId,
+
+      category: category,
+
+      stock: stock
+
+    };
 
 
     /*
-    Disable button
-    */
-
-    submitButton.disabled =
-      true;
+     * ========================================
+     * SEND TO SUPABASE
+     * ========================================
+     */
 
     submitButton.textContent =
       "Adding Product...";
 
+    productCard.classList.add("loading");
+
 
     try {
-
-      /*
-      Product data
-
-      These fields match the
-      products table used by
-      seller-dashboard.html.
-      */
-
-      const productData = {
-
-        name: name,
-
-        price: price,
-
-        category: category,
-
-        stock: stock,
-
-        description:
-          description || null,
-
-        image_url:
-          image_url || null,
-
-        seller_name:
-          SELLER_NAME
-
-      };
-
-
-      /*
-      Send product to Supabase
-      */
 
       const response =
         await fetch(
@@ -782,11 +748,10 @@ form.addEventListener(
 
             headers: {
 
-              "apikey":
-                SUPABASE_KEY,
+              "apikey": SUPABASE_KEY,
 
               "Authorization":
-                `Bearer ${SUPABASE_KEY}`,
+                `Bearer ${accessToken}`,
 
               "Content-Type":
                 "application/json",
@@ -803,98 +768,151 @@ form.addEventListener(
         );
 
 
+      const responseText =
+        await response.text();
+
+
       /*
-      Handle Supabase error
-      */
+       * ======================================
+       * ERROR
+       * ======================================
+       */
 
       if (!response.ok) {
 
-        const errorText =
-          await response.text();
-
-        throw new Error(
-          `${response.status}: ${errorText}`
+        console.error(
+          "Supabase product error:",
+          responseText
         );
+
+        let errorMessage =
+          "Failed to add product.";
+
+        try {
+
+          const errorData =
+            JSON.parse(responseText);
+
+          if (errorData.message) {
+
+            errorMessage =
+              errorData.message;
+
+          } else if (errorData.hint) {
+
+            errorMessage =
+              errorData.hint;
+
+          } else if (errorData.details) {
+
+            errorMessage =
+              errorData.details;
+
+          }
+
+        } catch (error) {
+
+          if (responseText) {
+
+            errorMessage =
+              responseText;
+
+          }
+
+        }
+
+
+        showStatus(
+          errorMessage,
+          "error"
+        );
+
+        return;
 
       }
 
 
       /*
-      Read created product
-      */
+       * ======================================
+       * SUCCESS
+       * ======================================
+       */
 
-      const createdProduct =
-        await response.json();
-
-
-      console.log(
-        "Created product:",
-        createdProduct
-      );
-
-
-      /*
-      SUCCESS
-      */
-
-      showMessage(
-        "Product added successfully! Redirecting to your Seller Dashboard...",
+      showStatus(
+        "Product added successfully!",
         "success"
       );
 
 
-      /*
-      Clear form
-      */
-
-      form.reset();
-
-      imagePreview.style.display =
-        "none";
+      productForm.reset();
 
 
       /*
-      Go to dashboard
-      */
+       * Give Supabase a moment, then go
+       * to seller dashboard.
+       */
 
-      setTimeout(
-        function() {
+      setTimeout(function() {
 
-          window.location.href =
-            "seller-dashboard.html";
+        window.location.href =
+          "seller-dashboard.html";
 
-        },
-        1200
-      );
+      }, 1200);
 
 
     } catch (error) {
 
-      console.error(
-        "Add product error:",
-        error
-      );
+      console.error(error);
 
-
-      showMessage(
-        "Could not add product: " +
-        error.message,
+      showStatus(
+        "Connection error. Please try again.",
         "error"
       );
 
-
     } finally {
-
-      submitButton.disabled =
-        false;
 
       submitButton.textContent =
         "Add Product";
 
+      productCard.classList.remove("loading");
+
     }
 
+  });
+
+
+  /*
+   * ==========================================
+   * LOGOUT
+   * ==========================================
+   */
+
+  function logout() {
+
+    localStorage.removeItem(
+      "berakah_access_token"
+    );
+
+    localStorage.removeItem(
+      "berakah_refresh_token"
+    );
+
+    localStorage.removeItem(
+      "berakah_user"
+    );
+
+    localStorage.removeItem(
+      "berakah_username"
+    );
+
+    localStorage.removeItem(
+      "berakah_auth_user_id"
+    );
+
+    window.location.href =
+      "login.html";
+
   }
-);
 
 </script>
 
