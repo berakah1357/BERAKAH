@@ -1,254 +1,354 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BERAKAH - Seller Dashboard</title>
+  <title>BERAKAH - Seller Dashboard</title>
 
-<style>
+  <style>
 
-* {
-  box-sizing: border-box;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
-  color: #111827;
-}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #111827;
+    }
 
-header {
-  background: white;
-  padding: 16px 20px;
-  border-bottom: 1px solid #e5e7eb;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
+    header {
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-.header-inner {
-  max-width: 1100px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-}
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #111827;
+      text-decoration: none;
+    }
 
-.logo {
-  font-size: 22px;
-  font-weight: bold;
-}
+    nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-nav {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
+    nav a,
+    nav button {
+      border: none;
+      background: #f3f4f6;
+      color: #111827;
+      text-decoration: none;
+      padding: 9px 13px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
 
-nav a {
-  text-decoration: none;
-  color: #374151;
-  padding: 8px 10px;
-  border-radius: 8px;
-}
+    nav a:hover,
+    nav button:hover {
+      background: #e5e7eb;
+    }
 
-nav a:hover {
-  background: #f3f4f6;
-}
+    .container {
+      max-width: 1200px;
+      margin: 35px auto;
+      padding: 0 20px;
+    }
 
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 25px 18px 50px;
-}
+    .page-header {
+      margin-bottom: 25px;
+    }
 
-h1 {
-  margin-bottom: 5px;
-}
+    .page-header h1 {
+      margin: 0 0 7px;
+      font-size: 30px;
+    }
 
-.welcome {
-  color: #6b7280;
-  margin-top: 0;
-}
+    .page-header p {
+      margin: 0;
+      color: #6b7280;
+    }
 
-.message {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  padding: 14px;
-  border-radius: 10px;
-  margin: 20px 0;
-}
+    .seller-name {
+      font-weight: bold;
+      color: #111827;
+    }
 
-.message.error {
-  color: #b91c1c;
-  border-color: #fecaca;
-  background: #fef2f2;
-}
+    /* STATS */
 
-.message.success {
-  color: #047857;
-  border-color: #a7f3d0;
-  background: #ecfdf5;
-}
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 30px;
+    }
 
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-  margin: 20px 0;
-}
+    .stat-card {
+      background: white;
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    }
 
-.stat {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-}
+    .stat-title {
+      color: #6b7280;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
 
-.stat-title {
-  color: #6b7280;
-  font-size: 14px;
-}
+    .stat-value {
+      font-size: 28px;
+      font-weight: bold;
+    }
 
-.stat-value {
-  font-size: 28px;
-  font-weight: bold;
-  margin-top: 8px;
-}
+    /* ACTIONS */
 
-.actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin: 20px 0;
-}
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
 
-button,
-.action-link {
-  border: none;
-  background: #111827;
-  color: white;
-  padding: 11px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  text-decoration: none;
-  font-size: 14px;
-}
+    .btn {
+      border: none;
+      padding: 12px 18px;
+      border-radius: 9px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: bold;
+      display: inline-block;
+    }
 
-button:hover,
-.action-link:hover {
-  opacity: .9;
-}
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
 
-.section {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 20px;
-  margin-top: 20px;
-}
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
 
-.section h2 {
-  margin-top: 0;
-}
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
 
-.product {
-  display: flex;
-  gap: 15px;
-  padding: 15px 0;
-  border-bottom: 1px solid #e5e7eb;
-  align-items: center;
-}
+    .btn-secondary:hover {
+      background: #d1d5db;
+    }
 
-.product:last-child {
-  border-bottom: none;
-}
+    /* SECTIONS */
 
-.product img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 10px;
-  background: #f3f4f6;
-}
+    .section {
+      background: white;
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 25px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    }
 
-.product-info {
-  flex: 1;
-}
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
 
-.product-name {
-  font-size: 18px;
-  font-weight: bold;
-}
+    .section-header h2 {
+      margin: 0;
+      font-size: 21px;
+    }
 
-.product-meta {
-  color: #6b7280;
-  margin-top: 5px;
-  font-size: 14px;
-}
+    .loading {
+      color: #6b7280;
+      padding: 20px 0;
+    }
 
-.order {
-  padding: 14px 0;
-  border-bottom: 1px solid #e5e7eb;
-}
+    .empty {
+      color: #6b7280;
+      text-align: center;
+      padding: 30px 10px;
+    }
 
-.order:last-child {
-  border-bottom: none;
-}
+    /* PRODUCTS */
 
-.empty {
-  color: #6b7280;
-  padding: 10px 0;
-}
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
 
-.login-required {
-  text-align: center;
-  padding: 30px;
-}
+    .product-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+      background: white;
+    }
 
-.login-required h2 {
-  margin-top: 0;
-}
+    .product-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #f3f4f6;
+      display: block;
+    }
 
-.logout {
-  background: #b91c1c;
-}
+    .product-info {
+      padding: 15px;
+    }
 
-@media (max-width: 800px) {
+    .product-name {
+      font-weight: bold;
+      margin-bottom: 7px;
+      font-size: 17px;
+    }
 
-  .stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
+    .product-price {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
 
-}
+    .product-meta {
+      color: #6b7280;
+      font-size: 13px;
+      line-height: 1.6;
+    }
 
-@media (max-width: 500px) {
+    /* ORDERS */
 
-  .stats {
-    grid-template-columns: 1fr 1fr;
-  }
+    .orders-container {
+      overflow-x: auto;
+    }
 
-  .header-inner {
-    align-items: flex-start;
-    flex-direction: column;
-  }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 650px;
+    }
 
-  nav {
-    width: 100%;
-  }
+    th,
+    td {
+      padding: 13px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 14px;
+    }
 
-  .product {
-    align-items: flex-start;
-  }
+    th {
+      background: #f9fafb;
+      font-weight: bold;
+    }
 
-}
+    .status {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      background: #f3f4f6;
+    }
 
-</style>
+    /* LOGIN REQUIRED */
+
+    #loginRequired {
+      display: none;
+      background: white;
+      border-radius: 16px;
+      padding: 45px 25px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    #loginRequired h2 {
+      margin-top: 0;
+    }
+
+    #loginRequired p {
+      color: #6b7280;
+      margin-bottom: 25px;
+    }
+
+    /* ERROR */
+
+    .error-box {
+      display: none;
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 14px;
+      border-radius: 9px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 900px) {
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+    }
+
+    @media (max-width: 600px) {
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      nav {
+        width: 100%;
+      }
+
+      nav a,
+      nav button {
+        flex: 1;
+        text-align: center;
+      }
+
+      .container {
+        margin-top: 25px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .page-header h1 {
+        font-size: 25px;
+      }
+
+    }
+
+  </style>
 
 </head>
 
@@ -258,39 +358,33 @@ button:hover,
 
 <header>
 
-  <div class="header-inner">
+  <a href="index.html" class="logo">
+    BERAKAH
+  </a>
 
-    <div class="logo">
-      🛍️ BERAKAH
-    </div>
+  <nav>
 
-    <nav>
+    <a href="index.html">
+      Home
+    </a>
 
-      <a href="index.html">
-        Home
-      </a>
+    <a href="marketplace.html">
+      Market
+    </a>
 
-      <a href="marketplace.html">
-        Market
-      </a>
+    <a href="seller-dashboard.html">
+      Dashboard
+    </a>
 
-      <a href="seller-dashboard.html">
-        Seller Dashboard
-      </a>
+    <a href="profile.html">
+      Profile
+    </a>
 
-      <a href="profile.html">
-        Profile
-      </a>
+    <button onclick="logout()">
+      Logout
+    </button>
 
-      <button
-        class="logout"
-        onclick="logout()">
-        Logout
-      </button>
-
-    </nav>
-
-  </div>
+  </nav>
 
 </header>
 
@@ -298,110 +392,119 @@ button:hover,
 <div class="container">
 
 
-  <div id="loginRequired"
-       class="section login-required"
-       style="display:none;">
+  <!-- LOGIN REQUIRED -->
+
+  <div id="loginRequired">
 
     <h2>
       Seller Login Required
     </h2>
 
     <p>
-      Please log in to your BERAKAH account before opening your Seller Dashboard.
+      Please log in to your BERAKAH account to view your seller dashboard.
     </p>
 
-    <a
-      class="action-link"
-      href="login.html">
+    <a href="login.html" class="btn btn-primary">
       Go to Login
     </a>
 
   </div>
 
 
-  <div id="dashboardContent">
+  <!-- DASHBOARD -->
+
+  <div id="dashboard">
 
 
-    <h1>
-      Seller Dashboard
-    </h1>
+    <!-- PAGE HEADER -->
 
+    <div class="page-header">
 
-    <p class="welcome">
-      Welcome back,
-      <strong id="sellerName">
-        Seller
-      </strong>
-      👋
-    </p>
+      <h1>
+        Seller Dashboard
+      </h1>
 
-
-    <div
-      id="message"
-      class="message">
-
-      Loading dashboard...
+      <p>
+        Welcome,
+        <span class="seller-name" id="sellerName">
+          ephphavora
+        </span>
+      </p>
 
     </div>
 
 
+    <!-- ERROR -->
+
+    <div
+      id="errorBox"
+      class="error-box"
+    ></div>
+
+
+    <!-- STATS -->
+
     <div class="stats">
 
 
-      <div class="stat">
+      <div class="stat-card">
 
         <div class="stat-title">
           Total Orders
         </div>
 
         <div
+          class="stat-value"
           id="totalOrders"
-          class="stat-value">
+        >
           0
         </div>
 
       </div>
 
 
-      <div class="stat">
+      <div class="stat-card">
 
         <div class="stat-title">
           Products
         </div>
 
         <div
+          class="stat-value"
           id="totalProducts"
-          class="stat-value">
+        >
           0
         </div>
 
       </div>
 
 
-      <div class="stat">
+      <div class="stat-card">
 
         <div class="stat-title">
           Paid Orders
         </div>
 
         <div
+          class="stat-value"
           id="paidOrders"
-          class="stat-value">
+        >
           0
         </div>
 
       </div>
 
 
-      <div class="stat">
+      <div class="stat-card">
 
         <div class="stat-title">
           Sales
         </div>
 
         <div
-          id="sales"
-          class="stat-value">
+          class="stat-value"
+          id="totalSales"
+        >
           $0.00
         </div>
 
@@ -411,50 +514,143 @@ button:hover,
     </div>
 
 
+    <!-- ACTIONS -->
+
     <div class="actions">
 
       <a
-        class="action-link"
-        href="marketplace.html">
-        Marketplace
+        href="seller-add-product.html"
+        class="btn btn-primary"
+      >
+        + Add Product
       </a>
 
       <a
-        class="action-link"
-        href="seller-add-product.html">
-        Add Product
+        href="marketplace.html"
+        class="btn btn-secondary"
+      >
+        🛒 Marketplace
       </a>
 
       <button
-        onclick="loadDashboard()">
-        Refresh
+        onclick="loadDashboard()"
+        class="btn btn-secondary"
+      >
+        🔄 Refresh
       </button>
 
     </div>
 
 
+    <!-- PRODUCTS -->
+
     <div class="section">
 
-      <h2>
-        Recent Orders
-      </h2>
+      <div class="section-header">
 
-      <div id="orders">
-        Loading orders...
+        <h2>
+          My Products
+        </h2>
+
+        <a
+          href="seller-add-product.html"
+          class="btn btn-primary"
+        >
+          + Add Product
+        </a>
+
       </div>
+
+
+      <div
+        id="productsLoading"
+        class="loading"
+      >
+        Loading products...
+      </div>
+
+
+      <div
+        id="productsGrid"
+        class="products-grid"
+      ></div>
+
 
     </div>
 
 
+    <!-- ORDERS -->
+
     <div class="section">
 
-      <h2>
-        My Products
-      </h2>
+      <div class="section-header">
 
-      <div id="products">
-        Loading products...
+        <h2>
+          Recent Orders
+        </h2>
+
       </div>
+
+
+      <div
+        id="ordersLoading"
+        class="loading"
+      >
+        Loading orders...
+      </div>
+
+
+      <div class="orders-container">
+
+        <table id="ordersTable" style="display:none;">
+
+          <thead>
+
+            <tr>
+
+              <th>
+                Product
+              </th>
+
+              <th>
+                Price
+              </th>
+
+              <th>
+                Quantity
+              </th>
+
+              <th>
+                Total
+              </th>
+
+              <th>
+                Status
+              </th>
+
+              <th>
+                Date
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody id="ordersBody"></tbody>
+
+        </table>
+
+      </div>
+
+
+      <div
+        id="ordersEmpty"
+        class="empty"
+        style="display:none;"
+      >
+        No orders yet.
+      </div>
+
 
     </div>
 
@@ -482,7 +678,7 @@ const SUPABASE_KEY =
 
 /*
 ==================================================
-GET LOGGED-IN USER
+LOGIN SESSION
 ==================================================
 */
 
@@ -496,10 +692,28 @@ const authUserId =
     "berakah_auth_user_id"
   );
 
-let sellerName =
-  localStorage.getItem(
-    "berakah_username"
-  );
+
+/*
+==================================================
+SELLER NAME
+==================================================
+
+IMPORTANT:
+The username is ALWAYS converted
+to lowercase.
+
+Current seller:
+ephphavora
+==================================================
+*/
+
+const sellerName =
+  (
+    localStorage.getItem(
+      "berakah_username"
+    )
+    || "ephphavora"
+  ).toLowerCase();
 
 
 /*
@@ -508,9 +722,9 @@ ELEMENTS
 ==================================================
 */
 
-const dashboardContent =
+const dashboard =
   document.getElementById(
-    "dashboardContent"
+    "dashboard"
   );
 
 const loginRequired =
@@ -518,24 +732,44 @@ const loginRequired =
     "loginRequired"
   );
 
-const sellerNameBox =
+const sellerNameElement =
   document.getElementById(
     "sellerName"
   );
 
-const message =
+const errorBox =
   document.getElementById(
-    "message"
+    "errorBox"
   );
 
-const productsBox =
+const productsLoading =
   document.getElementById(
-    "products"
+    "productsLoading"
   );
 
-const ordersBox =
+const productsGrid =
   document.getElementById(
-    "orders"
+    "productsGrid"
+  );
+
+const ordersLoading =
+  document.getElementById(
+    "ordersLoading"
+  );
+
+const ordersTable =
+  document.getElementById(
+    "ordersTable"
+  );
+
+const ordersBody =
+  document.getElementById(
+    "ordersBody"
+  );
+
+const ordersEmpty =
+  document.getElementById(
+    "ordersEmpty"
   );
 
 
@@ -547,20 +781,15 @@ CHECK LOGIN
 
 if (!accessToken || !authUserId) {
 
-  dashboardContent.style.display =
+  dashboard.style.display =
     "none";
 
   loginRequired.style.display =
     "block";
 
-}
-else {
+} else {
 
-  sellerName =
-    sellerName ||
-    "BERAKAH Seller";
-
-  sellerNameBox.textContent =
+  sellerNameElement.textContent =
     sellerName;
 
   loadDashboard();
@@ -570,57 +799,55 @@ else {
 
 /*
 ==================================================
-SUPABASE GET
+SUPABASE HEADERS
 ==================================================
 */
 
-async function supabaseFetch(
-  table,
-  query = ""
-) {
+function getHeaders() {
 
-  const token =
-    localStorage.getItem(
-      "berakah_access_token"
-    );
+  return {
 
-  const response =
-    await fetch(
-      `${SUPABASE_URL}/rest/v1/${table}${query}`,
-      {
+    "apikey":
+      SUPABASE_KEY,
 
-        method: "GET",
+    "Authorization":
+      `Bearer ${accessToken}`,
 
-        headers: {
+    "Content-Type":
+      "application/json"
 
-          "apikey":
-            SUPABASE_KEY,
+  };
 
-          "Authorization":
-            `Bearer ${token}`,
-
-          "Content-Type":
-            "application/json"
-
-        }
-
-      }
-    );
+}
 
 
-  if (!response.ok) {
+/*
+==================================================
+SHOW ERROR
+==================================================
+*/
 
-    const errorText =
-      await response.text();
+function showError(message) {
 
-    throw new Error(
-      `${table}: ${response.status} ${errorText}`
-    );
+  errorBox.textContent =
+    message;
 
-  }
+  errorBox.style.display =
+    "block";
+
+}
 
 
-  return await response.json();
+/*
+==================================================
+HIDE ERROR
+==================================================
+*/
+
+function hideError() {
+
+  errorBox.style.display =
+    "none";
 
 }
 
@@ -633,56 +860,73 @@ LOAD DASHBOARD
 
 async function loadDashboard() {
 
-  if (!accessToken || !authUserId) {
+  hideError();
 
-    return;
+  productsLoading.style.display =
+    "block";
 
-  }
-
-
-  message.textContent =
-    "Loading dashboard...";
-
-  message.className =
-    "message";
-
-
-  productsBox.innerHTML =
-    "Loading products...";
-
-  ordersBox.innerHTML =
-    "Loading orders...";
+  ordersLoading.style.display =
+    "block";
 
 
   try {
 
-
     /*
-    ------------------------------------------------
+    ==============================================
     LOAD SELLER PRODUCTS
-    ------------------------------------------------
-
-    We use seller_name because that is
-    the field currently used by your
-    products table.
+    ==============================================
     */
 
-    const products =
-      await supabaseFetch(
+    const productsUrl =
+      `${SUPABASE_URL}/rest/v1/products` +
+      `?select=id,name,price,image_url,seller_name,created_at,seller_id,category,stock` +
+      `&seller_name=eq.${encodeURIComponent(sellerName)}` +
+      `&order=created_at.desc`;
 
-        "products",
 
-        `?select=*&seller_name=eq.${encodeURIComponent(
-          sellerName
-        )}&order=created_at.desc`
-
+    const productsResponse =
+      await fetch(
+        productsUrl,
+        {
+          method: "GET",
+          headers: getHeaders()
+        }
       );
 
 
+    const productsText =
+      await productsResponse.text();
+
+
+    if (!productsResponse.ok) {
+
+      throw new Error(
+        productsText ||
+        "Could not load products."
+      );
+
+    }
+
+
+    let products = [];
+
+
+    try {
+
+      products =
+        JSON.parse(productsText);
+
+    } catch {
+
+      products = [];
+
+    }
+
+
     /*
-    ------------------------------------------------
+    ==============================================
     PRODUCT COUNT
-    ------------------------------------------------
+    ==============================================
     */
 
     document.getElementById(
@@ -692,51 +936,243 @@ async function loadDashboard() {
 
 
     /*
-    ------------------------------------------------
-    GET PRODUCT IDS
-    ------------------------------------------------
+    ==============================================
+    DISPLAY PRODUCTS
+    ==============================================
+    */
+
+    renderProducts(products);
+
+
+    /*
+    ==============================================
+    LOAD ORDERS
+    ==============================================
+    */
+
+    await loadOrders(products);
+
+
+  } catch (error) {
+
+    console.error(
+      "Dashboard error:",
+      error
+    );
+
+    showError(
+      "Dashboard error: " +
+      error.message
+    );
+
+    productsLoading.textContent =
+      "Could not load products.";
+
+    ordersLoading.textContent =
+      "Could not load orders.";
+
+  }
+
+}
+
+
+/*
+==================================================
+RENDER PRODUCTS
+==================================================
+*/
+
+function renderProducts(products) {
+
+  productsLoading.style.display =
+    "none";
+
+  productsGrid.innerHTML = "";
+
+
+  if (!products.length) {
+
+    productsGrid.innerHTML = `
+      <div class="empty" style="grid-column:1/-1;">
+        You have no products yet.
+        <br><br>
+        <a href="seller-add-product.html"
+           class="btn btn-primary">
+          Add Your First Product
+        </a>
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  products.forEach(function(product) {
+
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "product-card";
+
+
+    const image =
+      product.image_url ||
+      "https://via.placeholder.com/600x400?text=BERAKAH";
+
+
+    const price =
+      Number(product.price || 0)
+        .toFixed(2);
+
+
+    const stock =
+      product.stock ?? 0;
+
+
+    card.innerHTML = `
+
+      <img
+        src="${escapeHtml(image)}"
+        alt="${escapeHtml(product.name || "Product")}"
+        class="product-image"
+        onerror="this.src='https://via.placeholder.com/600x400?text=BERAKAH'"
+      >
+
+      <div class="product-info">
+
+        <div class="product-name">
+          ${escapeHtml(product.name || "Unnamed Product")}
+        </div>
+
+        <div class="product-price">
+          $${price}
+        </div>
+
+        <div class="product-meta">
+
+          Category:
+          ${escapeHtml(product.category || "Other")}
+
+          <br>
+
+          Stock:
+          ${escapeHtml(String(stock))}
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    productsGrid.appendChild(card);
+
+  });
+
+}
+
+
+/*
+==================================================
+LOAD ORDERS
+==================================================
+*/
+
+async function loadOrders(products) {
+
+  try {
+
+
+    const ordersUrl =
+      `${SUPABASE_URL}/rest/v1/orders` +
+      `?select=*` +
+      `&order=created_at.desc`;
+
+
+    const ordersResponse =
+      await fetch(
+        ordersUrl,
+        {
+          method: "GET",
+          headers: getHeaders()
+        }
+      );
+
+
+    const ordersText =
+      await ordersResponse.text();
+
+
+    if (!ordersResponse.ok) {
+
+      throw new Error(
+        ordersText ||
+        "Could not load orders."
+      );
+
+    }
+
+
+    let allOrders = [];
+
+
+    try {
+
+      allOrders =
+        JSON.parse(ordersText);
+
+    } catch {
+
+      allOrders = [];
+
+    }
+
+
+    /*
+    ==============================================
+    MATCH ORDERS TO SELLER PRODUCTS
+    ==============================================
     */
 
     const productIds =
       new Set(
         products.map(
-          product => product.id
+          product => String(product.id)
         )
       );
 
 
-    /*
-    ------------------------------------------------
-    LOAD ORDERS
-    ------------------------------------------------
-    */
-
-    const orders =
-      await supabaseFetch(
-        "orders",
-        "?select=*"
-      );
-
-
-    /*
-    ------------------------------------------------
-    FILTER SELLER ORDERS
-    ------------------------------------------------
-    */
-
     const sellerOrders =
-      orders.filter(
-        order =>
-          productIds.has(
-            order.product_id
-          )
-      );
+      allOrders.filter(function(order) {
+
+        /*
+        Orders are matched through product_id.
+        */
+
+        if (
+          order.product_id !== undefined &&
+          order.product_id !== null
+        ) {
+
+          return productIds.has(
+            String(order.product_id)
+          );
+
+        }
+
+
+        return false;
+
+      });
 
 
     /*
-    ------------------------------------------------
-    TOTAL ORDERS
-    ------------------------------------------------
+    ==============================================
+    STATS
+    ==============================================
     */
 
     document.getElementById(
@@ -745,20 +1181,25 @@ async function loadDashboard() {
       sellerOrders.length;
 
 
-    /*
-    ------------------------------------------------
-    PAID ORDERS
-    ------------------------------------------------
-    */
-
     const paidOrders =
-      sellerOrders.filter(
-        order =>
+      sellerOrders.filter(function(order) {
+
+        const status =
           String(
-            order.payment_status || ""
-          ).toLowerCase() ===
-          "paid"
-      );
+            order.status ||
+            order.payment_status ||
+            ""
+          ).toLowerCase();
+
+        return (
+          status === "paid" ||
+          status === "completed" ||
+          status === "complete" ||
+          status === "success" ||
+          status === "succeeded"
+        );
+
+      });
 
 
     document.getElementById(
@@ -768,277 +1209,131 @@ async function loadDashboard() {
 
 
     /*
-    ------------------------------------------------
-    SALES
-    ------------------------------------------------
+    ==============================================
+    CALCULATE SALES
+    ==============================================
     */
 
-    let totalSales = 0;
+    let sales = 0;
 
 
-    paidOrders.forEach(
-      order => {
+    sellerOrders.forEach(function(order) {
+
+      const status =
+        String(
+          order.status ||
+          order.payment_status ||
+          ""
+        ).toLowerCase();
+
+
+      const isPaid =
+        status === "paid" ||
+        status === "completed" ||
+        status === "complete" ||
+        status === "success" ||
+        status === "succeeded";
+
+
+      if (!isPaid) {
+        return;
+      }
+
+
+      let total = 0;
+
+
+      if (
+        order.total !== undefined &&
+        order.total !== null
+      ) {
+
+        total =
+          Number(order.total) || 0;
+
+      } else if (
+        order.amount !== undefined &&
+        order.amount !== null
+      ) {
+
+        total =
+          Number(order.amount) || 0;
+
+      } else {
+
+        const product =
+          products.find(
+            p =>
+              String(p.id) ===
+              String(order.product_id)
+          );
+
 
         const price =
           Number(
-            order.price || 0
+            product?.price || 0
           );
+
 
         const quantity =
           Number(
             order.quantity || 1
           );
 
-        totalSales +=
+
+        total =
           price * quantity;
 
       }
-    );
+
+
+      sales += total;
+
+    });
 
 
     document.getElementById(
-      "sales"
+      "totalSales"
     ).textContent =
-      "$" +
-      totalSales.toFixed(2);
+      "$" + sales.toFixed(2);
 
 
     /*
-    ------------------------------------------------
-    DISPLAY PRODUCTS
-    ------------------------------------------------
-    */
-
-    if (products.length === 0) {
-
-      productsBox.innerHTML =
-        `<div class="empty">
-          You have no products yet.
-        </div>`;
-
-    }
-    else {
-
-      productsBox.innerHTML =
-        products.map(
-          product => {
-
-            const image =
-              product.image_url ||
-              "";
-
-            return `
-
-              <div class="product">
-
-                ${
-                  image
-                  ?
-                  `<img
-                    src="${escapeHtml(image)}"
-                    alt="">`
-                  :
-                  `<div style="
-                    width:80px;
-                    height:80px;
-                    border-radius:10px;
-                    background:#f3f4f6;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                  ">
-                    📦
-                  </div>`
-                }
-
-
-                <div class="product-info">
-
-                  <div class="product-name">
-                    ${escapeHtml(
-                      product.name ||
-                      "Unnamed Product"
-                    )}
-                  </div>
-
-
-                  <div class="product-meta">
-
-                    Price:
-                    $${Number(
-                      product.price || 0
-                    ).toFixed(2)}
-
-                    &nbsp; • &nbsp;
-
-                    Stock:
-                    ${Number(
-                      product.stock || 0
-                    )}
-
-                  </div>
-
-
-                  <div class="product-meta">
-
-                    Category:
-                    ${escapeHtml(
-                      product.category ||
-                      "Uncategorized"
-                    )}
-
-                  </div>
-
-
-                  ${
-                    product.description
-                    ?
-                    `<div class="product-meta">
-                      ${escapeHtml(
-                        product.description
-                      )}
-                    </div>`
-                    :
-                    ""
-                  }
-
-                </div>
-
-              </div>
-
-            `;
-
-          }
-        ).join("");
-
-    }
-
-
-    /*
-    ------------------------------------------------
+    ==============================================
     DISPLAY ORDERS
-    ------------------------------------------------
+    ==============================================
     */
 
-    if (
-      sellerOrders.length === 0
-    ) {
-
-      ordersBox.innerHTML =
-        `<div class="empty">
-          No orders yet.
-        </div>`;
-
-    }
-    else {
-
-      ordersBox.innerHTML =
-        sellerOrders
-
-        .sort(
-          (a, b) =>
-            new Date(
-              b.created_at
-            ) -
-            new Date(
-              a.created_at
-            )
-        )
-
-        .slice(0, 10)
-
-        .map(
-          order => {
-
-            return `
-
-              <div class="order">
-
-                <strong>
-                  ${escapeHtml(
-                    order.product_name ||
-                    "Product"
-                  )}
-                </strong>
-
-
-                <div class="product-meta">
-
-                  Quantity:
-                  ${Number(
-                    order.quantity || 0
-                  )}
-
-                  &nbsp; • &nbsp;
-
-                  Price:
-                  $${Number(
-                    order.price || 0
-                  ).toFixed(2)}
-
-                </div>
-
-
-                <div class="product-meta">
-
-                  Payment:
-                  ${escapeHtml(
-                    order.payment_status ||
-                    "Unknown"
-                  )}
-
-                </div>
-
-              </div>
-
-            `;
-
-          }
-        ).join("");
-
-    }
-
-
-    /*
-    ------------------------------------------------
-    SUCCESS
-    ------------------------------------------------
-    */
-
-    message.textContent =
-      `Dashboard loaded successfully for ${sellerName}.`;
-
-    message.className =
-      "message success";
-
-
-  }
-  catch (error) {
-
-    console.error(
-      "BERAKAH DASHBOARD ERROR:",
-      error
+    renderOrders(
+      sellerOrders,
+      products
     );
 
 
-    message.textContent =
-      "Could not load dashboard data: " +
-      error.message;
+  } catch (error) {
 
-    message.className =
-      "message error";
+    console.error(
+      "Orders error:",
+      error
+    );
 
+    ordersLoading.textContent =
+      "Orders could not be loaded.";
 
-    productsBox.innerHTML =
-      `<div class="empty">
-        Unable to load products.
-      </div>`;
+    document.getElementById(
+      "totalOrders"
+    ).textContent =
+      "0";
 
+    document.getElementById(
+      "paidOrders"
+    ).textContent =
+      "0";
 
-    ordersBox.innerHTML =
-      `<div class="empty">
-        Unable to load orders.
-      </div>`;
+    document.getElementById(
+      "totalSales"
+    ).textContent =
+      "$0.00";
 
   }
 
@@ -1047,38 +1342,149 @@ async function loadDashboard() {
 
 /*
 ==================================================
-ESCAPE HTML
+RENDER ORDERS
+==================================================
+*/
+
+function renderOrders(
+  orders,
+  products
+) {
+
+  ordersLoading.style.display =
+    "none";
+
+  ordersBody.innerHTML = "";
+
+
+  if (!orders.length) {
+
+    ordersTable.style.display =
+      "none";
+
+    ordersEmpty.style.display =
+      "block";
+
+    return;
+
+  }
+
+
+  ordersEmpty.style.display =
+    "none";
+
+  ordersTable.style.display =
+    "table";
+
+
+  orders.forEach(function(order) {
+
+
+    const product =
+      products.find(
+        p =>
+          String(p.id) ===
+          String(order.product_id)
+      );
+
+
+    const productName =
+      product?.name ||
+      "Product";
+
+
+    const price =
+      Number(
+        order.price ??
+        product?.price ??
+        0
+      );
+
+
+    const quantity =
+      Number(
+        order.quantity || 1
+      );
+
+
+    const total =
+      Number(
+        order.total ??
+        order.amount ??
+        (price * quantity)
+      );
+
+
+    const status =
+      order.status ||
+      order.payment_status ||
+      "Pending";
+
+
+    const date =
+      order.created_at
+        ? new Date(
+            order.created_at
+          ).toLocaleDateString()
+        : "-";
+
+
+    const row =
+      document.createElement("tr");
+
+
+    row.innerHTML = `
+
+      <td>
+        ${escapeHtml(productName)}
+      </td>
+
+      <td>
+        $${price.toFixed(2)}
+      </td>
+
+      <td>
+        ${quantity}
+      </td>
+
+      <td>
+        $${total.toFixed(2)}
+      </td>
+
+      <td>
+        <span class="status">
+          ${escapeHtml(String(status))}
+        </span>
+      </td>
+
+      <td>
+        ${date}
+      </td>
+
+    `;
+
+
+    ordersBody.appendChild(row);
+
+  });
+
+}
+
+
+/*
+==================================================
+HTML ESCAPE
 ==================================================
 */
 
 function escapeHtml(value) {
 
   return String(value)
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
 }
 
@@ -1111,7 +1517,6 @@ function logout() {
     "berakah_auth_user_id"
   );
 
-
   window.location.href =
     "login.html";
 
@@ -1119,6 +1524,6 @@ function logout() {
 
 </script>
 
-</body>
 
+</body>
 </html>
