@@ -1,18 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8"><meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
 
-<head>
+«»
 
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>BERAKAH - Marketplace</title>
-
-  <style>
+  <title>EPHPHAVORA - Marketplace</title>  <style>
 
     * {
       box-sizing: border-box;
@@ -92,8 +84,6 @@
       color: #6b7280;
     }
 
-    /* SEARCH */
-
     .search-area {
       background: white;
       padding: 18px;
@@ -140,8 +130,6 @@
       background: #1d4ed8;
     }
 
-    /* RESULTS */
-
     .market-header {
       display: flex;
       justify-content: space-between;
@@ -157,8 +145,6 @@
       color: #6b7280;
       font-size: 14px;
     }
-
-    /* PRODUCTS */
 
     .products-grid {
       display: grid;
@@ -251,8 +237,6 @@
       cursor: not-allowed;
     }
 
-    /* LOADING */
-
     .loading {
       background: white;
       border-radius: 14px;
@@ -260,8 +244,6 @@
       text-align: center;
       color: #6b7280;
     }
-
-    /* EMPTY */
 
     .empty {
       background: white;
@@ -271,8 +253,6 @@
       color: #6b7280;
     }
 
-    /* ERROR */
-
     .error {
       background: #fee2e2;
       color: #991b1b;
@@ -281,8 +261,6 @@
       margin-bottom: 20px;
       display: none;
     }
-
-    /* MODAL */
 
     .modal-overlay {
       position: fixed;
@@ -367,12 +345,29 @@
       color: white;
     }
 
+    .confirm-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .confirm-btn:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+
     .cancel-btn {
       background: #e5e7eb;
       color: #111827;
     }
 
-    /* MOBILE */
+    .payment-note {
+      background: #eff6ff;
+      color: #1e40af;
+      padding: 12px;
+      border-radius: 9px;
+      margin-bottom: 18px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
 
     @media (max-width: 950px) {
 
@@ -422,269 +417,190 @@
 
     }
 
-  </style>
+  </style></head><body><header><a
+href="index.html"
+class="logo"
 
-</head>
+«»
 
+EPHPHAVORA
 
-<body>
+  </a>  <nav><a href="index.html">
+  Home
+</a>
 
+<a href="marketplace.html">
+  Market
+</a>
 
-<header>
+<a href="seller-dashboard.html">
+  Dashboard
+</a>
 
-  <a
-    href="index.html"
-    class="logo"
+<a href="profile.html">
+  Profile
+</a>
+
+<button onclick="logout()">
+  Logout
+</button>
+
+  </nav></header><div class="container">  <div class="hero"><h1>
+  EPHPHAVORA Marketplace
+</h1>
+
+<p>
+  Discover products and services from EPHPHAVORA sellers.
+</p>
+
+  </div>  <div class="search-area"><div class="search-box">
+
+  <input
+    type="search"
+    id="searchInput"
+    placeholder="Search products..."
+    oninput="filterProducts()"
   >
-    BERAKAH
-  </a>
 
+</div>
 
-  <nav>
+<div style="min-width:180px;">
 
-    <a href="index.html">
+  <select
+    id="categorySelect"
+    class="category-select"
+    onchange="filterProducts()"
+  >
+
+    <option value="">
+      All Categories
+    </option>
+
+    <option value="Clothing">
+      Clothing
+    </option>
+
+    <option value="Electronics">
+      Electronics
+    </option>
+
+    <option value="Beauty">
+      Beauty
+    </option>
+
+    <option value="Food">
+      Food
+    </option>
+
+    <option value="Home">
       Home
-    </a>
+    </option>
 
-    <a href="marketplace.html">
-      Market
-    </a>
+    <option value="Services">
+      Services
+    </option>
 
-    <a href="seller-dashboard.html">
-      Dashboard
-    </a>
+    <option value="Other">
+      Other
+    </option>
 
-    <a href="profile.html">
-      Profile
-    </a>
+  </select>
 
-    <button onclick="logout()">
-      Logout
-    </button>
+</div>
 
-  </nav>
+<button
+  class="refresh-btn"
+  onclick="loadProducts()"
+>
+  🔄 Refresh
+</button>
 
-</header>
-
-
-<div class="container">
-
-
-  <!-- HERO -->
-
-  <div class="hero">
-
-    <h1>
-      BERAKAH Marketplace
-    </h1>
-
-    <p>
-      Discover products and services from BERAKAH sellers.
-    </p>
-
-  </div>
-
-
-  <!-- SEARCH -->
-
-  <div class="search-area">
-
-    <div class="search-box">
-
-      <input
-        type="search"
-        id="searchInput"
-        placeholder="Search products..."
-        oninput="filterProducts()"
-      >
-
-    </div>
-
-
-    <div style="min-width:180px;">
-
-      <select
-        id="categorySelect"
-        class="category-select"
-        onchange="filterProducts()"
-      >
-
-        <option value="">
-          All Categories
-        </option>
-
-        <option value="Clothing">
-          Clothing
-        </option>
-
-        <option value="Electronics">
-          Electronics
-        </option>
-
-        <option value="Beauty">
-          Beauty
-        </option>
-
-        <option value="Food">
-          Food
-        </option>
-
-        <option value="Home">
-          Home
-        </option>
-
-        <option value="Services">
-          Services
-        </option>
-
-        <option value="Other">
-          Other
-        </option>
-
-      </select>
-
-    </div>
-
-
-    <button
-      class="refresh-btn"
-      onclick="loadProducts()"
-    >
-      🔄 Refresh
-    </button>
-
-  </div>
-
-
-  <!-- ERROR -->
-
-  <div
+  </div>  <div
     id="errorBox"
     class="error"
-  ></div>
+  ></div>  <div class="market-header"><h2>
+  Products
+</h2>
 
+<span id="productCount">
+  Loading...
+</span>
 
-  <!-- PRODUCT HEADER -->
-
-  <div class="market-header">
-
-    <h2>
-      Products
-    </h2>
-
-    <span id="productCount">
-      Loading...
-    </span>
-
-  </div>
-
-
-  <!-- LOADING -->
-
-  <div
+  </div>  <div
     id="loading"
     class="loading"
   >
     Loading marketplace...
-  </div>
-
-
-  <!-- EMPTY -->
-
-  <div
+  </div>  <div
     id="empty"
     class="empty"
     style="display:none;"
-  >
+  ><h3>
+  No products found
+</h3>
 
-    <h3>
-      No products found
-    </h3>
+<p>
+  Sellers haven't added products yet.
+</p>
 
-    <p>
-      Sellers haven't added products yet.
-    </p>
-
-  </div>
-
-
-  <!-- PRODUCTS -->
-
-  <div
+  </div>  <div
     id="productsGrid"
     class="products-grid"
-  ></div>
-
-
-</div>
-
-
-<!-- BUY MODAL -->
-
-<div
+  ></div></div><div
   id="buyModalOverlay"
   class="modal-overlay"
+>  <div class="modal"><h2>
+  Buy Product
+</h2>
+
+<div
+  id="modalProduct"
+  class="modal-product"
+></div>
+
+<div class="payment-note">
+  🔒 You will be securely redirected to Stripe to complete your test payment.
+</div>
+
+<label
+  class="quantity-label"
+  for="quantity"
+>
+  Quantity
+</label>
+
+<input
+  id="quantity"
+  class="quantity-input"
+  type="number"
+  min="1"
+  value="1"
 >
 
-  <div class="modal">
+<div class="modal-actions">
 
-    <h2>
-      Product Details
-    </h2>
+  <button
+    class="cancel-btn"
+    onclick="closeModal()"
+  >
+    Cancel
+  </button>
 
-
-    <div
-      id="modalProduct"
-      class="modal-product"
-    ></div>
-
-
-    <label
-      class="quantity-label"
-      for="quantity"
-    >
-      Quantity
-    </label>
-
-
-    <input
-      id="quantity"
-      class="quantity-input"
-      type="number"
-      min="1"
-      value="1"
-    >
-
-
-    <div class="modal-actions">
-
-      <button
-        class="cancel-btn"
-        onclick="closeModal()"
-      >
-        Cancel
-      </button>
-
-      <button
-        class="confirm-btn"
-        onclick="confirmOrder()"
-      >
-        Continue
-      </button>
-
-    </div>
-
-  </div>
+  <button
+    id="checkoutButton"
+    class="confirm-btn"
+    onclick="startCheckout()"
+  >
+    Continue to Stripe
+  </button>
 
 </div>
 
-
-<script>
-
+  </div></div><script>
 
 /*
 ==================================================
-BERAKAH SUPABASE CONFIGURATION
+EPHPHAVORA SUPABASE CONFIGURATION
 ==================================================
 */
 
@@ -699,6 +615,11 @@ const SUPABASE_KEY =
 ==================================================
 SESSION
 ==================================================
+*/
+
+/*
+We keep the existing localStorage names so
+the current login system continues working.
 */
 
 const accessToken =
@@ -736,14 +657,12 @@ function getHeaders() {
 
   };
 
-
   if (accessToken) {
 
     headers["Authorization"] =
       `Bearer ${accessToken}`;
 
   }
-
 
   return headers;
 
@@ -759,22 +678,30 @@ LOAD PRODUCTS
 async function loadProducts() {
 
   const loading =
-    document.getElementById("loading");
+    document.getElementById(
+      "loading"
+    );
 
   const grid =
-    document.getElementById("productsGrid");
+    document.getElementById(
+      "productsGrid"
+    );
 
   const empty =
-    document.getElementById("empty");
+    document.getElementById(
+      "empty"
+    );
 
   const errorBox =
-    document.getElementById("errorBox");
-
+    document.getElementById(
+      "errorBox"
+    );
 
   loading.style.display =
     "block";
 
-  grid.innerHTML = "";
+  grid.innerHTML =
+    "";
 
   empty.style.display =
     "none";
@@ -782,35 +709,26 @@ async function loadProducts() {
   errorBox.style.display =
     "none";
 
-
   try {
-
-
-    /*
-    ==============================================
-    GET PRODUCTS
-    ==============================================
-    */
 
     const url =
       `${SUPABASE_URL}/rest/v1/products` +
       `?select=id,name,price,image_url,seller_name,created_at,seller_id,category,stock` +
       `&order=created_at.desc`;
 
-
     const response =
       await fetch(
         url,
         {
-          method: "GET",
-          headers: getHeaders()
+          method:
+            "GET",
+          headers:
+            getHeaders()
         }
       );
 
-
     const responseText =
       await response.text();
-
 
     if (!response.ok) {
 
@@ -821,31 +739,24 @@ async function loadProducts() {
 
     }
 
-
     try {
 
       allProducts =
-        JSON.parse(responseText);
+        JSON.parse(
+          responseText
+        );
 
     } catch {
 
-      allProducts = [];
+      allProducts =
+        [];
 
     }
-
 
     loading.style.display =
       "none";
 
-
-    /*
-    ==============================================
-    DISPLAY
-    ==============================================
-    */
-
     filterProducts();
-
 
   } catch (error) {
 
@@ -854,19 +765,15 @@ async function loadProducts() {
       error
     );
 
-
     loading.style.display =
       "none";
-
 
     errorBox.textContent =
       "Could not load marketplace: " +
       error.message;
 
-
     errorBox.style.display =
       "block";
-
 
     document.getElementById(
       "productCount"
@@ -893,47 +800,40 @@ function filterProducts() {
       .trim()
       .toLowerCase();
 
-
   const category =
     document.getElementById(
       "categorySelect"
     ).value
       .toLowerCase();
 
-
   const filtered =
     allProducts.filter(
       function(product) {
-
 
         const name =
           String(
             product.name || ""
           ).toLowerCase();
 
-
         const seller =
           String(
             product.seller_name || ""
           ).toLowerCase();
-
 
         const productCategory =
           String(
             product.category || ""
           ).toLowerCase();
 
-
         const matchesSearch =
           !search ||
           name.includes(search) ||
           seller.includes(search);
 
-
         const matchesCategory =
           !category ||
-          productCategory === category;
-
+          productCategory ===
+            category;
 
         return (
           matchesSearch &&
@@ -943,8 +843,9 @@ function filterProducts() {
       }
     );
 
-
-  renderProducts(filtered);
+  renderProducts(
+    filtered
+  );
 
 }
 
@@ -955,7 +856,9 @@ RENDER PRODUCTS
 ==================================================
 */
 
-function renderProducts(products) {
+function renderProducts(
+  products
+) {
 
   const grid =
     document.getElementById(
@@ -972,13 +875,15 @@ function renderProducts(products) {
       "productCount"
     );
 
-
-  grid.innerHTML = "";
-
+  grid.innerHTML =
+    "";
 
   count.textContent =
-    `${products.length} product${products.length === 1 ? "" : "s"}`;
-
+    `${products.length} product${
+      products.length === 1
+        ? ""
+        : "s"
+    }`;
 
   if (!products.length) {
 
@@ -989,60 +894,53 @@ function renderProducts(products) {
 
   }
 
-
   empty.style.display =
     "none";
 
-
   products.forEach(
     function(product) {
-
 
       const card =
         document.createElement(
           "div"
         );
 
-
       card.className =
         "product-card";
 
-
       const image =
         product.image_url ||
-        "https://via.placeholder.com/600x400?text=BERAKAH";
-
+        "https://via.placeholder.com/600x400?text=EPHPHAVORA";
 
       const price =
         Number(
           product.price || 0
         ).toFixed(2);
 
-
       const stock =
         Number(
           product.stock || 0
         );
 
-
       const isAvailable =
         stock > 0;
-
 
       const seller =
         (
           product.seller_name ||
-          "BERAKAH Seller"
+          "EPHPHAVORA Seller"
         ).toLowerCase();
-
 
       card.innerHTML = `
 
         <img
           src="${escapeHtml(image)}"
-          alt="${escapeHtml(product.name || "Product")}"
+          alt="${escapeHtml(
+            product.name ||
+            "Product"
+          )}"
           class="product-image"
-          onerror="this.src='https://via.placeholder.com/600x400?text=BERAKAH'"
+          onerror="this.src='https://via.placeholder.com/600x400?text=EPHPHAVORA'"
         >
 
         <div class="product-content">
@@ -1068,7 +966,9 @@ function renderProducts(products) {
           <div class="seller">
             Seller:
             <strong>
-              ${escapeHtml(seller)}
+              ${escapeHtml(
+                seller
+              )}
             </strong>
           </div>
 
@@ -1093,21 +993,26 @@ function renderProducts(products) {
                 ? "disabled"
                 : ""
             }
-            onclick="openBuyModal('${escapeJs(String(product.id))}')"
+            onclick="openBuyModal('${escapeJs(
+              String(product.id)
+            )}')"
           >
+
             ${
               isAvailable
                 ? "Buy"
                 : "Out of Stock"
             }
+
           </button>
 
         </div>
 
       `;
 
-
-      grid.appendChild(card);
+      grid.appendChild(
+        card
+      );
 
     }
   );
@@ -1121,15 +1026,20 @@ OPEN BUY MODAL
 ==================================================
 */
 
-function openBuyModal(productId) {
+function openBuyModal(
+  productId
+) {
 
   selectedProduct =
     allProducts.find(
       product =>
-        String(product.id) ===
-        String(productId)
+        String(
+          product.id
+        ) ===
+        String(
+          productId
+        )
     );
-
 
   if (!selectedProduct) {
 
@@ -1141,17 +1051,15 @@ function openBuyModal(productId) {
 
   }
 
-
   const image =
     selectedProduct.image_url ||
-    "https://via.placeholder.com/600x400?text=BERAKAH";
-
+    "https://via.placeholder.com/600x400?text=EPHPHAVORA";
 
   const price =
     Number(
-      selectedProduct.price || 0
+      selectedProduct.price ||
+      0
     ).toFixed(2);
-
 
   document.getElementById(
     "modalProduct"
@@ -1159,7 +1067,10 @@ function openBuyModal(productId) {
 
     <img
       src="${escapeHtml(image)}"
-      alt="${escapeHtml(selectedProduct.name || "Product")}"
+      alt="${escapeHtml(
+        selectedProduct.name ||
+        "Product"
+      )}"
     >
 
     <div class="modal-product-info">
@@ -1175,33 +1086,40 @@ function openBuyModal(productId) {
         $${price}
       </div>
 
-      <div style="color:#6b7280;font-size:13px;margin-top:6px;">
+      <div
+        style="
+          color:#6b7280;
+          font-size:13px;
+          margin-top:6px;
+        "
+      >
+
         Seller:
         ${
           escapeHtml(
             (
               selectedProduct.seller_name ||
-              "BERAKAH Seller"
+              "EPHPHAVORA Seller"
             ).toLowerCase()
           )
         }
+
       </div>
 
     </div>
 
   `;
 
-
   document.getElementById(
     "quantity"
-  ).value = 1;
-
+  ).value =
+    1;
 
   document.getElementById(
     "quantity"
   ).max =
-    selectedProduct.stock || 1;
-
+    selectedProduct.stock ||
+    1;
 
   document.getElementById(
     "buyModalOverlay"
@@ -1232,11 +1150,11 @@ function closeModal() {
 
 /*
 ==================================================
-CONFIRM ORDER
+START STRIPE CHECKOUT
 ==================================================
 */
 
-async function confirmOrder() {
+async function startCheckout() {
 
   if (!selectedProduct) {
 
@@ -1244,6 +1162,15 @@ async function confirmOrder() {
 
   }
 
+  const currentToken =
+    localStorage.getItem(
+      "berakah_access_token"
+    );
+
+  const buyerId =
+    localStorage.getItem(
+      "berakah_auth_user_id"
+    );
 
   /*
   ================================================
@@ -1251,33 +1178,27 @@ async function confirmOrder() {
   ================================================
   */
 
-  const currentToken =
-    localStorage.getItem(
-      "berakah_access_token"
-    );
-
-
-  const buyerId =
-    localStorage.getItem(
-      "berakah_auth_user_id"
-    );
-
-
-  if (!currentToken || !buyerId) {
+  if (
+    !currentToken ||
+    !buyerId
+  ) {
 
     alert(
       "Please log in to buy a product."
     );
 
-
     window.location.href =
       "login.html";
-
 
     return;
 
   }
 
+  /*
+  ================================================
+  QUANTITY
+  ================================================
+  */
 
   const quantity =
     parseInt(
@@ -1287,12 +1208,11 @@ async function confirmOrder() {
       10
     );
 
-
   const stock =
     Number(
-      selectedProduct.stock || 0
+      selectedProduct.stock ||
+      0
     );
-
 
   if (
     isNaN(quantity) ||
@@ -1307,8 +1227,9 @@ async function confirmOrder() {
 
   }
 
-
-  if (quantity > stock) {
+  if (
+    quantity > stock
+  ) {
 
     alert(
       "There is not enough stock available."
@@ -1318,61 +1239,37 @@ async function confirmOrder() {
 
   }
 
-
-  const price =
-    Number(
-      selectedProduct.price || 0
-    );
-
-
-  const total =
-    price * quantity;
-
-
   /*
   ================================================
-  ORDER DATA
+  BUTTON
   ================================================
   */
 
-  const orderData = {
+  const button =
+    document.getElementById(
+      "checkoutButton"
+    );
 
-    product_id:
-      selectedProduct.id,
+  button.disabled =
+    true;
 
-    quantity:
-      quantity,
-
-    price:
-      price,
-
-    total:
-      total,
-
-    buyer_id:
-      buyerId,
-
-    status:
-      "pending"
-
-  };
-
+  button.textContent =
+    "Opening Stripe...";
 
   try {
 
-
     /*
     ==============================================
-    CREATE ORDER
+    CALL STRIPE CHECKOUT EDGE FUNCTION
     ==============================================
     */
 
     const response =
       await fetch(
-        `${SUPABASE_URL}/rest/v1/orders`,
+        `${SUPABASE_URL}/functions/v1/stripe-checkout`,
         {
-
-          method: "POST",
+          method:
+            "POST",
 
           headers: {
 
@@ -1383,93 +1280,105 @@ async function confirmOrder() {
               `Bearer ${currentToken}`,
 
             "Content-Type":
-              "application/json",
-
-            "Prefer":
-              "return=representation"
+              "application/json"
 
           },
 
           body:
-            JSON.stringify(
-              orderData
-            )
+            JSON.stringify({
+
+              product_id:
+                selectedProduct.id,
+
+              quantity:
+                quantity
+
+            })
 
         }
       );
 
-
     const responseText =
       await response.text();
 
+    let data = {};
+
+    try {
+
+      data =
+        JSON.parse(
+          responseText
+        );
+
+    } catch {
+
+      data = {
+        error:
+          responseText
+      };
+
+    }
 
     if (!response.ok) {
 
       console.error(
-        "Order error:",
-        responseText
+        "Stripe Checkout error:",
+        data
       );
 
-
-      let message =
-        "Could not create order.";
-
-
-      try {
-
-        const data =
-          JSON.parse(
-            responseText
-          );
-
-
-        message =
-          data.message ||
-          data.details ||
-          data.hint ||
-          message;
-
-      } catch {}
-
-
-      alert(message);
-
-      return;
+      throw new Error(
+        data.error ||
+        data.message ||
+        data.details ||
+        "Stripe Checkout could not be started."
+      );
 
     }
 
+    if (
+      !data.checkout_url
+    ) {
+
+      throw new Error(
+        "Stripe Checkout URL was not returned."
+      );
+
+    }
 
     /*
     ==============================================
-    SUCCESS
+    CLOSE MODAL
     ==============================================
     */
 
     closeModal();
 
+    /*
+    ==============================================
+    REDIRECT TO STRIPE
+    ==============================================
+    */
 
-    alert(
-      `Order created successfully!\n\n` +
-      `Product: ${selectedProduct.name}\n` +
-      `Quantity: ${quantity}\n` +
-      `Total: $${total.toFixed(2)}\n\n` +
-      `Payment processing will be connected next.`
-    );
-
-
-    loadProducts();
-
+    window.location.href =
+      data.checkout_url;
 
   } catch (error) {
 
     console.error(
+      "Checkout error:",
       error
     );
 
-
     alert(
-      "Connection error. Please try again."
+      "Checkout error:\n\n" +
+      error.message
     );
+
+    button.disabled =
+      false;
+
+    button.textContent =
+      "Continue to Stripe";
 
   }
 
@@ -1482,9 +1391,13 @@ ESCAPE HTML
 ==================================================
 */
 
-function escapeHtml(value) {
+function escapeHtml(
+  value
+) {
 
-  return String(value)
+  return String(
+    value
+  )
     .replace(
       /&/g,
       "&amp;"
@@ -1515,9 +1428,13 @@ ESCAPE JAVASCRIPT
 ==================================================
 */
 
-function escapeJs(value) {
+function escapeJs(
+  value
+) {
 
-  return String(value)
+  return String(
+    value
+  )
     .replace(
       /\\/g,
       "\\\\"
@@ -1570,14 +1487,10 @@ function logout() {
 
 /*
 ==================================================
-START
+START MARKETPLACE
 ==================================================
 */
 
 loadProducts();
 
-</script>
-
-
-</body>
-</html>
+</script></body></html>
