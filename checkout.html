@@ -1,7 +1,14 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="en">
 
-<title>BERAKAH - Checkout</title><style>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BERAKAH - Checkout</title>
+
+<style>
 
 *{
     box-sizing:border-box;
@@ -173,6 +180,16 @@ input:focus{
     padding:40px;
 }
 
+.payment-note{
+    margin-top:15px;
+    padding:12px;
+    border-radius:9px;
+    background:#eff6ff;
+    color:#1e40af;
+    font-size:14px;
+    line-height:1.5;
+}
+
 @media(max-width:600px){
 
     .header-inner{
@@ -194,9 +211,23 @@ input:focus{
 
 }
 
-</style></head><body><header><div class="header-inner"><div class="logo">
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="header-inner">
+
+<div class="logo">
 BERAKAH
-</div><nav><a href="index.html">Home</a>
+</div>
+
+<nav>
+
+<a href="index.html">Home</a>
 
 <a href="marketplace.html">Market</a>
 
@@ -204,53 +235,127 @@ BERAKAH
 
 <a href="profile.html">Profile</a>
 
-</nav></div></header><main class="container"><div class="checkout-card"><h1>🛒 Checkout</h1><div id="status"
-     class="status">
-</div><h2>🛍️ Order Summary</h2><div id="orderSummary"></div><div class="total"><span>TOTAL</span>
+</nav>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+
+<div class="checkout-card">
+
+<h1>🛒 Checkout</h1>
+
+<div id="status" class="status"></div>
+
+<h2>🛍️ Order Summary</h2>
+
+<div id="orderSummary"></div>
+
+<div class="total">
+
+<span>TOTAL</span>
 
 <span id="total">$0.00</span>
 
-</div></div><div class="checkout-card"><h2>👤 Customer Information</h2><div class="form-group"><label for="customerName">
+</div>
+
+</div>
+
+
+<div class="checkout-card">
+
+<h2>👤 Customer Information</h2>
+
+
+<div class="form-group">
+
+<label for="customerName">
 Full Name
-</label><input
+</label>
+
+<input
 id="customerName"
 type="text"
 placeholder="Your full name"
 autocomplete="name">
 
-</div><div class="form-group"><label for="customerEmail">
+</div>
+
+
+<div class="form-group">
+
+<label for="customerEmail">
 Email
-</label><input
+</label>
+
+<input
 id="customerEmail"
 type="email"
 placeholder="Your email"
 autocomplete="email">
 
-</div><div class="form-group"><label for="customerPhone">
+</div>
+
+
+<div class="form-group">
+
+<label for="customerPhone">
 Phone
-</label><input
+</label>
+
+<input
 id="customerPhone"
 type="tel"
 placeholder="Your phone number"
 autocomplete="tel">
 
-</div><div class="form-group"><label for="customerAddress">
+</div>
+
+
+<div class="form-group">
+
+<label for="customerAddress">
 Shipping Address
-</label><input
+</label>
+
+<input
 id="customerAddress"
 type="text"
 placeholder="Your shipping address"
 autocomplete="street-address">
 
-</div><button
+</div>
+
+
+<div class="payment-note">
+
+💳 You will be securely redirected to Stripe Test Checkout to complete the payment.
+
+</div>
+
+
+<br>
+
+
+<button
 id="placeOrderButton"
 class="place-order"
 onclick="placeOrder()">
 
-🛒 PLACE ORDER
+💳 CONTINUE TO STRIPE
 
-</button></div></main><script>
+</button>
 
+</div>
+
+</main>
+
+
+<script>
 
 /* =====================================================
    BERAKAH SUPABASE
@@ -271,7 +376,6 @@ const accessToken =
 localStorage.getItem(
     "berakah_access_token"
 );
-
 
 let currentUser = null;
 
@@ -329,7 +433,7 @@ document.getElementById(
 
 
 /* =====================================================
-   STATUS MESSAGE
+   STATUS
 ===================================================== */
 
 function showStatus(
@@ -354,6 +458,15 @@ async function supabaseRequest(
     endpoint,
     options={}
 ){
+
+    if(!accessToken){
+
+        throw new Error(
+            "You are not logged in."
+        );
+
+    }
+
 
     const response =
         await fetch(
@@ -475,6 +588,18 @@ async function loadCurrentUser(){
             "berakah_refresh_token"
         );
 
+        localStorage.removeItem(
+            "berakah_user"
+        );
+
+        localStorage.removeItem(
+            "berakah_username"
+        );
+
+        localStorage.removeItem(
+            "berakah_auth_user_id"
+        );
+
 
         window.location.href =
             "login.html";
@@ -488,10 +613,49 @@ async function loadCurrentUser(){
 
 
 /* =====================================================
+   GET PRODUCT
+===================================================== */
+
+async function getProduct(
+    productId
+){
+
+    const endpoint =
+        "/rest/v1/products" +
+        "?select=*" +
+        "&id=eq." +
+        encodeURIComponent(productId) +
+        "&limit=1";
+
+
+    const products =
+        await supabaseRequest(
+            endpoint
+        );
+
+
+    if(
+        !products ||
+        !products.length
+    ){
+
+        throw new Error(
+            "Product could not be found."
+        );
+
+    }
+
+
+    return products[0];
+
+}
+
+
+/* =====================================================
    DISPLAY CART
 ===================================================== */
 
-function displayCart(){
+async function displayCart(){
 
     if(!cart.length){
 
@@ -527,173 +691,140 @@ function displayCart(){
 
     let total = 0;
 
-
-    summaryBox.innerHTML =
-        cart.map(
-            function(item){
-
-                const quantity =
-                    Number(
-                        item.quantity || 1
-                    );
+    let html = "";
 
 
-                const price =
-                    Number(
-                        item.price || 0
-                    );
+    for(
+        const item of cart
+    ){
+
+        const quantity =
+            Number(
+                item.quantity || 1
+            );
 
 
-                const itemTotal =
-                    price * quantity;
+        const price =
+            Number(
+                item.price || 0
+            );
 
 
-                total +=
-                    itemTotal;
+        const itemTotal =
+            price * quantity;
 
 
-                return `
-
-                    <div class="product-row">
-
-                        <div>
-
-                            <div class="product-name">
-
-                                ${escapeHTML(
-                                    item.name ||
-                                    "Product"
-                                )}
-
-                            </div>
+        total +=
+            itemTotal;
 
 
-                            <div class="product-meta">
+        html += `
 
-                                Quantity:
-                                ${quantity}
+            <div class="product-row">
 
-                            </div>
+                <div>
 
-                        </div>
+                    <div class="product-name">
 
-
-                        <div class="product-price">
-
-                            $${itemTotal.toFixed(2)}
-
-                        </div>
+                        ${escapeHTML(
+                            item.name ||
+                            "Product"
+                        )}
 
                     </div>
 
-                `;
+                    <div class="product-meta">
 
-            }
-        ).join("");
+                        Quantity:
+                        ${quantity}
 
+                    </div>
 
-    totalBox.textContent =
-        "$" + total.toFixed(2);
+                </div>
 
-}
+                <div class="product-price">
 
+                    $${itemTotal.toFixed(2)}
 
-/* =====================================================
-   GET PRODUCT FROM SUPABASE
-===================================================== */
+                </div>
 
-async function getProduct(
-    productId
-){
+            </div>
 
-    const endpoint =
-        "/rest/v1/products" +
-        "?select=*" +
-        "&id=eq." +
-        encodeURIComponent(productId) +
-        "&limit=1";
-
-
-    const products =
-        await supabaseRequest(
-            endpoint
-        );
-
-
-    if(
-        !products ||
-        !products.length
-    ){
-
-        throw new Error(
-
-            "Product " +
-            productId +
-            " could not be found."
-
-        );
+        `;
 
     }
 
 
-    return products[0];
+    summaryBox.innerHTML =
+        html;
+
+
+    totalBox.textContent =
+        "$" +
+        total.toFixed(2);
 
 }
 
 
 /* =====================================================
-   GENERATE UNIQUE ORDER NUMBER
+   START STRIPE CHECKOUT
 ===================================================== */
 
-function generateOrderNumber(){
-
-    const timestamp =
-        Date.now()
-        .toString()
-        .slice(-8);
-
-
-    const random =
-        Math.floor(
-            1000 +
-            Math.random() *
-            9000
-        );
-
-
-    return "BRK-" +
-           timestamp +
-           random;
-
-}
-
-
-/* =====================================================
-   PLACE ORDER
-===================================================== */
-
-async function placeOrder(){
+async function createStripeCheckout(){
 
     if(!currentUser){
 
-        showStatus(
-            "Please log in first.",
-            "error"
+        throw new Error(
+            "Please log in first."
         );
-
-        return;
 
     }
 
 
     if(!cart.length){
 
-        showStatus(
-            "Your cart is empty.",
-            "error"
+        throw new Error(
+            "Your cart is empty."
         );
 
-        return;
+    }
+
+
+    /*
+       For the first Stripe test we use
+       ONE product at a time.
+
+       This matches the stripe-checkout
+       Edge Function we deployed.
+    */
+
+    if(cart.length > 1){
+
+        throw new Error(
+            "For the first Stripe test, please checkout one product at a time."
+        );
+
+    }
+
+
+    const cartItem =
+        cart[0];
+
+
+    const quantity =
+        Number(
+            cartItem.quantity || 1
+        );
+
+
+    if(
+        !Number.isInteger(quantity) ||
+        quantity < 1
+    ){
+
+        throw new Error(
+            "Invalid product quantity."
+        );
 
     }
 
@@ -729,13 +860,191 @@ async function placeOrder(){
         !customerAddress
     ){
 
-        showStatus(
+        throw new Error(
+            "Please complete your name, email, phone, and shipping address."
+        );
 
-            "Please complete your name, email, phone, and shipping address.",
+    }
 
-            "error"
+
+    /*
+       Get the real product from Supabase.
+       Never trust the price stored only
+       in localStorage.
+    */
+
+    const product =
+        await getProduct(
+            cartItem.id
+        );
+
+
+    if(!product){
+
+        throw new Error(
+            "Product was not found."
+        );
+
+    }
+
+
+    const stock =
+        Number(
+            product.stock || 0
+        );
+
+
+    if(
+        stock < quantity
+    ){
+
+        throw new Error(
+            `Only ${stock} item(s) are available.`
+        );
+
+    }
+
+
+    showStatus(
+        "Creating your secure Stripe checkout...",
+        "success"
+    );
+
+
+    /*
+       Call the Supabase Edge Function.
+    */
+
+    const response =
+        await fetch(
+            SUPABASE_URL +
+            "/functions/v1/stripe-checkout",
+            {
+
+                method:
+                    "POST",
+
+                headers:{
+
+                    "apikey":
+                        SUPABASE_KEY,
+
+                    "Authorization":
+                        "Bearer " +
+                        accessToken,
+
+                    "Content-Type":
+                        "application/json"
+
+                },
+
+                body:
+                    JSON.stringify({
+
+                        product_id:
+                            product.id,
+
+                        quantity:
+                            quantity,
+
+                        customer_name:
+                            customerName,
+
+                        customer_email:
+                            customerEmail,
+
+                        customer_phone:
+                            customerPhone,
+
+                        customer_address:
+                            customerAddress
+
+                    })
+
+            }
 
         );
+
+
+    const text =
+        await response.text();
+
+
+    let data = null;
+
+
+    try{
+
+        data =
+            text
+            ? JSON.parse(text)
+            : null;
+
+    }catch(error){
+
+        data = null;
+
+    }
+
+
+    console.log(
+        "STRIPE CHECKOUT RESPONSE:",
+        data
+    );
+
+
+    if(!response.ok){
+
+        throw new Error(
+
+            data?.error ||
+
+            data?.message ||
+
+            "Stripe Checkout could not be created."
+
+        );
+
+    }
+
+
+    if(
+        !data ||
+        !data.checkout_url
+    ){
+
+        throw new Error(
+            "Stripe Checkout URL was not returned."
+        );
+
+    }
+
+
+    /*
+       Redirect buyer to Stripe.
+    */
+
+    showStatus(
+        "Redirecting you to Stripe...",
+        "success"
+    );
+
+
+    window.location.href =
+        data.checkout_url;
+
+}
+
+
+/* =====================================================
+   PLACE ORDER BUTTON
+===================================================== */
+
+async function placeOrder(){
+
+    if(
+        placeOrderButton.disabled
+    ){
 
         return;
 
@@ -747,237 +1056,12 @@ async function placeOrder(){
 
 
     placeOrderButton.textContent =
-        "PLACING ORDER...";
-
-
-    showStatus(
-        "Saving your order...",
-        "success"
-    );
+        "CONNECTING TO STRIPE...";
 
 
     try{
 
-
-        /* =================================================
-           PROCESS EACH CART ITEM
-           
-           IMPORTANT:
-           A UNIQUE ORDER NUMBER IS GENERATED
-           FOR EVERY ORDER ROW.
-        ================================================= */
-
-        for(
-            const cartItem of cart
-        ){
-
-            const product =
-                await getProduct(
-                    cartItem.id
-                );
-
-
-            const quantity =
-                Number(
-                    cartItem.quantity || 1
-                );
-
-
-            const price =
-                Number(
-                    product.price || 0
-                );
-
-
-            const itemTotal =
-                price * quantity;
-
-
-            /* =================================================
-               SELLER
-            ================================================= */
-
-            const sellerId =
-                product.seller_id ||
-                null;
-
-
-            /* =================================================
-               UNIQUE ORDER NUMBER
-            ================================================= */
-
-            const orderNumber =
-                generateOrderNumber();
-
-
-            /* =================================================
-               PRODUCT SNAPSHOT
-            ================================================= */
-
-            const productSnapshot = {
-
-                id:
-                    product.id,
-
-                name:
-                    product.name,
-
-                price:
-                    price,
-
-                quantity:
-                    quantity,
-
-                image_url:
-                    product.image_url,
-
-                seller_id:
-                    sellerId,
-
-                seller_name:
-                    product.seller_name,
-
-                category:
-                    product.category
-
-            };
-
-
-            /* =================================================
-               ORDER DATA
-            ================================================= */
-
-            const order = {
-
-                buyer_id:
-                    currentUser.id,
-
-                seller_id:
-                    sellerId,
-
-                product_id:
-                    product.id,
-
-                product_name:
-                    product.name,
-
-                quantity:
-                    quantity,
-
-                price:
-                    price,
-
-                total:
-                    itemTotal,
-
-                status:
-                    "pending",
-
-                shipping_name:
-                    customerName,
-
-                shipping_email:
-                    customerEmail,
-
-                shipping_phone:
-                    customerPhone,
-
-                shipping_address:
-                    customerAddress,
-
-                customer_id:
-                    currentUser.id,
-
-                order_number:
-                    orderNumber,
-
-                customer_name:
-                    customerName,
-
-                customer_email:
-                    customerEmail,
-
-                customer_phone:
-                    customerPhone,
-
-                customer_address:
-                    customerAddress,
-
-                products:
-                    productSnapshot
-
-            };
-
-
-            console.log(
-                "ORDER BEING SENT:",
-                order
-            );
-
-
-            /* =================================================
-               INSERT ORDER
-            ================================================= */
-
-            await supabaseRequest(
-
-                "/rest/v1/orders",
-
-                {
-
-                    method:
-                        "POST",
-
-                    headers:{
-
-                        "Prefer":
-                            "return=representation"
-
-                    },
-
-                    body:
-                        JSON.stringify(
-                            order
-                        )
-
-                }
-
-            );
-
-        }
-
-
-        /* =================================================
-           SUCCESS
-        ================================================= */
-
-        localStorage.removeItem(
-            "berakahCart"
-        );
-
-
-        showStatus(
-
-            "Order placed successfully! Redirecting...",
-
-            "success"
-
-        );
-
-
-        setTimeout(
-
-            function(){
-
-                window.location.href =
-                    "orders.html";
-
-            },
-
-            800
-
-        );
-
+        await createStripeCheckout();
 
     }catch(error){
 
@@ -989,8 +1073,8 @@ async function placeOrder(){
 
         showStatus(
 
-            "Could not save the order to Supabase.\n\n" +
-            error.message,
+            error.message ||
+            "Could not start Stripe Checkout.",
 
             "error"
 
@@ -1002,7 +1086,7 @@ async function placeOrder(){
 
 
         placeOrderButton.textContent =
-            "🛒 PLACE ORDER";
+            "💳 CONTINUE TO STRIPE";
 
     }
 
@@ -1053,70 +1137,88 @@ function escapeHTML(
 
 async function startCheckout(){
 
-    displayCart();
+    try{
+
+        await displayCart();
 
 
-    const loggedIn =
-        await loadCurrentUser();
+        const loggedIn =
+            await loadCurrentUser();
 
 
-    if(!loggedIn){
+        if(!loggedIn){
 
-        return;
+            return;
 
-    }
+        }
 
 
-    /* =================================================
-       PREFILL EMAIL
-    ================================================= */
+        /* =============================================
+           PREFILL EMAIL
+        ============================================= */
 
-    const emailInput =
-        document.getElementById(
-            "customerEmail"
+        const emailInput =
+            document.getElementById(
+                "customerEmail"
+            );
+
+
+        if(
+            currentUser.email &&
+            !emailInput.value
+        ){
+
+            emailInput.value =
+                currentUser.email;
+
+        }
+
+
+        /* =============================================
+           PREFILL NAME
+        ============================================= */
+
+        const metadata =
+            currentUser.user_metadata ||
+            {};
+
+
+        const name =
+            metadata.full_name ||
+            metadata.name ||
+            metadata.username ||
+            "";
+
+
+        const nameInput =
+            document.getElementById(
+                "customerName"
+            );
+
+
+        if(
+            name &&
+            !nameInput.value
+        ){
+
+            nameInput.value =
+                name;
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "START CHECKOUT ERROR:",
+            error
         );
 
 
-    if(
-        currentUser.email &&
-        !emailInput.value
-    ){
-
-        emailInput.value =
-            currentUser.email;
-
-    }
-
-
-    /* =================================================
-       PREFILL NAME
-    ================================================= */
-
-    const metadata =
-        currentUser.user_metadata ||
-        {};
-
-
-    const name =
-        metadata.full_name ||
-        metadata.name ||
-        metadata.username ||
-        "";
-
-
-    const nameInput =
-        document.getElementById(
-            "customerName"
+        showStatus(
+            error.message ||
+            "Could not load checkout.",
+            "error"
         );
-
-
-    if(
-        name &&
-        !nameInput.value
-    ){
-
-        nameInput.value =
-            name;
 
     }
 
@@ -1129,4 +1231,7 @@ async function startCheckout(){
 
 startCheckout();
 
-</script></body></html>
+</script>
+
+</body>
+</html>
