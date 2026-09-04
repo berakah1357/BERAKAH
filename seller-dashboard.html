@@ -1,484 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>BERAKAH - Seller Dashboard</title>
-
-  <!-- Stripe Connect.js -->
-  <script
-    src="https://connect-js.stripe.com/v1.0/connect.js"
-    async
-  ></script>
-
-  <style>
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #111827;
-    }
-
-    header {
-      background: white;
-      border-bottom: 1px solid #e5e7eb;
-      padding: 15px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #111827;
-      text-decoration: none;
-    }
-
-    nav {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    nav a,
-    nav button {
-      border: none;
-      background: #f3f4f6;
-      color: #111827;
-      text-decoration: none;
-      padding: 9px 13px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-
-    nav a:hover,
-    nav button:hover {
-      background: #e5e7eb;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 35px auto;
-      padding: 0 20px;
-    }
-
-    .page-header {
-      margin-bottom: 25px;
-    }
-
-    .page-header h1 {
-      margin: 0 0 7px;
-      font-size: 30px;
-    }
-
-    .page-header p {
-      margin: 0;
-      color: #6b7280;
-    }
-
-    .seller-name {
-      font-weight: bold;
-      color: #111827;
-    }
-
-    /* STRIPE */
-
-    .stripe-box {
-      background: white;
-      border-radius: 14px;
-      padding: 22px;
-      margin-bottom: 30px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-      border: 1px solid #e5e7eb;
-    }
-
-    .stripe-box h2 {
-      margin: 0 0 8px;
-      font-size: 21px;
-    }
-
-    .stripe-box p {
-      margin: 0 0 15px;
-      color: #6b7280;
-      line-height: 1.5;
-    }
-
-    .stripe-status {
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-
-    .stripe-connected {
-      color: #15803d;
-    }
-
-    .stripe-not-connected {
-      color: #b45309;
-    }
-
-    .stripe-button {
-      border: none;
-      background: #111827;
-      color: white;
-      padding: 12px 18px;
-      border-radius: 9px;
-      cursor: pointer;
-      font-size: 15px;
-      font-weight: bold;
-    }
-
-    .stripe-button:hover {
-      background: #000;
-    }
-
-    .stripe-button:disabled {
-      opacity: 0.6;
-      cursor: wait;
-    }
-
-    /* STRIPE EMBEDDED AREA */
-
-    #stripeOnboardingContainer {
-      display: none;
-      margin-top: 20px;
-      border-top: 1px solid #e5e7eb;
-      padding-top: 20px;
-    }
-
-    #stripeOnboardingContainer stripe-connect-account-onboarding {
-      display: block;
-      width: 100%;
-      min-height: 500px;
-    }
-
-    .stripe-close-button {
-      display: none;
-      margin-top: 15px;
-      border: none;
-      background: #e5e7eb;
-      color: #111827;
-      padding: 10px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    /* STATS */
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-      margin-bottom: 30px;
-    }
-
-    .stat-card {
-      background: white;
-      border-radius: 14px;
-      padding: 22px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-    }
-
-    .stat-title {
-      color: #6b7280;
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
-
-    .stat-value {
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    /* ACTIONS */
-
-    .actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 30px;
-    }
-
-    .btn {
-      border: none;
-      padding: 12px 18px;
-      border-radius: 9px;
-      cursor: pointer;
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: bold;
-      display: inline-block;
-    }
-
-    .btn-primary {
-      background: #2563eb;
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: #1d4ed8;
-    }
-
-    .btn-secondary {
-      background: #e5e7eb;
-      color: #111827;
-    }
-
-    .btn-secondary:hover {
-      background: #d1d5db;
-    }
-
-    /* SECTIONS */
-
-    .section {
-      background: white;
-      border-radius: 14px;
-      padding: 22px;
-      margin-bottom: 25px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    .section-header h2 {
-      margin: 0;
-      font-size: 21px;
-    }
-
-    .loading {
-      color: #6b7280;
-      padding: 20px 0;
-    }
-
-    .empty {
-      color: #6b7280;
-      text-align: center;
-      padding: 30px 10px;
-    }
-
-    /* PRODUCTS */
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-    }
-
-    .product-card {
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      overflow: hidden;
-      background: white;
-    }
-
-    .product-image {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      background: #f3f4f6;
-      display: block;
-    }
-
-    .product-info {
-      padding: 15px;
-    }
-
-    .product-name {
-      font-weight: bold;
-      margin-bottom: 7px;
-      font-size: 17px;
-    }
-
-    .product-price {
-      font-weight: bold;
-      font-size: 18px;
-      margin-bottom: 8px;
-    }
-
-    .product-meta {
-      color: #6b7280;
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    /* ORDERS */
-
-    .orders-container {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 650px;
-    }
-
-    th,
-    td {
-      padding: 13px;
-      text-align: left;
-      border-bottom: 1px solid #e5e7eb;
-      font-size: 14px;
-    }
-
-    th {
-      background: #f9fafb;
-      font-weight: bold;
-    }
-
-    .status {
-      display: inline-block;
-      padding: 5px 9px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: bold;
-      background: #f3f4f6;
-    }
-
-    /* LOGIN REQUIRED */
-
-    #loginRequired {
-      display: none;
-      background: white;
-      border-radius: 16px;
-      padding: 45px 25px;
-      text-align: center;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-    }
-
-    #loginRequired h2 {
-      margin-top: 0;
-    }
-
-    #loginRequired p {
-      color: #6b7280;
-      margin-bottom: 25px;
-    }
-
-    /* ERROR */
-
-    .error-box {
-      display: none;
-      background: #fee2e2;
-      color: #991b1b;
-      padding: 14px;
-      border-radius: 9px;
-      margin-bottom: 20px;
-      font-weight: bold;
-    }
-
-    /* MOBILE */
-
-    @media (max-width: 900px) {
-
-      .stats {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-    }
-
-    @media (max-width: 600px) {
-
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-      }
-
-      nav {
-        width: 100%;
-      }
-
-      nav a,
-      nav button {
-        flex: 1;
-        text-align: center;
-      }
-
-      .container {
-        margin-top: 25px;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
-      .products-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .page-header h1 {
-        font-size: 25px;
-      }
-
-      #stripeOnboardingContainer stripe-connect-account-onboarding {
-        min-height: 650px;
-      }
-
-    }
-
-  </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BERAKAH - Seller Dashboard</title>
+
+<!-- Stripe Connect Embedded Components -->
+<script src="https://connect-js.stripe.com/v1.0/connect.js" async></script>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #111827;
+}
+
+header {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: #2563eb;
+}
+
+nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+nav a,
+.logout-btn {
+  text-decoration: none;
+  border: none;
+  background: #eef2ff;
+  color: #1e3a8a;
+  padding: 9px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.logout-btn {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 25px 18px 50px;
+}
+
+h1 {
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  color: #6b7280;
+  margin-top: 0;
+}
+
+.seller-box {
+  background: white;
+  padding: 18px;
+  border-radius: 14px;
+  margin: 20px 0;
+  box-shadow: 0 3px 12px rgba(0,0,0,.06);
+}
+
+.seller-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+.stripe-btn {
+  background: #635bff;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 9px;
+  font-weight: bold;
+  margin-top: 12px;
+}
+
+.stripe-btn:hover {
+  opacity: .9;
+}
+
+.status {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.stat {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(0,0,0,.06);
+}
+
+.stat-title {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.stat-value {
+  font-size: 25px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.section {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  margin-top: 20px;
+  box-shadow: 0 3px 12px rgba(0,0,0,.06);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.add-btn {
+  background: #16a34a;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.refresh-btn {
+  background: #e5e7eb;
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th,
+td {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  font-size: 14px;
+}
+
+th {
+  background: #f9fafb;
+}
+
+.product-image {
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.empty {
+  color: #6b7280;
+  padding: 20px 0;
+}
+
+.error {
+  color: #b91c1c;
+}
+
+.success {
+  color: #15803d;
+}
+
+/* Stripe onboarding modal */
+
+#stripeOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 1000;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.stripe-modal {
+  background: white;
+  width: 100%;
+  max-width: 1000px;
+  min-height: 85vh;
+  margin: 20px auto;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.stripe-modal-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stripe-modal-header h2 {
+  margin: 0;
+  font-size: 19px;
+}
+
+.close-btn {
+  background: #f3f4f6;
+  color: #111827;
+  padding: 9px 13px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+#stripeOnboardingContainer {
+  padding: 10px;
+  min-height: 700px;
+}
+
+.loading {
+  padding: 30px;
+  text-align: center;
+  color: #6b7280;
+}
+
+@media (max-width: 800px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 500px) {
+  .stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  header {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  nav {
+    justify-content: flex-end;
+  }
+}
+</style>
 </head>
 
 <body>
 
 <header>
 
-  <a href="index.html" class="logo">
+  <div class="logo">
     BERAKAH
-  </a>
+  </div>
 
   <nav>
+    <a href="index.html">Home</a>
+    <a href="marketplace.html">Market</a>
+    <a href="seller-dashboard.html">Dashboard</a>
+    <a href="profile.html">Profile</a>
 
-    <a href="index.html">
-      Home
-    </a>
-
-    <a href="marketplace.html">
-      Market
-    </a>
-
-    <a href="seller-dashboard.html">
-      Dashboard
-    </a>
-
-    <a href="profile.html">
-      Profile
-    </a>
-
-    <button onclick="logout()">
+    <button
+      class="logout-btn"
+      onclick="logout()">
       Logout
     </button>
-
   </nav>
 
 </header>
@@ -486,303 +316,194 @@
 
 <div class="container">
 
-  <!-- LOGIN REQUIRED -->
+  <h1>Seller Dashboard</h1>
 
-  <div id="loginRequired">
+  <p class="subtitle">
+    Manage your BERAKAH store, products, orders and payments.
+  </p>
 
-    <h2>
-      Seller Login Required
-    </h2>
 
-    <p>
-      Please log in to your BERAKAH account to view your seller dashboard.
-    </p>
+  <div class="seller-box">
 
-    <a
-      href="login.html"
-      class="btn btn-primary"
-    >
-      Go to Login
-    </a>
+    <div>
+      Seller:
+      <span
+        class="seller-name"
+        id="sellerName">
+        ephphavora
+      </span>
+    </div>
+
+    <button
+      class="stripe-btn"
+      id="stripeButton"
+      onclick="connectStripe()">
+      Connect Stripe
+    </button>
+
+    <div
+      id="stripeStatus"
+      class="status">
+    </div>
 
   </div>
 
 
-  <!-- DASHBOARD -->
+  <!-- Statistics -->
 
-  <div id="dashboard">
+  <div class="stats">
 
-    <!-- PAGE HEADER -->
-
-    <div class="page-header">
-
-      <h1>
-        Seller Dashboard
-      </h1>
-
-      <p>
-        Welcome,
-        <span
-          class="seller-name"
-          id="sellerName"
-        >
-          ephphavora
-        </span>
-      </p>
-
-    </div>
-
-
-    <!-- ERROR -->
-
-    <div
-      id="errorBox"
-      class="error-box"
-    ></div>
-
-
-    <!-- STRIPE SETUP -->
-
-    <div class="stripe-box">
-
-      <h2>
-        💳 Seller Payments
-      </h2>
-
-      <p>
-        Connect your Stripe account so customers can pay for your products.
-      </p>
+    <div class="stat">
+      <div class="stat-title">
+        Products
+      </div>
 
       <div
-        id="stripeStatus"
-        class="stripe-status stripe-not-connected"
-      >
-        Checking Stripe connection...
+        class="stat-value"
+        id="productCount">
+        0
       </div>
-
-      <button
-        id="stripeButton"
-        class="stripe-button"
-        onclick="startStripeSetup()"
-      >
-        💳 Set Up Stripe Payments
-      </button>
-
-      <div id="stripeOnboardingContainer"></div>
-
-      <button
-        id="stripeCloseButton"
-        class="stripe-close-button"
-        onclick="closeStripeOnboarding()"
-      >
-        Close Stripe Setup
-      </button>
-
     </div>
 
 
-    <!-- STATS -->
-
-    <div class="stats">
-
-      <div class="stat-card">
-
-        <div class="stat-title">
-          Total Orders
-        </div>
-
-        <div
-          class="stat-value"
-          id="totalOrders"
-        >
-          0
-        </div>
-
+    <div class="stat">
+      <div class="stat-title">
+        Orders
       </div>
 
-
-      <div class="stat-card">
-
-        <div class="stat-title">
-          Products
-        </div>
-
-        <div
-          class="stat-value"
-          id="totalProducts"
-        >
-          0
-        </div>
-
+      <div
+        class="stat-value"
+        id="orderCount">
+        0
       </div>
-
-
-      <div class="stat-card">
-
-        <div class="stat-title">
-          Paid Orders
-        </div>
-
-        <div
-          class="stat-value"
-          id="paidOrders"
-        >
-          0
-        </div>
-
-      </div>
-
-
-      <div class="stat-card">
-
-        <div class="stat-title">
-          Sales
-        </div>
-
-        <div
-          class="stat-value"
-          id="totalSales"
-        >
-          $0.00
-        </div>
-
-      </div>
-
     </div>
 
 
-    <!-- ACTIONS -->
+    <div class="stat">
+      <div class="stat-title">
+        Sales
+      </div>
 
-    <div class="actions">
-
-      <a
-        href="seller-add-product.html"
-        class="btn btn-primary"
-      >
-        + Add Product
-      </a>
-
-      <a
-        href="marketplace.html"
-        class="btn btn-secondary"
-      >
-        🛒 Marketplace
-      </a>
-
-      <button
-        onclick="loadDashboard()"
-        class="btn btn-secondary"
-      >
-        🔄 Refresh
-      </button>
-
+      <div
+        class="stat-value"
+        id="salesCount">
+        0
+      </div>
     </div>
 
 
-    <!-- PRODUCTS -->
+    <div class="stat">
+      <div class="stat-title">
+        Revenue
+      </div>
 
-    <div class="section">
+      <div
+        class="stat-value"
+        id="revenue">
+        $0.00
+      </div>
+    </div>
 
-      <div class="section-header">
+  </div>
 
-        <h2>
-          My Products
-        </h2>
+
+  <!-- Products -->
+
+  <div class="section">
+
+    <div class="section-header">
+
+      <h2>
+        My Products
+      </h2>
+
+      <div>
 
         <a
-          href="seller-add-product.html"
-          class="btn btn-primary"
-        >
+          class="add-btn"
+          href="seller-add-product.html">
           + Add Product
         </a>
 
-      </div>
+        <button
+          class="refresh-btn"
+          onclick="loadProducts()">
+          Refresh
+        </button>
 
-      <div
-        id="productsLoading"
-        class="loading"
-      >
-        Loading products...
       </div>
-
-      <div
-        id="productsGrid"
-        class="products-grid"
-      ></div>
 
     </div>
 
 
-    <!-- ORDERS -->
+    <div id="productsArea">
 
-    <div class="section">
-
-      <div class="section-header">
-
-        <h2>
-          Recent Orders
-        </h2>
-
+      <div class="loading">
+        Loading products...
       </div>
 
-      <div
-        id="ordersLoading"
-        class="loading"
-      >
+    </div>
+
+  </div>
+
+
+  <!-- Orders -->
+
+  <div class="section">
+
+    <div class="section-header">
+
+      <h2>
+        My Orders
+      </h2>
+
+      <button
+        class="refresh-btn"
+        onclick="loadOrders()">
+        Refresh
+      </button>
+
+    </div>
+
+
+    <div id="ordersArea">
+
+      <div class="loading">
         Loading orders...
       </div>
 
-      <div class="orders-container">
+    </div>
 
-        <table
-          id="ordersTable"
-          style="display:none;"
-        >
+  </div>
 
-          <thead>
+</div>
 
-            <tr>
 
-              <th>
-                Product
-              </th>
+<!-- Stripe Overlay -->
 
-              <th>
-                Price
-              </th>
+<div id="stripeOverlay">
 
-              <th>
-                Quantity
-              </th>
+  <div class="stripe-modal">
 
-              <th>
-                Total
-              </th>
+    <div class="stripe-modal-header">
 
-              <th>
-                Status
-              </th>
+      <h2>
+        Connect your Stripe account
+      </h2>
 
-              <th>
-                Date
-              </th>
+      <button
+        class="close-btn"
+        onclick="closeStripe()">
+        Close
+      </button>
 
-            </tr>
+    </div>
 
-          </thead>
+    <div
+      id="stripeOnboardingContainer">
 
-          <tbody id="ordersBody"></tbody>
-
-        </table>
-
-      </div>
-
-      <div
-        id="ordersEmpty"
-        class="empty"
-        style="display:none;"
-      >
-        No orders yet.
+      <div class="loading">
+        Loading Stripe onboarding...
       </div>
 
     </div>
@@ -794,12 +515,6 @@
 
 <script>
 
-/*
-==================================================
-BERAKAH SUPABASE
-==================================================
-*/
-
 const SUPABASE_URL =
   "https://utoyoglycqjmqznczfxa.supabase.co";
 
@@ -808,560 +523,632 @@ const SUPABASE_KEY =
 
 
 /*
-==================================================
-STRIPE CONNECT FUNCTION
-==================================================
+  IMPORTANT
+
+  This is the Stripe PUBLISHABLE key.
+
+  It is safe for browser/client-side use.
+
+  NEVER put your Stripe secret key here.
 */
 
-const STRIPE_CONNECT_URL =
-  `${SUPABASE_URL}/functions/v1/stripe-connect`;
+const STRIPE_PUBLISHABLE_KEY =
+  "pk_test_51U7RQhK9xfW7bcexhXi9aqwxmp2xEl02xafzXoHPCbAHRXPVf9aJj3YvwV3aaDNphy8utySgACPOyggYy2cb3rXu00Rm0kozdn";
 
 
-/*
-==================================================
-LOGIN SESSION
-==================================================
-*/
-
-const accessToken =
+let accessToken =
   localStorage.getItem(
     "berakah_access_token"
   );
 
-const authUserId =
+let authUserId =
   localStorage.getItem(
     "berakah_auth_user_id"
   );
 
 
-/*
-==================================================
-SELLER NAME
-==================================================
-*/
+let stripeConnectInstance =
+  null;
 
-const sellerName =
-  (
+let stripeOnboardingComponent =
+  null;
+
+
+/* --------------------------------------------------
+   SESSION
+-------------------------------------------------- */
+
+async function verifySession() {
+
+  accessToken =
     localStorage.getItem(
-      "berakah_username"
-    )
-    || "ephphavora"
-  ).toLowerCase();
+      "berakah_access_token"
+    );
+
+  authUserId =
+    localStorage.getItem(
+      "berakah_auth_user_id"
+    );
 
 
-/*
-==================================================
-ELEMENTS
-==================================================
-*/
+  if (
+    !accessToken ||
+    !authUserId
+  ) {
 
-const dashboard =
-  document.getElementById(
-    "dashboard"
-  );
+    window.location.href =
+      "login.html";
 
-const loginRequired =
-  document.getElementById(
-    "loginRequired"
-  );
+    return false;
 
-const sellerNameElement =
-  document.getElementById(
-    "sellerName"
-  );
+  }
 
-const errorBox =
-  document.getElementById(
-    "errorBox"
-  );
-
-const productsLoading =
-  document.getElementById(
-    "productsLoading"
-  );
-
-const productsGrid =
-  document.getElementById(
-    "productsGrid"
-  );
-
-const ordersLoading =
-  document.getElementById(
-    "ordersLoading"
-  );
-
-const ordersTable =
-  document.getElementById(
-    "ordersTable"
-  );
-
-const ordersBody =
-  document.getElementById(
-    "ordersBody"
-  );
-
-const ordersEmpty =
-  document.getElementById(
-    "ordersEmpty"
-  );
-
-const stripeStatus =
-  document.getElementById(
-    "stripeStatus"
-  );
-
-const stripeButton =
-  document.getElementById(
-    "stripeButton"
-  );
-
-const stripeOnboardingContainer =
-  document.getElementById(
-    "stripeOnboardingContainer"
-  );
-
-const stripeCloseButton =
-  document.getElementById(
-    "stripeCloseButton"
-  );
-
-
-/*
-==================================================
-STRIPE CONNECT INSTANCE
-==================================================
-*/
-
-let stripeConnectInstance = null;
-
-let stripeOnboardingElement = null;
-
-
-/*
-==================================================
-CHECK LOGIN
-==================================================
-*/
-
-if (!accessToken || !authUserId) {
-
-  dashboard.style.display =
-    "none";
-
-  loginRequired.style.display =
-    "block";
-
-} else {
-
-  sellerNameElement.textContent =
-    sellerName;
-
-  checkStripeStatus();
-
-  loadDashboard();
-
-}
-
-
-/*
-==================================================
-SUPABASE HEADERS
-==================================================
-*/
-
-function getHeaders() {
-
-  return {
-
-    "apikey":
-      SUPABASE_KEY,
-
-    "Authorization":
-      `Bearer ${accessToken}`,
-
-    "Content-Type":
-      "application/json"
-
-  };
-
-}
-
-
-/*
-==================================================
-CHECK STRIPE STATUS
-==================================================
-*/
-
-async function checkStripeStatus() {
 
   try {
 
-    const profileUrl =
-      `${SUPABASE_URL}/rest/v1/profiles` +
-      `?select=stripe_connect_account_id` +
-      `&user_id=eq.${encodeURIComponent(authUserId)}`;
-
     const response =
       await fetch(
-        profileUrl,
+        SUPABASE_URL +
+        "/auth/v1/user",
         {
-          method: "GET",
-          headers: getHeaders()
+          headers: {
+            apikey:
+              SUPABASE_KEY,
+
+            Authorization:
+              "Bearer " +
+              accessToken
+          }
         }
       );
 
-    const text =
-      await response.text();
 
     if (!response.ok) {
 
-      console.error(
-        "Stripe status error:",
-        text
+      logout();
+
+      return false;
+
+    }
+
+
+    const user =
+      await response.json();
+
+
+    if (user.id !== authUserId) {
+
+      authUserId =
+        user.id;
+
+      localStorage.setItem(
+        "berakah_auth_user_id",
+        user.id
       );
 
-      stripeStatus.textContent =
-        "Stripe connection status unavailable.";
+    }
+
+
+    return true;
+
+  } catch (error) {
+
+    console.error(error);
+
+    return false;
+
+  }
+
+}
+
+
+/* --------------------------------------------------
+   SELLER NAME
+-------------------------------------------------- */
+
+async function loadSellerProfile() {
+
+  try {
+
+    const response =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/profiles" +
+        "?select=username,stripe_connect_account_id" +
+        "&user_id=eq." +
+        encodeURIComponent(authUserId),
+
+        {
+          headers: {
+            apikey:
+              SUPABASE_KEY,
+
+            Authorization:
+              "Bearer " +
+              accessToken
+          }
+        }
+      );
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        "Could not load seller profile."
+      );
+
+    }
+
+
+    const profiles =
+      await response.json();
+
+
+    if (
+      profiles.length > 0 &&
+      profiles[0].username
+    ) {
+
+      document.getElementById(
+        "sellerName"
+      ).textContent =
+        profiles[0].username
+          .toLowerCase();
+
+    }
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+
+}
+
+
+/* --------------------------------------------------
+   PRODUCTS
+-------------------------------------------------- */
+
+async function loadProducts() {
+
+  const area =
+    document.getElementById(
+      "productsArea"
+    );
+
+
+  area.innerHTML =
+    '<div class="loading">Loading products...</div>';
+
+
+  try {
+
+    const response =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/products" +
+        "?select=*" +
+        "&seller_id=eq." +
+        encodeURIComponent(authUserId) +
+        "&order=created_at.desc",
+
+        {
+          headers: {
+            apikey:
+              SUPABASE_KEY,
+
+            Authorization:
+              "Bearer " +
+              accessToken
+          }
+        }
+      );
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        await response.text()
+      );
+
+    }
+
+
+    const products =
+      await response.json();
+
+
+    document.getElementById(
+      "productCount"
+    ).textContent =
+      products.length;
+
+
+    if (!products.length) {
+
+      area.innerHTML =
+        '<div class="empty">You have no products yet.</div>';
 
       return;
 
     }
 
-    const profiles =
-      JSON.parse(text);
 
-    const accountId =
-      profiles?.[0]?.stripe_connect_account_id;
+    let html =
+      `
+      <table>
 
-    if (accountId) {
+        <thead>
 
-      stripeStatus.textContent =
-        "✓ Stripe account connected";
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Stock</th>
+          </tr>
 
-      stripeStatus.className =
-        "stripe-status stripe-connected";
+        </thead>
 
-      stripeButton.textContent =
-        "💳 Continue Stripe Setup";
+        <tbody>
+      `;
 
-    } else {
 
-      stripeStatus.textContent =
-        "Stripe account not connected yet.";
+    products.forEach(product => {
 
-      stripeStatus.className =
-        "stripe-status stripe-not-connected";
+      const image =
+        product.image_url ||
+        "https://via.placeholder.com/100x100?text=BERAKAH";
 
-      stripeButton.textContent =
-        "💳 Set Up Stripe Payments";
 
-    }
+      html +=
+        `
+        <tr>
 
-  } catch (error) {
+          <td>
+            <img
+              class="product-image"
+              src="${escapeHtml(image)}"
+              alt="">
+          </td>
 
-    console.error(
-      "Stripe status check failed:",
-      error
-    );
+          <td>
+            ${escapeHtml(product.name || "")}
+          </td>
 
-    stripeStatus.textContent =
-      "Stripe connection status unavailable.";
+          <td>
+            $${Number(product.price || 0).toFixed(2)}
+          </td>
 
-  }
+          <td>
+            ${escapeHtml(product.category || "")}
+          </td>
 
-}
+          <td>
+            ${Number(product.stock || 0)}
+          </td>
 
+        </tr>
+        `;
 
-/*
-==================================================
-START STRIPE SETUP
-==================================================
-*/
-
-async function startStripeSetup() {
-
-  if (!accessToken || !authUserId) {
-
-    alert(
-      "Please log in before setting up Stripe."
-    );
-
-    window.location.href =
-      "login.html";
-
-    return;
-
-  }
-
-  stripeButton.disabled =
-    true;
-
-  stripeButton.textContent =
-    "Connecting to Stripe...";
-
-  hideError();
-
-  try {
-
-    /*
-    ----------------------------------------------
-    CALL BERAKAH STRIPE CONNECT FUNCTION
-    ----------------------------------------------
-    */
-
-    const response =
-      await fetch(
-        STRIPE_CONNECT_URL,
-        {
-          method: "POST",
-
-          headers: getHeaders(),
-
-          body: JSON.stringify({})
-        }
-      );
-
-    const text =
-      await response.text();
-
-    let result;
-
-    try {
-
-      result =
-        JSON.parse(text);
-
-    } catch {
-
-      throw new Error(
-        text ||
-        "Invalid response from Stripe Connect."
-      );
-
-    }
-
-
-    if (
-      !response.ok ||
-      !result.success
-    ) {
-
-      throw new Error(
-        result.error ||
-        "Stripe setup failed."
-      );
-
-    }
-
-
-    /*
-    ----------------------------------------------
-    ACCOUNT SESSION CLIENT SECRET
-    ----------------------------------------------
-    */
-
-    const clientSecret =
-      result.account_session_client_secret;
-
-    if (!clientSecret) {
-
-      throw new Error(
-        "Stripe Account Session was not created."
-      );
-
-    }
-
-
-    /*
-    ----------------------------------------------
-    MAKE SURE STRIPE CONNECT.JS IS READY
-    ----------------------------------------------
-    */
-
-    await waitForStripeConnect();
-
-
-    /*
-    ----------------------------------------------
-    INITIALIZE STRIPE CONNECT
-    ----------------------------------------------
-    */
-
-    stripeConnectInstance =
-      StripeConnect.init({
-
-        publishableKey:
-          getStripePublishableKey(),
-
-        fetchClientSecret:
-          async function() {
-
-            const refreshResponse =
-              await fetch(
-                STRIPE_CONNECT_URL,
-                {
-                  method: "POST",
-                  headers: getHeaders(),
-                  body: JSON.stringify({})
-                }
-              );
-
-            const refreshText =
-              await refreshResponse.text();
-
-            let refreshResult;
-
-            try {
-
-              refreshResult =
-                JSON.parse(
-                  refreshText
-                );
-
-            } catch {
-
-              throw new Error(
-                refreshText ||
-                "Could not refresh Stripe Account Session."
-              );
-
-            }
-
-            if (
-              !refreshResponse.ok ||
-              !refreshResult.success
-            ) {
-
-              throw new Error(
-                refreshResult.error ||
-                "Could not refresh Stripe Account Session."
-              );
-
-            }
-
-            if (
-              !refreshResult.account_session_client_secret
-            ) {
-
-              throw new Error(
-                "Stripe did not return a new Account Session client secret."
-              );
-
-            }
-
-            return refreshResult.account_session_client_secret;
-
-          }
-
-      });
-
-
-    /*
-    ----------------------------------------------
-    CREATE ACCOUNT ONBOARDING COMPONENT
-    ----------------------------------------------
-    */
-
-    stripeOnboardingElement =
-      stripeConnectInstance.create(
-        "account-onboarding"
-      );
-
-
-    /*
-    ----------------------------------------------
-    CLEAR OLD COMPONENT
-    ----------------------------------------------
-    */
-
-    stripeOnboardingContainer.innerHTML =
-      "";
-
-
-    /*
-    ----------------------------------------------
-    ADD STRIPE ONBOARDING TO PAGE
-    ----------------------------------------------
-    */
-
-    stripeOnboardingContainer.appendChild(
-      stripeOnboardingElement
-    );
-
-
-    /*
-    ----------------------------------------------
-    SHOW STRIPE AREA
-    ----------------------------------------------
-    */
-
-    stripeOnboardingContainer.style.display =
-      "block";
-
-    stripeCloseButton.style.display =
-      "inline-block";
-
-    stripeButton.style.display =
-      "none";
-
-
-    stripeStatus.textContent =
-      "✓ Stripe account connected — complete your Stripe setup below.";
-
-    stripeStatus.className =
-      "stripe-status stripe-connected";
-
-
-    /*
-    ----------------------------------------------
-    SCROLL TO STRIPE
-    ----------------------------------------------
-    */
-
-    stripeOnboardingContainer.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
     });
 
 
+    html +=
+      `
+        </tbody>
+      </table>
+      `;
+
+
+    area.innerHTML =
+      html;
+
+
   } catch (error) {
 
-    console.error(
-      "Stripe setup error:",
-      error
-    );
+    console.error(error);
 
-    showError(
-      "Stripe setup error: " +
-      error.message
-    );
-
-    stripeButton.disabled =
-      false;
-
-    stripeButton.textContent =
-      "💳 Continue Stripe Setup";
+    area.innerHTML =
+      `<div class="error">
+        Could not load products.
+        ${escapeHtml(error.message)}
+      </div>`;
 
   }
 
 }
 
 
-/*
-==================================================
-WAIT FOR STRIPE CONNECT.JS
-==================================================
-*/
+/* --------------------------------------------------
+   ORDERS
+-------------------------------------------------- */
+
+async function loadOrders() {
+
+  const area =
+    document.getElementById(
+      "ordersArea"
+    );
+
+
+  area.innerHTML =
+    '<div class="loading">Loading orders...</div>';
+
+
+  try {
+
+    const response =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/orders" +
+        "?select=*" +
+        "&seller_id=eq." +
+        encodeURIComponent(authUserId) +
+        "&order=created_at.desc",
+
+        {
+          headers: {
+            apikey:
+              SUPABASE_KEY,
+
+            Authorization:
+              "Bearer " +
+              accessToken
+          }
+        }
+      );
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        await response.text()
+      );
+
+    }
+
+
+    const orders =
+      await response.json();
+
+
+    document.getElementById(
+      "orderCount"
+    ).textContent =
+      orders.length;
+
+
+    let paidOrders =
+      orders.filter(
+        order =>
+          order.payment_status === "paid" ||
+          order.status === "paid"
+      );
+
+
+    document.getElementById(
+      "salesCount"
+    ).textContent =
+      paidOrders.length;
+
+
+    const revenue =
+      paidOrders.reduce(
+        (sum, order) =>
+          sum +
+          Number(
+            order.total || 0
+          ),
+        0
+      );
+
+
+    document.getElementById(
+      "revenue"
+    ).textContent =
+      "$" +
+      revenue.toFixed(2);
+
+
+    if (!orders.length) {
+
+      area.innerHTML =
+        '<div class="empty">No orders yet.</div>';
+
+      return;
+
+    }
+
+
+    let html =
+      `
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Order</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Payment</th>
+            <th>Date</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+      `;
+
+
+    orders.forEach(order => {
+
+      const date =
+        order.created_at
+          ? new Date(
+              order.created_at
+            ).toLocaleString()
+          : "";
+
+
+      html +=
+        `
+        <tr>
+
+          <td>
+            ${escapeHtml(
+              order.order_number ||
+              String(order.id || "")
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              order.product_name ||
+              "Product"
+            )}
+          </td>
+
+          <td>
+            ${Number(
+              order.quantity || 0
+            )}
+          </td>
+
+          <td>
+            $${Number(
+              order.total || 0
+            ).toFixed(2)}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              order.status || "pending"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(
+              order.payment_status ||
+              "unpaid"
+            )}
+          </td>
+
+          <td>
+            ${escapeHtml(date)}
+          </td>
+
+        </tr>
+        `;
+
+    });
+
+
+    html +=
+      `
+        </tbody>
+      </table>
+      `;
+
+
+    area.innerHTML =
+      html;
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    area.innerHTML =
+      `<div class="error">
+        Could not load orders.
+        ${escapeHtml(error.message)}
+      </div>`;
+
+  }
+
+}
+
+
+/* --------------------------------------------------
+   STRIPE CONNECT
+-------------------------------------------------- */
+
+async function createStripeAccountSession() {
+
+  const response =
+    await fetch(
+      SUPABASE_URL +
+      "/functions/v1/stripe-connect",
+      {
+        method: "POST",
+
+        headers: {
+
+          apikey:
+            SUPABASE_KEY,
+
+          Authorization:
+            "Bearer " +
+            accessToken,
+
+          "Content-Type":
+            "application/json"
+        },
+
+        body:
+          JSON.stringify({})
+      }
+    );
+
+
+  const data =
+    await response.json();
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      data?.error ||
+      data?.message ||
+      "Stripe Connect setup failed."
+    );
+
+  }
+
+
+  if (
+    !data.account_session_client_secret
+  ) {
+
+    throw new Error(
+      "Stripe onboarding session was not returned."
+    );
+
+  }
+
+
+  return data.account_session_client_secret;
+
+}
+
+
+/* --------------------------------------------------
+   WAIT FOR STRIPE CONNECT JS
+-------------------------------------------------- */
 
 function waitForStripeConnect() {
 
   return new Promise(
-    function(resolve, reject) {
+    (resolve, reject) => {
 
       if (
         window.StripeConnect &&
-        typeof window.StripeConnect.init === "function"
+        typeof window.StripeConnect.init ===
+          "function"
       ) {
 
         resolve();
@@ -1371,825 +1158,43 @@ function waitForStripeConnect() {
       }
 
 
-      let attempts =
-        0;
-
-      const maxAttempts =
-        100;
+      let attempts = 0;
 
 
       const timer =
-        setInterval(
-          function() {
+        setInterval(() => {
 
-            attempts++;
+          attempts++;
 
-
-            if (
-              window.StripeConnect &&
-              typeof window.StripeConnect.init === "function"
-            ) {
-
-              clearInterval(timer);
-
-              resolve();
-
-              return;
-
-            }
-
-
-            if (
-              attempts >= maxAttempts
-            ) {
-
-              clearInterval(timer);
-
-              reject(
-                new Error(
-                  "Stripe Connect.js could not be loaded. Please refresh the page and try again."
-                )
-              );
-
-            }
-
-          },
-          100
-        );
-
-    }
-  );
-
-}
-
-
-/*
-==================================================
-STRIPE PUBLISHABLE KEY
-==================================================
-
-IMPORTANT:
-Replace the placeholder below with your Stripe
-PUBLISHABLE key (pk_test_...).
-
-Never put sk_test_ or sk_live_ here.
-==================================================
-*/
-
-function getStripePublishableKey() {
-
-  const key =
-    localStorage.getItem(
-      "berakah_stripe_publishable_key"
-    );
-
-
-  if (key) {
-
-    return key;
-
-  }
-
-
-  /*
-  ------------------------------------------------
-  IMPORTANT
-  ------------------------------------------------
-  We intentionally do NOT put a secret Stripe key
-  in this page.
-
-  Add your pk_test_ publishable key below once.
-  ------------------------------------------------
-  */
-
-  const publishableKey =
-    "pk_test_REPLACE_WITH_YOUR_STRIPE_PUBLISHABLE_KEY";
-
-
-  if (
-    publishableKey.includes(
-      "REPLACE_WITH"
-    )
-  ) {
-
-    throw new Error(
-      "Your Stripe publishable key has not been added to seller-dashboard.html."
-    );
-
-  }
-
-
-  return publishableKey;
-
-}
-
-
-/*
-==================================================
-CLOSE STRIPE ONBOARDING
-==================================================
-*/
-
-async function closeStripeOnboarding() {
-
-  try {
-
-    if (
-      stripeConnectInstance
-    ) {
-
-      await stripeConnectInstance.logout();
-
-    }
-
-  } catch (error) {
-
-    console.error(
-      "Stripe logout error:",
-      error
-    );
-
-  }
-
-
-  stripeOnboardingContainer.innerHTML =
-    "";
-
-  stripeOnboardingContainer.style.display =
-    "none";
-
-  stripeCloseButton.style.display =
-    "none";
-
-  stripeButton.style.display =
-    "inline-block";
-
-  stripeButton.disabled =
-    false;
-
-  stripeButton.textContent =
-    "💳 Continue Stripe Setup";
-
-}
-
-
-/*
-==================================================
-SHOW ERROR
-==================================================
-*/
-
-function showError(message) {
-
-  errorBox.textContent =
-    message;
-
-  errorBox.style.display =
-    "block";
-
-}
-
-
-/*
-==================================================
-HIDE ERROR
-==================================================
-*/
-
-function hideError() {
-
-  errorBox.style.display =
-    "none";
-
-}
-
-
-/*
-==================================================
-LOAD DASHBOARD
-==================================================
-*/
-
-async function loadDashboard() {
-
-  hideError();
-
-  productsLoading.style.display =
-    "block";
-
-  ordersLoading.style.display =
-    "block";
-
-  try {
-
-    /*
-    ==============================================
-    LOAD SELLER PRODUCTS
-    ==============================================
-    */
-
-    const productsUrl =
-      `${SUPABASE_URL}/rest/v1/products` +
-      `?select=id,name,price,image_url,seller_name,created_at,seller_id,category,stock` +
-      `&seller_name=eq.${encodeURIComponent(sellerName)}` +
-      `&order=created_at.desc`;
-
-    const productsResponse =
-      await fetch(
-        productsUrl,
-        {
-          method: "GET",
-          headers: getHeaders()
-        }
-      );
-
-    const productsText =
-      await productsResponse.text();
-
-    if (!productsResponse.ok) {
-
-      throw new Error(
-        productsText ||
-        "Could not load products."
-      );
-
-    }
-
-    let products = [];
-
-    try {
-
-      products =
-        JSON.parse(productsText);
-
-    } catch {
-
-      products = [];
-
-    }
-
-    document.getElementById(
-      "totalProducts"
-    ).textContent =
-      products.length;
-
-    renderProducts(
-      products
-    );
-
-    await loadOrders(
-      products
-    );
-
-  } catch (error) {
-
-    console.error(
-      "Dashboard error:",
-      error
-    );
-
-    showError(
-      "Dashboard error: " +
-      error.message
-    );
-
-    productsLoading.textContent =
-      "Could not load products.";
-
-    ordersLoading.textContent =
-      "Could not load orders.";
-
-  }
-
-}
-
-
-/*
-==================================================
-RENDER PRODUCTS
-==================================================
-*/
-
-function renderProducts(
-  products
-) {
-
-  productsLoading.style.display =
-    "none";
-
-  productsGrid.innerHTML =
-    "";
-
-  if (!products.length) {
-
-    productsGrid.innerHTML = `
-
-      <div
-        class="empty"
-        style="grid-column:1/-1;"
-      >
-
-        You have no products yet.
-
-        <br><br>
-
-        <a
-          href="seller-add-product.html"
-          class="btn btn-primary"
-        >
-          Add Your First Product
-        </a>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  products.forEach(
-    function(product) {
-
-      const card =
-        document.createElement(
-          "div"
-        );
-
-      card.className =
-        "product-card";
-
-
-      const image =
-        product.image_url ||
-        "https://via.placeholder.com/600x400?text=BERAKAH";
-
-
-      const price =
-        Number(
-          product.price || 0
-        ).toFixed(2);
-
-
-      const stock =
-        product.stock ?? 0;
-
-
-      card.innerHTML = `
-
-        <img
-          src="${escapeHtml(image)}"
-          alt="${escapeHtml(product.name || "Product")}"
-          class="product-image"
-          onerror="this.src='https://via.placeholder.com/600x400?text=BERAKAH'"
-        >
-
-        <div class="product-info">
-
-          <div class="product-name">
-            ${escapeHtml(product.name || "Unnamed Product")}
-          </div>
-
-          <div class="product-price">
-            $${price}
-          </div>
-
-          <div class="product-meta">
-
-            Category:
-            ${escapeHtml(product.category || "Other")}
-
-            <br>
-
-            Stock:
-            ${escapeHtml(String(stock))}
-
-          </div>
-
-        </div>
-
-      `;
-
-
-      productsGrid.appendChild(
-        card
-      );
-
-    }
-  );
-
-}
-
-
-/*
-==================================================
-LOAD ORDERS
-==================================================
-*/
-
-async function loadOrders(
-  products
-) {
-
-  try {
-
-    const ordersUrl =
-      `${SUPABASE_URL}/rest/v1/orders` +
-      `?select=*` +
-      `&order=created_at.desc`;
-
-    const ordersResponse =
-      await fetch(
-        ordersUrl,
-        {
-          method: "GET",
-          headers: getHeaders()
-        }
-      );
-
-    const ordersText =
-      await ordersResponse.text();
-
-    if (!ordersResponse.ok) {
-
-      throw new Error(
-        ordersText ||
-        "Could not load orders."
-      );
-
-    }
-
-    let allOrders = [];
-
-    try {
-
-      allOrders =
-        JSON.parse(
-          ordersText
-        );
-
-    } catch {
-
-      allOrders = [];
-
-    }
-
-
-    const productIds =
-      new Set(
-        products.map(
-          product =>
-            String(product.id)
-        )
-      );
-
-
-    const sellerOrders =
-      allOrders.filter(
-        function(order) {
 
           if (
-            order.product_id !== undefined &&
-            order.product_id !== null
+            window.StripeConnect &&
+            typeof window.StripeConnect.init ===
+              "function"
           ) {
 
-            return productIds.has(
-              String(
-                order.product_id
+            clearInterval(timer);
+
+            resolve();
+
+            return;
+
+          }
+
+
+          if (attempts >= 100) {
+
+            clearInterval(timer);
+
+            reject(
+              new Error(
+                "Stripe Connect.js could not be loaded. Please refresh the page."
               )
             );
 
           }
 
-          return false;
-
-        }
-      );
-
-
-    document.getElementById(
-      "totalOrders"
-    ).textContent =
-      sellerOrders.length;
-
-
-    const paidOrders =
-      sellerOrders.filter(
-        function(order) {
-
-          const status =
-            String(
-              order.status ||
-              order.payment_status ||
-              ""
-            ).toLowerCase();
-
-
-          return (
-
-            status === "paid" ||
-
-            status === "completed" ||
-
-            status === "complete" ||
-
-            status === "success" ||
-
-            status === "succeeded"
-
-          );
-
-        }
-      );
-
-
-    document.getElementById(
-      "paidOrders"
-    ).textContent =
-      paidOrders.length;
-
-
-    let sales =
-      0;
-
-
-    sellerOrders.forEach(
-      function(order) {
-
-        const status =
-          String(
-            order.status ||
-            order.payment_status ||
-            ""
-          ).toLowerCase();
-
-
-        const isPaid =
-
-          status === "paid" ||
-
-          status === "completed" ||
-
-          status === "complete" ||
-
-          status === "success" ||
-
-          status === "succeeded";
-
-
-        if (!isPaid) {
-
-          return;
-
-        }
-
-
-        let total =
-          0;
-
-
-        if (
-          order.total !== undefined &&
-          order.total !== null
-        ) {
-
-          total =
-            Number(
-              order.total
-            ) || 0;
-
-        }
-
-        else if (
-          order.amount !== undefined &&
-          order.amount !== null
-        ) {
-
-          total =
-            Number(
-              order.amount
-            ) || 0;
-
-        }
-
-        else {
-
-          const product =
-            products.find(
-              p =>
-                String(p.id) ===
-                String(order.product_id)
-            );
-
-
-          const price =
-            Number(
-              product?.price || 0
-            );
-
-
-          const quantity =
-            Number(
-              order.quantity || 1
-            );
-
-
-          total =
-            price * quantity;
-
-        }
-
-
-        sales +=
-          total;
-
-      }
-    );
-
-
-    document.getElementById(
-      "totalSales"
-    ).textContent =
-      "$" +
-      sales.toFixed(2);
-
-
-    renderOrders(
-      sellerOrders,
-      products
-    );
-
-
-  } catch (error) {
-
-    console.error(
-      "Orders error:",
-      error
-    );
-
-
-    ordersLoading.textContent =
-      "Orders could not be loaded.";
-
-
-    document.getElementById(
-      "totalOrders"
-    ).textContent =
-      "0";
-
-
-    document.getElementById(
-      "paidOrders"
-    ).textContent =
-      "0";
-
-
-    document.getElementById(
-      "totalSales"
-    ).textContent =
-      "$0.00";
-
-  }
-
-}
-
-
-/*
-==================================================
-RENDER ORDERS
-==================================================
-*/
-
-function renderOrders(
-  orders,
-  products
-) {
-
-  ordersLoading.style.display =
-    "none";
-
-  ordersBody.innerHTML =
-    "";
-
-
-  if (!orders.length) {
-
-    ordersTable.style.display =
-      "none";
-
-    ordersEmpty.style.display =
-      "block";
-
-    return;
-
-  }
-
-
-  ordersEmpty.style.display =
-    "none";
-
-  ordersTable.style.display =
-    "table";
-
-
-  orders.forEach(
-    function(order) {
-
-      const product =
-        products.find(
-          p =>
-            String(p.id) ===
-            String(order.product_id)
-        );
-
-
-      const productName =
-        product?.name ||
-        order.product_name ||
-        "Product";
-
-
-      const price =
-        Number(
-          order.price ??
-          product?.price ??
-          0
-        );
-
-
-      const quantity =
-        Number(
-          order.quantity || 1
-        );
-
-
-      const total =
-        Number(
-          order.total ??
-          order.amount ??
-          (price * quantity)
-        );
-
-
-      const status =
-        order.status ||
-        order.payment_status ||
-        "Pending";
-
-
-      const date =
-        order.created_at
-          ? new Date(
-              order.created_at
-            ).toLocaleDateString()
-          : "-";
-
-
-      const row =
-        document.createElement(
-          "tr"
-        );
-
-
-      row.innerHTML = `
-
-        <td>
-          ${escapeHtml(productName)}
-        </td>
-
-        <td>
-          $${price.toFixed(2)}
-        </td>
-
-        <td>
-          ${quantity}
-        </td>
-
-        <td>
-          $${total.toFixed(2)}
-        </td>
-
-        <td>
-
-          <span class="status">
-            ${escapeHtml(
-              String(status)
-            )}
-          </span>
-
-        </td>
-
-        <td>
-          ${date}
-        </td>
-
-      `;
-
-
-      ordersBody.appendChild(
-        row
-      );
+        }, 100);
 
     }
   );
@@ -2197,74 +1202,258 @@ function renderOrders(
 }
 
 
-/*
-==================================================
-HTML ESCAPE
-==================================================
-*/
+/* --------------------------------------------------
+   OPEN STRIPE
+-------------------------------------------------- */
 
-function escapeHtml(
-  value
-) {
+async function connectStripe() {
 
-  return String(value)
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
+  const overlay =
+    document.getElementById(
+      "stripeOverlay"
     );
+
+  const container =
+    document.getElementById(
+      "stripeOnboardingContainer"
+    );
+
+  const status =
+    document.getElementById(
+      "stripeStatus"
+    );
+
+  const button =
+    document.getElementById(
+      "stripeButton"
+    );
+
+
+  try {
+
+    const valid =
+      await verifySession();
+
+
+    if (!valid) {
+
+      return;
+
+    }
+
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Opening Stripe...";
+
+
+    status.className =
+      "status";
+
+
+    status.textContent =
+      "";
+
+
+    overlay.style.display =
+      "block";
+
+
+    container.innerHTML =
+      `
+      <div class="loading">
+        Connecting to Stripe...
+      </div>
+      `;
+
+
+    /*
+      Create a fresh Account Session.
+    */
+
+    const clientSecret =
+      await createStripeAccountSession();
+
+
+    /*
+      Wait until Stripe Connect.js
+      is available.
+    */
+
+    await waitForStripeConnect();
+
+
+    /*
+      Initialize Stripe Connect.
+    */
+
+    if (!stripeConnectInstance) {
+
+      stripeConnectInstance =
+        window.StripeConnect.init({
+
+          publishableKey:
+            STRIPE_PUBLISHABLE_KEY,
+
+          fetchClientSecret:
+            async () => {
+
+              return await
+                createStripeAccountSession();
+
+            }
+
+        });
+
+    }
+
+
+    /*
+      Create embedded onboarding.
+    */
+
+    if (
+      stripeOnboardingComponent
+    ) {
+
+      stripeOnboardingComponent =
+        null;
+
+    }
+
+
+    stripeOnboardingComponent =
+      stripeConnectInstance.create(
+        "account-onboarding"
+      );
+
+
+    container.innerHTML =
+      "";
+
+
+    container.appendChild(
+      stripeOnboardingComponent
+    );
+
+
+    /*
+      Keep reference alive.
+      clientSecret is intentionally
+      created before component loading
+      to verify backend response.
+    */
+
+    console.log(
+      "Stripe Account Session created:",
+      !!clientSecret
+    );
+
+
+    status.className =
+      "status success";
+
+    status.textContent =
+      "Stripe onboarding opened.";
+
+
+  } catch (error) {
+
+    console.error(
+      "Stripe setup error:",
+      error
+    );
+
+
+    status.className =
+      "status error";
+
+
+    status.textContent =
+      "Stripe setup error: " +
+      error.message;
+
+
+    container.innerHTML =
+      `
+      <div class="error" style="padding:30px;">
+        Stripe setup error:
+        ${escapeHtml(error.message)}
+      </div>
+      `;
+
+  } finally {
+
+    button.disabled =
+      false;
+
+    button.textContent =
+      "Connect Stripe";
+
+  }
 
 }
 
 
-/*
-==================================================
-LOGOUT
-==================================================
-*/
+/* --------------------------------------------------
+   CLOSE STRIPE
+-------------------------------------------------- */
+
+function closeStripe() {
+
+  const overlay =
+    document.getElementById(
+      "stripeOverlay"
+    );
+
+
+  overlay.style.display =
+    "none";
+
+
+  const container =
+    document.getElementById(
+      "stripeOnboardingContainer"
+    );
+
+
+  container.innerHTML =
+    `
+    <div class="loading">
+      Loading Stripe onboarding...
+    </div>
+    `;
+
+
+  stripeOnboardingComponent =
+    null;
+
+}
+
+
+/* --------------------------------------------------
+   LOGOUT
+-------------------------------------------------- */
 
 function logout() {
 
-  /*
-  Log out of Stripe Connect instance too.
-  */
+  try {
 
-  if (
-    stripeConnectInstance
-  ) {
+    if (
+      stripeConnectInstance &&
+      typeof stripeConnectInstance.logout ===
+        "function"
+    ) {
 
-    stripeConnectInstance
-      .logout()
-      .catch(
-        function(error) {
+      stripeConnectInstance.logout();
 
-          console.error(
-            "Stripe logout error:",
-            error
-          );
+    }
 
-        }
-      );
+  } catch (error) {
+
+    console.error(error);
 
   }
 
@@ -2294,6 +1483,66 @@ function logout() {
     "login.html";
 
 }
+
+
+/* --------------------------------------------------
+   ESCAPE HTML
+-------------------------------------------------- */
+
+function escapeHtml(value) {
+
+  return String(value)
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* --------------------------------------------------
+   START
+-------------------------------------------------- */
+
+async function startDashboard() {
+
+  const valid =
+    await verifySession();
+
+
+  if (!valid) {
+
+    return;
+
+  }
+
+
+  await loadSellerProfile();
+
+  await loadProducts();
+
+  await loadOrders();
+
+}
+
+
+startDashboard();
 
 </script>
 
