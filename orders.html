@@ -1,7 +1,14 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="en">
 
-<title>BERAKAH - My Orders</title><style>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EPHPHAVORA - My Orders</title>
+
+<style>
 
 *{
   box-sizing:border-box;
@@ -99,40 +106,63 @@ h1{
   text-transform:uppercase;
 }
 
+/* PENDING */
+
 .status.pending{
   background:#fef3c7;
   color:#92400e;
 }
+
+/* CONFIRMED */
+
+.status.confirmed{
+  background:#dcfce7;
+  color:#166534;
+}
+
+/* PAID - kept for compatibility */
 
 .status.paid{
   background:#dcfce7;
   color:#166534;
 }
 
+/* PROCESSING */
+
 .status.processing{
   background:#dbeafe;
   color:#1d4ed8;
 }
+
+/* SHIPPED */
 
 .status.shipped{
   background:#e0e7ff;
   color:#3730a3;
 }
 
+/* DELIVERED */
+
 .status.delivered{
   background:#dcfce7;
   color:#166534;
 }
+
+/* CANCELLED */
 
 .status.cancelled{
   background:#fee2e2;
   color:#991b1b;
 }
 
+/* REFUNDED */
+
 .status.refunded{
   background:#f3e8ff;
   color:#7e22ce;
 }
+
+/* UNKNOWN */
 
 .status.unknown{
   background:#e5e7eb;
@@ -206,33 +236,83 @@ h1{
 
 }
 
-</style></head><body><header><div class="header-inner"><div class="logo">
-BERAKAH
-</div><nav><a href="index.html">
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="header-inner">
+
+<div class="logo">
+EPHPHAVORA
+</div>
+
+<nav>
+
+<a href="index.html">
 Home
-</a><a href="feed.html">
+</a>
+
+<a href="feed.html">
 Feed
-</a><a href="people.html">
+</a>
+
+<a href="people.html">
 👥 People
-</a><a href="marketplace.html">
+</a>
+
+<a href="marketplace.html">
 Market
-</a><a href="notifications.html">
+</a>
+
+<a href="notifications.html">
 🔔 Notifications
-</a><a href="messages.html">
+</a>
+
+<a href="messages.html">
 💬 Messages
-</a><a href="profile.html">
+</a>
+
+<a href="profile.html">
 Profile
-</a></nav></div></header><div class="container"><h1>
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+<h1>
 📦 MY ORDERS
-</h1><div class="refresh-note">
+</h1>
+
+<div class="refresh-note">
 Order status updates automatically while this page is open.
-</div><div id="ordersContainer"><div class="loading">
+</div>
+
+<div id="ordersContainer">
+
+<div class="loading">
 Loading orders...
-</div></div></div><script>
+</div>
+
+</div>
+
+</div>
+
+
+<script>
 
 
 /* =====================================================
-   BERAKAH SUPABASE
+   EPHPHAVORA SUPABASE
 ===================================================== */
 
 const SUPABASE_URL =
@@ -464,11 +544,19 @@ function getStatus(
   const allowed = [
 
     "pending",
+
+    "confirmed",
+
     "paid",
+
     "processing",
+
     "shipped",
+
     "delivered",
+
     "cancelled",
+
     "refunded"
 
   ];
@@ -506,7 +594,6 @@ async function loadOrders(){
 
 
   try{
-
 
     const endpoint =
 
@@ -688,12 +775,11 @@ function renderOrders(
               <div>
 
                 <span
-                  class="status ${status}"
+                  class="status ${escapeHTML(status)}"
                 >
 
                   ${escapeHTML(
-                    status
-                      .toUpperCase()
+                    status.toUpperCase()
                   )}
 
                 </span>
@@ -787,6 +873,7 @@ function renderOrders(
         `;
 
       }
+
     ).join("");
 
 }
@@ -832,4 +919,8 @@ document.addEventListener(
   }
 );
 
-</script></body></html>
+</script>
+
+</body>
+
+</html>
