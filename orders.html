@@ -1,926 +1,642 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!DOCTYPE html><html lang="en">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>EPHPHAVORA - My Orders</title>
-
-<style>
-
-*{
-  box-sizing:border-box;
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>EPHPHAVORA - My Orders</title><style>
+* {
+  box-sizing: border-box;
 }
 
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f5f7fb;
-  color:#111827;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #111827;
 }
 
-header{
-  background:white;
-  padding:15px 20px;
-  border-bottom:1px solid #e5e7eb;
+header {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 15px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-.header-inner{
-  max-width:1100px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
+.header-inner {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
-.logo{
-  font-size:24px;
-  font-weight:bold;
-  color:#2563eb;
+.logo {
+  font-size: 23px;
+  font-weight: bold;
 }
 
-nav{
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
+.logo span {
+  display: block;
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 3px;
 }
 
-nav a{
-  text-decoration:none;
-  color:#374151;
-  font-weight:600;
+.nav {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
 }
 
-.container{
-  max-width:850px;
-  margin:25px auto;
-  padding:0 15px 50px;
+.nav a {
+  text-decoration: none;
+  color: #111827;
+  background: #f3f4f6;
+  padding: 9px 11px;
+  border-radius: 7px;
+  font-size: 13px;
 }
 
-h1{
-  margin-bottom:10px;
+main {
+  max-width: 1100px;
+  margin: 25px auto;
+  padding: 0 15px 50px;
 }
 
-.refresh-note{
-  font-size:13px;
-  color:#6b7280;
-  margin-bottom:20px;
+h1 {
+  margin-bottom: 5px;
 }
 
-.order-card{
-  background:white;
-  border-radius:12px;
-  padding:18px;
-  margin-bottom:18px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.06);
+.subtitle {
+  color: #6b7280;
+  margin-top: 0;
 }
 
-.order-top{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-bottom:10px;
+.refresh {
+  margin: 15px 0;
+  border: 0;
+  background: #111827;
+  color: white;
+  padding: 11px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-.order-number{
-  font-size:18px;
-  font-weight:bold;
+.order-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 18px;
+  box-shadow: 0 2px 7px rgba(0,0,0,0.04);
 }
 
-.date{
-  color:#6b7280;
-  font-size:14px;
-  margin-top:5px;
+.order-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 15px;
 }
 
-.status{
-  display:inline-block;
-  padding:7px 12px;
-  border-radius:20px;
-  font-weight:bold;
-  font-size:13px;
-  text-transform:uppercase;
+.order-number {
+  font-size: 17px;
+  font-weight: bold;
 }
 
-/* PENDING */
-
-.status.pending{
-  background:#fef3c7;
-  color:#92400e;
+.date {
+  color: #6b7280;
+  font-size: 13px;
+  margin-top: 5px;
 }
 
-/* CONFIRMED */
-
-.status.confirmed{
-  background:#dcfce7;
-  color:#166534;
+.status {
+  padding: 8px 13px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
-/* PAID - kept for compatibility */
-
-.status.paid{
-  background:#dcfce7;
-  color:#166534;
+.status.pending {
+  background: #fef3c7;
+  color: #92400e;
 }
 
-/* PROCESSING */
-
-.status.processing{
-  background:#dbeafe;
-  color:#1d4ed8;
+.status.confirmed {
+  background: #dcfce7;
+  color: #166534;
 }
 
-/* SHIPPED */
-
-.status.shipped{
-  background:#e0e7ff;
-  color:#3730a3;
+.status.processing {
+  background: #dbeafe;
+  color: #1e40af;
 }
 
-/* DELIVERED */
-
-.status.delivered{
-  background:#dcfce7;
-  color:#166534;
+.status.shipped {
+  background: #e0e7ff;
+  color: #3730a3;
 }
 
-/* CANCELLED */
-
-.status.cancelled{
-  background:#fee2e2;
-  color:#991b1b;
+.status.delivered {
+  background: #d1fae5;
+  color: #065f46;
 }
 
-/* REFUNDED */
-
-.status.refunded{
-  background:#f3e8ff;
-  color:#7e22ce;
+.status.cancelled {
+  background: #fee2e2;
+  color: #991b1b;
 }
 
-/* UNKNOWN */
-
-.status.unknown{
-  background:#e5e7eb;
-  color:#374151;
+.status.unknown {
+  background: #e5e7eb;
+  color: #374151;
 }
 
-.product{
-  border-top:1px solid #e5e7eb;
-  padding:14px 0;
+.order-body {
+  padding-top: 18px;
 }
 
-.product-name{
-  font-size:17px;
-  font-weight:bold;
+.product-name {
+  font-size: 19px;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
-.product-info{
-  margin-top:5px;
-  color:#4b5563;
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
 }
 
-.total{
-  border-top:1px solid #e5e7eb;
-  padding-top:14px;
-  font-size:18px;
-  font-weight:bold;
+.info {
+  background: #f9fafb;
+  padding: 12px;
+  border-radius: 8px;
 }
 
-.shipping{
-  margin-top:12px;
-  padding:12px;
-  background:#f9fafb;
-  border-radius:8px;
+.label {
+  display: block;
+  color: #6b7280;
+  font-size: 12px;
+  margin-bottom: 5px;
 }
 
-.empty{
-  background:white;
-  padding:30px;
-  text-align:center;
-  border-radius:12px;
-  color:#6b7280;
+.value {
+  font-weight: 600;
+  word-break: break-word;
 }
 
-.error{
-  background:#fef2f2;
-  color:#991b1b;
-  border:1px solid #fecaca;
-  padding:15px;
-  border-radius:10px;
-  margin-bottom:20px;
+.payment-paid {
+  color: #047857;
+  font-weight: bold;
 }
 
-.loading{
-  background:white;
-  padding:30px;
-  text-align:center;
-  border-radius:12px;
-  color:#6b7280;
+.payment-pending {
+  color: #92400e;
+  font-weight: bold;
 }
 
-@media(max-width:600px){
-
-  .header-inner{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
-  nav{
-    justify-content:flex-start;
-  }
-
+.message {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 18px;
+  margin-top: 15px;
 }
 
-</style>
+.error {
+  color: #b91c1c;
+}
 
-</head>
+.empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6b7280;
+}
 
-<body>
-
-<header>
-
-<div class="header-inner">
-
-<div class="logo">
-EPHPHAVORA
+.updated {
+  margin-top: 15px;
+  color: #6b7280;
+  font-size: 12px;
+}
+</style></head><body><header>  <div class="header-inner"><div class="logo">
+  EPHPHAVORA
+  <span>My Orders</span>
 </div>
 
-<nav>
-
-<a href="index.html">
-Home
-</a>
-
-<a href="feed.html">
-Feed
-</a>
-
-<a href="people.html">
-👥 People
-</a>
-
-<a href="marketplace.html">
-Market
-</a>
-
-<a href="notifications.html">
-🔔 Notifications
-</a>
-
-<a href="messages.html">
-💬 Messages
-</a>
-
-<a href="profile.html">
-Profile
-</a>
-
+<nav class="nav">
+  <a href="index.html">Home</a>
+  <a href="marketplace.html">Market</a>
+  <a href="seller-orders.html">Seller</a>
+  <a href="profile.html">Profile</a>
 </nav>
 
-</div>
+  </div></header><main>  <h1>📦 MY ORDERS</h1>  <p class="subtitle">
+    Track your EPHPHAVORA purchases.
+  </p><button
+class="refresh"
+onclick="loadOrders()"
 
-</header>
+«»
 
+🔄 REFRESH ORDERS
 
-<div class="container">
-
-<h1>
-📦 MY ORDERS
-</h1>
-
-<div class="refresh-note">
-Order status updates automatically while this page is open.
-</div>
-
-<div id="ordersContainer">
-
-<div class="loading">
-Loading orders...
-</div>
-
-</div>
-
-</div>
-
-
-<script>
-
-
-/* =====================================================
-   EPHPHAVORA SUPABASE
-===================================================== */
+  </button>  <div id="message" class="message">
+    Loading orders...
+  </div>  <div id="orders"></div></main><script>
 
 const SUPABASE_URL =
-"https://utoyoglycqjmqznczfxa.supabase.co";
+  "https://utoyoglycqjmqznczfxa.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+  "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
+const ACCESS_KEY =
+  "berakah_access_token";
 
-/* =====================================================
-   SESSION
-===================================================== */
+function getToken() {
+  return localStorage.getItem(ACCESS_KEY);
+}
 
-const accessToken =
-localStorage.getItem(
-  "berakah_access_token"
-);
+async function getCurrentUser() {
 
+  const token = getToken();
 
-/* =====================================================
-   ELEMENT
-===================================================== */
+  if (!token) {
+    throw new Error("You are not logged in.");
+  }
 
-const ordersContainer =
-document.getElementById(
-  "ordersContainer"
-);
+  const response = await fetch(
+    `${SUPABASE_URL}/auth/v1/user`,
+    {
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${token}`
+      }
+    }
+  );
 
+  if (!response.ok) {
+    throw new Error("Your login session has expired.");
+  }
 
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
+  return await response.json();
+}
 
-function escapeHTML(value){
+function escapeHtml(value) {
 
   return String(value ?? "")
-
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
+function money(value) {
 
-/* =====================================================
-   SUPABASE REQUEST
-===================================================== */
-
-async function supabaseRequest(
-  endpoint,
-  options={}
-){
-
-  const response =
-    await fetch(
-      SUPABASE_URL + endpoint,
-      {
-
-        ...options,
-
-        headers:{
-
-          "apikey":
-            SUPABASE_KEY,
-
-          "Authorization":
-            "Bearer " +
-            accessToken,
-
-          "Content-Type":
-            "application/json",
-
-          ...(options.headers || {})
-
-        }
-
-      }
-    );
-
-
-  const text =
-    await response.text();
-
-
-  let data = null;
-
-
-  try{
-
-    data =
-      text
-      ? JSON.parse(text)
-      : null;
-
-  }catch(error){
-
-    data = text;
-
-  }
-
-
-  if(!response.ok){
-
-    console.error(
-      "SUPABASE ERROR:",
-      data
-    );
-
-
-    throw new Error(
-
-      data?.message ||
-      data?.msg ||
-      data?.hint ||
-      data?.details ||
-      "Supabase request failed."
-
-    );
-
-  }
-
-
-  return data;
-
+  return Number(value || 0).toLocaleString(
+    "en-US",
+    {
+      style: "currency",
+      currency: "USD"
+    }
+  );
 }
 
+function formatDate(value) {
 
-/* =====================================================
-   LOAD CURRENT USER
-===================================================== */
+  if (!value) return "—";
 
-async function loadCurrentUser(){
+  const date = new Date(value);
 
-  if(!accessToken){
-
-    window.location.href =
-      "login.html";
-
-    return null;
-
+  if (isNaN(date.getTime())) {
+    return value;
   }
-
-
-  try{
-
-    return await supabaseRequest(
-      "/auth/v1/user"
-    );
-
-  }catch(error){
-
-    console.error(
-      "USER ERROR:",
-      error
-    );
-
-
-    localStorage.removeItem(
-      "berakah_access_token"
-    );
-
-    localStorage.removeItem(
-      "berakah_refresh_token"
-    );
-
-
-    window.location.href =
-      "login.html";
-
-    return null;
-
-  }
-
-}
-
-
-/* =====================================================
-   FORMAT DATE
-===================================================== */
-
-function formatDate(
-  value
-){
-
-  if(!value){
-    return "";
-  }
-
-
-  const date =
-    new Date(value);
-
-
-  if(
-    isNaN(
-      date.getTime()
-    )
-  ){
-
-    return "";
-
-  }
-
 
   return date.toLocaleString();
-
 }
 
-
-/* =====================================================
-   STATUS
-===================================================== */
-
-function getStatus(
-  order
-){
-
-  const raw =
-    String(
-      order.status ||
-      "unknown"
-    )
-    .toLowerCase()
-    .trim();
-
+function getStatus(status) {
 
   const allowed = [
-
     "pending",
-
     "confirmed",
-
-    "paid",
-
     "processing",
-
     "shipped",
-
     "delivered",
-
-    "cancelled",
-
-    "refunded"
-
+    "cancelled"
   ];
 
+  const clean =
+    String(status || "")
+      .toLowerCase()
+      .trim();
 
-  if(
-    allowed.includes(raw)
-  ){
+  if (!allowed.includes(clean)) {
 
-    return raw;
-
+    return {
+      text: "Unknown",
+      className: "unknown"
+    };
   }
 
-
-  return "unknown";
-
+  return {
+    text: clean,
+    className: clean
+  };
 }
 
+async function loadOrders() {
 
-/* =====================================================
-   LOAD ORDERS
-===================================================== */
+  const message =
+    document.getElementById("message");
 
-async function loadOrders(){
+  const container =
+    document.getElementById("orders");
 
-  const user =
-    await loadCurrentUser();
+  message.style.display = "block";
+  message.className = "message";
+  message.textContent =
+    "Loading your orders...";
 
+  container.innerHTML = "";
 
-  if(!user){
+  try {
 
-    return;
+    const token = getToken();
 
-  }
+    const user =
+      await getCurrentUser();
 
+    /*
+      IMPORTANT:
+      Only orders belonging to the
+      currently logged-in customer
+      are requested.
+    */
 
-  try{
+    const url =
+      `${SUPABASE_URL}/rest/v1/orders` +
+      `?select=*` +
+      `&customer_id=eq.${encodeURIComponent(user.id)}` +
+      `&order=created_at.desc`;
 
-    const endpoint =
-
-      "/rest/v1/orders" +
-
-      "?select=*" +
-
-      "&customer_id=eq." +
-
-      encodeURIComponent(
-        user.id
-      ) +
-
-      "&order=created_at.desc";
-
-
-    const orders =
-      await supabaseRequest(
-        endpoint
+    const response =
+      await fetch(
+        url,
+        {
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization":
+              `Bearer ${token}`,
+            "Content-Type":
+              "application/json"
+          }
+        }
       );
 
+    const data =
+      await response.json();
 
-    renderOrders(
-      orders || []
-    );
+    if (!response.ok) {
 
+      console.error(
+        "CUSTOMER ORDERS ERROR:",
+        data
+      );
 
-  }catch(error){
+      throw new Error(
+        data.message ||
+        data.hint ||
+        "Could not load your orders."
+      );
+    }
 
-    console.error(
-      "ORDERS ERROR:",
-      error
-    );
+    message.style.display = "none";
 
+    if (
+      !Array.isArray(data) ||
+      data.length === 0
+    ) {
 
-    ordersContainer.innerHTML = `
+      container.innerHTML = `
+        <div class="message empty">
 
-      <div class="error">
+          <h2>No orders yet</h2>
 
-        Could not load your orders.
+          <p>
+            Your purchases will appear here.
+          </p>
 
-        <br><br>
+        </div>
+      `;
 
-        ${escapeHTML(
-          error.message
-        )}
+      return;
+    }
 
-      </div>
+    data.forEach(order => {
 
-    `;
+      const status =
+        getStatus(order.status);
 
-  }
+      const payment =
+        String(
+          order.payment_status ||
+          "pending"
+        ).toLowerCase();
 
-}
+      const paymentClass =
+        payment === "paid"
+          ? "payment-paid"
+          : "payment-pending";
 
+      const product =
+        order.product_name ||
+        "Product";
 
-/* =====================================================
-   RENDER ORDERS
-===================================================== */
+      const customerName =
+        order.customer_name ||
+        order.shipping_name ||
+        "Customer";
 
-function renderOrders(
-  orders
-){
+      const card =
+        document.createElement("div");
 
-  if(!orders.length){
+      card.className =
+        "order-card";
 
-    ordersContainer.innerHTML = `
+      card.innerHTML = `
 
-      <div class="empty">
+        <div class="order-top">
 
-        <h2>
-          No orders yet
-        </h2>
+          <div>
 
-        <p>
-          Your purchases will appear here.
-        </p>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  ordersContainer.innerHTML =
-
-    orders.map(
-      function(order){
-
-        const status =
-          getStatus(
-            order
-          );
-
-
-        const orderNumber =
-          order.order_number ||
-          order.id ||
-          "Unknown";
-
-
-        const productName =
-          order.product_name ||
-          "Product";
-
-
-        const quantity =
-          Math.max(
-            1,
-            Number(
-              order.quantity
-            ) || 1
-          );
-
-
-        const price =
-          Number(
-            order.price
-          ) || 0;
-
-
-        const total =
-          Number(
-            order.total
-          ) || 0;
-
-
-        const customerName =
-          order.shipping_name ||
-          order.customer_name ||
-          "";
-
-
-        const address =
-          order.shipping_address ||
-          order.customer_address ||
-          "";
-
-
-        const date =
-          order.updated_at ||
-          order.created_at ||
-          "";
-
-
-        return `
-
-          <div class="order-card">
-
-            <div class="order-top">
-
-              <div>
-
-                <div class="order-number">
-
-                  Order #${escapeHTML(
-                    orderNumber
-                  )}
-
-                </div>
-
-
-                <div class="date">
-
-                  ${escapeHTML(
-                    formatDate(
-                      date
-                    )
-                  )}
-
-                </div>
-
-              </div>
-
-
-              <div>
-
-                <span
-                  class="status ${escapeHTML(status)}"
-                >
-
-                  ${escapeHTML(
-                    status.toUpperCase()
-                  )}
-
-                </span>
-
-              </div>
-
+            <div class="order-number">
+              Order #
+              ${escapeHtml(
+                order.order_number ||
+                order.id ||
+                "—"
+              )}
             </div>
 
-
-            <div class="product">
-
-              <div class="product-name">
-
-                ${escapeHTML(
-                  productName
-                )}
-
-              </div>
-
-
-              <div class="product-info">
-
-                Quantity:
-                ${quantity}
-
-              </div>
-
-
-              <div class="product-info">
-
-                $${price.toFixed(2)}
-
-              </div>
-
+            <div class="date">
+              Ordered:
+              ${formatDate(
+                order.created_at
+              )}
             </div>
-
-
-            <div class="total">
-
-              TOTAL
-              $${total.toFixed(2)}
-
-            </div>
-
-
-            ${
-              customerName ||
-              address
-
-              ?
-
-              `
-
-                <div class="shipping">
-
-                  <strong>
-                    Shipping to:
-                  </strong>
-
-                  ${escapeHTML(
-                    customerName
-                  )}
-
-                  ${
-                    address
-
-                    ?
-
-                    `<br>${escapeHTML(
-                      address
-                    )}`
-
-                    :
-
-                    ""
-
-                  }
-
-                </div>
-
-              `
-
-              :
-
-              ""
-
-            }
 
           </div>
 
-        `;
+          <div class="status ${status.className}">
+            ${escapeHtml(status.text)}
+          </div>
 
-      }
+        </div>
 
-    ).join("");
+        <div class="order-body">
 
+          <div class="product-name">
+            ${escapeHtml(product)}
+          </div>
+
+          <div class="info-grid">
+
+            <div class="info">
+
+              <span class="label">
+                Quantity
+              </span>
+
+              <span class="value">
+                ${escapeHtml(
+                  order.quantity ?? 0
+                )}
+              </span>
+
+            </div>
+
+            <div class="info">
+
+              <span class="label">
+                Price
+              </span>
+
+              <span class="value">
+                ${money(order.price)}
+              </span>
+
+            </div>
+
+            <div class="info">
+
+              <span class="label">
+                Total
+              </span>
+
+              <span class="value">
+                ${money(order.total)}
+              </span>
+
+            </div>
+
+            <div class="info">
+
+              <span class="label">
+                Payment
+              </span>
+
+              <span class="value ${paymentClass}">
+                ${escapeHtml(payment)}
+              </span>
+
+            </div>
+
+          </div>
+
+          <div class="info-grid"
+               style="margin-top:12px;">
+
+            <div class="info">
+
+              <span class="label">
+                Customer
+              </span>
+
+              <span class="value">
+                ${escapeHtml(customerName)}
+              </span>
+
+            </div>
+
+            <div class="info">
+
+              <span class="label">
+                Shipping Address
+              </span>
+
+              <span class="value">
+                ${escapeHtml(
+                  order.shipping_address ||
+                  order.customer_address ||
+                  "—"
+                )}
+              </span>
+
+            </div>
+
+          </div>
+
+          <div class="updated">
+
+            Last updated:
+            ${formatDate(
+              order.updated_at ||
+              order.created_at
+            )}
+
+          </div>
+
+        </div>
+      `;
+
+      container.appendChild(card);
+
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    message.style.display = "block";
+    message.className =
+      "message error";
+
+    message.innerHTML = `
+      <strong>Error:</strong><br>
+      ${escapeHtml(error.message)}
+    `;
+  }
 }
 
-
-/* =====================================================
-   START
-===================================================== */
-
-loadOrders();
-
-
-/* =====================================================
-   AUTO REFRESH
-===================================================== */
-
+/*
+  Automatically checks for status changes
+  every 5 seconds.
+*/
 setInterval(
-  function(){
-
-    loadOrders();
-
-  },
+  loadOrders,
   5000
 );
 
+loadOrders();
 
-/* =====================================================
-   REFRESH WHEN TAB RETURNS
-===================================================== */
-
-document.addEventListener(
-  "visibilitychange",
-  function(){
-
-    if(
-      !document.hidden
-    ){
-
-      loadOrders();
-
-    }
-
-  }
-);
-
-</script>
-
-</body>
-
+</script></body>
 </html>
