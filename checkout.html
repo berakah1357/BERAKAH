@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BERAKAH - Checkout</title>
+<title>EPHPHAVORA - Checkout</title>
 
 <style>
 
@@ -118,6 +118,10 @@ label{
     margin-bottom:7px;
 }
 
+.required{
+    color:#dc2626;
+}
+
 input{
     width:100%;
     padding:13px;
@@ -129,6 +133,22 @@ input{
 input:focus{
     outline:none;
     border-color:#2563eb;
+}
+
+input.invalid{
+    border-color:#dc2626;
+    background:#fffafa;
+}
+
+.field-error{
+    display:none;
+    color:#b91c1c;
+    font-size:13px;
+    margin-top:5px;
+}
+
+.field-error.show{
+    display:block;
 }
 
 .place-order{
@@ -222,7 +242,7 @@ input:focus{
 <div class="header-inner">
 
 <div class="logo">
-BERAKAH
+EPHPHAVORA
 </div>
 
 <nav>
@@ -270,18 +290,21 @@ BERAKAH
 
 <h2>👤 Customer Information</h2>
 
-
 <div class="form-group">
 
 <label for="customerName">
-Full Name
+Full Name <span class="required">*</span>
 </label>
 
 <input
 id="customerName"
 type="text"
-placeholder="Your full name"
+placeholder="Enter your full name"
 autocomplete="name">
+
+<div id="nameError" class="field-error">
+Full name is required.
+</div>
 
 </div>
 
@@ -289,14 +312,18 @@ autocomplete="name">
 <div class="form-group">
 
 <label for="customerEmail">
-Email
+Email <span class="required">*</span>
 </label>
 
 <input
 id="customerEmail"
 type="email"
-placeholder="Your email"
+placeholder="Enter your email"
 autocomplete="email">
+
+<div id="emailError" class="field-error">
+A valid email address is required.
+</div>
 
 </div>
 
@@ -304,14 +331,18 @@ autocomplete="email">
 <div class="form-group">
 
 <label for="customerPhone">
-Phone
+Phone <span class="required">*</span>
 </label>
 
 <input
 id="customerPhone"
 type="tel"
-placeholder="Your phone number"
+placeholder="Enter your phone number"
 autocomplete="tel">
+
+<div id="phoneError" class="field-error">
+Phone number is required.
+</div>
 
 </div>
 
@@ -319,14 +350,18 @@ autocomplete="tel">
 <div class="form-group">
 
 <label for="customerAddress">
-Shipping Address
+Shipping Address <span class="required">*</span>
 </label>
 
 <input
 id="customerAddress"
 type="text"
-placeholder="Your shipping address"
+placeholder="Enter your shipping address"
 autocomplete="street-address">
+
+<div id="addressError" class="field-error">
+Shipping address is required.
+</div>
 
 </div>
 
@@ -336,7 +371,6 @@ autocomplete="street-address">
 💳 You will be securely redirected to Stripe Test Checkout to complete the payment.
 
 </div>
-
 
 <br>
 
@@ -358,7 +392,7 @@ onclick="placeOrder()">
 <script>
 
 /* =====================================================
-   BERAKAH SUPABASE
+   EPHPHAVORA SUPABASE
 ===================================================== */
 
 const SUPABASE_URL =
@@ -431,6 +465,26 @@ document.getElementById(
     "placeOrderButton"
 );
 
+const nameInput =
+document.getElementById(
+    "customerName"
+);
+
+const emailInput =
+document.getElementById(
+    "customerEmail"
+);
+
+const phoneInput =
+document.getElementById(
+    "customerPhone"
+);
+
+const addressInput =
+document.getElementById(
+    "customerAddress"
+);
+
 
 /* =====================================================
    STATUS
@@ -446,6 +500,192 @@ function showStatus(
 
     statusBox.className =
         "status " + type;
+
+}
+
+
+/* =====================================================
+   CLEAR FIELD ERROR
+===================================================== */
+
+function clearFieldError(
+    input,
+    errorId
+){
+
+    input.classList.remove(
+        "invalid"
+    );
+
+    document
+        .getElementById(errorId)
+        .classList.remove("show");
+
+}
+
+
+/* =====================================================
+   SHOW FIELD ERROR
+===================================================== */
+
+function showFieldError(
+    input,
+    errorId,
+    message
+){
+
+    input.classList.add(
+        "invalid"
+    );
+
+    const errorBox =
+        document.getElementById(
+            errorId
+        );
+
+    errorBox.textContent =
+        message;
+
+    errorBox.classList.add(
+        "show"
+    );
+
+}
+
+
+/* =====================================================
+   VALIDATE CUSTOMER INFORMATION
+===================================================== */
+
+function validateCustomerInformation(){
+
+    let valid = true;
+
+    const name =
+        nameInput.value.trim();
+
+    const email =
+        emailInput.value.trim();
+
+    const phone =
+        phoneInput.value.trim();
+
+    const address =
+        addressInput.value.trim();
+
+
+    clearFieldError(
+        nameInput,
+        "nameError"
+    );
+
+    clearFieldError(
+        emailInput,
+        "emailError"
+    );
+
+    clearFieldError(
+        phoneInput,
+        "phoneError"
+    );
+
+    clearFieldError(
+        addressInput,
+        "addressError"
+    );
+
+
+    if(!name){
+
+        showFieldError(
+            nameInput,
+            "nameError",
+            "Full name is required."
+        );
+
+        valid = false;
+
+    }
+
+
+    if(!email){
+
+        showFieldError(
+            emailInput,
+            "emailError",
+            "Email address is required."
+        );
+
+        valid = false;
+
+    }else{
+
+        const emailPattern =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if(!emailPattern.test(email)){
+
+            showFieldError(
+                emailInput,
+                "emailError",
+                "Please enter a valid email address."
+            );
+
+            valid = false;
+
+        }
+
+    }
+
+
+    if(!phone){
+
+        showFieldError(
+            phoneInput,
+            "phoneError",
+            "Phone number is required."
+        );
+
+        valid = false;
+
+    }
+
+
+    if(!address){
+
+        showFieldError(
+            addressInput,
+            "addressError",
+            "Shipping address is required."
+        );
+
+        valid = false;
+
+    }
+
+
+    if(!valid){
+
+        showStatus(
+            "Please complete all required customer information.",
+            "error"
+        );
+
+        const firstInvalid =
+            document.querySelector(
+                "input.invalid"
+            );
+
+        if(firstInvalid){
+
+            firstInvalid.focus();
+
+        }
+
+    }
+
+
+    return valid;
 
 }
 
@@ -790,18 +1030,23 @@ async function createStripeCheckout(){
     }
 
 
-    /*
-       For the first Stripe test we use
-       ONE product at a time.
-
-       This matches the stripe-checkout
-       Edge Function we deployed.
-    */
-
     if(cart.length > 1){
 
         throw new Error(
             "For the first Stripe test, please checkout one product at a time."
+        );
+
+    }
+
+
+    /*
+       VALIDATE CUSTOMER INFORMATION
+    */
+
+    if(!validateCustomerInformation()){
+
+        throw new Error(
+            "Please complete the required customer information."
         );
 
     }
@@ -830,47 +1075,23 @@ async function createStripeCheckout(){
 
 
     const customerName =
-        document.getElementById(
-            "customerName"
-        ).value.trim();
+        nameInput.value.trim();
 
 
     const customerEmail =
-        document.getElementById(
-            "customerEmail"
-        ).value.trim();
+        emailInput.value.trim();
 
 
     const customerPhone =
-        document.getElementById(
-            "customerPhone"
-        ).value.trim();
+        phoneInput.value.trim();
 
 
     const customerAddress =
-        document.getElementById(
-            "customerAddress"
-        ).value.trim();
-
-
-    if(
-        !customerName ||
-        !customerEmail ||
-        !customerPhone ||
-        !customerAddress
-    ){
-
-        throw new Error(
-            "Please complete your name, email, phone, and shipping address."
-        );
-
-    }
+        addressInput.value.trim();
 
 
     /*
        Get the real product from Supabase.
-       Never trust the price stored only
-       in localStorage.
     */
 
     const product =
@@ -910,10 +1131,6 @@ async function createStripeCheckout(){
         "success"
     );
 
-
-    /*
-       Call the Supabase Edge Function.
-    */
 
     const response =
         await fetch(
@@ -1020,10 +1237,6 @@ async function createStripeCheckout(){
     }
 
 
-    /*
-       Redirect buyer to Stripe.
-    */
-
     showStatus(
         "Redirecting you to Stripe...",
         "success"
@@ -1037,7 +1250,7 @@ async function createStripeCheckout(){
 
 
 /* =====================================================
-   PLACE ORDER BUTTON
+   PLACE ORDER
 ===================================================== */
 
 async function placeOrder(){
@@ -1045,6 +1258,17 @@ async function placeOrder(){
     if(
         placeOrderButton.disabled
     ){
+
+        return;
+
+    }
+
+
+    /*
+       Validate BEFORE disabling button.
+    */
+
+    if(!validateCustomerInformation()){
 
         return;
 
@@ -1153,15 +1377,9 @@ async function startCheckout(){
         }
 
 
-        /* =============================================
+        /*
            PREFILL EMAIL
-        ============================================= */
-
-        const emailInput =
-            document.getElementById(
-                "customerEmail"
-            );
-
+        */
 
         if(
             currentUser.email &&
@@ -1174,9 +1392,9 @@ async function startCheckout(){
         }
 
 
-        /* =============================================
+        /*
            PREFILL NAME
-        ============================================= */
+        */
 
         const metadata =
             currentUser.user_metadata ||
@@ -1190,12 +1408,6 @@ async function startCheckout(){
             "";
 
 
-        const nameInput =
-            document.getElementById(
-                "customerName"
-            );
-
-
         if(
             name &&
             !nameInput.value
@@ -1205,6 +1417,7 @@ async function startCheckout(){
                 name;
 
         }
+
 
     }catch(error){
 
