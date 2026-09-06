@@ -6,389 +6,432 @@
 <title>EPHPHAVORA - Profile</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f7fb;
+  color:#111827;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
-  color: #111827;
+header{
+  background:white;
+  border-bottom:1px solid #e5e7eb;
+  position:sticky;
+  top:0;
+  z-index:1000;
 }
 
-header {
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+.header-inner{
+  max-width:1100px;
+  margin:auto;
+  padding:14px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
 }
 
-.header-inner {
-  max-width: 1100px;
-  margin: auto;
-  padding: 14px 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
+.logo{
+  font-size:24px;
+  font-weight:800;
+  color:#111827;
 }
 
-.logo {
-  font-size: 24px;
-  font-weight: 800;
-  color: #111827;
+.nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  justify-content:flex-end;
 }
 
-.nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: flex-end;
+.nav a,.logout-btn{
+  text-decoration:none;
+  color:#374151;
+  background:#f3f4f6;
+  border:0;
+  border-radius:8px;
+  padding:9px 12px;
+  cursor:pointer;
+  font-size:14px;
 }
 
-.nav a,
-.logout-btn {
-  text-decoration: none;
-  color: #374151;
-  background: #f3f4f6;
-  border: 0;
-  border-radius: 8px;
-  padding: 9px 12px;
-  cursor: pointer;
-  font-size: 14px;
+.container{
+  max-width:900px;
+  margin:25px auto;
+  padding:0 15px;
 }
 
-.nav a:hover,
-.logout-btn:hover {
-  background: #e5e7eb;
+.cover-area{
+  position:relative;
 }
 
-.container {
-  max-width: 900px;
-  margin: 25px auto;
-  padding: 0 15px;
+.cover{
+  height:240px;
+  background:linear-gradient(135deg,#111827,#4b5563);
+  border-radius:16px 16px 0 0;
+  overflow:hidden;
+  position:relative;
 }
 
-.cover {
-  height: 210px;
-  background: linear-gradient(135deg, #111827, #4b5563);
-  border-radius: 16px 16px 0 0;
+.cover img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
 }
 
-.profile-card {
-  background: white;
-  border-radius: 0 0 16px 16px;
-  padding: 0 25px 25px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+.cover-button{
+  position:absolute;
+  right:15px;
+  bottom:15px;
+  background:rgba(17,24,39,.9);
+  color:white;
+  border:0;
+  border-radius:8px;
+  padding:10px 14px;
+  cursor:pointer;
+  font-weight:600;
 }
 
-.profile-top {
-  display: flex;
-  align-items: flex-end;
-  gap: 20px;
-  margin-top: -60px;
+.cover-button:hover{
+  background:#374151;
 }
 
-.avatar-area {
-  position: relative;
-  width: 125px;
-  height: 125px;
-  flex-shrink: 0;
+.cover-menu{
+  position:absolute;
+  right:15px;
+  top:55px;
+  width:210px;
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  box-shadow:0 8px 25px rgba(0,0,0,.15);
+  padding:8px;
+  display:none;
+  z-index:100;
 }
 
-.avatar {
-  width: 125px;
-  height: 125px;
-  border-radius: 50%;
-  background: #111827;
-  color: white;
-  border: 5px solid white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 48px;
-  font-weight: bold;
-  overflow: hidden;
+.cover-menu button{
+  width:100%;
+  padding:11px;
+  border:0;
+  background:white;
+  text-align:left;
+  border-radius:7px;
+  cursor:pointer;
 }
 
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.cover-menu button:hover{
+  background:#f3f4f6;
 }
 
-.photo-button {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 3px solid white;
-  background: #111827;
-  color: white;
-  cursor: pointer;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.profile-card{
+  background:white;
+  border-radius:0 0 16px 16px;
+  padding:0 25px 25px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
 }
 
-.photo-button:hover {
-  background: #374151;
+.profile-top{
+  display:flex;
+  align-items:flex-end;
+  gap:20px;
+  margin-top:-60px;
 }
 
-.photo-menu {
-  position: absolute;
-  left: 0;
-  top: 135px;
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-  padding: 8px;
-  width: 190px;
-  display: none;
-  z-index: 50;
+.avatar-area{
+  position:relative;
+  width:125px;
+  height:125px;
+  flex-shrink:0;
 }
 
-.photo-menu button {
-  width: 100%;
-  padding: 10px;
-  border: 0;
-  background: white;
-  text-align: left;
-  border-radius: 7px;
-  cursor: pointer;
-  font-size: 14px;
+.avatar{
+  width:125px;
+  height:125px;
+  border-radius:50%;
+  background:#111827;
+  color:white;
+  border:5px solid white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:48px;
+  font-weight:bold;
+  overflow:hidden;
 }
 
-.photo-menu button:hover {
-  background: #f3f4f6;
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
-.hidden-file {
-  display: none;
+.photo-button{
+  position:absolute;
+  right:0;
+  bottom:0;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  border:3px solid white;
+  background:#111827;
+  color:white;
+  cursor:pointer;
+  font-size:18px;
 }
 
-.photo-status {
-  margin-top: 10px;
-  font-size: 13px;
-  color: #374151;
+.photo-menu{
+  position:absolute;
+  left:0;
+  top:135px;
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  box-shadow:0 8px 25px rgba(0,0,0,.15);
+  padding:8px;
+  width:210px;
+  display:none;
+  z-index:100;
 }
 
-.photo-help {
-  font-size: 12px;
-  color: #6b7280;
-  margin-top: 5px;
+.photo-menu button{
+  width:100%;
+  padding:10px;
+  border:0;
+  background:white;
+  text-align:left;
+  border-radius:7px;
+  cursor:pointer;
 }
 
-.profile-main {
-  flex: 1;
-  padding-bottom: 5px;
+.photo-menu button:hover{
+  background:#f3f4f6;
 }
 
-.profile-name {
-  font-size: 28px;
-  font-weight: 800;
+.hidden-file{
+  display:none;
 }
 
-.profile-username {
-  color: #6b7280;
-  margin-top: 4px;
+.photo-status{
+  margin-top:10px;
+  font-size:13px;
+  color:#374151;
 }
 
-.profile-language {
-  color: #6b7280;
-  margin-top: 5px;
-  font-size: 14px;
+.photo-help{
+  font-size:12px;
+  color:#6b7280;
+  margin-top:5px;
 }
 
-.profile-bio {
-  margin-top: 15px;
-  line-height: 1.5;
+.profile-main{
+  flex:1;
+  padding-bottom:5px;
 }
 
-.stats {
-  display: flex;
-  gap: 30px;
-  margin-top: 20px;
-  flex-wrap: wrap;
+.profile-name{
+  font-size:28px;
+  font-weight:800;
 }
 
-.stat {
-  text-align: center;
+.profile-username{
+  color:#6b7280;
+  margin-top:4px;
 }
 
-.stat strong {
-  display: block;
-  font-size: 20px;
+.profile-language{
+  color:#6b7280;
+  margin-top:5px;
+  font-size:14px;
 }
 
-.stat span {
-  color: #6b7280;
-  font-size: 13px;
+.profile-bio{
+  margin-top:15px;
+  line-height:1.5;
 }
 
-.actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 20px;
+.stats{
+  display:flex;
+  gap:30px;
+  margin-top:20px;
+  flex-wrap:wrap;
 }
 
-.btn {
-  border: 0;
-  border-radius: 8px;
-  padding: 10px 16px;
-  cursor: pointer;
-  font-weight: 600;
+.stat{
+  text-align:center;
 }
 
-.btn-primary {
-  background: #111827;
-  color: white;
+.stat strong{
+  display:block;
+  font-size:20px;
 }
 
-.btn-secondary {
-  background: #e5e7eb;
-  color: #111827;
+.stat span{
+  color:#6b7280;
+  font-size:13px;
 }
 
-.btn-danger {
-  background: #fee2e2;
-  color: #991b1b;
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:20px;
 }
 
-.edit-box {
-  display: none;
-  margin-top: 20px;
-  padding: 18px;
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+.btn{
+  border:0;
+  border-radius:8px;
+  padding:10px 16px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.btn-primary{
+  background:#111827;
+  color:white;
+}
+
+.btn-secondary{
+  background:#e5e7eb;
+  color:#111827;
+}
+
+.btn-danger{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.edit-box{
+  display:none;
+  margin-top:20px;
+  padding:18px;
+  background:#f9fafb;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
 }
 
 .edit-box input,
 .edit-box textarea,
-.edit-box select {
-  width: 100%;
-  padding: 11px;
-  margin-top: 6px;
-  margin-bottom: 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 15px;
+.edit-box select{
+  width:100%;
+  padding:11px;
+  margin-top:6px;
+  margin-bottom:14px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  font-size:15px;
 }
 
-.edit-box textarea {
-  min-height: 100px;
-  resize: vertical;
+.edit-box textarea{
+  min-height:100px;
+  resize:vertical;
 }
 
-.section {
-  background: white;
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+.section{
+  background:white;
+  margin-top:20px;
+  padding:20px;
+  border-radius:16px;
+  box-shadow:0 3px 12px rgba(0,0,0,.06);
 }
 
-.section h2 {
-  margin-top: 0;
+.section h2{
+  margin-top:0;
 }
 
-.post {
-  border-top: 1px solid #e5e7eb;
-  padding: 18px 0;
+.post{
+  border-top:1px solid #e5e7eb;
+  padding:18px 0;
 }
 
-.post:first-child {
-  border-top: 0;
+.post:first-child{
+  border-top:0;
 }
 
-.post-content {
-  white-space: pre-wrap;
-  line-height: 1.5;
+.post-content{
+  white-space:pre-wrap;
+  line-height:1.5;
 }
 
-.post img {
-  max-width: 100%;
-  border-radius: 10px;
-  margin-top: 12px;
+.post img{
+  max-width:100%;
+  border-radius:10px;
+  margin-top:12px;
 }
 
-.post-date {
-  color: #6b7280;
-  font-size: 12px;
-  margin-top: 8px;
+.post-date{
+  color:#6b7280;
+  font-size:12px;
+  margin-top:8px;
 }
 
-.status {
-  padding: 12px;
-  background: #f3f4f6;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  font-size: 14px;
+.status{
+  padding:12px;
+  background:#f3f4f6;
+  border-radius:8px;
+  margin-bottom:15px;
+  font-size:14px;
 }
 
-.people-list {
-  display: grid;
-  gap: 10px;
+.people-list{
+  display:grid;
+  gap:10px;
 }
 
-.person {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
+.person{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
 }
 
-.person-avatar {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background: #111827;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  font-weight: bold;
+.person-avatar{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#111827;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  font-weight:bold;
 }
 
-.person-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.person-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
-@media (max-width: 700px) {
-  .header-inner {
-    align-items: flex-start;
-    flex-direction: column;
+@media(max-width:700px){
+
+  .header-inner{
+    align-items:flex-start;
+    flex-direction:column;
   }
 
-  .nav {
-    justify-content: flex-start;
+  .nav{
+    justify-content:flex-start;
   }
 
-  .profile-top {
-    align-items: flex-start;
-    flex-direction: column;
-    margin-top: -55px;
+  .cover{
+    height:180px;
   }
 
-  .profile-main {
-    width: 100%;
+  .profile-top{
+    align-items:flex-start;
+    flex-direction:column;
+    margin-top:-55px;
   }
 
-  .cover {
-    height: 160px;
+  .profile-main{
+    width:100%;
   }
 }
 </style>
@@ -398,6 +441,7 @@ header {
 
 <header>
   <div class="header-inner">
+
     <div class="logo">EPHPHAVORA</div>
 
     <nav class="nav">
@@ -409,20 +453,74 @@ header {
       <a href="messages.html">Messages</a>
       <button class="logout-btn" id="logoutBtn">Logout</button>
     </nav>
+
   </div>
 </header>
 
 <main class="container">
 
-  <div class="cover"></div>
+  <!-- COVER PHOTO -->
+
+  <div class="cover-area">
+
+    <div class="cover" id="cover">
+      <!-- Cover image appears here -->
+    </div>
+
+    <button
+      class="cover-button"
+      id="coverButton"
+      type="button"
+      style="display:none;"
+    >
+      🌄 Cover Photo
+    </button>
+
+    <div
+      class="cover-menu"
+      id="coverMenu"
+    >
+
+      <button
+        type="button"
+        id="chooseCoverBtn"
+      >
+        🌄 Choose cover photo
+      </button>
+
+      <button
+        type="button"
+        id="removeCoverBtn"
+      >
+        🗑️ Remove cover photo
+      </button>
+
+    </div>
+
+    <input
+      type="file"
+      id="coverInput"
+      class="hidden-file"
+      accept="image/jpeg,image/png,image/webp"
+    />
+
+  </div>
+
 
   <div class="profile-card">
+
+    <!-- PROFILE PHOTO -->
 
     <div class="profile-top">
 
       <div class="avatar-area">
 
-        <div class="avatar" id="avatar">👤</div>
+        <div
+          class="avatar"
+          id="avatar"
+        >
+          👤
+        </div>
 
         <button
           class="photo-button"
@@ -434,13 +532,22 @@ header {
           📷
         </button>
 
-        <div class="photo-menu" id="photoMenu">
+        <div
+          class="photo-menu"
+          id="photoMenu"
+        >
 
-          <button type="button" id="choosePhotoBtn">
+          <button
+            type="button"
+            id="choosePhotoBtn"
+          >
             📷 Choose profile picture
           </button>
 
-          <button type="button" id="removePhotoBtn">
+          <button
+            type="button"
+            id="removePhotoBtn"
+          >
             🗑️ Remove profile picture
           </button>
 
@@ -457,25 +564,38 @@ header {
 
       <div class="profile-main">
 
-        <div class="profile-name" id="profileName">
+        <div
+          class="profile-name"
+          id="profileName"
+        >
           EPHPHAVORA User
         </div>
 
-        <div class="profile-username" id="profileUsername">
+        <div
+          class="profile-username"
+          id="profileUsername"
+        >
           @username
         </div>
 
-        <div class="profile-language" id="profileLanguage">
+        <div
+          class="profile-language"
+          id="profileLanguage"
+        >
           Language
         </div>
 
-        <div class="profile-bio" id="profileBio">
+        <div
+          class="profile-bio"
+          id="profileBio"
+        >
           Welcome to EPHPHAVORA.
         </div>
 
       </div>
 
     </div>
+
 
     <div
       class="photo-status"
@@ -488,8 +608,9 @@ header {
       id="photoHelp"
       style="display:none;"
     >
-      JPG, PNG, or WEBP. Maximum size: 10 MB.
+      Profile and cover pictures: JPG, PNG, or WEBP. Maximum size: 10 MB each.
     </div>
+
 
     <div class="stats">
 
@@ -509,6 +630,7 @@ header {
       </div>
 
     </div>
+
 
     <div class="actions">
 
@@ -544,24 +666,51 @@ header {
 
     </div>
 
-    <div class="edit-box" id="editBox">
+
+    <div
+      class="edit-box"
+      id="editBox"
+    >
 
       <label>Full Name</label>
-      <input id="editFullName" type="text">
+      <input
+        id="editFullName"
+        type="text"
+      >
 
       <label>Username</label>
-      <input id="editUsername" type="text">
+      <input
+        id="editUsername"
+        type="text"
+      >
 
       <label>Language</label>
+
       <select id="editLanguage">
-        <option value="English">English</option>
-        <option value="Kreyòl">Kreyòl</option>
-        <option value="Français">Français</option>
-        <option value="Español">Español</option>
+
+        <option value="English">
+          English
+        </option>
+
+        <option value="Kreyòl">
+          Kreyòl
+        </option>
+
+        <option value="Français">
+          Français
+        </option>
+
+        <option value="Español">
+          Español
+        </option>
+
       </select>
 
       <label>Bio</label>
-      <textarea id="editBio"></textarea>
+
+      <textarea
+        id="editBio"
+      ></textarea>
 
       <div class="actions">
 
@@ -585,11 +734,17 @@ header {
 
   </div>
 
+
+  <!-- POSTS -->
+
   <div class="section">
 
     <h2>Posts</h2>
 
-    <div id="postsStatus" class="status">
+    <div
+      id="postsStatus"
+      class="status"
+    >
       Loading posts...
     </div>
 
@@ -597,29 +752,47 @@ header {
 
   </div>
 
+
+  <!-- FOLLOWERS -->
+
   <div class="section">
 
     <h2>Followers</h2>
 
-    <div id="followers" class="people-list">
-      <div class="status">Loading followers...</div>
+    <div
+      id="followers"
+      class="people-list"
+    >
+      <div class="status">
+        Loading followers...
+      </div>
     </div>
 
   </div>
+
+
+  <!-- FOLLOWING -->
 
   <div class="section">
 
     <h2>Following</h2>
 
-    <div id="following" class="people-list">
-      <div class="status">Loading following...</div>
+    <div
+      id="following"
+      class="people-list"
+    >
+      <div class="status">
+        Loading following...
+      </div>
     </div>
 
   </div>
 
 </main>
 
+
 <script>
+
 const SUPABASE_URL =
   "https://utoyoglycqjmqznczfxa.supabase.co";
 
@@ -627,23 +800,50 @@ const SUPABASE_KEY =
   "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
 const AVATAR_BUCKET = "avatars";
+const COVER_BUCKET = "covers";
 
-/*
-  IMPORTANT:
-  These internal localStorage names remain unchanged
-  because other EPHPHAVORA pages depend on them.
-*/
-const ACCESS_TOKEN_KEY = "berakah_access_token";
-const REFRESH_TOKEN_KEY = "berakah_refresh_token";
-const USER_KEY = "berakah_user";
-const USERNAME_KEY = "berakah_username";
-const AUTH_USER_ID_KEY = "berakah_auth_user_id";
+const ACCESS_TOKEN_KEY =
+  "berakah_access_token";
+
+const REFRESH_TOKEN_KEY =
+  "berakah_refresh_token";
+
+const USER_KEY =
+  "berakah_user";
+
+const USERNAME_KEY =
+  "berakah_username";
+
+const AUTH_USER_ID_KEY =
+  "berakah_auth_user_id";
+
 
 let accessToken =
   localStorage.getItem(ACCESS_TOKEN_KEY);
 
 let currentUser = null;
 let profile = null;
+
+
+/* ELEMENTS */
+
+const cover =
+  document.getElementById("cover");
+
+const coverButton =
+  document.getElementById("coverButton");
+
+const coverMenu =
+  document.getElementById("coverMenu");
+
+const coverInput =
+  document.getElementById("coverInput");
+
+const chooseCoverBtn =
+  document.getElementById("chooseCoverBtn");
+
+const removeCoverBtn =
+  document.getElementById("removeCoverBtn");
 
 const avatar =
   document.getElementById("avatar");
@@ -739,21 +939,28 @@ const logoutBtn =
   document.getElementById("logoutBtn");
 
 
-function escapeHTML(value) {
+/* HELPERS */
+
+function escapeHTML(value){
+
   return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
 
-async function supabaseFetch(path, options = {}) {
+async function supabaseFetch(
+  path,
+  options = {}
+){
 
   const headers = {
     "apikey": SUPABASE_KEY,
-    "Authorization": `Bearer ${accessToken}`,
+    "Authorization":
+      `Bearer ${accessToken}`,
     ...(options.headers || {})
   };
 
@@ -767,31 +974,37 @@ async function supabaseFetch(path, options = {}) {
 }
 
 
-async function getCurrentUser() {
+async function getCurrentUser(){
 
   const response =
-    await supabaseFetch("/auth/v1/user");
+    await supabaseFetch(
+      "/auth/v1/user"
+    );
 
-  if (!response.ok) {
-    throw new Error("Not logged in");
+  if(!response.ok){
+    throw new Error(
+      "Not logged in"
+    );
   }
 
   return response.json();
 }
 
 
-function getQueryValue(name) {
+function getQueryValue(name){
 
   const params =
-    new URLSearchParams(window.location.search);
+    new URLSearchParams(
+      window.location.search
+    );
 
   return params.get(name);
 }
 
 
-function isOwnProfile() {
+function isOwnProfile(){
 
-  if (!currentUser || !profile) {
+  if(!currentUser || !profile){
     return false;
   }
 
@@ -800,21 +1013,32 @@ function isOwnProfile() {
 }
 
 
-function showPhotoStatus(message) {
+function showPhotoStatus(message){
 
-  photoStatus.textContent = message;
-  photoStatus.style.display = "block";
+  photoStatus.textContent =
+    message;
+
+  photoStatus.style.display =
+    "block";
 }
 
 
-function hidePhotoStatus() {
+function displayCover(){
 
-  photoStatus.textContent = "";
-  photoStatus.style.display = "none";
+  if(profile && profile.cover_url){
+
+    cover.innerHTML =
+      `<img src="${escapeHTML(profile.cover_url)}" alt="Cover photo">`;
+
+  }else{
+
+    cover.innerHTML =
+      "";
+  }
 }
 
 
-function displayProfile() {
+function displayProfile(){
 
   const fullName =
     profile["Full name"] ||
@@ -822,39 +1046,50 @@ function displayProfile() {
     profile.username ||
     "EPHPHAVORA User";
 
+
   profileName.textContent =
     fullName;
+
 
   profileUsername.textContent =
     profile.username
       ? "@" + profile.username
       : "@username";
 
+
   profileLanguage.textContent =
     profile.language ||
     "Language";
+
 
   profileBio.textContent =
     profile.bio ||
     "Welcome to EPHPHAVORA.";
 
-  if (profile.avatar_url) {
+
+  if(profile.avatar_url){
 
     avatar.innerHTML =
       `<img src="${escapeHTML(profile.avatar_url)}" alt="Profile picture">`;
 
-  } else {
+  }else{
 
     avatar.textContent =
-      fullName
-        .charAt(0)
-        .toUpperCase() || "👤";
+      fullName.charAt(0).toUpperCase() ||
+      "👤";
   }
 
-  if (isOwnProfile()) {
+
+  displayCover();
+
+
+  if(isOwnProfile()){
 
     photoButton.style.display =
       "flex";
+
+    coverButton.style.display =
+      "block";
 
     photoHelp.style.display =
       "block";
@@ -865,9 +1100,12 @@ function displayProfile() {
     followBtn.style.display =
       "none";
 
-  } else {
+  }else{
 
     photoButton.style.display =
+      "none";
+
+    coverButton.style.display =
       "none";
 
     photoHelp.style.display =
@@ -884,9 +1122,11 @@ function displayProfile() {
 }
 
 
+/* PROFILE PHOTO MENU */
+
 photoButton.addEventListener(
   "click",
-  function(event) {
+  function(event){
 
     event.stopPropagation();
 
@@ -898,24 +1138,9 @@ photoButton.addEventListener(
 );
 
 
-document.addEventListener(
-  "click",
-  function(event) {
-
-    if (
-      !photoMenu.contains(event.target) &&
-      event.target !== photoButton
-    ) {
-      photoMenu.style.display =
-        "none";
-    }
-  }
-);
-
-
 choosePhotoBtn.addEventListener(
   "click",
-  function() {
+  function(){
 
     photoMenu.style.display =
       "none";
@@ -925,34 +1150,91 @@ choosePhotoBtn.addEventListener(
 );
 
 
+/* COVER MENU */
+
+coverButton.addEventListener(
+  "click",
+  function(event){
+
+    event.stopPropagation();
+
+    coverMenu.style.display =
+      coverMenu.style.display === "block"
+        ? "none"
+        : "block";
+  }
+);
+
+
+chooseCoverBtn.addEventListener(
+  "click",
+  function(){
+
+    coverMenu.style.display =
+      "none";
+
+    coverInput.click();
+  }
+);
+
+
+document.addEventListener(
+  "click",
+  function(event){
+
+    if(
+      !photoMenu.contains(event.target) &&
+      event.target !== photoButton
+    ){
+
+      photoMenu.style.display =
+        "none";
+    }
+
+
+    if(
+      !coverMenu.contains(event.target) &&
+      event.target !== coverButton
+    ){
+
+      coverMenu.style.display =
+        "none";
+    }
+  }
+);
+
+
+/* PROFILE PHOTO UPLOAD */
+
 photoInput.addEventListener(
   "change",
-  async function() {
+  async function(){
 
     const file =
       photoInput.files &&
       photoInput.files[0];
 
-    if (!file) {
+    if(!file){
       return;
     }
 
-    /*
-      10 MB maximum.
-    */
+
     const MAX_SIZE =
       10 * 1024 * 1024;
 
-    if (file.size > MAX_SIZE) {
+
+    if(file.size > MAX_SIZE){
 
       showPhotoStatus(
         "This picture is too large. Maximum size is 10 MB."
       );
 
-      photoInput.value = "";
+      photoInput.value =
+        "";
 
       return;
     }
+
 
     const allowedTypes = [
       "image/jpeg",
@@ -960,33 +1242,39 @@ photoInput.addEventListener(
       "image/webp"
     ];
 
-    if (!allowedTypes.includes(file.type)) {
+
+    if(!allowedTypes.includes(file.type)){
 
       showPhotoStatus(
         "Please choose a JPG, PNG, or WEBP image."
       );
 
-      photoInput.value = "";
+      photoInput.value =
+        "";
 
       return;
     }
 
-    if (!currentUser || !isOwnProfile()) {
+
+    if(!currentUser || !isOwnProfile()){
 
       showPhotoStatus(
         "You can only change your own profile picture."
       );
 
-      photoInput.value = "";
+      photoInput.value =
+        "";
 
       return;
     }
 
-    try {
+
+    try{
 
       showPhotoStatus(
         "Uploading profile picture..."
       );
+
 
       const extension =
         file.type === "image/png"
@@ -995,83 +1283,87 @@ photoInput.addEventListener(
             ? "webp"
             : "jpg";
 
+
       const filePath =
         `${currentUser.id}/profile-${Date.now()}.${extension}`;
+
 
       const uploadResponse =
         await supabaseFetch(
           `/storage/v1/object/${AVATAR_BUCKET}/${encodeURIComponent(filePath)}`,
           {
-            method: "POST",
-            headers: {
-              "Content-Type": file.type,
-              "x-upsert": "true"
+            method:"POST",
+            headers:{
+              "Content-Type":
+                file.type,
+              "x-upsert":
+                "true"
             },
-            body: file
+            body:file
           }
         );
 
-      if (!uploadResponse.ok) {
 
-        const errorText =
-          await uploadResponse.text();
+      if(!uploadResponse.ok){
 
         console.error(
-          "Avatar upload error:",
-          uploadResponse.status,
-          errorText
+          "Profile upload:",
+          await uploadResponse.text()
         );
 
         throw new Error(
-          `Upload failed (${uploadResponse.status})`
+          "Upload failed"
         );
       }
+
 
       const publicURL =
         `${SUPABASE_URL}/storage/v1/object/public/${AVATAR_BUCKET}/${filePath}`;
 
-      const profileUpdate =
+
+      const updateResponse =
         await supabaseFetch(
           `/rest/v1/profiles?id=eq.${profile.id}`,
           {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              "Prefer": "return=minimal"
+            method:"PATCH",
+            headers:{
+              "Content-Type":
+                "application/json",
+              "Prefer":
+                "return=minimal"
             },
-            body: JSON.stringify({
-              avatar_url: publicURL
+            body:JSON.stringify({
+              avatar_url:
+                publicURL
             })
           }
         );
 
-      if (!profileUpdate.ok) {
 
-        const errorText =
-          await profileUpdate.text();
-
-        console.error(
-          "Profile avatar save error:",
-          errorText
-        );
+      if(!updateResponse.ok){
 
         throw new Error(
-          "Picture uploaded, but profile could not be updated."
+          "Profile update failed"
         );
       }
+
 
       profile.avatar_url =
         publicURL;
 
+
       displayProfile();
+
 
       showPhotoStatus(
         "Profile picture updated successfully!"
       );
 
-      photoInput.value = "";
 
-    } catch (error) {
+      photoInput.value =
+        "";
+
+    }catch(error){
 
       console.error(
         "PROFILE PICTURE ERROR:",
@@ -1082,20 +1374,209 @@ photoInput.addEventListener(
         "Could not upload profile picture."
       );
 
-      photoInput.value = "";
+      photoInput.value =
+        "";
     }
   }
 );
 
 
+/* COVER PHOTO UPLOAD */
+
+coverInput.addEventListener(
+  "change",
+  async function(){
+
+    const file =
+      coverInput.files &&
+      coverInput.files[0];
+
+    if(!file){
+      return;
+    }
+
+
+    const MAX_SIZE =
+      10 * 1024 * 1024;
+
+
+    if(file.size > MAX_SIZE){
+
+      showPhotoStatus(
+        "This cover photo is too large. Maximum size is 10 MB."
+      );
+
+      coverInput.value =
+        "";
+
+      return;
+    }
+
+
+    const allowedTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/webp"
+    ];
+
+
+    if(!allowedTypes.includes(file.type)){
+
+      showPhotoStatus(
+        "Please choose a JPG, PNG, or WEBP cover photo."
+      );
+
+      coverInput.value =
+        "";
+
+      return;
+    }
+
+
+    if(!currentUser || !isOwnProfile()){
+
+      showPhotoStatus(
+        "You can only change your own cover photo."
+      );
+
+      coverInput.value =
+        "";
+
+      return;
+    }
+
+
+    try{
+
+      showPhotoStatus(
+        "Uploading cover photo..."
+      );
+
+
+      const extension =
+        file.type === "image/png"
+          ? "png"
+          : file.type === "image/webp"
+            ? "webp"
+            : "jpg";
+
+
+      const filePath =
+        `${currentUser.id}/cover-${Date.now()}.${extension}`;
+
+
+      const uploadResponse =
+        await supabaseFetch(
+          `/storage/v1/object/${COVER_BUCKET}/${encodeURIComponent(filePath)}`,
+          {
+            method:"POST",
+            headers:{
+              "Content-Type":
+                file.type,
+              "x-upsert":
+                "true"
+            },
+            body:file
+          }
+        );
+
+
+      if(!uploadResponse.ok){
+
+        console.error(
+          "Cover upload:",
+          await uploadResponse.text()
+        );
+
+        throw new Error(
+          "Cover upload failed"
+        );
+      }
+
+
+      const publicURL =
+        `${SUPABASE_URL}/storage/v1/object/public/${COVER_BUCKET}/${filePath}`;
+
+
+      const updateResponse =
+        await supabaseFetch(
+          `/rest/v1/profiles?id=eq.${profile.id}`,
+          {
+            method:"PATCH",
+            headers:{
+              "Content-Type":
+                "application/json",
+              "Prefer":
+                "return=minimal"
+            },
+            body:JSON.stringify({
+              cover_url:
+                publicURL
+            })
+          }
+        );
+
+
+      if(!updateResponse.ok){
+
+        const errorText =
+          await updateResponse.text();
+
+        console.error(
+          "Cover database update:",
+          errorText
+        );
+
+        throw new Error(
+          "Could not save cover URL"
+        );
+      }
+
+
+      profile.cover_url =
+        publicURL;
+
+
+      displayProfile();
+
+
+      showPhotoStatus(
+        "Cover photo updated successfully!"
+      );
+
+
+      coverInput.value =
+        "";
+
+    }catch(error){
+
+      console.error(
+        "COVER PHOTO ERROR:",
+        error
+      );
+
+      showPhotoStatus(
+        "Could not upload cover photo."
+      );
+
+      coverInput.value =
+        "";
+    }
+  }
+);
+
+
+/* REMOVE PROFILE PHOTO */
+
 removePhotoBtn.addEventListener(
   "click",
-  async function() {
+  async function(){
 
     photoMenu.style.display =
       "none";
 
-    if (!currentUser || !isOwnProfile()) {
+
+    if(!currentUser || !isOwnProfile()){
 
       showPhotoStatus(
         "You can only remove your own profile picture."
@@ -1104,7 +1585,8 @@ removePhotoBtn.addEventListener(
       return;
     }
 
-    if (!profile.avatar_url) {
+
+    if(!profile.avatar_url){
 
       showPhotoStatus(
         "There is no profile picture to remove."
@@ -1113,61 +1595,58 @@ removePhotoBtn.addEventListener(
       return;
     }
 
-    const confirmed =
-      confirm(
-        "Remove your profile picture?"
-      );
 
-    if (!confirmed) {
+    if(!confirm(
+      "Remove your profile picture?"
+    )){
       return;
     }
 
-    try {
+
+    try{
 
       showPhotoStatus(
         "Removing profile picture..."
       );
 
+
       const response =
         await supabaseFetch(
           `/rest/v1/profiles?id=eq.${profile.id}`,
           {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              "Prefer": "return=minimal"
+            method:"PATCH",
+            headers:{
+              "Content-Type":
+                "application/json",
+              "Prefer":
+                "return=minimal"
             },
-            body: JSON.stringify({
-              avatar_url: null
+            body:JSON.stringify({
+              avatar_url:null
             })
           }
         );
 
-      if (!response.ok) {
 
-        const errorText =
-          await response.text();
-
-        console.error(
-          "Remove avatar error:",
-          errorText
-        );
-
+      if(!response.ok){
         throw new Error(
-          "Could not remove profile picture."
+          "Remove failed"
         );
       }
+
 
       profile.avatar_url =
         null;
 
+
       displayProfile();
+
 
       showPhotoStatus(
         "Profile picture removed."
       );
 
-    } catch (error) {
+    }catch(error){
 
       console.error(
         "REMOVE PROFILE PICTURE ERROR:",
@@ -1182,7 +1661,104 @@ removePhotoBtn.addEventListener(
 );
 
 
-async function loadProfile() {
+/* REMOVE COVER */
+
+removeCoverBtn.addEventListener(
+  "click",
+  async function(){
+
+    coverMenu.style.display =
+      "none";
+
+
+    if(!currentUser || !isOwnProfile()){
+
+      showPhotoStatus(
+        "You can only remove your own cover photo."
+      );
+
+      return;
+    }
+
+
+    if(!profile.cover_url){
+
+      showPhotoStatus(
+        "There is no cover photo to remove."
+      );
+
+      return;
+    }
+
+
+    if(!confirm(
+      "Remove your cover photo?"
+    )){
+      return;
+    }
+
+
+    try{
+
+      showPhotoStatus(
+        "Removing cover photo..."
+      );
+
+
+      const response =
+        await supabaseFetch(
+          `/rest/v1/profiles?id=eq.${profile.id}`,
+          {
+            method:"PATCH",
+            headers:{
+              "Content-Type":
+                "application/json",
+              "Prefer":
+                "return=minimal"
+            },
+            body:JSON.stringify({
+              cover_url:null
+            })
+          }
+        );
+
+
+      if(!response.ok){
+        throw new Error(
+          "Remove failed"
+        );
+      }
+
+
+      profile.cover_url =
+        null;
+
+
+      displayProfile();
+
+
+      showPhotoStatus(
+        "Cover photo removed."
+      );
+
+    }catch(error){
+
+      console.error(
+        "REMOVE COVER ERROR:",
+        error
+      );
+
+      showPhotoStatus(
+        "Could not remove cover photo."
+      );
+    }
+  }
+);
+
+
+/* LOAD PROFILE */
+
+async function loadProfile(){
 
   const requestedId =
     getQueryValue("id");
@@ -1192,21 +1768,22 @@ async function loadProfile() {
 
   let response;
 
-  if (requestedId) {
+
+  if(requestedId){
 
     response =
       await supabaseFetch(
         `/rest/v1/profiles?select=*&id=eq.${encodeURIComponent(requestedId)}&limit=1`
       );
 
-  } else if (requestedUsername) {
+  }else if(requestedUsername){
 
     response =
       await supabaseFetch(
         `/rest/v1/profiles?select=*&username=eq.${encodeURIComponent(requestedUsername)}&limit=1`
       );
 
-  } else {
+  }else{
 
     response =
       await supabaseFetch(
@@ -1214,49 +1791,59 @@ async function loadProfile() {
       );
   }
 
-  if (!response.ok) {
+
+  if(!response.ok){
 
     throw new Error(
       "Could not load profile."
     );
   }
 
+
   const data =
     await response.json();
 
-  if (!data.length) {
+
+  if(!data.length){
 
     throw new Error(
       "Profile not found."
     );
   }
 
+
   profile =
     data[0];
+
 
   displayProfile();
 }
 
 
-async function loadFollowCounts() {
+/* FOLLOW COUNTS */
 
-  if (!profile || !profile.user_id) {
+async function loadFollowCounts(){
+
+  if(!profile || !profile.user_id){
     return;
   }
 
-  try {
+
+  try{
 
     const followersResponse =
       await supabaseFetch(
         `/rest/v1/follows?select=id&following_id=eq.${encodeURIComponent(profile.user_id)}`
       );
 
+
     const followingResponse =
       await supabaseFetch(
         `/rest/v1/follows?select=id&follower_id=eq.${encodeURIComponent(profile.user_id)}`
       );
 
-    if (followersResponse.ok) {
+
+    if(followersResponse.ok){
 
       const followers =
         await followersResponse.json();
@@ -1265,7 +1852,8 @@ async function loadFollowCounts() {
         followers.length;
     }
 
-    if (followingResponse.ok) {
+
+    if(followingResponse.ok){
 
       const following =
         await followingResponse.json();
@@ -1274,7 +1862,7 @@ async function loadFollowCounts() {
         following.length;
     }
 
-  } catch (error) {
+  }catch(error){
 
     console.error(
       "FOLLOW COUNT ERROR:",
@@ -1284,37 +1872,43 @@ async function loadFollowCounts() {
 }
 
 
-async function checkFollowing() {
+/* CHECK FOLLOWING */
 
-  if (
+async function checkFollowing(){
+
+  if(
     !currentUser ||
     !profile ||
     !profile.user_id ||
     isOwnProfile()
-  ) {
+  ){
     return;
   }
 
-  try {
+
+  try{
 
     const response =
       await supabaseFetch(
         `/rest/v1/follows?select=id&follower_id=eq.${encodeURIComponent(currentUser.id)}&following_id=eq.${encodeURIComponent(profile.user_id)}&limit=1`
       );
 
-    if (!response.ok) {
+
+    if(!response.ok){
       return;
     }
 
+
     const data =
       await response.json();
+
 
     followBtn.textContent =
       data.length
         ? "Unfollow"
         : "Follow";
 
-  } catch (error) {
+  }catch(error){
 
     console.error(
       "FOLLOW CHECK ERROR:",
@@ -1324,60 +1918,71 @@ async function checkFollowing() {
 }
 
 
-async function toggleFollow() {
+/* FOLLOW */
 
-  if (
+async function toggleFollow(){
+
+  if(
     !currentUser ||
     !profile ||
     !profile.user_id ||
     isOwnProfile()
-  ) {
+  ){
     return;
   }
 
-  try {
+
+  try{
 
     const checkResponse =
       await supabaseFetch(
         `/rest/v1/follows?select=id&follower_id=eq.${encodeURIComponent(currentUser.id)}&following_id=eq.${encodeURIComponent(profile.user_id)}&limit=1`
       );
 
+
     const existing =
       checkResponse.ok
         ? await checkResponse.json()
         : [];
 
-    if (existing.length) {
+
+    if(existing.length){
 
       await supabaseFetch(
         `/rest/v1/follows?id=eq.${existing[0].id}`,
         {
-          method: "DELETE"
+          method:"DELETE"
         }
       );
+
 
       followBtn.textContent =
         "Follow";
 
-    } else {
+    }else{
 
       const response =
         await supabaseFetch(
           "/rest/v1/follows",
           {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Prefer": "return=minimal"
+            method:"POST",
+            headers:{
+              "Content-Type":
+                "application/json",
+              "Prefer":
+                "return=minimal"
             },
-            body: JSON.stringify({
-              follower_id: currentUser.id,
-              following_id: profile.user_id
+            body:JSON.stringify({
+              follower_id:
+                currentUser.id,
+              following_id:
+                profile.user_id
             })
           }
         );
 
-      if (!response.ok) {
+
+      if(!response.ok){
 
         console.error(
           "Follow failed:",
@@ -1387,31 +1992,40 @@ async function toggleFollow() {
         return;
       }
 
+
       followBtn.textContent =
         "Unfollow";
+
 
       await supabaseFetch(
         "/rest/v1/notifications",
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Prefer": "return=minimal"
+          method:"POST",
+          headers:{
+            "Content-Type":
+              "application/json",
+            "Prefer":
+              "return=minimal"
           },
-          body: JSON.stringify({
-            user_id: profile.user_id,
-            from_user_id: currentUser.id,
-            type: "follow",
-            message: "started following you",
-            read: false
+          body:JSON.stringify({
+            user_id:
+              profile.user_id,
+            from_user_id:
+              currentUser.id,
+            type:
+              "follow",
+            message:
+              "started following you",
+            read:false
           })
         }
       );
     }
 
+
     await loadFollowCounts();
 
-  } catch (error) {
+  }catch(error){
 
     console.error(
       "TOGGLE FOLLOW ERROR:",
@@ -1427,9 +2041,11 @@ followBtn.addEventListener(
 );
 
 
+/* EDIT PROFILE */
+
 editBtn.addEventListener(
   "click",
-  function() {
+  function(){
 
     editFullName.value =
       profile["Full name"] ||
@@ -1456,7 +2072,7 @@ editBtn.addEventListener(
 
 cancelEditBtn.addEventListener(
   "click",
-  function() {
+  function(){
 
     editBox.style.display =
       "none";
@@ -1464,15 +2080,18 @@ cancelEditBtn.addEventListener(
 );
 
 
+/* SAVE PROFILE */
+
 saveProfileBtn.addEventListener(
   "click",
-  async function() {
+  async function(){
 
-    if (!isOwnProfile()) {
+    if(!isOwnProfile()){
       return;
     }
 
-    try {
+
+    try{
 
       saveProfileBtn.disabled =
         true;
@@ -1480,7 +2099,9 @@ saveProfileBtn.addEventListener(
       saveProfileBtn.textContent =
         "Saving...";
 
+
       const updatedProfile = {
+
         "Full name":
           editFullName.value.trim(),
 
@@ -1494,29 +2115,30 @@ saveProfileBtn.addEventListener(
           editBio.value.trim()
       };
 
+
       const response =
         await supabaseFetch(
           `/rest/v1/profiles?id=eq.${profile.id}`,
           {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              "Prefer": "return=representation"
+            method:"PATCH",
+            headers:{
+              "Content-Type":
+                "application/json",
+              "Prefer":
+                "return=representation"
             },
-            body: JSON.stringify(
+            body:JSON.stringify(
               updatedProfile
             )
           }
         );
 
-      if (!response.ok) {
 
-        const errorText =
-          await response.text();
+      if(!response.ok){
 
         console.error(
           "PROFILE SAVE ERROR:",
-          errorText
+          await response.text()
         );
 
         alert(
@@ -1526,28 +2148,37 @@ saveProfileBtn.addEventListener(
         return;
       }
 
+
       const data =
         await response.json();
 
-      if (data.length) {
-        profile = data[0];
-      } else {
+
+      if(data.length){
+
+        profile =
+          data[0];
+
+      }else{
+
         Object.assign(
           profile,
           updatedProfile
         );
       }
 
+
       displayProfile();
+
 
       editBox.style.display =
         "none";
+
 
       alert(
         "Profile updated successfully!"
       );
 
-    } catch (error) {
+    }catch(error){
 
       console.error(
         "SAVE PROFILE ERROR:",
@@ -1558,7 +2189,7 @@ saveProfileBtn.addEventListener(
         "Could not save profile."
       );
 
-    } finally {
+    }finally{
 
       saveProfileBtn.disabled =
         false;
@@ -1570,20 +2201,24 @@ saveProfileBtn.addEventListener(
 );
 
 
-async function loadPosts() {
+/* POSTS */
 
-  if (!profile || !profile.user_id) {
+async function loadPosts(){
+
+  if(!profile || !profile.user_id){
     return;
   }
 
-  try {
+
+  try{
 
     const response =
       await supabaseFetch(
         `/rest/v1/posts?select=*&user_id=eq.${encodeURIComponent(profile.user_id)}&order=created_at.desc`
       );
 
-    if (!response.ok) {
+
+    if(!response.ok){
 
       postsStatus.textContent =
         "Could not load posts.";
@@ -1591,13 +2226,16 @@ async function loadPosts() {
       return;
     }
 
+
     const data =
       await response.json();
+
 
     postsCount.textContent =
       data.length;
 
-    if (!data.length) {
+
+    if(!data.length){
 
       postsStatus.textContent =
         "No posts yet.";
@@ -1608,8 +2246,10 @@ async function loadPosts() {
       return;
     }
 
+
     postsStatus.style.display =
       "none";
+
 
     postsContainer.innerHTML =
       data.map(post => {
@@ -1619,10 +2259,12 @@ async function loadPosts() {
             post.content || ""
           );
 
+
         const image =
           post.image_url
             ? `<img src="${escapeHTML(post.image_url)}" alt="Post image">`
             : "";
+
 
         const date =
           post.created_at
@@ -1630,6 +2272,7 @@ async function loadPosts() {
                 post.created_at
               ).toLocaleString()
             : "";
+
 
         const deleteButton =
           isOwnProfile()
@@ -1643,6 +2286,7 @@ async function loadPosts() {
               </button>
             `
             : "";
+
 
         return `
           <div class="post">
@@ -1664,7 +2308,7 @@ async function loadPosts() {
 
       }).join("");
 
-  } catch (error) {
+  }catch(error){
 
     console.error(
       "LOAD POSTS ERROR:",
@@ -1677,32 +2321,32 @@ async function loadPosts() {
 }
 
 
-async function deletePost(postId) {
+async function deletePost(postId){
 
-  if (!isOwnProfile()) {
+  if(!isOwnProfile()){
     return;
   }
 
-  const confirmed =
-    confirm(
-      "Delete this post?"
-    );
 
-  if (!confirmed) {
+  if(!confirm(
+    "Delete this post?"
+  )){
     return;
   }
 
-  try {
+
+  try{
 
     const response =
       await supabaseFetch(
         `/rest/v1/posts?id=eq.${encodeURIComponent(postId)}`,
         {
-          method: "DELETE"
+          method:"DELETE"
         }
       );
 
-    if (!response.ok) {
+
+    if(!response.ok){
 
       alert(
         "Could not delete post."
@@ -1711,9 +2355,10 @@ async function deletePost(postId) {
       return;
     }
 
+
     await loadPosts();
 
-  } catch (error) {
+  }catch(error){
 
     console.error(
       "DELETE POST ERROR:",
@@ -1727,33 +2372,39 @@ async function deletePost(postId) {
 }
 
 
+/* PEOPLE */
+
 async function loadPeopleList(
   type,
   container
-) {
+){
 
-  if (!profile || !profile.user_id) {
+  if(!profile || !profile.user_id){
     return;
   }
+
 
   const column =
     type === "followers"
       ? "follower_id"
       : "following_id";
 
+
   const otherColumn =
     type === "followers"
       ? "following_id"
       : "follower_id";
 
-  try {
+
+  try{
 
     const response =
       await supabaseFetch(
         `/rest/v1/follows?select=${column}&${otherColumn}=eq.${encodeURIComponent(profile.user_id)}`
       );
 
-    if (!response.ok) {
+
+    if(!response.ok){
 
       container.innerHTML =
         `<div class="status">Could not load ${type}.</div>`;
@@ -1761,10 +2412,12 @@ async function loadPeopleList(
       return;
     }
 
+
     const rows =
       await response.json();
 
-    if (!rows.length) {
+
+    if(!rows.length){
 
       container.innerHTML =
         `<div class="status">No ${type} yet.</div>`;
@@ -1772,27 +2425,32 @@ async function loadPeopleList(
       return;
     }
 
+
     const ids =
       rows
         .map(row => row[column])
         .filter(Boolean);
 
+
     const uniqueIds =
-      [...new Set(ids.map(String))];
+      [...new Set(
+        ids.map(String)
+      )];
+
 
     const query =
       uniqueIds
-        .map(id =>
-          `"${id}"`
-        )
+        .map(id => `"${id}"`)
         .join(",");
+
 
     const profilesResponse =
       await supabaseFetch(
         `/rest/v1/profiles?select=id,user_id,"Full name",username,language,avatar_url&user_id=in.(${encodeURIComponent(query)})`
       );
 
-    if (!profilesResponse.ok) {
+
+    if(!profilesResponse.ok){
 
       container.innerHTML =
         `<div class="status">Could not load people.</div>`;
@@ -1800,16 +2458,19 @@ async function loadPeopleList(
       return;
     }
 
+
     const people =
       await profilesResponse.json();
 
-    if (!people.length) {
+
+    if(!people.length){
 
       container.innerHTML =
         `<div class="status">No ${type} yet.</div>`;
 
       return;
     }
+
 
     container.innerHTML =
       people.map(person => {
@@ -1819,20 +2480,22 @@ async function loadPeopleList(
           person.username ||
           "EPHPHAVORA User";
 
+
         const initial =
-          name
-            .charAt(0)
-            .toUpperCase();
+          name.charAt(0).toUpperCase();
+
 
         const personAvatar =
           person.avatar_url
             ? `<img src="${escapeHTML(person.avatar_url)}" alt="Profile picture">`
             : initial;
 
+
         const profileLink =
           person.id
             ? `profile.html?id=${encodeURIComponent(person.id)}`
             : "#";
+
 
         return `
           <div class="person">
@@ -1842,6 +2505,7 @@ async function loadPeopleList(
             </div>
 
             <div>
+
               <a
                 href="${profileLink}"
                 style="text-decoration:none;color:#111827;font-weight:700;"
@@ -1860,7 +2524,7 @@ async function loadPeopleList(
 
       }).join("");
 
-  } catch (error) {
+  }catch(error){
 
     console.error(
       `LOAD ${type.toUpperCase()} ERROR:`,
@@ -1873,20 +2537,23 @@ async function loadPeopleList(
 }
 
 
+/* BUTTONS */
+
 messageBtn.addEventListener(
   "click",
-  function() {
+  function(){
 
-    if (!profile) {
+    if(!profile){
       return;
     }
 
-    if (profile.username) {
+
+    if(profile.username){
 
       window.location.href =
         `messages.html?username=${encodeURIComponent(profile.username)}`;
 
-    } else {
+    }else{
 
       window.location.href =
         "messages.html";
@@ -1897,7 +2564,7 @@ messageBtn.addEventListener(
 
 notificationBtn.addEventListener(
   "click",
-  function() {
+  function(){
 
     window.location.href =
       "notifications.html";
@@ -1905,9 +2572,11 @@ notificationBtn.addEventListener(
 );
 
 
+/* LOGOUT */
+
 logoutBtn.addEventListener(
   "click",
-  function() {
+  function(){
 
     localStorage.removeItem(
       ACCESS_TOKEN_KEY
@@ -1935,11 +2604,13 @@ logoutBtn.addEventListener(
 );
 
 
-async function start() {
+/* START */
 
-  try {
+async function start(){
 
-    if (!accessToken) {
+  try{
+
+    if(!accessToken){
 
       window.location.href =
         "login.html";
@@ -1947,13 +2618,16 @@ async function start() {
       return;
     }
 
+
     currentUser =
       await getCurrentUser();
+
 
     localStorage.setItem(
       AUTH_USER_ID_KEY,
       currentUser.id
     );
+
 
     await loadProfile();
 
@@ -1971,14 +2645,16 @@ async function start() {
       followingContainer
     );
 
-  } catch (error) {
+  }catch(error){
 
     console.error(
       "PROFILE START ERROR:",
       error
     );
 
+
     document.body.innerHTML = `
+
       <div style="
         max-width:600px;
         margin:80px auto;
@@ -2019,6 +2695,7 @@ async function start() {
 
 
 start();
+
 </script>
 
 </body>
