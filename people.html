@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BERAKAH - People</title>
+<title>EPHPHAVORA - People</title>
 
 <style>
 
@@ -184,16 +184,14 @@ h1 {
 
 </head>
 
-
 <body>
-
 
 <header>
 
 <div class="nav">
 
 <div class="logo">
-BERAKAH
+EPHPHAVORA
 </div>
 
 <div class="nav-buttons">
@@ -224,7 +222,6 @@ Logout
 
 </header>
 
-
 <main>
 
 <div class="card">
@@ -234,7 +231,7 @@ Logout
 </h1>
 
 <div id="status">
-Connecting to BERAKAH...
+Connecting to EPHPHAVORA...
 </div>
 
 <div id="people"></div>
@@ -243,33 +240,21 @@ Connecting to BERAKAH...
 
 </main>
 
-
 <script>
-
-/* =========================================
-   SUPABASE
-========================================= */
 
 const SUPABASE_URL =
 "https://utoyoglycqjmqznczfxa.supabase.co";
 
-
 const SUPABASE_ANON_KEY =
 "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
-
 
 const accessToken =
 localStorage.getItem(
 "berakah_access_token"
 );
 
-
 let currentUser = null;
 
-
-/* =========================================
-   HEADERS
-========================================= */
 
 function headers(extra) {
 
@@ -292,10 +277,6 @@ function headers(extra) {
 }
 
 
-/* =========================================
-   SAFE TEXT
-========================================= */
-
 function safe(value) {
 
   return String(value ?? "")
@@ -307,10 +288,6 @@ function safe(value) {
 
 }
 
-
-/* =========================================
-   STATUS
-========================================= */
 
 function setStatus(text, error = false) {
 
@@ -325,14 +302,10 @@ function setStatus(text, error = false) {
 }
 
 
-/* =========================================
-   GET CURRENT USER
-========================================= */
-
 async function getCurrentUser() {
 
   setStatus(
-    "Step 1: Checking your BERAKAH login..."
+    "Step 1: Checking your EPHPHAVORA login..."
   );
 
 
@@ -397,28 +370,12 @@ async function getCurrentUser() {
 }
 
 
-/* =========================================
-   LOAD PEOPLE
-========================================= */
-
 async function loadPeople() {
 
   setStatus(
-    "Step 2: Loading BERAKAH members..."
+    "Step 2: Loading EPHPHAVORA members..."
   );
 
-
-  /*
-    IMPORTANT:
-
-    We explicitly request the REAL
-    profile ID.
-
-    The ID is what Profile.html
-    needs in:
-
-    profile.html?id=UUID
-  */
 
   const url =
     SUPABASE_URL +
@@ -490,10 +447,6 @@ async function loadPeople() {
     "";
 
 
-  /*
-    Remove current user.
-  */
-
   const otherUsers =
     profiles.filter(
 
@@ -520,7 +473,7 @@ async function loadPeople() {
 
         <br><br>
 
-        No other BERAKAH users found yet.
+        No other EPHPHAVORA users found yet.
 
       </div>
 
@@ -538,17 +491,9 @@ async function loadPeople() {
   }
 
 
-  /*
-    DISPLAY USERS
-  */
-
   otherUsers.forEach(
 
     function(profile) {
-
-      /*
-        This MUST be the Supabase UUID.
-      */
 
       const profileId =
         String(profile.id);
@@ -556,7 +501,7 @@ async function loadPeople() {
 
       const username =
         profile.username ||
-        "BERAKAH User";
+        "EPHPHAVORA User";
 
 
       const firstLetter =
@@ -599,11 +544,10 @@ async function loadPeople() {
           </div>
 
           <div class="member">
-            BERAKAH member
+            EPHPHAVORA member
           </div>
 
         </div>
-
 
         <a
           class="profile-button"
@@ -628,15 +572,11 @@ async function loadPeople() {
     "Step 3: People loaded successfully.\n\n" +
     "Found " +
     otherUsers.length +
-    " other BERAKAH member(s)."
+    " other EPHPHAVORA member(s)."
   );
 
 }
 
-
-/* =========================================
-   LOGOUT
-========================================= */
 
 document
   .getElementById(
@@ -669,10 +609,6 @@ document
   );
 
 
-/* =========================================
-   START
-========================================= */
-
 async function start() {
 
   try {
@@ -694,7 +630,7 @@ async function start() {
   catch(error) {
 
     console.error(
-      "BERAKAH PEOPLE ERROR:",
+      "EPHPHAVORA PEOPLE ERROR:",
       error
     );
 
