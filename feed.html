@@ -10,7 +10,7 @@
     content="width=device-width, initial-scale=1.0"
 >
 
-<title>BERAKAH - Feed</title>
+<title>EPHPHAVORA - Feed</title>
 
 <style>
 
@@ -25,11 +25,6 @@ body {
     color: #111827;
 }
 
-
-/* ==========================================
-   HEADER
-========================================== */
-
 header {
     background: white;
     border-bottom: 1px solid #e5e7eb;
@@ -42,11 +37,9 @@ header {
     max-width: 1100px;
     margin: auto;
     padding: 14px 20px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 15px;
 }
 
@@ -68,13 +61,9 @@ header {
 .logout-btn {
     text-decoration: none;
     color: #374151;
-
     padding: 8px 10px;
-
     border-radius: 8px;
-
     font-size: 14px;
-
     cursor: pointer;
 }
 
@@ -89,72 +78,40 @@ header {
     font-family: inherit;
 }
 
-
-/* ==========================================
-   MAIN
-========================================== */
-
 .container {
     max-width: 760px;
-
     margin: 25px auto;
-
     padding: 0 15px;
 }
 
 .page-title {
     font-size: 28px;
-
-    margin:
-        0 0 18px;
+    margin: 0 0 18px;
 }
-
-
-/* ==========================================
-   CREATE POST
-========================================== */
 
 .create-post {
     background: white;
-
-    border:
-        1px solid #e5e7eb;
-
+    border: 1px solid #e5e7eb;
     border-radius: 14px;
-
     padding: 18px;
-
     margin-bottom: 22px;
-
-    box-shadow:
-        0 2px 8px rgba(0,0,0,0.04);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
 .create-post h2 {
-    margin:
-        0 0 14px;
-
+    margin: 0 0 14px;
     font-size: 18px;
 }
 
 textarea {
     width: 100%;
-
     min-height: 110px;
-
     resize: vertical;
-
-    border:
-        1px solid #d1d5db;
-
+    border: 1px solid #d1d5db;
     border-radius: 10px;
-
     padding: 12px;
-
     font-family: Arial, sans-serif;
-
     font-size: 15px;
-
     outline: none;
 }
 
@@ -164,27 +121,18 @@ textarea:focus {
 
 .create-bottom {
     margin-top: 12px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     gap: 10px;
 }
 
 .file-label {
     display: inline-block;
-
     background: #f3f4f6;
-
     padding: 10px 14px;
-
     border-radius: 8px;
-
     cursor: pointer;
-
     font-size: 14px;
 }
 
@@ -198,25 +146,17 @@ textarea:focus {
 
 #imageName {
     font-size: 12px;
-
     color: #6b7280;
-
     margin-top: 7px;
 }
 
 .post-btn {
     background: #2563eb;
-
     color: white;
-
     border: none;
-
     padding: 11px 18px;
-
     border-radius: 8px;
-
     cursor: pointer;
-
     font-weight: bold;
 }
 
@@ -226,22 +166,13 @@ textarea:focus {
 
 .post-btn:disabled {
     opacity: 0.6;
-
     cursor: not-allowed;
 }
 
-
-/* ==========================================
-   STATUS
-========================================== */
-
 .status {
     text-align: center;
-
     margin: 15px 0;
-
     color: #6b7280;
-
     font-size: 14px;
 }
 
@@ -253,157 +184,97 @@ textarea:focus {
     color: #16a34a;
 }
 
-
-/* ==========================================
-   POST
-========================================== */
-
 .post {
     background: white;
-
-    border:
-        1px solid #e5e7eb;
-
+    border: 1px solid #e5e7eb;
     border-radius: 14px;
-
     margin-bottom: 18px;
-
     overflow: hidden;
-
-    box-shadow:
-        0 2px 8px rgba(0,0,0,0.04);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
 .post-header {
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
-    padding:
-        15px 16px 10px;
+    padding: 15px 16px 10px;
 }
 
 .author {
     display: flex;
-
     align-items: center;
-
     gap: 10px;
-
     text-decoration: none;
-
     color: inherit;
 }
 
 .avatar {
     width: 44px;
     height: 44px;
-
     border-radius: 50%;
-
     object-fit: cover;
-
     background: #e5e7eb;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     font-weight: bold;
-
     color: #374151;
-
     overflow: hidden;
-
     flex-shrink: 0;
 }
 
 .avatar img {
     width: 100%;
     height: 100%;
-
     object-fit: cover;
 }
 
 .author-name {
     font-weight: bold;
-
     font-size: 15px;
 }
 
 .username {
     color: #6b7280;
-
     font-size: 13px;
-
     margin-top: 2px;
 }
 
 .post-date {
     color: #9ca3af;
-
     font-size: 12px;
 }
 
 .post-content {
-    padding:
-        5px 16px 15px;
-
+    padding: 5px 16px 15px;
     white-space: pre-wrap;
-
     word-break: break-word;
-
     line-height: 1.5;
-
     font-size: 15px;
 }
 
 .post-image {
     width: 100%;
-
     max-height: 600px;
-
     object-fit: cover;
-
     display: block;
 }
 
-
-/* ==========================================
-   POST ACTIONS
-========================================== */
-
 .post-actions {
-    border-top:
-        1px solid #f0f0f0;
-
-    padding:
-        10px 16px;
-
+    border-top: 1px solid #f0f0f0;
+    padding: 10px 16px;
     display: flex;
-
     align-items: center;
-
     gap: 10px;
 }
 
 .action-btn {
     background: transparent;
-
     border: none;
-
     cursor: pointer;
-
     color: #4b5563;
-
-    padding:
-        7px 10px;
-
+    padding: 7px 10px;
     border-radius: 7px;
-
     font-size: 14px;
 }
 
@@ -411,41 +282,25 @@ textarea:focus {
     background: #f3f4f6;
 }
 
-
-/* ==========================================
-   LIKE BUTTON
-========================================== */
-
 .like-btn {
     display: flex;
-
     align-items: center;
-
     gap: 5px;
 }
 
 .like-btn.liked {
     color: #dc2626;
-
     font-weight: bold;
 }
 
 .like-count {
     color: #6b7280;
-
     font-size: 13px;
-
     min-width: 10px;
 }
 
-
-/* ==========================================
-   DELETE
-========================================== */
-
 .delete-btn {
     margin-left: auto;
-
     color: #dc2626;
 }
 
@@ -453,62 +308,36 @@ textarea:focus {
     background: #fef2f2;
 }
 
-
-/* ==========================================
-   EMPTY
-========================================== */
-
 .empty {
     background: white;
-
-    border:
-        1px solid #e5e7eb;
-
+    border: 1px solid #e5e7eb;
     border-radius: 14px;
-
     padding: 40px 20px;
-
     text-align: center;
-
     color: #6b7280;
 }
 
 .refresh-btn {
     margin-top: 15px;
-
     background: #111827;
-
     color: white;
-
     border: none;
-
     padding: 10px 16px;
-
     border-radius: 8px;
-
     cursor: pointer;
 }
-
-
-/* ==========================================
-   MOBILE
-========================================== */
 
 @media (max-width: 700px) {
 
     .nav {
         padding: 12px;
-
         align-items: flex-start;
-
         flex-direction: column;
     }
 
     .nav-links {
         width: 100%;
-
         overflow-x: auto;
-
         flex-wrap: nowrap;
     }
 
@@ -519,9 +348,7 @@ textarea:focus {
 
     .container {
         margin-top: 18px;
-
-        padding:
-            0 10px;
+        padding: 0 10px;
     }
 
     .page-title {
@@ -530,7 +357,6 @@ textarea:focus {
 
     .create-bottom {
         align-items: stretch;
-
         flex-direction: column;
     }
 
@@ -552,9 +378,7 @@ textarea:focus {
 
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -564,9 +388,8 @@ textarea:focus {
             class="logo"
             href="index.html"
         >
-            BERAKAH
+            EPHPHAVORA
         </a>
-
 
         <nav class="nav-links">
 
@@ -607,17 +430,11 @@ textarea:focus {
 
 </header>
 
-
-
 <main class="container">
-
 
     <h1 class="page-title">
         Feed
     </h1>
-
-
-    <!-- CREATE POST -->
 
     <section class="create-post">
 
@@ -625,15 +442,12 @@ textarea:focus {
             Create a post
         </h2>
 
-
         <textarea
             id="postContent"
             placeholder="What's on your mind?"
         ></textarea>
 
-
         <div id="imageName"></div>
-
 
         <div class="create-bottom">
 
@@ -649,7 +463,6 @@ textarea:focus {
 
             </label>
 
-
             <button
                 class="post-btn"
                 id="publishBtn"
@@ -662,25 +475,16 @@ textarea:focus {
 
     </section>
 
-
     <div
         id="status"
         class="status"
     ></div>
 
-
     <section id="feed"></section>
-
 
 </main>
 
-
-
 <script>
-
-/* =========================================================
-   SUPABASE
-========================================================= */
 
 const SUPABASE_URL =
     "https://utoyoglycqjmqznczfxa.supabase.co";
@@ -698,10 +502,6 @@ let accessToken =
 let currentUser = null;
 
 
-/* =========================================================
-   HEADERS
-========================================================= */
-
 function supabaseHeaders(extra = {}) {
 
     return {
@@ -718,10 +518,6 @@ function supabaseHeaders(extra = {}) {
 
 }
 
-
-/* =========================================================
-   STATUS
-========================================================= */
 
 function showStatus(
     message,
@@ -742,10 +538,6 @@ function showStatus(
 }
 
 
-/* =========================================================
-   CURRENT USER
-========================================================= */
-
 async function getCurrentUser() {
 
     if (!accessToken) {
@@ -755,7 +547,6 @@ async function getCurrentUser() {
 
         return null;
     }
-
 
     const response =
         await fetch(
@@ -799,10 +590,6 @@ async function getCurrentUser() {
 }
 
 
-/* =========================================================
-   LOAD FEED
-========================================================= */
-
 async function loadFeed() {
 
     const feed =
@@ -820,10 +607,6 @@ async function loadFeed() {
 
 
     try {
-
-        /* -----------------------------------------
-           LOAD POSTS
-        ----------------------------------------- */
 
         const postsUrl =
             SUPABASE_URL +
@@ -871,10 +654,6 @@ async function loadFeed() {
         }
 
 
-        /* -----------------------------------------
-           GET UNIQUE USER IDS
-        ----------------------------------------- */
-
         const userIds = [
             ...new Set(
 
@@ -891,10 +670,6 @@ async function loadFeed() {
 
         let profiles = [];
 
-
-        /* -----------------------------------------
-           LOAD PROFILES
-        ----------------------------------------- */
 
         if (
             userIds.length > 0
@@ -958,10 +733,6 @@ async function loadFeed() {
             }
         );
 
-
-        /* -----------------------------------------
-           LOAD LIKES
-        ----------------------------------------- */
 
         const postIds =
             posts
@@ -1031,10 +802,6 @@ async function loadFeed() {
         }
 
 
-        /* -----------------------------------------
-           BUILD LIKE DATA
-        ----------------------------------------- */
-
         const likeMap = {};
 
 
@@ -1079,10 +846,6 @@ async function loadFeed() {
             }
         );
 
-
-        /* -----------------------------------------
-           CREATE POSTS
-        ----------------------------------------- */
 
         posts.forEach(
             post => {
@@ -1170,10 +933,6 @@ async function loadFeed() {
 }
 
 
-/* =========================================================
-   CREATE POST CARD
-========================================================= */
-
 function createPostCard(
     post,
     profile,
@@ -1197,9 +956,9 @@ function createPostCard(
             profile.full_name ||
             profile.name ||
             profile.username ||
-            "BERAKAH Member"
+            "EPHPHAVORA Member"
         )
-        : "BERAKAH Member";
+        : "EPHPHAVORA Member";
 
 
     const username =
@@ -1290,7 +1049,6 @@ function createPostCard(
 
                 ${avatarHTML}
 
-
                 <div>
 
                     <div class="author-name">
@@ -1300,7 +1058,6 @@ function createPostCard(
                         )}
 
                     </div>
-
 
                     ${
                         username
@@ -1334,7 +1091,6 @@ function createPostCard(
             <div class="author">
 
                 ${avatarHTML}
-
 
                 <div>
 
@@ -1417,7 +1173,6 @@ function createPostCard(
 
             ${authorHTML}
 
-
             <div class="post-date">
 
                 ${formattedDate}
@@ -1425,7 +1180,6 @@ function createPostCard(
             </div>
 
         </div>
-
 
         ${
             post.content
@@ -1443,12 +1197,9 @@ function createPostCard(
             : ""
         }
 
-
         ${imageHTML}
 
-
         <div class="post-actions">
-
 
             <button
                 class="action-btn like-btn ${likedClass}"
@@ -1477,9 +1228,7 @@ function createPostCard(
 
             </button>
 
-
             ${deleteButton}
-
 
         </div>
 
@@ -1490,10 +1239,6 @@ function createPostCard(
 
 }
 
-
-/* =========================================================
-   LIKE / UNLIKE
-========================================================= */
 
 async function toggleLike(
     postId,
@@ -1513,7 +1258,6 @@ async function toggleLike(
 
 
     if (!button) {
-
         return;
     }
 
@@ -1524,10 +1268,6 @@ async function toggleLike(
     try {
 
         if (currentlyLiked) {
-
-            /* -------------------------------
-               UNLIKE
-            -------------------------------- */
 
             const deleteUrl =
                 SUPABASE_URL +
@@ -1602,10 +1342,6 @@ async function toggleLike(
 
         } else {
 
-            /* -------------------------------
-               LIKE
-            -------------------------------- */
-
             const response =
                 await fetch(
 
@@ -1644,12 +1380,6 @@ async function toggleLike(
                 const error =
                     await response.text();
 
-
-                /*
-                 If another request already
-                 created the like, simply
-                 reload the feed.
-                */
 
                 if (
                     response.status === 409
@@ -1722,10 +1452,6 @@ async function toggleLike(
 
 }
 
-
-/* =========================================================
-   CREATE POST
-========================================================= */
 
 async function createPost() {
 
@@ -1921,16 +1647,11 @@ async function createPost() {
 }
 
 
-/* =========================================================
-   DELETE POST
-========================================================= */
-
 async function deletePost(
     postId
 ) {
 
     if (!postId) {
-
         return;
     }
 
@@ -1942,7 +1663,6 @@ async function deletePost(
 
 
     if (!confirmed) {
-
         return;
     }
 
@@ -2009,10 +1729,6 @@ async function deletePost(
 }
 
 
-/* =========================================================
-   IMAGE READER
-========================================================= */
-
 function fileToDataURL(
     file
 ) {
@@ -2053,10 +1769,6 @@ function fileToDataURL(
 }
 
 
-/* =========================================================
-   IMAGE NAME
-========================================================= */
-
 document
     .getElementById(
         "postImage"
@@ -2090,16 +1802,11 @@ document
     );
 
 
-/* =========================================================
-   DATE
-========================================================= */
-
 function formatDate(
     dateString
 ) {
 
     if (!dateString) {
-
         return "";
     }
 
@@ -2134,10 +1841,6 @@ function formatDate(
 }
 
 
-/* =========================================================
-   EMPTY FEED
-========================================================= */
-
 function showEmpty() {
 
     showStatus("");
@@ -2155,7 +1858,7 @@ function showEmpty() {
 
             <p>
                 Be the first person to
-                post something on BERAKAH.
+                post something on EPHPHAVORA.
             </p>
 
         </div>
@@ -2164,10 +1867,6 @@ function showEmpty() {
 
 }
 
-
-/* =========================================================
-   HTML SECURITY
-========================================================= */
 
 function escapeHTML(
     value
@@ -2224,10 +1923,6 @@ function escapeAttribute(
 }
 
 
-/* =========================================================
-   LOGOUT
-========================================================= */
-
 async function logout() {
 
     try {
@@ -2276,10 +1971,6 @@ async function logout() {
 }
 
 
-/* =========================================================
-   START FEED
-========================================================= */
-
 async function startFeed() {
 
     const user =
@@ -2287,7 +1978,6 @@ async function startFeed() {
 
 
     if (!user) {
-
         return;
     }
 
