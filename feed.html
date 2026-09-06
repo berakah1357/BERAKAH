@@ -123,8 +123,8 @@ textarea:focus {
     margin-top: 12px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .file-label {
@@ -140,14 +140,43 @@ textarea:focus {
     background: #e5e7eb;
 }
 
-#postImage {
+#postImage,
+#postVideo {
     display: none;
 }
 
-#imageName {
+#imageName,
+#videoName {
     font-size: 12px;
     color: #6b7280;
     margin-top: 7px;
+}
+
+.media-type {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.media-type button {
+    border: 1px solid #d1d5db;
+    background: white;
+    padding: 9px 13px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #374151;
+}
+
+.media-type button:hover {
+    background: #f3f4f6;
+}
+
+.media-type button.active {
+    background: #111827;
+    color: white;
+    border-color: #111827;
 }
 
 .post-btn {
@@ -158,6 +187,7 @@ textarea:focus {
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
+    margin-left: auto;
 }
 
 .post-btn:hover {
@@ -258,6 +288,48 @@ textarea:focus {
     max-height: 600px;
     object-fit: cover;
     display: block;
+}
+
+.video-wrapper {
+    width: 100%;
+    background: #000;
+    position: relative;
+}
+
+.post-video {
+    width: 100%;
+    max-height: 650px;
+    display: block;
+    background: #000;
+    object-fit: contain;
+}
+
+.reel-wrapper {
+    width: 100%;
+    background: #000;
+    display: flex;
+    justify-content: center;
+}
+
+.reel-video {
+    width: 100%;
+    max-width: 450px;
+    height: min(75vh, 720px);
+    display: block;
+    background: #000;
+    object-fit: contain;
+}
+
+.reel-label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 7px 11px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
 }
 
 .post-actions {
@@ -362,6 +434,7 @@ textarea:focus {
 
     .post-btn {
         width: 100%;
+        margin-left: 0;
     }
 
     .post-header {
@@ -370,6 +443,11 @@ textarea:focus {
 
     .post-date {
         text-align: right;
+    }
+
+    .reel-video {
+        height: 75vh;
+        max-width: 100%;
     }
 
 }
@@ -447,9 +525,39 @@ textarea:focus {
             placeholder="What's on your mind?"
         ></textarea>
 
-        <div id="imageName"></div>
+        <div class="media-type">
 
-        <div class="create-bottom">
+            <button
+                type="button"
+                id="imageModeBtn"
+                class="active"
+                onclick="selectMediaMode('image')"
+            >
+                📷 Image
+            </button>
+
+            <button
+                type="button"
+                id="videoModeBtn"
+                onclick="selectMediaMode('video')"
+            >
+                🎥 Video
+            </button>
+
+            <button
+                type="button"
+                id="reelModeBtn"
+                onclick="selectMediaMode('reel')"
+            >
+                🎬 Reel
+            </button>
+
+        </div>
+
+        <div
+            id="imageUploadArea"
+            style="margin-top:12px;"
+        >
 
             <label class="file-label">
 
@@ -462,6 +570,45 @@ textarea:focus {
                 >
 
             </label>
+
+            <div id="imageName"></div>
+
+        </div>
+
+        <div
+            id="videoUploadArea"
+            style="display:none;margin-top:12px;"
+        >
+
+            <label class="file-label">
+
+                🎥 Choose Video
+
+                <input
+                    type="file"
+                    id="postVideo"
+                    accept="video/mp4,video/webm,video/quicktime"
+                >
+
+            </label>
+
+            <div id="videoName"></div>
+
+            <div
+                style="
+                    margin-top:7px;
+                    font-size:12px;
+                    color:#6b7280;
+                "
+            >
+                MP4, WEBM, or MOV. Maximum 50 MB.
+            </div>
+
+        </div>
+
+        <div class="create-bottom">
+
+            <div></div>
 
             <button
                 class="post-btn"
@@ -492,6 +639,12 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
+const VIDEO_BUCKET =
+    "videos";
+
+const MAX_VIDEO_SIZE =
+    50 * 1024 * 1024;
+
 
 let accessToken =
     localStorage.getItem(
@@ -500,6 +653,9 @@ let accessToken =
 
 
 let currentUser = null;
+
+let selectedMediaMode =
+    "image";
 
 
 function supabaseHeaders(extra = {}) {
@@ -538,6 +694,92 @@ function showStatus(
 }
 
 
+function selectMediaMode(
+    mode
+) {
+
+    selectedMediaMode =
+        mode;
+
+    const imageButton =
+        document.getElementById(
+            "imageModeBtn"
+        );
+
+    const videoButton =
+        document.getElementById(
+            "videoModeBtn"
+        );
+
+    const reelButton =
+        document.getElementById(
+            "reelModeBtn"
+        );
+
+    const imageArea =
+        document.getElementById(
+            "imageUploadArea"
+        );
+
+    const videoArea =
+        document.getElementById(
+            "videoUploadArea"
+        );
+
+
+    imageButton.classList.remove(
+        "active"
+    );
+
+    videoButton.classList.remove(
+        "active"
+    );
+
+    reelButton.classList.remove(
+        "active"
+    );
+
+
+    if (mode === "image") {
+
+        imageButton.classList.add(
+            "active"
+        );
+
+        imageArea.style.display =
+            "block";
+
+        videoArea.style.display =
+            "none";
+
+    } else {
+
+        videoArea.style.display =
+            "block";
+
+        imageArea.style.display =
+            "none";
+
+
+        if (mode === "video") {
+
+            videoButton.classList.add(
+                "active"
+            );
+
+        } else {
+
+            reelButton.classList.add(
+                "active"
+            );
+
+        }
+
+    }
+
+}
+
+
 async function getCurrentUser() {
 
     if (!accessToken) {
@@ -546,7 +788,9 @@ async function getCurrentUser() {
             "login.html";
 
         return null;
+
     }
+
 
     const response =
         await fetch(
@@ -578,6 +822,7 @@ async function getCurrentUser() {
             "login.html";
 
         return null;
+
     }
 
 
@@ -651,6 +896,7 @@ async function loadFeed() {
             showEmpty();
 
             return;
+
         }
 
 
@@ -755,8 +1001,7 @@ async function loadFeed() {
         ) {
 
             const encodedPostIds =
-                postIds
-                    .join(",");
+                postIds.join(",");
 
 
             const likesUrl =
@@ -1120,7 +1365,10 @@ function createPostCard(
     let imageHTML = "";
 
 
-    if (imageUrl) {
+    if (
+        imageUrl &&
+        !post.video_url
+    ) {
 
         imageHTML = `
 
@@ -1132,6 +1380,65 @@ function createPostCard(
             >
 
         `;
+
+    }
+
+
+    let videoHTML = "";
+
+
+    if (post.video_url) {
+
+        const safeVideoUrl =
+            escapeAttribute(
+                post.video_url
+            );
+
+
+        if (post.is_reel) {
+
+            videoHTML = `
+
+                <div
+                    class="reel-wrapper"
+                    style="position:relative;"
+                >
+
+                    <video
+                        class="reel-video"
+                        src="${safeVideoUrl}"
+                        controls
+                        playsinline
+                        preload="metadata"
+                    ></video>
+
+                    <div class="reel-label">
+                        🎬 REEL
+                    </div>
+
+                </div>
+
+            `;
+
+        } else {
+
+            videoHTML = `
+
+                <div class="video-wrapper">
+
+                    <video
+                        class="post-video"
+                        src="${safeVideoUrl}"
+                        controls
+                        playsinline
+                        preload="metadata"
+                    ></video>
+
+                </div>
+
+            `;
+
+        }
 
     }
 
@@ -1198,6 +1505,8 @@ function createPostCard(
         }
 
         ${imageHTML}
+
+        ${videoHTML}
 
         <div class="post-actions">
 
@@ -1453,6 +1762,151 @@ async function toggleLike(
 }
 
 
+async function uploadVideo(
+    file
+) {
+
+    if (!file) {
+
+        throw new Error(
+            "Please choose a video."
+        );
+
+    }
+
+
+    if (
+        !file.type.startsWith(
+            "video/"
+        )
+    ) {
+
+        throw new Error(
+            "Please select a video file."
+        );
+
+    }
+
+
+    if (
+        file.size >
+        MAX_VIDEO_SIZE
+    ) {
+
+        throw new Error(
+            "Video must be smaller than 50 MB."
+        );
+
+    }
+
+
+    const extension =
+        getFileExtension(
+            file.name
+        );
+
+
+    const filePath =
+        currentUser.id +
+        "/video-" +
+        Date.now() +
+        "-" +
+        Math.random()
+            .toString(36)
+            .substring(2, 8) +
+        "." +
+        extension;
+
+
+    const uploadUrl =
+        SUPABASE_URL +
+        "/storage/v1/object/" +
+        VIDEO_BUCKET +
+        "/" +
+        filePath;
+
+
+    const response =
+        await fetch(
+            uploadUrl,
+            {
+                method: "POST",
+
+                headers:
+                    supabaseHeaders({
+                        "Content-Type":
+                            file.type,
+
+                        "x-upsert":
+                            "false"
+                    }),
+
+                body:
+                    file
+            }
+        );
+
+
+    if (!response.ok) {
+
+        const errorText =
+            await response.text();
+
+
+        console.error(
+            "Video upload error:",
+            errorText
+        );
+
+
+        throw new Error(
+            "Could not upload video. " +
+            errorText
+        );
+
+    }
+
+
+    return (
+        SUPABASE_URL +
+        "/storage/v1/object/public/" +
+        VIDEO_BUCKET +
+        "/" +
+        filePath
+    );
+
+}
+
+
+function getFileExtension(
+    fileName
+) {
+
+    const parts =
+        fileName.split(".");
+
+
+    if (
+        parts.length < 2
+    ) {
+
+        return "mp4";
+
+    }
+
+
+    return parts[
+        parts.length - 1
+    ]
+        .toLowerCase()
+        .replace(
+            /[^a-z0-9]/g,
+            ""
+        ) || "mp4";
+
+}
+
+
 async function createPost() {
 
     const contentInput =
@@ -1467,6 +1921,12 @@ async function createPost() {
         );
 
 
+    const videoInput =
+        document.getElementById(
+            "postVideo"
+        );
+
+
     const publishBtn =
         document.getElementById(
             "publishBtn"
@@ -1477,14 +1937,20 @@ async function createPost() {
         contentInput.value.trim();
 
 
-    const file =
+    const imageFile =
         imageInput.files[0] ||
         null;
 
 
+    const videoFile =
+        videoInput.files[0] ||
+        null;
+
+
     if (
+        selectedMediaMode === "image" &&
         !content &&
-        !file
+        !imageFile
     ) {
 
         showStatus(
@@ -1493,6 +1959,27 @@ async function createPost() {
         );
 
         return;
+
+    }
+
+
+    if (
+        (
+            selectedMediaMode === "video" ||
+            selectedMediaMode === "reel"
+        ) &&
+        !videoFile
+    ) {
+
+        showStatus(
+            selectedMediaMode === "reel"
+            ? "Choose a video for your Reel."
+            : "Choose a video.",
+            "error"
+        );
+
+        return;
+
     }
 
 
@@ -1506,11 +1993,16 @@ async function createPost() {
 
         let imageUrl = null;
 
+        let videoUrl = null;
 
-        if (file) {
+
+        if (
+            selectedMediaMode === "image" &&
+            imageFile
+        ) {
 
             if (
-                !file.type.startsWith(
+                !imageFile.type.startsWith(
                     "image/"
                 )
             ) {
@@ -1523,7 +2015,7 @@ async function createPost() {
 
 
             if (
-                file.size >
+                imageFile.size >
                 5 * 1024 * 1024
             ) {
 
@@ -1536,7 +2028,25 @@ async function createPost() {
 
             imageUrl =
                 await fileToDataURL(
-                    file
+                    imageFile
+                );
+
+        }
+
+
+        if (
+            selectedMediaMode === "video" ||
+            selectedMediaMode === "reel"
+        ) {
+
+            showStatus(
+                "Uploading video..."
+            );
+
+
+            videoUrl =
+                await uploadVideo(
+                    videoFile
                 );
 
         }
@@ -1551,7 +2061,13 @@ async function createPost() {
                 content || null,
 
             image_url:
-                imageUrl
+                imageUrl,
+
+            video_url:
+                videoUrl,
+
+            is_reel:
+                selectedMediaMode === "reel"
 
         };
 
@@ -1603,14 +2119,31 @@ async function createPost() {
             "";
 
 
+        videoInput.value =
+            "";
+
+
         document.getElementById(
             "imageName"
         ).textContent =
             "";
 
 
+        document.getElementById(
+            "videoName"
+        ).textContent =
+            "";
+
+
+        selectMediaMode(
+            "image"
+        );
+
+
         showStatus(
-            "Post published successfully! 🎉",
+            selectedMediaMode === "reel"
+            ? "Reel published successfully! 🎬"
+            : "Post published successfully! 🎉",
             "success"
         );
 
@@ -1794,6 +2327,53 @@ document
             } else {
 
                 imageName.textContent =
+                    "";
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "postVideo"
+    )
+    .addEventListener(
+        "change",
+        function () {
+
+            const videoName =
+                document.getElementById(
+                    "videoName"
+                );
+
+
+            if (
+                this.files.length > 0
+            ) {
+
+                const file =
+                    this.files[0];
+
+
+                const sizeMB =
+                    (
+                        file.size /
+                        (1024 * 1024)
+                    ).toFixed(1);
+
+
+                videoName.textContent =
+                    "Selected: " +
+                    file.name +
+                    " (" +
+                    sizeMB +
+                    " MB)";
+
+            } else {
+
+                videoName.textContent =
                     "";
 
             }
