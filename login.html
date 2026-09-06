@@ -1,18 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ht">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>EPHPHAVORA - Login</title>
 
 <style>
-
 * {
   box-sizing: border-box;
 }
@@ -216,7 +211,6 @@ input:focus {
 }
 
 @media (max-width: 500px) {
-
   .login-card {
     padding: 23px;
   }
@@ -228,524 +222,448 @@ input:focus {
   .language-bar {
     text-align: center;
   }
-
 }
-
 </style>
-
 </head>
-
 
 <body>
 
-
 <header>
+  <div class="header-inner">
 
-<div class="header-inner">
+    <div class="logo">
+      EPHPHAVORA
+    </div>
 
-<div class="logo">
-EPHPHAVORA
-</div>
+    <a
+      class="home-link"
+      href="index.html"
+      id="homeLink">
+      Akèy
+    </a>
 
-<a
-class="home-link"
-href="index.html"
-id="homeLink">
-
-Home
-
-</a>
-
-</div>
-
+  </div>
 </header>
-
 
 <div class="language-bar">
 
-<label for="language" id="languageLabel">
-🌎 Language:
-</label>
+  <label for="language" id="languageLabel">
+    🌎 Lang:
+  </label>
 
-<select id="language">
-
-<option value="ht">
-Haitian Creole
-</option>
-
-<option value="en">
-English
-</option>
-
-<option value="fr">
-French
-</option>
-
-<option value="es">
-Spanish
-</option>
-
-</select>
+  <select id="language">
+    <option value="ht">Haitian Creole</option>
+    <option value="en">English</option>
+    <option value="fr">French</option>
+    <option value="es">Spanish</option>
+  </select>
 
 </div>
-
 
 <main>
 
-
 <div class="login-card">
 
+  <h1 id="pageTitle">
+    Byenveni ankò
+  </h1>
 
-<h1 id="pageTitle">
-Byenveni ankò
-</h1>
+  <div class="subtitle" id="pageSubtitle">
+    Konekte nan kont EPHPHAVORA ou epi konekte,
+    pataje, epi grandi ansanm.
+  </div>
 
+  <form id="loginForm">
 
-<div
-class="subtitle"
-id="pageSubtitle">
+    <label for="email" id="emailLabel">
+      Imèl
+    </label>
 
-Konekte nan kont EPHPHAVORA ou
-epi konekte, pataje, epi grandi ansanm.
+    <input
+      id="email"
+      type="email"
+      autocomplete="email"
+      placeholder="Antre imèl ou"
+      required>
 
-</div>
+    <label for="password" id="passwordLabel">
+      Modpas
+    </label>
 
+    <div class="password-wrap">
 
-<form id="loginForm">
+      <input
+        id="password"
+        type="password"
+        autocomplete="current-password"
+        placeholder="Antre modpas ou"
+        required>
 
+      <button
+        type="button"
+        class="show-password"
+        id="showPassword">
+        Montre
+      </button>
 
-<label
-for="email"
-id="emailLabel">
+    </div>
 
-Imèl
+    <a
+      href="#"
+      class="forgot"
+      id="forgotPassword">
+      Ou bliye modpas ou?
+    </a>
 
-</label>
+    <button
+      type="submit"
+      class="login-button"
+      id="loginButton">
+      KONEKTE
+    </button>
 
+  </form>
 
-<input
-id="email"
-type="email"
-autocomplete="email"
-placeholder="Antre imèl ou"
-required>
+  <div id="status" class="status"></div>
 
+  <div class="signup">
 
-<label
-for="password"
-id="passwordLabel">
+    <span id="noAccount">
+      Ou poko gen kont?
+    </span>
 
-Modpas
+    <a
+      href="signup.html"
+      id="createAccount">
+      KREYE KONT
+    </a>
 
-</label>
+  </div>
 
-
-<div class="password-wrap">
-
-<input
-id="password"
-type="password"
-autocomplete="current-password"
-placeholder="Antre modpas ou"
-required>
-
-
-<button
-type="button"
-class="show-password"
-id="showPassword">
-
-Montre
-
-</button>
-
-</div>
-
-
-<a
-href="#"
-class="forgot"
-id="forgotPassword">
-
-Ou bliye modpas ou?
-
-</a>
-
-
-<button
-type="submit"
-class="login-button"
-id="loginButton">
-
-KONEKTE
-
-</button>
-
-
-</form>
-
-
-<div
-id="status"
-class="status">
-</div>
-
-
-<div class="signup">
-
-<span id="noAccount">
-Ou poko gen kont?
-</span>
-
-<a
-href="signup.html"
-id="createAccount">
-
-KREYE KONT
-
-</a>
+  <div
+    class="languages"
+    id="languagesText">
+    Kreyòl Ayisyen • Anglè • Franse • Panyòl
+  </div>
 
 </div>
-
-
-<div
-class="languages"
-id="languagesText">
-
-Kreyòl Ayisyen • Anglè • Franse • Panyòl
-
-</div>
-
-
-</div>
-
 
 </main>
-
 
 <script>
 
 /* =====================================================
-   EPHPHAVORA MULTILINGUAL TRANSLATIONS
+   SUPABASE CONFIGURATION
+   ===================================================== */
+
+const SUPABASE_URL =
+  "https://utoyoglycqjmqznczfxa.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+
+
+/* =====================================================
+   ELEMENTS
+   IMPORTANT: ELEMENTS ARE CREATED BEFORE LANGUAGE SYSTEM
+   ===================================================== */
+
+const loginForm =
+  document.getElementById("loginForm");
+
+const emailInput =
+  document.getElementById("email");
+
+const passwordInput =
+  document.getElementById("password");
+
+const loginButton =
+  document.getElementById("loginButton");
+
+const statusBox =
+  document.getElementById("status");
+
+const showPasswordButton =
+  document.getElementById("showPassword");
+
+const forgotPassword =
+  document.getElementById("forgotPassword");
+
+
+/* =====================================================
+   TRANSLATIONS
    ===================================================== */
 
 const translations = {
 
-ht: {
+  ht: {
+    pageTitle: "Byenveni ankò",
 
-pageTitle:
-"Byenveni ankò",
+    pageSubtitle:
+      "Konekte nan kont EPHPHAVORA ou epi konekte, pataje, epi grandi ansanm.",
 
-pageSubtitle:
-"Konekte nan kont EPHPHAVORA ou epi konekte, pataje, epi grandi ansanm.",
+    home: "Akèy",
 
-home:
-"Akèy",
+    languageLabel: "🌎 Lang:",
 
-languageLabel:
-"🌎 Lang:",
+    emailLabel: "Imèl",
 
-emailLabel:
-"Imèl",
+    emailPlaceholder: "Antre imèl ou",
 
-emailPlaceholder:
-"Antre imèl ou",
+    passwordLabel: "Modpas",
 
-passwordLabel:
-"Modpas",
+    passwordPlaceholder: "Antre modpas ou",
 
-passwordPlaceholder:
-"Antre modpas ou",
+    show: "Montre",
 
-show:
-"Montre",
+    hide: "Fèmen",
 
-hide:
-"Fèmen",
+    forgot: "Ou bliye modpas ou?",
 
-forgot:
-"Ou bliye modpas ou?",
+    login: "KONEKTE",
 
-login:
-"KONEKTE",
+    loggingIn: "AP KONEKTE...",
 
-loggingIn:
-"AP KONEKTE...",
+    noAccount: "Ou poko gen kont?",
 
-noAccount:
-"Ou poko gen kont?",
+    createAccount: "KREYE KONT",
 
-createAccount:
-"KREYE KONT",
+    languages:
+      "Kreyòl Ayisyen • Anglè • Franse • Panyòl",
 
-languages:
-"Kreyòl Ayisyen • Anglè • Franse • Panyòl",
+    connecting:
+      "Ap konekte ak EPHPHAVORA...",
 
-connecting:
-"Ap konekte ak EPHPHAVORA...",
+    success:
+      "Koneksyon reyisi! N ap redirije ou...",
 
-success:
-"Koneksyon reyisi! N ap redirije ou...",
+    emailRequired:
+      "Tanpri antre imèl ou.",
 
-emailRequired:
-"Tanpri antre imèl ou.",
+    passwordRequired:
+      "Tanpri antre modpas ou.",
 
-passwordRequired:
-"Tanpri antre modpas ou.",
+    loginFailed:
+      "Koneksyon echwe. Tanpri verifye imèl ak modpas ou.",
 
-loginFailed:
-"Koneksyon echwe. Tanpri verifye imèl ak modpas ou.",
+    incorrectCredentials:
+      "Imèl oswa modpas la pa kòrèk.",
 
-incorrectCredentials:
-"Imèl oswa modpas la pa kòrèk.",
+    sessionError:
+      "Koneksyon an pa t kapab verifye. Tanpri eseye ankò.",
 
-sessionError:
-"Koneksyon an pa t kapab verifye. Tanpri eseye ankò.",
+    forgotSending:
+      "Ap voye imèl pou rekipere modpas la...",
 
-forgotSending:
-"Ap voye imèl pou rekipere modpas la...",
+    forgotSuccess:
+      "Enstriksyon pou chanje modpas la te voye si imèl sa a asosye ak yon kont EPHPHAVORA."
+  },
 
-forgotSuccess:
-"Enstriksyon pou chanje modpas la te voye si imèl sa a asosye ak yon kont EPHPHAVORA."
+  en: {
+    pageTitle: "Welcome Back",
 
-},
+    pageSubtitle:
+      "Log in to your EPHPHAVORA account and connect, share, and grow together.",
 
-en: {
+    home: "Home",
 
-pageTitle:
-"Welcome Back",
+    languageLabel: "🌎 Language:",
 
-pageSubtitle:
-"Log in to your EPHPHAVORA account and connect, share, and grow together.",
+    emailLabel: "Email",
 
-home:
-"Home",
+    emailPlaceholder: "Enter your email",
 
-languageLabel:
-"🌎 Language:",
+    passwordLabel: "Password",
 
-emailLabel:
-"Email",
+    passwordPlaceholder: "Enter your password",
 
-emailPlaceholder:
-"Enter your email",
+    show: "Show",
 
-passwordLabel:
-"Password",
+    hide: "Hide",
 
-passwordPlaceholder:
-"Enter your password",
+    forgot: "Forgot password?",
 
-show:
-"Show",
+    login: "LOG IN",
 
-hide:
-"Hide",
+    loggingIn: "LOGGING IN...",
 
-forgot:
-"Forgot password?",
+    noAccount: "Don't have an account?",
 
-login:
-"LOG IN",
+    createAccount: "CREATE ACCOUNT",
 
-loggingIn:
-"LOGGING IN...",
+    languages:
+      "Haitian Creole • English • French • Spanish",
 
-noAccount:
-"Don't have an account?",
+    connecting:
+      "Connecting to EPHPHAVORA...",
 
-createAccount:
-"CREATE ACCOUNT",
+    success:
+      "Login successful! Redirecting...",
 
-languages:
-"Haitian Creole • English • French • Spanish",
+    emailRequired:
+      "Please enter your email.",
 
-connecting:
-"Connecting to EPHPHAVORA...",
+    passwordRequired:
+      "Please enter your password.",
 
-success:
-"Login successful! Redirecting...",
+    loginFailed:
+      "Login failed. Please check your email and password.",
 
-emailRequired:
-"Please enter your email.",
+    incorrectCredentials:
+      "Incorrect email or password.",
 
-passwordRequired:
-"Please enter your password.",
+    sessionError:
+      "Your login session could not be verified. Please try again.",
 
-loginFailed:
-"Login failed. Please check your email and password.",
+    forgotSending:
+      "Sending password reset email...",
 
-incorrectCredentials:
-"Incorrect email or password.",
+    forgotSuccess:
+      "Password reset instructions have been sent if this email belongs to an EPHPHAVORA account."
+  },
 
-sessionError:
-"Your login session could not be verified. Please try again.",
+  fr: {
+    pageTitle: "Bon retour",
 
-forgotSending:
-"Sending password reset email...",
+    pageSubtitle:
+      "Connectez-vous à votre compte EPHPHAVORA et connectez-vous, partagez et grandissez ensemble.",
 
-forgotSuccess:
-"Password reset instructions have been sent if this email belongs to an EPHPHAVORA account."
+    home: "Accueil",
 
-},
+    languageLabel: "🌎 Langue:",
 
-fr: {
+    emailLabel: "E-mail",
 
-pageTitle:
-"Bon retour",
+    emailPlaceholder:
+      "Entrez votre e-mail",
 
-pageSubtitle:
-"Connectez-vous à votre compte EPHPHAVORA et connectez-vous, partagez et grandissez ensemble.",
+    passwordLabel:
+      "Mot de passe",
 
-home:
-"Accueil",
+    passwordPlaceholder:
+      "Entrez votre mot de passe",
 
-languageLabel:
-"🌎 Langue:",
+    show: "Afficher",
 
-emailLabel:
-"E-mail",
+    hide: "Masquer",
 
-emailPlaceholder:
-"Entrez votre e-mail",
+    forgot:
+      "Mot de passe oublié ?",
 
-passwordLabel:
-"Mot de passe",
+    login: "SE CONNECTER",
 
-passwordPlaceholder:
-"Entrez votre mot de passe",
+    loggingIn: "CONNEXION...",
 
-show:
-"Afficher",
+    noAccount:
+      "Vous n'avez pas de compte ?",
 
-hide:
-"Masquer",
+    createAccount:
+      "CRÉER UN COMPTE",
 
-forgot:
-"Mot de passe oublié ?",
+    languages:
+      "Créole haïtien • Anglais • Français • Espagnol",
 
-login:
-"SE CONNECTER",
+    connecting:
+      "Connexion à EPHPHAVORA...",
 
-loggingIn:
-"CONNEXION...",
+    success:
+      "Connexion réussie ! Redirection...",
 
-noAccount:
-"Vous n'avez pas de compte ?",
+    emailRequired:
+      "Veuillez entrer votre e-mail.",
 
-createAccount:
-"CRÉER UN COMPTE",
+    passwordRequired:
+      "Veuillez entrer votre mot de passe.",
 
-languages:
-"Créole haïtien • Anglais • Français • Espagnol",
+    loginFailed:
+      "Échec de la connexion. Vérifiez votre e-mail et votre mot de passe.",
 
-connecting:
-"Connexion à EPHPHAVORA...",
+    incorrectCredentials:
+      "E-mail ou mot de passe incorrect.",
 
-success:
-"Connexion réussie ! Redirection...",
+    sessionError:
+      "Votre session de connexion n'a pas pu être vérifiée. Veuillez réessayer.",
 
-emailRequired:
-"Veuillez entrer votre e-mail.",
+    forgotSending:
+      "Envoi de l'e-mail de réinitialisation du mot de passe...",
 
-passwordRequired:
-"Veuillez entrer votre mot de passe.",
+    forgotSuccess:
+      "Les instructions de réinitialisation ont été envoyées si cet e-mail appartient à un compte EPHPHAVORA."
+  },
 
-loginFailed:
-"Échec de la connexion. Vérifiez votre e-mail et votre mot de passe.",
+  es: {
+    pageTitle:
+      "Bienvenido de nuevo",
 
-incorrectCredentials:
-"E-mail ou mot de passe incorrect.",
+    pageSubtitle:
+      "Inicia sesión en tu cuenta de EPHPHAVORA y conecta, comparte y crece juntos.",
 
-sessionError:
-"Votre session de connexion n'a pas pu être vérifiée. Veuillez réessayer.",
+    home: "Inicio",
 
-forgotSending:
-"Envoi de l'e-mail de réinitialisation du mot de passe...",
+    languageLabel:
+      "🌎 Idioma:",
 
-forgotSuccess:
-"Les instructions de réinitialisation ont été envoyées si cet e-mail appartient à un compte EPHPHAVORA."
+    emailLabel:
+      "Correo electrónico",
 
-},
+    emailPlaceholder:
+      "Ingresa tu correo electrónico",
 
-es: {
+    passwordLabel:
+      "Contraseña",
 
-pageTitle:
-"Bienvenido de nuevo",
+    passwordPlaceholder:
+      "Ingresa tu contraseña",
 
-pageSubtitle:
-"Inicia sesión en tu cuenta de EPHPHAVORA y conecta, comparte y crece juntos.",
+    show: "Mostrar",
 
-home:
-"Inicio",
+    hide: "Ocultar",
 
-languageLabel:
-"🌎 Idioma:",
+    forgot:
+      "¿Olvidaste tu contraseña?",
 
-emailLabel:
-"Correo electrónico",
+    login:
+      "INICIAR SESIÓN",
 
-emailPlaceholder:
-"Ingresa tu correo electrónico",
+    loggingIn:
+      "INICIANDO SESIÓN...",
 
-passwordLabel:
-"Contraseña",
+    noAccount:
+      "¿No tienes una cuenta?",
 
-passwordPlaceholder:
-"Ingresa tu contraseña",
+    createAccount:
+      "CREAR CUENTA",
 
-show:
-"Mostrar",
+    languages:
+      "Criollo haitiano • Inglés • Francés • Español",
 
-hide:
-"Ocultar",
+    connecting:
+      "Conectando a EPHPHAVORA...",
 
-forgot:
-"¿Olvidaste tu contraseña?",
+    success:
+      "¡Inicio de sesión exitoso! Redirigiendo...",
 
-login:
-"INICIAR SESIÓN",
+    emailRequired:
+      "Por favor, ingresa tu correo electrónico.",
 
-loggingIn:
-"INICIANDO SESIÓN...",
+    passwordRequired:
+      "Por favor, ingresa tu contraseña.",
 
-noAccount:
-"¿No tienes una cuenta?",
+    loginFailed:
+      "Error al iniciar sesión. Verifica tu correo y contraseña.",
 
-createAccount:
-"CREAR CUENTA",
+    incorrectCredentials:
+      "Correo electrónico o contraseña incorrectos.",
 
-languages:
-"Criollo haitiano • Inglés • Francés • Español",
+    sessionError:
+      "No se pudo verificar tu sesión. Inténtalo de nuevo.",
 
-connecting:
-"Conectando a EPHPHAVORA...",
+    forgotSending:
+      "Enviando correo para restablecer la contraseña...",
 
-success:
-"¡Inicio de sesión exitoso! Redirigiendo...",
-
-emailRequired:
-"Por favor, ingresa tu correo electrónico.",
-
-passwordRequired:
-"Por favor, ingresa tu contraseña.",
-
-loginFailed:
-"Error al iniciar sesión. Verifica tu correo y contraseña.",
-
-incorrectCredentials:
-"Correo electrónico o contraseña incorrectos.",
-
-sessionError:
-"No se pudo verificar tu sesión. Inténtalo de nuevo.",
-
-forgotSending:
-"Enviando correo para restablecer la contraseña...",
-
-forgotSuccess:
-"Las instrucciones para restablecer la contraseña se han enviado si este correo pertenece a una cuenta de EPHPHAVORA."
-
-}
+    forgotSuccess:
+      "Las instrucciones para restablecer la contraseña se han enviado si este correo pertenece a una cuenta de EPHPHAVORA."
+  }
 
 };
 
@@ -756,93 +674,82 @@ forgotSuccess:
 
 let currentLanguage = "ht";
 
-
 function t(key) {
-
-return translations[currentLanguage][key];
-
+  return translations[currentLanguage][key];
 }
 
 
 function changeLanguage(language) {
 
-if (!translations[language]) {
-return;
-}
+  if (!translations[language]) {
+    return;
+  }
 
-currentLanguage = language;
+  currentLanguage = language;
 
-document.documentElement.lang =
-language === "ht" ? "ht" : language;
-
-
-/* Header */
-
-document.getElementById("homeLink").textContent =
-t("home");
-
-document.getElementById("languageLabel").textContent =
-t("languageLabel");
+  document.documentElement.lang =
+    language === "ht" ? "ht" : language;
 
 
-/* Login */
+  document.getElementById("homeLink").textContent =
+    t("home");
 
-document.getElementById("pageTitle").textContent =
-t("pageTitle");
+  document.getElementById("languageLabel").textContent =
+    t("languageLabel");
 
-document.getElementById("pageSubtitle").textContent =
-t("pageSubtitle");
+  document.getElementById("pageTitle").textContent =
+    t("pageTitle");
 
-document.getElementById("emailLabel").textContent =
-t("emailLabel");
+  document.getElementById("pageSubtitle").textContent =
+    t("pageSubtitle");
 
-document.getElementById("passwordLabel").textContent =
-t("passwordLabel");
+  document.getElementById("emailLabel").textContent =
+    t("emailLabel");
 
-document.getElementById("email").placeholder =
-t("emailPlaceholder");
+  document.getElementById("passwordLabel").textContent =
+    t("passwordLabel");
 
-document.getElementById("password").placeholder =
-t("passwordPlaceholder");
+  emailInput.placeholder =
+    t("emailPlaceholder");
 
-document.getElementById("forgotPassword").textContent =
-t("forgot");
+  passwordInput.placeholder =
+    t("passwordPlaceholder");
 
-document.getElementById("loginButton").textContent =
-t("login");
+  forgotPassword.textContent =
+    t("forgot");
 
-document.getElementById("noAccount").textContent =
-t("noAccount");
+  loginButton.textContent =
+    loginButton.disabled
+      ? t("loggingIn")
+      : t("login");
 
-document.getElementById("createAccount").textContent =
-t("createAccount");
+  document.getElementById("noAccount").textContent =
+    t("noAccount");
 
-document.getElementById("languagesText").textContent =
-t("languages");
+  document.getElementById("createAccount").textContent =
+    t("createAccount");
 
-
-/* Password button */
-
-if (passwordInput.type === "password") {
-
-showPasswordButton.textContent =
-t("show");
-
-} else {
-
-showPasswordButton.textContent =
-t("hide");
-
-}
+  document.getElementById("languagesText").textContent =
+    t("languages");
 
 
-/* Save language */
+  if (passwordInput.type === "password") {
 
-localStorage.setItem(
-"ephphavora_language",
-language
-);
+    showPasswordButton.textContent =
+      t("show");
 
+  } else {
+
+    showPasswordButton.textContent =
+      t("hide");
+
+  }
+
+
+  localStorage.setItem(
+    "ephphavora_language",
+    language
+  );
 }
 
 
@@ -851,129 +758,85 @@ language
    ===================================================== */
 
 const savedLanguage =
-localStorage.getItem(
-"ephphavora_language"
-);
+  localStorage.getItem("ephphavora_language");
 
-if (savedLanguage &&
-translations[savedLanguage]) {
+if (
+  savedLanguage &&
+  translations[savedLanguage]
+) {
 
-currentLanguage =
-savedLanguage;
+  currentLanguage =
+    savedLanguage;
 
-document.getElementById("language").value =
-savedLanguage;
-
+  document.getElementById("language").value =
+    savedLanguage;
 }
 
 changeLanguage(currentLanguage);
 
 
 document
-.getElementById("language")
-.addEventListener(
-"change",
-function() {
-
-changeLanguage(this.value);
-
-}
-);
+  .getElementById("language")
+  .addEventListener(
+    "change",
+    function() {
+      changeLanguage(this.value);
+    }
+  );
 
 
 /* =====================================================
-   SUPABASE CONFIGURATION
-   ===================================================== */
-
-const SUPABASE_URL =
-"https://utoyoglycqjmqznczfxa.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
-
-
-/* =====================================================
-   ELEMENTS
-   ===================================================== */
-
-const loginForm =
-document.getElementById("loginForm");
-
-const emailInput =
-document.getElementById("email");
-
-const passwordInput =
-document.getElementById("password");
-
-const loginButton =
-document.getElementById("loginButton");
-
-const statusBox =
-document.getElementById("status");
-
-const showPasswordButton =
-document.getElementById("showPassword");
-
-const forgotPassword =
-document.getElementById("forgotPassword");
-
-
-/* =====================================================
-   SHOW STATUS
+   STATUS
    ===================================================== */
 
 function showStatus(message, type) {
 
-statusBox.textContent =
-message;
+  statusBox.textContent =
+    message;
 
-statusBox.className =
-"status " + type;
-
+  statusBox.className =
+    "status " + type;
 }
 
 
 /* =====================================================
    CLEAR OLD SESSION
-   IMPORTANT:
-   Keep these existing storage keys because
-   other EPHPHAVORA pages may use them.
+   KEEP EXISTING KEYS FOR COMPATIBILITY
    ===================================================== */
 
 function clearBERAKAHSession() {
 
-localStorage.removeItem(
-"berakah_access_token"
-);
+  localStorage.removeItem(
+    "berakah_access_token"
+  );
 
-localStorage.removeItem(
-"berakah_refresh_token"
-);
+  localStorage.removeItem(
+    "berakah_refresh_token"
+  );
 
-localStorage.removeItem(
-"berakah_user"
-);
+  localStorage.removeItem(
+    "berakah_user"
+  );
 
-localStorage.removeItem(
-"berakah_username"
-);
+  localStorage.removeItem(
+    "berakah_username"
+  );
 
-localStorage.removeItem(
-"berakah_auth_user_id"
-);
+  localStorage.removeItem(
+    "berakah_auth_user_id"
+  );
 
-localStorage.removeItem(
-"access_token"
-);
+  localStorage.removeItem(
+    "access_token"
+  );
 
-localStorage.removeItem(
-"refresh_token"
-);
+  localStorage.removeItem(
+    "refresh_token"
+  );
 
-localStorage.removeItem(
-"supabase.auth.token"
-);
-
+  localStorage.removeItem(
+    "supabase.auth.token"
+  );
 }
 
 
@@ -983,67 +846,69 @@ localStorage.removeItem(
 
 function saveBERAKAHSession(data) {
 
-if (!data ||
-!data.access_token) {
+  if (
+    !data ||
+    !data.access_token
+  ) {
 
-throw new Error(
-"No access token was returned by Supabase."
-);
+    throw new Error(
+      "No access token was returned by Supabase."
+    );
+  }
 
-}
 
-localStorage.setItem(
-"berakah_access_token",
-data.access_token
-);
+  localStorage.setItem(
+    "berakah_access_token",
+    data.access_token
+  );
 
-if (data.refresh_token) {
 
-localStorage.setItem(
-"berakah_refresh_token",
-data.refresh_token
-);
+  if (data.refresh_token) {
 
-}
+    localStorage.setItem(
+      "berakah_refresh_token",
+      data.refresh_token
+    );
+  }
 
-if (data.user) {
 
-localStorage.setItem(
-"berakah_user",
-JSON.stringify(data.user)
-);
+  if (data.user) {
 
-if (data.user.id) {
+    localStorage.setItem(
+      "berakah_user",
+      JSON.stringify(data.user)
+    );
 
-localStorage.setItem(
-"berakah_auth_user_id",
-data.user.id
-);
 
-}
+    if (data.user.id) {
 
-const metadata =
-data.user.user_metadata || {};
+      localStorage.setItem(
+        "berakah_auth_user_id",
+        data.user.id
+      );
+    }
 
-const username =
-metadata.username ||
-metadata.user_name ||
-metadata.userName ||
-"";
 
-if (username) {
+    const metadata =
+      data.user.user_metadata || {};
 
-localStorage.setItem(
-"berakah_username",
-String(username)
-.replace("@", "")
-.trim()
-);
+    const username =
+      metadata.username ||
+      metadata.user_name ||
+      metadata.userName ||
+      "";
 
-}
 
-}
+    if (username) {
 
+      localStorage.setItem(
+        "berakah_username",
+        String(username)
+          .replace("@", "")
+          .trim()
+      );
+    }
+  }
 }
 
 
@@ -1053,210 +918,167 @@ String(username)
 
 async function loginUser(email, password) {
 
-clearBERAKAHSession();
-
-const response =
-await fetch(
-
-SUPABASE_URL +
-"/auth/v1/token?grant_type=password",
-
-{
-
-method: "POST",
-
-headers: {
-
-"apikey":
-SUPABASE_KEY,
-
-"Content-Type":
-"application/json"
-
-},
-
-body:
-JSON.stringify({
-
-email:
-email,
-
-password:
-password
-
-})
-
-}
-
-);
+  clearBERAKAHSession();
 
 
-const text =
-await response.text();
+  const response =
+    await fetch(
+
+      SUPABASE_URL +
+      "/auth/v1/token?grant_type=password",
+
+      {
+        method: "POST",
+
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
+      }
+    );
 
 
-let data = null;
+  const text =
+    await response.text();
 
 
-try {
-
-data =
-text ?
-JSON.parse(text) :
-null;
-
-}
-
-catch(error) {
-
-throw new Error(
-"Supabase returned an invalid response."
-);
-
-}
+  let data = null;
 
 
-/* Login failed */
+  try {
 
-if (!response.ok) {
+    data =
+      text
+        ? JSON.parse(text)
+        : null;
 
-console.error(
-"EPHPHAVORA LOGIN ERROR:",
-data
-);
+  } catch (error) {
 
-
-if (
-data &&
-data.error_code ===
-"invalid_credentials"
-) {
-
-throw new Error(
-t("incorrectCredentials")
-);
-
-}
+    throw new Error(
+      "Supabase returned an invalid response."
+    );
+  }
 
 
-if (
-data &&
-data.msg
-) {
+  if (!response.ok) {
 
-throw new Error(
-data.msg
-);
-
-}
+    console.error(
+      "EPHPHAVORA LOGIN ERROR:",
+      data
+    );
 
 
-if (
-data &&
-data.error_description
-) {
+    if (
+      data &&
+      data.error_code ===
+      "invalid_credentials"
+    ) {
 
-throw new Error(
-data.error_description
-);
-
-}
-
-
-throw new Error(
-t("loginFailed")
-);
-
-}
+      throw new Error(
+        t("incorrectCredentials")
+      );
+    }
 
 
-/* Verify token exists */
+    if (
+      data &&
+      data.msg
+    ) {
 
-if (!data.access_token) {
-
-throw new Error(
-"Login succeeded but Supabase did not return an access token."
-);
-
-}
+      throw new Error(
+        data.msg
+      );
+    }
 
 
-/* Save fresh session */
+    if (
+      data &&
+      data.error_description
+    ) {
 
-saveBERAKAHSession(data);
+      throw new Error(
+        data.error_description
+      );
+    }
 
-return data;
 
+    throw new Error(
+      t("loginFailed")
+    );
+  }
+
+
+  if (!data.access_token) {
+
+    throw new Error(
+      "Login succeeded but Supabase did not return an access token."
+    );
+  }
+
+
+  saveBERAKAHSession(data);
+
+  return data;
 }
 
 
 /* =====================================================
-   VERIFY NEW SESSION
+   VERIFY SESSION
    ===================================================== */
 
 async function verifyNewSession(accessToken) {
 
-const response =
-await fetch(
+  const response =
+    await fetch(
 
-SUPABASE_URL +
-"/auth/v1/user",
+      SUPABASE_URL +
+      "/auth/v1/user",
 
-{
+      {
+        method: "GET",
 
-method: "GET",
-
-headers: {
-
-"apikey":
-SUPABASE_KEY,
-
-"Authorization":
-"Bearer " +
-accessToken
-
-}
-
-}
-
-);
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization":
+            "Bearer " + accessToken
+        }
+      }
+    );
 
 
-const text =
-await response.text();
+  const text =
+    await response.text();
 
 
-if (!response.ok) {
+  if (!response.ok) {
 
-console.error(
-"SESSION VERIFY ERROR:",
-text
-);
+    console.error(
+      "SESSION VERIFY ERROR:",
+      text
+    );
 
-return null;
-
-}
-
-
-if (!text) {
-
-return null;
-
-}
+    return null;
+  }
 
 
-try {
+  if (!text) {
+    return null;
+  }
 
-return JSON.parse(text);
 
-}
+  try {
 
-catch(error) {
+    return JSON.parse(text);
 
-return null;
+  } catch (error) {
 
-}
-
+    return null;
+  }
 }
 
 
@@ -1266,92 +1088,80 @@ return null;
 
 async function getProfileUsername(user) {
 
-if (!user ||
-!user.id) {
+  if (
+    !user ||
+    !user.id
+  ) {
 
-return "";
-
-}
-
-
-const url =
-SUPABASE_URL +
-"/rest/v1/profiles" +
-"?select=username" +
-"&user_id=eq." +
-encodeURIComponent(user.id) +
-"&limit=1";
+    return "";
+  }
 
 
-try {
-
-const response =
-await fetch(
-
-url,
-
-{
-
-method: "GET",
-
-headers: {
-
-"apikey":
-SUPABASE_KEY,
-
-"Authorization":
-"Bearer " +
-localStorage.getItem(
-"berakah_access_token"
-)
-
-}
-
-}
-
-);
+  const url =
+    SUPABASE_URL +
+    "/rest/v1/profiles" +
+    "?select=username" +
+    "&user_id=eq." +
+    encodeURIComponent(user.id) +
+    "&limit=1";
 
 
-if (!response.ok) {
+  try {
 
-return "";
+    const response =
+      await fetch(
 
-}
+        url,
 
+        {
+          method: "GET",
 
-const text =
-await response.text();
+          headers: {
+            "apikey": SUPABASE_KEY,
 
-
-const rows =
-text ?
-JSON.parse(text) :
-[];
-
-
-if (
-rows.length &&
-rows[0].username
-) {
-
-return rows[0].username;
-
-}
-
-}
-
-catch(error) {
-
-console.warn(
-"Could not load profile username:",
-error
-);
-
-}
+            "Authorization":
+              "Bearer " +
+              localStorage.getItem(
+                "berakah_access_token"
+              )
+          }
+        }
+      );
 
 
-return "";
+    if (!response.ok) {
+      return "";
+    }
 
+
+    const text =
+      await response.text();
+
+
+    const rows =
+      text
+        ? JSON.parse(text)
+        : [];
+
+
+    if (
+      rows.length &&
+      rows[0].username
+    ) {
+
+      return rows[0].username;
+    }
+
+  } catch (error) {
+
+    console.warn(
+      "Could not load profile username:",
+      error
+    );
+  }
+
+
+  return "";
 }
 
 
@@ -1360,183 +1170,173 @@ return "";
    ===================================================== */
 
 loginForm.addEventListener(
-"submit",
-async function(event) {
+  "submit",
+  async function(event) {
 
-event.preventDefault();
-
-
-const email =
-emailInput.value
-.trim()
-.toLowerCase();
+    event.preventDefault();
 
 
-const password =
-passwordInput.value;
+    const email =
+      emailInput.value
+        .trim()
+        .toLowerCase();
+
+    const password =
+      passwordInput.value;
 
 
-if (!email) {
+    if (!email) {
 
-showStatus(
-t("emailRequired"),
-"error"
+      showStatus(
+        t("emailRequired"),
+        "error"
+      );
+
+      return;
+    }
+
+
+    if (!password) {
+
+      showStatus(
+        t("passwordRequired"),
+        "error"
+      );
+
+      return;
+    }
+
+
+    loginButton.disabled =
+      true;
+
+    loginButton.textContent =
+      t("loggingIn");
+
+
+    showStatus(
+      t("connecting"),
+      "success"
+    );
+
+
+    try {
+
+      /* LOGIN */
+
+      const session =
+        await loginUser(
+          email,
+          password
+        );
+
+
+      /* VERIFY TOKEN */
+
+      const verifiedUser =
+        await verifyNewSession(
+          session.access_token
+        );
+
+
+      if (!verifiedUser) {
+
+        clearBERAKAHSession();
+
+        throw new Error(
+          t("sessionError")
+        );
+      }
+
+
+      /* SAVE VERIFIED USER */
+
+      localStorage.setItem(
+        "berakah_user",
+        JSON.stringify(
+          verifiedUser
+        )
+      );
+
+      localStorage.setItem(
+        "berakah_auth_user_id",
+        verifiedUser.id
+      );
+
+
+      /* GET USERNAME */
+
+      let username =
+        localStorage.getItem(
+          "berakah_username"
+        ) || "";
+
+
+      if (!username) {
+
+        username =
+          await getProfileUsername(
+            verifiedUser
+          );
+      }
+
+
+      if (username) {
+
+        localStorage.setItem(
+          "berakah_username",
+          username
+        );
+      }
+
+
+      /* SUCCESS */
+
+      showStatus(
+        t("success"),
+        "success"
+      );
+
+
+      /* REDIRECT */
+
+      setTimeout(
+        function() {
+
+          window.location.href =
+            "profile.html";
+
+        },
+        700
+      );
+
+    } catch (error) {
+
+      console.error(
+        "EPHPHAVORA LOGIN ERROR:",
+        error
+      );
+
+
+      clearBERAKAHSession();
+
+
+      showStatus(
+        error.message ||
+        t("loginFailed"),
+        "error"
+      );
+
+
+      loginButton.disabled =
+        false;
+
+      loginButton.textContent =
+        t("login");
+    }
+
+  }
 );
-
-return;
-
-}
-
-
-if (!password) {
-
-showStatus(
-t("passwordRequired"),
-"error"
-);
-
-return;
-
-}
-
-
-loginButton.disabled =
-true;
-
-loginButton.textContent =
-t("loggingIn");
-
-
-showStatus(
-t("connecting"),
-"success"
-);
-
-
-try {
-
-
-/* LOGIN */
-
-const session =
-await loginUser(
-email,
-password
-);
-
-
-/* VERIFY FRESH TOKEN */
-
-const verifiedUser =
-await verifyNewSession(
-session.access_token
-);
-
-
-if (!verifiedUser) {
-
-clearBERAKAHSession();
-
-throw new Error(
-t("sessionError")
-);
-
-}
-
-
-/* Save verified user */
-
-localStorage.setItem(
-"berakah_user",
-JSON.stringify(
-verifiedUser
-)
-);
-
-localStorage.setItem(
-"berakah_auth_user_id",
-verifiedUser.id
-);
-
-
-/* Get username */
-
-let username =
-localStorage.getItem(
-"berakah_username"
-) || "";
-
-
-if (!username) {
-
-username =
-await getProfileUsername(
-verifiedUser
-);
-
-}
-
-
-if (username) {
-
-localStorage.setItem(
-"berakah_username",
-username
-);
-
-}
-
-
-/* SUCCESS */
-
-showStatus(
-t("success"),
-"success"
-);
-
-
-/* Redirect */
-
-setTimeout(
-function() {
-
-window.location.href =
-"profile.html";
-
-},
-500
-);
-
-
-}
-
-catch(error) {
-
-console.error(
-"EPHPHAVORA LOGIN ERROR:",
-error
-);
-
-
-clearBERAKAHSession();
-
-
-showStatus(
-error.message ||
-t("loginFailed"),
-"error"
-);
-
-
-loginButton.disabled =
-false;
-
-loginButton.textContent =
-t("login");
-
-}
-
-});
 
 
 /* =====================================================
@@ -1544,33 +1344,31 @@ t("login");
    ===================================================== */
 
 showPasswordButton.addEventListener(
-"click",
-function() {
+  "click",
+  function() {
 
-if (
-passwordInput.type ===
-"password"
-) {
+    if (
+      passwordInput.type ===
+      "password"
+    ) {
 
-passwordInput.type =
-"text";
+      passwordInput.type =
+        "text";
 
-showPasswordButton.textContent =
-t("hide");
+      showPasswordButton.textContent =
+        t("hide");
 
-}
+    } else {
 
-else {
+      passwordInput.type =
+        "password";
 
-passwordInput.type =
-"password";
+      showPasswordButton.textContent =
+        t("show");
+    }
 
-showPasswordButton.textContent =
-t("show");
-
-}
-
-});
+  }
+);
 
 
 /* =====================================================
@@ -1578,144 +1376,117 @@ t("show");
    ===================================================== */
 
 forgotPassword.addEventListener(
-"click",
-async function(event) {
+  "click",
+  async function(event) {
 
-event.preventDefault();
-
-
-const email =
-emailInput.value
-.trim()
-.toLowerCase();
+    event.preventDefault();
 
 
-if (!email) {
+    const email =
+      emailInput.value
+        .trim()
+        .toLowerCase();
 
-showStatus(
-t("emailRequired"),
-"error"
+
+    if (!email) {
+
+      showStatus(
+        t("emailRequired"),
+        "error"
+      );
+
+      emailInput.focus();
+
+      return;
+    }
+
+
+    try {
+
+      showStatus(
+        t("forgotSending"),
+        "success"
+      );
+
+
+      const response =
+        await fetch(
+
+          SUPABASE_URL +
+          "/auth/v1/recover",
+
+          {
+            method: "POST",
+
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Content-Type":
+                "application/json"
+            },
+
+            body: JSON.stringify({
+              email: email
+            })
+          }
+        );
+
+
+      const text =
+        await response.text();
+
+
+      if (!response.ok) {
+
+        let data = null;
+
+
+        try {
+
+          data =
+            JSON.parse(text);
+
+        } catch (error) {}
+
+
+        throw new Error(
+          data?.msg ||
+          data?.message ||
+          "Could not send password reset email."
+        );
+      }
+
+
+      showStatus(
+        t("forgotSuccess"),
+        "success"
+      );
+
+    } catch (error) {
+
+      console.error(
+        "PASSWORD RESET ERROR:",
+        error
+      );
+
+      showStatus(
+        error.message,
+        "error"
+      );
+    }
+
+  }
 );
-
-emailInput.focus();
-
-return;
-
-}
-
-
-try {
-
-showStatus(
-t("forgotSending"),
-"success"
-);
-
-
-const response =
-await fetch(
-
-SUPABASE_URL +
-"/auth/v1/recover",
-
-{
-
-method: "POST",
-
-headers: {
-
-"apikey":
-SUPABASE_KEY,
-
-"Content-Type":
-"application/json"
-
-},
-
-body:
-JSON.stringify({
-
-email:
-email
-
-})
-
-}
-
-);
-
-
-const text =
-await response.text();
-
-
-if (!response.ok) {
-
-let data = null;
-
-try {
-
-data =
-JSON.parse(text);
-
-}
-
-catch(error) {}
-
-
-throw new Error(
-data?.msg ||
-data?.message ||
-"Could not send password reset email."
-);
-
-}
-
-
-showStatus(
-t("forgotSuccess"),
-"success"
-);
-
-}
-
-catch(error) {
-
-console.error(
-"PASSWORD RESET ERROR:",
-error
-);
-
-showStatus(
-error.message,
-"error"
-);
-
-}
-
-});
 
 
 /* =====================================================
    PAGE START
    ===================================================== */
 
-function prepareLoginPage() {
-
-/*
-Fresh login is always available.
-Existing session keys are preserved
-for compatibility with the rest of
-the EPHPHAVORA platform.
-*/
-
-}
-
-
-prepareLoginPage();
+console.log(
+  "EPHPHAVORA Login Page Ready"
+);
 
 </script>
 
 </body>
-
 </html>
