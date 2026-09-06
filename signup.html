@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>BERAKAH - Create Account</title>
+  <title>EPHPHAVORA - Create Account</title>
 
   <style>
     * {
@@ -101,7 +101,7 @@
 
 <div class="container">
 
-  <div class="logo">BERAKAH</div>
+  <div class="logo">EPHPHAVORA</div>
 
   <h1>Create Your Account</h1>
 
@@ -122,12 +122,10 @@
     <label>Preferred Language</label>
 
     <select id="language">
-
       <option value="ht">Haitian Creole</option>
       <option value="en">English</option>
       <option value="fr">French</option>
       <option value="es">Spanish</option>
-
     </select>
 
     <button id="signupButton" type="submit">
@@ -139,13 +137,10 @@
   </form>
 
   <div class="login">
-
     Already have an account?
-
     <a href="login.html">
       Log In
     </a>
-
   </div>
 
 </div>
@@ -171,9 +166,7 @@ const message =
 
 
 function showMessage(text) {
-
   message.textContent = text;
-
 }
 
 
@@ -312,10 +305,6 @@ form.addEventListener(
       /*
         SUPABASE MAY REQUIRE EMAIL
         CONFIRMATION.
-
-        If there is no session,
-        the user ID may still be
-        returned as authData.user.id.
       */
 
       const user =
@@ -435,7 +424,7 @@ form.addEventListener(
 
       showMessage(
 
-        "BERAKAH account created successfully! 🎉\n\n" +
+        "EPHPHAVORA account created successfully! 🎉\n\n" +
         "Your profile has been created."
 
       );
@@ -460,7 +449,7 @@ form.addEventListener(
     catch(error) {
 
       console.error(
-        "BERAKAH SIGNUP ERROR:",
+        "EPHPHAVORA SIGNUP ERROR:",
         error
       );
 
