@@ -1,10 +1,18 @@
-<!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8"><meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
+<!DOCTYPE html>
+<html lang="en">
 
-«»
+<head>
 
-  <title>EPHPHAVORA - Marketplace</title>  <style>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>EPHPHAVORA - Marketplace</title>
+
+  <style>
 
     * {
       box-sizing: border-box;
@@ -417,186 +425,249 @@ content="width=device-width, initial-scale=1.0"
 
     }
 
-  </style></head><body><header><a
-href="index.html"
-class="logo"
+  </style>
 
-«»
+</head>
 
-EPHPHAVORA
+<body>
 
-  </a>  <nav><a href="index.html">
-  Home
-</a>
+<header>
 
-<a href="marketplace.html">
-  Market
-</a>
-
-<a href="seller-dashboard.html">
-  Dashboard
-</a>
-
-<a href="profile.html">
-  Profile
-</a>
-
-<button onclick="logout()">
-  Logout
-</button>
-
-  </nav></header><div class="container">  <div class="hero"><h1>
-  EPHPHAVORA Marketplace
-</h1>
-
-<p>
-  Discover products and services from EPHPHAVORA sellers.
-</p>
-
-  </div>  <div class="search-area"><div class="search-box">
-
-  <input
-    type="search"
-    id="searchInput"
-    placeholder="Search products..."
-    oninput="filterProducts()"
+  <a
+    href="index.html"
+    class="logo"
   >
+    EPHPHAVORA
+  </a>
 
-</div>
+  <nav>
 
-<div style="min-width:180px;">
-
-  <select
-    id="categorySelect"
-    class="category-select"
-    onchange="filterProducts()"
-  >
-
-    <option value="">
-      All Categories
-    </option>
-
-    <option value="Clothing">
-      Clothing
-    </option>
-
-    <option value="Electronics">
-      Electronics
-    </option>
-
-    <option value="Beauty">
-      Beauty
-    </option>
-
-    <option value="Food">
-      Food
-    </option>
-
-    <option value="Home">
+    <a href="index.html">
       Home
-    </option>
+    </a>
 
-    <option value="Services">
-      Services
-    </option>
+    <a href="marketplace.html">
+      Market
+    </a>
 
-    <option value="Other">
-      Other
-    </option>
+    <a href="seller-dashboard.html">
+      Dashboard
+    </a>
 
-  </select>
+    <a href="profile.html">
+      Profile
+    </a>
 
-</div>
+    <button onclick="logout()">
+      Logout
+    </button>
 
-<button
-  class="refresh-btn"
-  onclick="loadProducts()"
->
-  🔄 Refresh
-</button>
+  </nav>
 
-  </div>  <div
+</header>
+
+
+<div class="container">
+
+  <div class="hero">
+
+    <h1>
+      EPHPHAVORA Marketplace
+    </h1>
+
+    <p>
+      Discover products and services from EPHPHAVORA sellers.
+    </p>
+
+  </div>
+
+
+  <div class="search-area">
+
+    <div class="search-box">
+
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="Search products..."
+        oninput="filterProducts()"
+      >
+
+    </div>
+
+
+    <div style="min-width:180px;">
+
+      <select
+        id="categorySelect"
+        class="category-select"
+        onchange="filterProducts()"
+      >
+
+        <option value="">
+          All Categories
+        </option>
+
+        <option value="Clothing">
+          Clothing
+        </option>
+
+        <option value="Electronics">
+          Electronics
+        </option>
+
+        <option value="Beauty">
+          Beauty
+        </option>
+
+        <option value="Food">
+          Food
+        </option>
+
+        <option value="Home">
+          Home
+        </option>
+
+        <option value="Services">
+          Services
+        </option>
+
+        <option value="Other">
+          Other
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <button
+      class="refresh-btn"
+      onclick="loadProducts()"
+    >
+      🔄 Refresh
+    </button>
+
+  </div>
+
+
+  <div
     id="errorBox"
     class="error"
-  ></div>  <div class="market-header"><h2>
-  Products
-</h2>
+  ></div>
 
-<span id="productCount">
-  Loading...
-</span>
 
-  </div>  <div
+  <div class="market-header">
+
+    <h2>
+      Products
+    </h2>
+
+    <span id="productCount">
+      Loading...
+    </span>
+
+  </div>
+
+
+  <div
     id="loading"
     class="loading"
   >
     Loading marketplace...
-  </div>  <div
+  </div>
+
+
+  <div
     id="empty"
     class="empty"
     style="display:none;"
-  ><h3>
-  No products found
-</h3>
+  >
 
-<p>
-  Sellers haven't added products yet.
-</p>
+    <h3>
+      No products found
+    </h3>
 
-  </div>  <div
+    <p>
+      Sellers haven't added products yet.
+    </p>
+
+  </div>
+
+
+  <div
     id="productsGrid"
     class="products-grid"
-  ></div></div><div
-  id="buyModalOverlay"
-  class="modal-overlay"
->  <div class="modal"><h2>
-  Buy Product
-</h2>
+  ></div>
+
+</div>
+
 
 <div
-  id="modalProduct"
-  class="modal-product"
-></div>
-
-<div class="payment-note">
-  🔒 You will be securely redirected to Stripe to complete your test payment.
-</div>
-
-<label
-  class="quantity-label"
-  for="quantity"
->
-  Quantity
-</label>
-
-<input
-  id="quantity"
-  class="quantity-input"
-  type="number"
-  min="1"
-  value="1"
+  id="buyModalOverlay"
+  class="modal-overlay"
 >
 
-<div class="modal-actions">
+  <div class="modal">
 
-  <button
-    class="cancel-btn"
-    onclick="closeModal()"
-  >
-    Cancel
-  </button>
+    <h2>
+      Buy Product
+    </h2>
 
-  <button
-    id="checkoutButton"
-    class="confirm-btn"
-    onclick="startCheckout()"
-  >
-    Continue to Stripe
-  </button>
+    <div
+      id="modalProduct"
+      class="modal-product"
+    ></div>
+
+
+    <div class="payment-note">
+      🔒 You will be securely redirected to Stripe to complete your test payment.
+    </div>
+
+
+    <label
+      class="quantity-label"
+      for="quantity"
+    >
+      Quantity
+    </label>
+
+
+    <input
+      id="quantity"
+      class="quantity-input"
+      type="number"
+      min="1"
+      value="1"
+    >
+
+
+    <div class="modal-actions">
+
+      <button
+        class="cancel-btn"
+        onclick="closeModal()"
+      >
+        Cancel
+      </button>
+
+
+      <button
+        id="checkoutButton"
+        class="confirm-btn"
+        onclick="startCheckout()"
+      >
+        Continue to Stripe
+      </button>
+
+    </div>
+
+  </div>
 
 </div>
 
-  </div></div><script>
+
+<script>
 
 /*
 ==================================================
@@ -615,11 +686,6 @@ const SUPABASE_KEY =
 ==================================================
 SESSION
 ==================================================
-*/
-
-/*
-We keep the existing localStorage names so
-the current login system continues working.
 */
 
 const accessToken =
@@ -761,7 +827,7 @@ async function loadProducts() {
   } catch (error) {
 
     console.error(
-      "Marketplace error:",
+      "EPHPHAVORA Marketplace error:",
       error
     );
 
@@ -832,8 +898,7 @@ function filterProducts() {
 
         const matchesCategory =
           !category ||
-          productCategory ===
-            category;
+          productCategory === category;
 
         return (
           matchesSearch &&
@@ -964,12 +1029,15 @@ function renderProducts(
           </div>
 
           <div class="seller">
+
             Seller:
+
             <strong>
               ${escapeHtml(
                 seller
               )}
             </strong>
+
           </div>
 
           <div class="stock ${
@@ -1076,10 +1144,12 @@ function openBuyModal(
     <div class="modal-product-info">
 
       <div class="modal-product-name">
+
         ${escapeHtml(
           selectedProduct.name ||
           "Product"
         )}
+
       </div>
 
       <div>
@@ -1095,6 +1165,7 @@ function openBuyModal(
       >
 
         Seller:
+
         ${
           escapeHtml(
             (
@@ -1172,6 +1243,7 @@ async function startCheckout() {
       "berakah_auth_user_id"
     );
 
+
   /*
   ================================================
   LOGIN CHECK
@@ -1193,6 +1265,7 @@ async function startCheckout() {
     return;
 
   }
+
 
   /*
   ================================================
@@ -1239,6 +1312,7 @@ async function startCheckout() {
 
   }
 
+
   /*
   ================================================
   BUTTON
@@ -1255,6 +1329,7 @@ async function startCheckout() {
 
   button.textContent =
     "Opening Stripe...";
+
 
   try {
 
@@ -1345,6 +1420,7 @@ async function startCheckout() {
 
     }
 
+
     /*
     ==============================================
     CLOSE MODAL
@@ -1352,6 +1428,7 @@ async function startCheckout() {
     */
 
     closeModal();
+
 
     /*
     ==============================================
@@ -1493,4 +1570,8 @@ START MARKETPLACE
 
 loadProducts();
 
-</script></body></html>
+</script>
+
+</body>
+
+</html>
