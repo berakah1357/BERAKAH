@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BERAKAH</title>
+
+  <title>EPHPHAVORA</title>
 
   <style>
     * {
@@ -11,52 +12,7 @@
       margin: 0;
       padding: 0;
     }
-<script>
-<script>
-const languageSelect = document.getElementById("language");
 
-if (languageSelect) {
-  languageSelect.addEventListener("change", function () {
-    const welcomeText = document.querySelector(".welcome-text");
-
-    if (this.value === "Haitian Creole") {
-      welcomeText.textContent = "Konekte. Pataje. Grandi Ansanm.";
-    }
-
-    if (this.value === "English") {
-      welcomeText.textContent = "Connect. Share. Grow Together.";
-    }
-
-    if (this.value === "French") {
-      welcomeText.textContent = "Connectez-vous. Partagez. Grandissez ensemble.";
-    }
-
-    if (this.value === "Spanish") {
-      welcomeText.textContent = "Conecta. Comparte. Crece Juntos.";
-    }
-  });
-}
-</script>
-  }
-};
-
-<script>
-document.getElementById("language").addEventListener("change", function () {
-  const welcome = document.querySelector(".welcome-text");
-
-  if (this.value === "Haitian Creole") {
-    welcome.textContent = "Konekte. Pataje. Grandi Ansanm.";
-  } else if (this.value === "English") {
-    welcome.textContent = "Connect. Share. Grow Together.";
-  } else if (this.value === "French") {
-    welcome.textContent = "Connectez-vous. Partagez. Grandissez ensemble.";
-  } else if (this.value === "Spanish") {
-    welcome.textContent = "Conecta. Comparte. Crece Juntos.";
-  }
-});
-</script>
-}
-</script>
     body {
       font-family: Arial, sans-serif;
       background: #f5f7fb;
@@ -83,6 +39,24 @@ document.getElementById("language").addEventListener("change", function () {
       text-decoration: none;
       color: #333;
       font-weight: 600;
+    }
+
+    .language-bar {
+      background: white;
+      padding: 10px 7%;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .language-bar label {
+      font-weight: 600;
+    }
+
+    .language-bar select {
+      padding: 7px 10px;
+      margin-left: 5px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      background: white;
     }
 
     .hero {
@@ -153,7 +127,7 @@ document.getElementById("language").addEventListener("change", function () {
       padding: 30px 20px;
       text-align: center;
       border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
     }
 
     .card h3 {
@@ -163,6 +137,14 @@ document.getElementById("language").addEventListener("change", function () {
     .card p {
       color: #6b7280;
       line-height: 1.5;
+    }
+
+    .card a {
+      display: block;
+      margin-bottom: 10px;
+      color: #111827;
+      font-weight: bold;
+      text-decoration: none;
     }
 
     footer {
@@ -191,53 +173,45 @@ document.getElementById("language").addEventListener("change", function () {
       .hero h1 {
         font-size: 45px;
       }
+
+      .hero h2 {
+        font-size: 24px;
+      }
     }
   </style>
 </head>
-<script>
-function changeLanguage(language) {
-  const welcome = document.querySelector(".welcome-text");
 
-  if (!welcome) return;
-
-  if (language === "Haitian Creole") {
-    welcome.textContent = "Konekte. Pataje. Grandi Ansanm.";
-  } else if (language === "English") {
-    welcome.textContent = "Connect. Share. Grow Together.";
-  } else if (language === "French") {
-    welcome.textContent = "Connectez-vous. Partagez. Grandissez ensemble.";
-  } else if (language === "Spanish") {
-    welcome.textContent = "Conecta. Comparte. Crece Juntos.";
-  }
-}
-</script>
 <body>
 
   <header>
-    <div class="logo">BERAKAH</div>
+    <div class="logo">EPHPHAVORA</div>
 
     <nav>
       <a href="#">Home</a>
       <a href="#">Discover</a>
       <a href="business.html">Business</a>
-      <a href="#">Market</a>
+      <a href="marketplace.html">Market</a>
     </nav>
   </header>
-  <div style="margin: 10px 0;">
-  <label for="language">🌎 Language:</label>
- <select id="language" onchange="changeLanguage(this.value)">
-    <option>Haitian Creole</option>
-    <option>English</option>
-    <option>French</option>
-    <option>Spanish</option>
-  </select>
-</div>
+
+  <div class="language-bar">
+    <label for="language">🌎 Language:</label>
+
+    <select id="language" onchange="changeLanguage(this.value)">
+      <option value="Haitian Creole">Haitian Creole</option>
+      <option value="English">English</option>
+      <option value="French">French</option>
+      <option value="Spanish">Spanish</option>
+    </select>
+  </div>
 
   <section class="hero">
 
-    <h1>BERAKAH</h1>
+    <h1>EPHPHAVORA</h1>
 
-    <h2>Connect. Share. Grow Together.</h2>
+    <h2 class="welcome-text">
+      Konekte. Pataje. Grandi Ansanm.
+    </h2>
 
     <p>
       A social and business platform where people,
@@ -246,17 +220,19 @@ function changeLanguage(language) {
     </p>
 
     <div class="buttons">
-     <a href="signup.html">
-  <a href="signup.html" style="text-decoration: none;">
- 
-</a>
- <a href="signup.html" style="text-decoration: none;">
-  <button class="primary" type="button">CREATE ACCOUNT</button>
-</a>
-</a>
+
+      <a href="signup.html" style="text-decoration: none;">
+        <button class="primary" type="button">
+          CREATE ACCOUNT
+        </button>
+      </a>
+
       <a href="login.html" style="text-decoration: none;">
-  <button class="secondary" type="button">LOG IN</button>
-</a>
+        <button class="secondary" type="button">
+          LOG IN
+        </button>
+      </a>
+
     </div>
 
     <div class="languages">
@@ -270,32 +246,68 @@ function changeLanguage(language) {
     <div class="card">
       <div>👥</div>
       <h3>Social</h3>
-      <p>Connect with people and share your world.</p>
+      <p>
+        Connect with people and share your world.
+      </p>
     </div>
 
     <div class="card">
       <div>💬</div>
       <h3>Community</h3>
-      <p>Join groups and build meaningful communities.</p>
+      <p>
+        Join groups and build meaningful communities.
+      </p>
     </div>
 
     <div class="card">
       <div>🏪</div>
       <h3>Business</h3>
-      <p>Build your business and reach new customers.</p>
+      <p>
+        Build your business and reach new customers.
+      </p>
     </div>
 
     <div class="card">
       <a href="marketplace.html">Marketplace</a>
       <div>🛍️</div>
-      <p>Buy and sell products and services.</p>
+      <p>
+        Buy and sell products and services.
+      </p>
     </div>
 
   </section>
 
   <footer>
-    © 2026 BERAKAH — Connect. Share. Grow Together.
+    © 2026 EPHPHAVORA — Connect. Share. Grow Together.
   </footer>
+
+  <script>
+    function changeLanguage(language) {
+      const welcome = document.querySelector(".welcome-text");
+
+      if (!welcome) return;
+
+      if (language === "Haitian Creole") {
+        welcome.textContent =
+          "Konekte. Pataje. Grandi Ansanm.";
+      }
+
+      else if (language === "English") {
+        welcome.textContent =
+          "Connect. Share. Grow Together.";
+      }
+
+      else if (language === "French") {
+        welcome.textContent =
+          "Connectez-vous. Partagez. Grandissez ensemble.";
+      }
+
+      else if (language === "Spanish") {
+        welcome.textContent =
+          "Conecta. Comparte. Crece Juntos.";
+      }
+    }
+  </script>
 
 </body>
 </html>
