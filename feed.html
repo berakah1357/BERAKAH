@@ -20,8 +20,6 @@ body {
     color: #111827;
 }
 
-/* HEADER */
-
 header {
     background: white;
     border-bottom: 1px solid #e5e7eb;
@@ -43,7 +41,6 @@ header {
 .logo {
     font-size: 24px;
     font-weight: bold;
-    color: #111827;
 }
 
 nav {
@@ -72,15 +69,11 @@ nav a:hover,
     cursor: pointer;
 }
 
-/* MAIN */
-
 .container {
     max-width: 700px;
     margin: 25px auto;
     padding: 0 15px;
 }
-
-/* CREATE POST */
 
 .create-post {
     background: white;
@@ -92,7 +85,6 @@ nav a:hover,
 
 .create-post h2 {
     margin-top: 0;
-    font-size: 20px;
 }
 
 textarea {
@@ -119,7 +111,6 @@ textarea {
     padding: 9px 13px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
 }
 
 .media-type button.active {
@@ -156,10 +147,7 @@ textarea {
 
 .publish-btn:disabled {
     opacity: .6;
-    cursor: not-allowed;
 }
-
-/* POST */
 
 .post {
     background: white;
@@ -208,8 +196,6 @@ textarea {
     display: block;
 }
 
-/* VIDEO */
-
 .video-wrapper {
     width: 100%;
     background: #000;
@@ -221,8 +207,6 @@ textarea {
     display: block;
     background: #000;
 }
-
-/* REELS */
 
 .reel-wrapper {
     width: 100%;
@@ -253,8 +237,6 @@ textarea {
     font-weight: bold;
 }
 
-/* ACTIONS */
-
 .post-actions {
     display: flex;
     gap: 10px;
@@ -270,24 +252,16 @@ textarea {
     cursor: pointer;
 }
 
-.action-btn:hover {
-    background: #e5e7eb;
-}
-
 .delete-btn {
     margin-left: auto;
     color: #b91c1c;
 }
-
-/* EMPTY */
 
 .empty {
     text-align: center;
     color: #6b7280;
     padding: 30px;
 }
-
-/* STATUS */
 
 .status {
     padding: 10px;
@@ -309,8 +283,6 @@ textarea {
     color: #991b1b;
 }
 
-/* MOBILE */
-
 @media (max-width: 700px) {
 
     header {
@@ -326,15 +298,9 @@ textarea {
         width: 100%;
     }
 
-    nav a,
-    .logout-btn {
-        font-size: 13px;
-    }
-
     .container {
         margin-top: 15px;
     }
-
 }
 
 </style>
@@ -371,8 +337,6 @@ EPHPHAVORA
 
 <div id="status" class="status"></div>
 
-
-<!-- CREATE POST -->
 
 <section class="create-post">
 
@@ -411,10 +375,7 @@ onclick="selectMediaMode('reel')"
 </div>
 
 
-<div
-id="imageArea"
-class="file-area"
->
+<div id="imageArea" class="file-area">
 
 <input
 type="file"
@@ -455,8 +416,6 @@ Publish
 </section>
 
 
-<!-- FEED -->
-
 <section id="feed"></section>
 
 </main>
@@ -464,80 +423,59 @@ Publish
 
 <script>
 
-/* =========================
-   SUPABASE
-========================= */
-
 const SUPABASE_URL =
-    "https://utoyoglycqjmqznczfxa.supabase.co";
+"https://utoyoglycqjmqznczfxa.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+"sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
 const VIDEO_BUCKET = "videos";
 
 const MAX_VIDEO_SIZE =
-    50 * 1024 * 1024;
+50 * 1024 * 1024;
 
-
-/* =========================
-   STATE
-========================= */
 
 let currentUser = null;
 
 let selectedMediaMode = "image";
 
 
-/* =========================
-   ELEMENTS
-========================= */
-
 const statusBox =
-    document.getElementById("status");
+document.getElementById("status");
 
 const feed =
-    document.getElementById("feed");
+document.getElementById("feed");
 
 const publishBtn =
-    document.getElementById("publishBtn");
+document.getElementById("publishBtn");
 
-
-/* =========================
-   STATUS
-========================= */
 
 function showStatus(message, type = "success") {
 
     statusBox.textContent = message;
 
     statusBox.className =
-        "status " + type;
+    "status " + type;
 
     setTimeout(() => {
 
-        statusBox.className =
-            "status";
+        statusBox.className = "status";
 
     }, 5000);
 }
 
 
-/* =========================
-   AUTH
-========================= */
-
 async function getCurrentUser() {
 
     const token =
-        localStorage.getItem(
-            "berakah_access_token"
-        );
+    localStorage.getItem(
+        "berakah_access_token"
+    );
 
     if (!token) {
 
         window.location.href =
-            "login.html";
+        "login.html";
 
         return null;
     }
@@ -545,16 +483,16 @@ async function getCurrentUser() {
     try {
 
         const response =
-            await fetch(
-                `${SUPABASE_URL}/auth/v1/user`,
-                {
-                    headers: {
-                        "apikey": SUPABASE_KEY,
-                        "Authorization":
-                            `Bearer ${token}`
-                    }
+        await fetch(
+            `${SUPABASE_URL}/auth/v1/user`,
+            {
+                headers: {
+                    "apikey": SUPABASE_KEY,
+                    "Authorization":
+                    `Bearer ${token}`
                 }
-            );
+            }
+        );
 
         if (!response.ok) {
 
@@ -563,7 +501,7 @@ async function getCurrentUser() {
             );
 
             window.location.href =
-                "login.html";
+            "login.html";
 
             return null;
         }
@@ -584,44 +522,38 @@ async function getCurrentUser() {
 }
 
 
-/* =========================
-   MEDIA MODE
-========================= */
-
 function selectMediaMode(mode) {
 
     selectedMediaMode = mode;
 
     const imageBtn =
-        document.getElementById(
-            "imageModeBtn"
-        );
+    document.getElementById(
+        "imageModeBtn"
+    );
 
     const videoBtn =
-        document.getElementById(
-            "videoModeBtn"
-        );
+    document.getElementById(
+        "videoModeBtn"
+    );
 
     const reelBtn =
-        document.getElementById(
-            "reelModeBtn"
-        );
+    document.getElementById(
+        "reelModeBtn"
+    );
 
     const imageArea =
-        document.getElementById(
-            "imageArea"
-        );
+    document.getElementById(
+        "imageArea"
+    );
 
     const videoArea =
-        document.getElementById(
-            "videoArea"
-        );
+    document.getElementById(
+        "videoArea"
+    );
 
 
     imageBtn.classList.remove("active");
-
     videoBtn.classList.remove("active");
-
     reelBtn.classList.remove("active");
 
 
@@ -629,98 +561,224 @@ function selectMediaMode(mode) {
 
         imageBtn.classList.add("active");
 
-        imageArea.style.display =
-            "block";
+        imageArea.style.display = "block";
 
-        videoArea.style.display =
-            "none";
+        videoArea.style.display = "none";
 
     } else {
 
+        imageArea.style.display = "none";
+
+        videoArea.style.display = "block";
+
+
         if (mode === "video") {
 
-            videoBtn.classList.add(
-                "active"
-            );
+            videoBtn.classList.add("active");
 
         }
 
         if (mode === "reel") {
 
-            reelBtn.classList.add(
-                "active"
-            );
+            reelBtn.classList.add("active");
 
         }
-
-        imageArea.style.display =
-            "none";
-
-        videoArea.style.display =
-            "block";
     }
 }
 
 
-/* =========================
-   LOAD FEED
-========================= */
+/*
+==================================================
+LOAD POSTS
+==================================================
+*/
 
 async function loadFeed() {
 
     feed.innerHTML =
-        `<div class="empty">Loading feed...</div>`;
+    `<div class="empty">Loading feed...</div>`;
+
 
     try {
 
         const token =
-            localStorage.getItem(
-                "berakah_access_token"
-            );
+        localStorage.getItem(
+            "berakah_access_token"
+        );
 
 
-        const response =
-            await fetch(
-                `${SUPABASE_URL}/rest/v1/posts?select=*,profiles(username,avatar_url),likes(user_id)&order=created_at.desc`,
-                {
-                    headers: {
-                        "apikey": SUPABASE_KEY,
-                        "Authorization":
-                            `Bearer ${token}`
-                    }
+        /*
+        STEP 1:
+        Load posts ONLY.
+
+        We intentionally do NOT use:
+
+        profiles(...)
+        likes(...)
+
+        in the same query.
+        */
+
+        const postsResponse =
+        await fetch(
+            `${SUPABASE_URL}/rest/v1/posts?select=*&order=created_at.desc`,
+            {
+                headers: {
+                    "apikey": SUPABASE_KEY,
+                    "Authorization":
+                    `Bearer ${token}`
                 }
-            );
+            }
+        );
 
 
-        if (!response.ok) {
+        if (!postsResponse.ok) {
 
             const errorText =
-                await response.text();
+            await postsResponse.text();
 
             console.error(
-                "Feed error:",
+                "POSTS ERROR:",
                 errorText
             );
 
             throw new Error(
-                "Could not load feed."
+                "Unable to load posts."
             );
         }
 
 
         const posts =
-            await response.json();
+        await postsResponse.json();
 
 
-        if (!posts.length) {
+        if (!Array.isArray(posts) ||
+            posts.length === 0) {
 
             feed.innerHTML =
-                `<div class="empty">
-                    No posts yet.
-                </div>`;
+            `<div class="empty">
+                No posts yet.
+            </div>`;
 
             return;
         }
+
+
+        /*
+        STEP 2:
+        Load profiles and likes separately.
+        */
+
+        const userIds =
+        [
+            ...new Set(
+                posts
+                .map(post => post.user_id)
+                .filter(Boolean)
+            )
+        ];
+
+
+        let profiles = [];
+
+        if (userIds.length > 0) {
+
+            const profileFilter =
+            userIds
+            .map(id =>
+                `"${id}"`
+            )
+            .join(",");
+
+
+            const profileResponse =
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/profiles?select=user_id,username,avatar_url&user_id=in.(${profileFilter})`,
+                {
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization":
+                        `Bearer ${token}`
+                    }
+                }
+            );
+
+
+            if (profileResponse.ok) {
+
+                profiles =
+                await profileResponse.json();
+
+            } else {
+
+                console.warn(
+                    "Profiles could not be loaded."
+                );
+            }
+        }
+
+
+        let likes = [];
+
+
+        const likesResponse =
+        await fetch(
+            `${SUPABASE_URL}/rest/v1/likes?select=post_id,user_id`,
+            {
+                headers: {
+                    "apikey": SUPABASE_KEY,
+                    "Authorization":
+                    `Bearer ${token}`
+                }
+            }
+        );
+
+
+        if (likesResponse.ok) {
+
+            likes =
+            await likesResponse.json();
+
+        } else {
+
+            console.warn(
+                "Likes could not be loaded."
+            );
+        }
+
+
+        /*
+        STEP 3:
+        Build lookup tables.
+        */
+
+        const profileMap = {};
+
+        profiles.forEach(profile => {
+
+            profileMap[
+                profile.user_id
+            ] = profile;
+
+        });
+
+
+        const likesMap = {};
+
+
+        likes.forEach(like => {
+
+            if (!likesMap[like.post_id]) {
+
+                likesMap[like.post_id] = [];
+
+            }
+
+            likesMap[like.post_id].push(
+                like
+            );
+
+        });
 
 
         feed.innerHTML = "";
@@ -728,76 +786,105 @@ async function loadFeed() {
 
         posts.forEach(post => {
 
+            const profile =
+            profileMap[post.user_id] || {};
+
+
+            const postLikes =
+            likesMap[post.id] || [];
+
+
+            const fullPost = {
+
+                ...post,
+
+                profiles: profile,
+
+                likes: postLikes
+
+            };
+
+
             feed.appendChild(
-                createPostCard(post)
+                createPostCard(
+                    fullPost
+                )
             );
 
         });
 
+
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "FEED LOAD ERROR:",
+            error
+        );
+
 
         feed.innerHTML =
-            `<div class="empty">
-                Unable to load feed.
-            </div>`;
+        `<div class="empty">
+            Unable to load feed.
+            <br><br>
+            Please refresh the page.
+        </div>`;
     }
 }
 
 
-/* =========================
-   CREATE POST CARD
-========================= */
+/*
+==================================================
+CREATE POST CARD
+==================================================
+*/
 
 function createPostCard(post) {
 
     const article =
-        document.createElement("article");
+    document.createElement("article");
 
     article.className = "post";
 
 
     const profile =
-        post.profiles || {};
+    post.profiles || {};
+
 
     const username =
-        profile.username ||
-        "EPHPHAVORA User";
+    profile.username ||
+    "EPHPHAVORA User";
 
 
     const avatar =
-        profile.avatar_url ||
-        "https://via.placeholder.com/100";
+    profile.avatar_url ||
+    "https://via.placeholder.com/100";
 
 
     const createdDate =
+    post.created_at
+    ? new Date(
         post.created_at
-            ? new Date(
-                post.created_at
-              ).toLocaleString()
-            : "";
+      ).toLocaleString()
+    : "";
 
 
     const likes =
-        Array.isArray(post.likes)
-            ? post.likes
-            : [];
+    Array.isArray(post.likes)
+    ? post.likes
+    : [];
 
 
     const userLiked =
-        currentUser &&
-        likes.some(
-            like =>
-                like.user_id ===
-                currentUser.id
-        );
+    currentUser &&
+    likes.some(
+        like =>
+        like.user_id ===
+        currentUser.id
+    );
 
 
     let mediaHTML = "";
 
-
-    /* IMAGE */
 
     if (
         post.image_url &&
@@ -805,19 +892,19 @@ function createPostCard(post) {
     ) {
 
         mediaHTML = `
-            <img
-                class="post-image"
-                src="${escapeHtml(
-                    post.image_url
-                )}"
-                alt="Post image"
-            >
+
+        <img
+            class="post-image"
+            src="${escapeHtml(
+                post.image_url
+            )}"
+            alt="Post image"
+        >
+
         `;
 
     }
 
-
-    /* VIDEO */
 
     if (
         post.video_url &&
@@ -825,33 +912,33 @@ function createPostCard(post) {
     ) {
 
         mediaHTML = `
-            <div class="video-wrapper">
 
-                <video
-                    class="post-video"
-                    controls
-                    playsinline
-                    preload="metadata"
+        <div class="video-wrapper">
+
+            <video
+                class="post-video"
+                controls
+                playsinline
+                preload="metadata"
+            >
+
+                <source
+                    src="${escapeHtml(
+                        post.video_url
+                    )}"
                 >
 
-                    <source
-                        src="${escapeHtml(
-                            post.video_url
-                        )}"
-                    >
+                Your browser does not
+                support video playback.
 
-                    Your browser does not
-                    support video playback.
+            </video>
 
-                </video>
+        </div>
 
-            </div>
         `;
 
     }
 
-
-    /* REEL */
 
     if (
         post.video_url &&
@@ -859,31 +946,33 @@ function createPostCard(post) {
     ) {
 
         mediaHTML = `
-            <div class="reel-wrapper">
 
-                <div class="reel-label">
-                    🎬 REEL
-                </div>
+        <div class="reel-wrapper">
 
-                <video
-                    class="reel-video"
-                    controls
-                    playsinline
-                    preload="metadata"
+            <div class="reel-label">
+                🎬 REEL
+            </div>
+
+            <video
+                class="reel-video"
+                controls
+                playsinline
+                preload="metadata"
+            >
+
+                <source
+                    src="${escapeHtml(
+                        post.video_url
+                    )}"
                 >
 
-                    <source
-                        src="${escapeHtml(
-                            post.video_url
-                        )}"
-                    >
+                Your browser does not
+                support video playback.
 
-                    Your browser does not
-                    support video playback.
+            </video>
 
-                </video>
+        </div>
 
-            </div>
         `;
 
     }
@@ -917,14 +1006,14 @@ function createPostCard(post) {
 
         ${
             post.content
-                ? `
-                    <div class="post-content">
-                        ${escapeHtml(
-                            post.content
-                        )}
-                    </div>
-                `
-                : ""
+            ? `
+                <div class="post-content">
+                    ${escapeHtml(
+                        post.content
+                    )}
+                </div>
+            `
+            : ""
         }
 
 
@@ -947,16 +1036,17 @@ function createPostCard(post) {
 
             ${
                 currentUser &&
-                post.user_id === currentUser.id
-                    ? `
-                        <button
-                            class="action-btn delete-btn"
-                            onclick="deletePost('${post.id}')"
-                        >
-                            🗑 Delete
-                        </button>
-                    `
-                    : ""
+                post.user_id ===
+                currentUser.id
+                ? `
+                    <button
+                        class="action-btn delete-btn"
+                        onclick="deletePost('${post.id}')"
+                    >
+                        🗑 Delete
+                    </button>
+                `
+                : ""
             }
 
         </div>
@@ -968,30 +1058,57 @@ function createPostCard(post) {
 }
 
 
-/* =========================
-   ESCAPE HTML
-========================= */
+/*
+==================================================
+ESCAPE HTML
+==================================================
+*/
 
 function escapeHtml(value) {
 
-    if (value === null ||
-        value === undefined) {
+    if (
+        value === null ||
+        value === undefined
+    ) {
 
         return "";
     }
 
+
     return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 }
 
 
-/* =========================
-   IMAGE TO DATA URL
-========================= */
+/*
+==================================================
+IMAGE
+==================================================
+*/
 
 function imageToDataURL(file) {
 
@@ -999,25 +1116,34 @@ function imageToDataURL(file) {
         (resolve, reject) => {
 
             const reader =
-                new FileReader();
+            new FileReader();
+
 
             reader.onload =
-                () => resolve(
-                    reader.result
-                );
+            () =>
+            resolve(
+                reader.result
+            );
+
 
             reader.onerror =
-                reject;
+            reject;
 
-            reader.readAsDataURL(file);
+
+            reader.readAsDataURL(
+                file
+            );
+
         }
     );
 }
 
 
-/* =========================
-   UPLOAD VIDEO
-========================= */
+/*
+==================================================
+VIDEO UPLOAD
+==================================================
+*/
 
 async function uploadVideo(file) {
 
@@ -1053,53 +1179,57 @@ async function uploadVideo(file) {
 
 
     const token =
-        localStorage.getItem(
-            "berakah_access_token"
-        );
+    localStorage.getItem(
+        "berakah_access_token"
+    );
 
 
     const extension =
-        file.name.includes(".")
-            ? file.name
-                .split(".")
-                .pop()
-                .toLowerCase()
-            : "mp4";
+    file.name.includes(".")
+    ? file.name
+        .split(".")
+        .pop()
+        .toLowerCase()
+    : "mp4";
 
 
     const filePath =
-        `${currentUser.id}/${Date.now()}-${Math.random()
-            .toString(36)
-            .substring(2)}.${extension}`;
+    `${currentUser.id}/${Date.now()}-${Math.random()
+        .toString(36)
+        .substring(2)}.${extension}`;
 
 
     const uploadResponse =
-        await fetch(
-            `${SUPABASE_URL}/storage/v1/object/${VIDEO_BUCKET}/${filePath}`,
-            {
-                method: "POST",
+    await fetch(
+        `${SUPABASE_URL}/storage/v1/object/${VIDEO_BUCKET}/${filePath}`,
+        {
+            method: "POST",
 
-                headers: {
-                    "apikey": SUPABASE_KEY,
-                    "Authorization":
-                        `Bearer ${token}`,
-                    "Content-Type":
-                        file.type ||
-                        "video/mp4"
-                },
+            headers: {
 
-                body: file
-            }
-        );
+                "apikey":
+                SUPABASE_KEY,
+
+                "Authorization":
+                `Bearer ${token}`,
+
+                "Content-Type":
+                file.type ||
+                "video/mp4"
+            },
+
+            body: file
+        }
+    );
 
 
     if (!uploadResponse.ok) {
 
         const errorText =
-            await uploadResponse.text();
+        await uploadResponse.text();
 
         console.error(
-            "Video upload error:",
+            "VIDEO UPLOAD ERROR:",
             errorText
         );
 
@@ -1113,9 +1243,11 @@ async function uploadVideo(file) {
 }
 
 
-/* =========================
-   CREATE POST
-========================= */
+/*
+==================================================
+CREATE POST
+==================================================
+*/
 
 async function createPost() {
 
@@ -1131,39 +1263,37 @@ async function createPost() {
 
 
     const content =
-        document
-            .getElementById(
-                "postContent"
-            )
-            .value
-            .trim();
+    document
+    .getElementById(
+        "postContent"
+    )
+    .value
+    .trim();
 
 
     const imageInput =
-        document.getElementById(
-            "postImage"
-        );
+    document.getElementById(
+        "postImage"
+    );
 
 
     const videoInput =
-        document.getElementById(
-            "postVideo"
-        );
+    document.getElementById(
+        "postVideo"
+    );
 
 
     const imageFile =
-        imageInput.files[0];
+    imageInput.files[0];
 
 
     const videoFile =
-        videoInput.files[0];
+    videoInput.files[0];
 
 
     const publishedMode =
-        selectedMediaMode;
+    selectedMediaMode;
 
-
-    /* IMAGE VALIDATION */
 
     if (
         publishedMode === "image" &&
@@ -1180,8 +1310,6 @@ async function createPost() {
     }
 
 
-    /* VIDEO / REEL VALIDATION */
-
     if (
         (
             publishedMode === "video" ||
@@ -1192,8 +1320,8 @@ async function createPost() {
 
         showStatus(
             publishedMode === "reel"
-                ? "Please select a Reel video."
-                : "Please select a video.",
+            ? "Please select a Reel video."
+            : "Please select a video.",
             "error"
         );
 
@@ -1204,7 +1332,7 @@ async function createPost() {
     publishBtn.disabled = true;
 
     publishBtn.textContent =
-        "Publishing...";
+    "Publishing...";
 
 
     try {
@@ -1213,8 +1341,6 @@ async function createPost() {
 
         let videoUrl = null;
 
-
-        /* IMAGE */
 
         if (
             publishedMode === "image" &&
@@ -1234,13 +1360,11 @@ async function createPost() {
 
 
             imageUrl =
-                await imageToDataURL(
-                    imageFile
-                );
+            await imageToDataURL(
+                imageFile
+            );
         }
 
-
-        /* VIDEO */
 
         if (
             publishedMode === "video" ||
@@ -1248,26 +1372,20 @@ async function createPost() {
         ) {
 
             videoUrl =
-                await uploadVideo(
-                    videoFile
-                );
+            await uploadVideo(
+                videoFile
+            );
         }
 
 
-        /*
-           IMPORTANT:
-
-           posts.content is currently
-           NOT NULL in Supabase.
-
-           Therefore video/Reel posts
-           without captions receive
-           a default caption.
-        */
-
         let finalContent =
-            content;
+        content;
 
+
+        /*
+        IMPORTANT:
+        posts.content is NOT NULL.
+        */
 
         if (!finalContent) {
 
@@ -1276,19 +1394,19 @@ async function createPost() {
             ) {
 
                 finalContent =
-                    "🎬 Reel";
+                "🎬 Reel";
 
             } else if (
                 publishedMode === "video"
             ) {
 
                 finalContent =
-                    "🎥 Video";
+                "🎥 Video";
 
             } else {
 
                 finalContent =
-                    "📷 Image";
+                "📷 Image";
             }
         }
 
@@ -1296,64 +1414,64 @@ async function createPost() {
         const postData = {
 
             user_id:
-                currentUser.id,
+            currentUser.id,
 
             content:
-                finalContent,
+            finalContent,
 
             image_url:
-                imageUrl,
+            imageUrl,
 
             video_url:
-                videoUrl,
+            videoUrl,
 
             is_reel:
-                publishedMode === "reel"
+            publishedMode === "reel"
         };
 
 
         const token =
-            localStorage.getItem(
-                "berakah_access_token"
-            );
+        localStorage.getItem(
+            "berakah_access_token"
+        );
 
 
         const response =
-            await fetch(
-                `${SUPABASE_URL}/rest/v1/posts`,
-                {
-                    method: "POST",
+        await fetch(
+            `${SUPABASE_URL}/rest/v1/posts`,
+            {
+                method: "POST",
 
-                    headers: {
+                headers: {
 
-                        "apikey":
-                            SUPABASE_KEY,
+                    "apikey":
+                    SUPABASE_KEY,
 
-                        "Authorization":
-                            `Bearer ${token}`,
+                    "Authorization":
+                    `Bearer ${token}`,
 
-                        "Content-Type":
-                            "application/json",
+                    "Content-Type":
+                    "application/json",
 
-                        "Prefer":
-                            "return=minimal"
-                    },
+                    "Prefer":
+                    "return=minimal"
+                },
 
-                    body:
-                        JSON.stringify(
-                            postData
-                        )
-                }
-            );
+                body:
+                JSON.stringify(
+                    postData
+                )
+            }
+        );
 
 
         if (!response.ok) {
 
             const errorText =
-                await response.text();
+            await response.text();
 
             console.error(
-                "Create post error:",
+                "CREATE POST ERROR:",
                 errorText
             );
 
@@ -1364,15 +1482,11 @@ async function createPost() {
         }
 
 
-        /*
-           RESET FORM
-        */
-
         document
-            .getElementById(
-                "postContent"
-            )
-            .value = "";
+        .getElementById(
+            "postContent"
+        )
+        .value = "";
 
 
         imageInput.value = "";
@@ -1382,8 +1496,6 @@ async function createPost() {
 
         selectMediaMode("image");
 
-
-        /* SUCCESS MESSAGE */
 
         if (
             publishedMode === "reel"
@@ -1414,11 +1526,13 @@ async function createPost() {
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            error
+        );
 
         showStatus(
             error.message ||
-            "Something went wrong while publishing.",
+            "Something went wrong.",
             "error"
         );
 
@@ -1427,14 +1541,16 @@ async function createPost() {
         publishBtn.disabled = false;
 
         publishBtn.textContent =
-            "Publish";
+        "Publish";
     }
 }
 
 
-/* =========================
-   LIKE / UNLIKE
-========================= */
+/*
+==================================================
+LIKE
+==================================================
+*/
 
 async function toggleLike(postId) {
 
@@ -1445,37 +1561,46 @@ async function toggleLike(postId) {
 
 
     const token =
-        localStorage.getItem(
-            "berakah_access_token"
-        );
+    localStorage.getItem(
+        "berakah_access_token"
+    );
 
 
     try {
 
         const checkResponse =
-            await fetch(
-                `${SUPABASE_URL}/rest/v1/likes?select=*&post_id=eq.${encodeURIComponent(postId)}&user_id=eq.${encodeURIComponent(currentUser.id)}`,
-                {
-                    headers: {
+        await fetch(
+            `${SUPABASE_URL}/rest/v1/likes?select=*&post_id=eq.${encodeURIComponent(postId)}&user_id=eq.${encodeURIComponent(currentUser.id)}`,
+            {
+                headers: {
 
-                        "apikey":
-                            SUPABASE_KEY,
+                    "apikey":
+                    SUPABASE_KEY,
 
-                        "Authorization":
-                            `Bearer ${token}`
-                    }
+                    "Authorization":
+                    `Bearer ${token}`
                 }
+            }
+        );
+
+
+        if (!checkResponse.ok) {
+
+            throw new Error(
+                "Unable to check like."
             );
+        }
 
 
         const existingLikes =
-            await checkResponse.json();
+        await checkResponse.json();
 
 
         if (
             existingLikes.length > 0
         ) {
 
+            const response =
             await fetch(
                 `${SUPABASE_URL}/rest/v1/likes?post_id=eq.${encodeURIComponent(postId)}&user_id=eq.${encodeURIComponent(currentUser.id)}`,
                 {
@@ -1484,16 +1609,25 @@ async function toggleLike(postId) {
                     headers: {
 
                         "apikey":
-                            SUPABASE_KEY,
+                        SUPABASE_KEY,
 
                         "Authorization":
-                            `Bearer ${token}`
+                        `Bearer ${token}`
                     }
                 }
             );
 
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to remove like."
+                );
+            }
+
         } else {
 
+            const response =
             await fetch(
                 `${SUPABASE_URL}/rest/v1/likes`,
                 {
@@ -1502,28 +1636,38 @@ async function toggleLike(postId) {
                     headers: {
 
                         "apikey":
-                            SUPABASE_KEY,
+                        SUPABASE_KEY,
 
                         "Authorization":
-                            `Bearer ${token}`,
+                        `Bearer ${token}`,
 
                         "Content-Type":
-                            "application/json",
+                        "application/json",
 
                         "Prefer":
-                            "return=minimal"
+                        "return=minimal"
                     },
 
                     body:
-                        JSON.stringify({
-                            post_id:
-                                postId,
+                    JSON.stringify({
 
-                            user_id:
-                                currentUser.id
-                        })
+                        post_id:
+                        postId,
+
+                        user_id:
+                        currentUser.id
+
+                    })
                 }
             );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to like post."
+                );
+            }
         }
 
 
@@ -1533,7 +1677,7 @@ async function toggleLike(postId) {
     } catch (error) {
 
         console.error(
-            "Like error:",
+            "LIKE ERROR:",
             error
         );
 
@@ -1545,9 +1689,11 @@ async function toggleLike(postId) {
 }
 
 
-/* =========================
-   DELETE POST
-========================= */
+/*
+==================================================
+DELETE
+==================================================
+*/
 
 async function deletePost(postId) {
 
@@ -1558,9 +1704,9 @@ async function deletePost(postId) {
 
 
     const confirmed =
-        confirm(
-            "Are you sure you want to delete this post?"
-        );
+    confirm(
+        "Are you sure you want to delete this post?"
+    );
 
 
     if (!confirmed) {
@@ -1570,38 +1716,38 @@ async function deletePost(postId) {
 
 
     const token =
-        localStorage.getItem(
-            "berakah_access_token"
-        );
+    localStorage.getItem(
+        "berakah_access_token"
+    );
 
 
     try {
 
         const response =
-            await fetch(
-                `${SUPABASE_URL}/rest/v1/posts?id=eq.${encodeURIComponent(postId)}&user_id=eq.${encodeURIComponent(currentUser.id)}`,
-                {
-                    method: "DELETE",
+        await fetch(
+            `${SUPABASE_URL}/rest/v1/posts?id=eq.${encodeURIComponent(postId)}&user_id=eq.${encodeURIComponent(currentUser.id)}`,
+            {
+                method: "DELETE",
 
-                    headers: {
+                headers: {
 
-                        "apikey":
-                            SUPABASE_KEY,
+                    "apikey":
+                    SUPABASE_KEY,
 
-                        "Authorization":
-                            `Bearer ${token}`
-                    }
+                    "Authorization":
+                    `Bearer ${token}`
                 }
-            );
+            }
+        );
 
 
         if (!response.ok) {
 
             const errorText =
-                await response.text();
+            await response.text();
 
             console.error(
-                "Delete error:",
+                "DELETE ERROR:",
                 errorText
             );
 
@@ -1621,7 +1767,9 @@ async function deletePost(postId) {
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            error
+        );
 
         showStatus(
             error.message ||
@@ -1632,9 +1780,11 @@ async function deletePost(postId) {
 }
 
 
-/* =========================
-   LOGOUT
-========================= */
+/*
+==================================================
+LOGOUT
+==================================================
+*/
 
 function logout() {
 
@@ -1660,18 +1810,20 @@ function logout() {
 
 
     window.location.href =
-        "login.html";
+    "login.html";
 }
 
 
-/* =========================
-   START
-========================= */
+/*
+==================================================
+START
+==================================================
+*/
 
 (async function init() {
 
     currentUser =
-        await getCurrentUser();
+    await getCurrentUser();
 
 
     if (!currentUser) {
