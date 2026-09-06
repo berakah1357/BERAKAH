@@ -32,6 +32,7 @@
       font-size: 30px;
       font-weight: bold;
       letter-spacing: 2px;
+      color: #111827;
     }
 
     nav a {
@@ -57,6 +58,7 @@
       border: 1px solid #d1d5db;
       border-radius: 6px;
       background: white;
+      cursor: pointer;
     }
 
     .hero {
@@ -130,6 +132,10 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
     }
 
+    .card-icon {
+      font-size: 32px;
+    }
+
     .card h3 {
       margin: 15px 0 10px;
     }
@@ -139,8 +145,8 @@
       line-height: 1.5;
     }
 
-    .card a {
-      display: block;
+    .card-link {
+      display: inline-block;
       margin-bottom: 10px;
       color: #111827;
       font-weight: bold;
@@ -162,12 +168,20 @@
     }
 
     @media (max-width: 500px) {
-      .features {
-        grid-template-columns: 1fr;
+      header {
+        padding: 18px 5%;
+      }
+
+      .logo {
+        font-size: 24px;
       }
 
       nav {
         display: none;
+      }
+
+      .hero {
+        padding: 65px 20px;
       }
 
       .hero h1 {
@@ -177,136 +191,433 @@
       .hero h2 {
         font-size: 24px;
       }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 
 <body>
 
+  <!-- HEADER -->
   <header>
     <div class="logo">EPHPHAVORA</div>
 
     <nav>
-      <a href="#">Home</a>
-      <a href="#">Discover</a>
-      <a href="business.html">Business</a>
-      <a href="marketplace.html">Market</a>
+      <a href="#" id="navHome">Home</a>
+      <a href="#" id="navDiscover">Discover</a>
+      <a href="business.html" id="navBusiness">Business</a>
+      <a href="marketplace.html" id="navMarket">Market</a>
     </nav>
   </header>
 
-  <div class="language-bar">
-    <label for="language">🌎 Language:</label>
 
-    <select id="language" onchange="changeLanguage(this.value)">
-      <option value="Haitian Creole">Haitian Creole</option>
-      <option value="English">English</option>
-      <option value="French">French</option>
-      <option value="Spanish">Spanish</option>
+  <!-- LANGUAGE SELECTOR -->
+  <div class="language-bar">
+    <label for="language" id="languageLabel">
+      🌎 Language:
+    </label>
+
+    <select id="language">
+      <option value="ht">Haitian Creole</option>
+      <option value="en">English</option>
+      <option value="fr">French</option>
+      <option value="es">Spanish</option>
     </select>
   </div>
 
+
+  <!-- HERO -->
   <section class="hero">
 
     <h1>EPHPHAVORA</h1>
 
-    <h2 class="welcome-text">
+    <h2 id="welcomeText" class="welcome-text">
       Konekte. Pataje. Grandi Ansanm.
     </h2>
 
-    <p>
-      A social and business platform where people,
-      communities, and businesses connect, communicate,
-      and create opportunities.
+    <p id="descriptionText">
+      Yon platfòm sosyal ak biznis kote moun,
+      kominote ak biznis konekte, kominike,
+      epi kreye opòtinite.
     </p>
 
     <div class="buttons">
 
       <a href="signup.html" style="text-decoration: none;">
-        <button class="primary" type="button">
-          CREATE ACCOUNT
+        <button class="primary" type="button" id="createAccountButton">
+          KREYE KONT
         </button>
       </a>
 
       <a href="login.html" style="text-decoration: none;">
-        <button class="secondary" type="button">
-          LOG IN
+        <button class="secondary" type="button" id="loginButton">
+          KONEKTE
         </button>
       </a>
 
     </div>
 
-    <div class="languages">
-      Haitian Creole • English • French • Spanish
+    <div class="languages" id="languagesText">
+      Kreyòl Ayisyen • Anglè • Franse • Panyòl
     </div>
 
   </section>
 
+
+  <!-- FEATURES -->
   <section class="features">
 
+    <!-- SOCIAL -->
     <div class="card">
-      <div>👥</div>
-      <h3>Social</h3>
-      <p>
-        Connect with people and share your world.
+      <div class="card-icon">👥</div>
+
+      <h3 id="socialTitle">
+        Sosyal
+      </h3>
+
+      <p id="socialDescription">
+        Konekte ak moun epi pataje mond ou.
       </p>
     </div>
 
+
+    <!-- COMMUNITY -->
     <div class="card">
-      <div>💬</div>
-      <h3>Community</h3>
-      <p>
-        Join groups and build meaningful communities.
+      <div class="card-icon">💬</div>
+
+      <h3 id="communityTitle">
+        Kominote
+      </h3>
+
+      <p id="communityDescription">
+        Antre nan gwoup epi konstwi kominote ki gen sans.
       </p>
     </div>
 
+
+    <!-- BUSINESS -->
     <div class="card">
-      <div>🏪</div>
-      <h3>Business</h3>
-      <p>
-        Build your business and reach new customers.
+      <div class="card-icon">🏪</div>
+
+      <h3 id="businessTitle">
+        Biznis
+      </h3>
+
+      <p id="businessDescription">
+        Devlope biznis ou epi jwenn nouvo kliyan.
       </p>
     </div>
 
+
+    <!-- MARKETPLACE -->
     <div class="card">
-      <a href="marketplace.html">Marketplace</a>
-      <div>🛍️</div>
-      <p>
-        Buy and sell products and services.
+      <div class="card-icon">🛍️</div>
+
+      <a href="marketplace.html"
+         class="card-link"
+         id="marketplaceTitle">
+        Mache
+      </a>
+
+      <p id="marketplaceDescription">
+        Achte epi vann pwodwi ak sèvis.
       </p>
     </div>
 
   </section>
 
-  <footer>
-    © 2026 EPHPHAVORA — Connect. Share. Grow Together.
+
+  <!-- FOOTER -->
+  <footer id="footerText">
+    © 2026 EPHPHAVORA — Konekte. Pataje. Grandi Ansanm.
   </footer>
 
+
+  <!-- TRANSLATION SCRIPT -->
   <script>
+
+    const translations = {
+
+      ht: {
+        languageLabel: "🌎 Lang:",
+        navHome: "Akèy",
+        navDiscover: "Dekouvri",
+        navBusiness: "Biznis",
+        navMarket: "Mache",
+
+        welcomeText: "Konekte. Pataje. Grandi Ansanm.",
+
+        descriptionText:
+          "Yon platfòm sosyal ak biznis kote moun, kominote ak biznis konekte, kominike, epi kreye opòtinite.",
+
+        createAccountButton: "KREYE KONT",
+        loginButton: "KONEKTE",
+
+        languagesText:
+          "Kreyòl Ayisyen • Anglè • Franse • Panyòl",
+
+        socialTitle: "Sosyal",
+
+        socialDescription:
+          "Konekte ak moun epi pataje mond ou.",
+
+        communityTitle: "Kominote",
+
+        communityDescription:
+          "Antre nan gwoup epi konstwi kominote ki gen sans.",
+
+        businessTitle: "Biznis",
+
+        businessDescription:
+          "Devlope biznis ou epi jwenn nouvo kliyan.",
+
+        marketplaceTitle: "Mache",
+
+        marketplaceDescription:
+          "Achte epi vann pwodwi ak sèvis.",
+
+        footerText:
+          "© 2026 EPHPHAVORA — Konekte. Pataje. Grandi Ansanm."
+      },
+
+
+      en: {
+        languageLabel: "🌎 Language:",
+        navHome: "Home",
+        navDiscover: "Discover",
+        navBusiness: "Business",
+        navMarket: "Market",
+
+        welcomeText:
+          "Connect. Share. Grow Together.",
+
+        descriptionText:
+          "A social and business platform where people, communities, and businesses connect, communicate, and create opportunities.",
+
+        createAccountButton:
+          "CREATE ACCOUNT",
+
+        loginButton:
+          "LOG IN",
+
+        languagesText:
+          "Haitian Creole • English • French • Spanish",
+
+        socialTitle:
+          "Social",
+
+        socialDescription:
+          "Connect with people and share your world.",
+
+        communityTitle:
+          "Community",
+
+        communityDescription:
+          "Join groups and build meaningful communities.",
+
+        businessTitle:
+          "Business",
+
+        businessDescription:
+          "Build your business and reach new customers.",
+
+        marketplaceTitle:
+          "Marketplace",
+
+        marketplaceDescription:
+          "Buy and sell products and services.",
+
+        footerText:
+          "© 2026 EPHPHAVORA — Connect. Share. Grow Together."
+      },
+
+
+      fr: {
+        languageLabel: "🌎 Langue:",
+        navHome: "Accueil",
+        navDiscover: "Découvrir",
+        navBusiness: "Entreprise",
+        navMarket: "Marché",
+
+        welcomeText:
+          "Connectez-vous. Partagez. Grandissez ensemble.",
+
+        descriptionText:
+          "Une plateforme sociale et commerciale où les personnes, les communautés et les entreprises se connectent, communiquent et créent des opportunités.",
+
+        createAccountButton:
+          "CRÉER UN COMPTE",
+
+        loginButton:
+          "SE CONNECTER",
+
+        languagesText:
+          "Créole haïtien • Anglais • Français • Espagnol",
+
+        socialTitle:
+          "Social",
+
+        socialDescription:
+          "Connectez-vous avec les autres et partagez votre monde.",
+
+        communityTitle:
+          "Communauté",
+
+        communityDescription:
+          "Rejoignez des groupes et construisez des communautés significatives.",
+
+        businessTitle:
+          "Entreprise",
+
+        businessDescription:
+          "Développez votre entreprise et atteignez de nouveaux clients.",
+
+        marketplaceTitle:
+          "Marché",
+
+        marketplaceDescription:
+          "Achetez et vendez des produits et des services.",
+
+        footerText:
+          "© 2026 EPHPHAVORA — Connectez-vous. Partagez. Grandissez ensemble."
+      },
+
+
+      es: {
+        languageLabel: "🌎 Idioma:",
+        navHome: "Inicio",
+        navDiscover: "Descubrir",
+        navBusiness: "Negocios",
+        navMarket: "Mercado",
+
+        welcomeText:
+          "Conecta. Comparte. Crece Juntos.",
+
+        descriptionText:
+          "Una plataforma social y empresarial donde las personas, comunidades y empresas se conectan, se comunican y crean oportunidades.",
+
+        createAccountButton:
+          "CREAR CUENTA",
+
+        loginButton:
+          "INICIAR SESIÓN",
+
+        languagesText:
+          "Criollo haitiano • Inglés • Francés • Español",
+
+        socialTitle:
+          "Social",
+
+        socialDescription:
+          "Conecta con personas y comparte tu mundo.",
+
+        communityTitle:
+          "Comunidad",
+
+        communityDescription:
+          "Únete a grupos y construye comunidades significativas.",
+
+        businessTitle:
+          "Negocios",
+
+        businessDescription:
+          "Desarrolla tu negocio y llega a nuevos clientes.",
+
+        marketplaceTitle:
+          "Mercado",
+
+        marketplaceDescription:
+          "Compra y vende productos y servicios.",
+
+        footerText:
+          "© 2026 EPHPHAVORA — Conecta. Comparte. Crece Juntos."
+      }
+
+    };
+
+
     function changeLanguage(language) {
-      const welcome = document.querySelector(".welcome-text");
 
-      if (!welcome) return;
+      const text = translations[language];
 
-      if (language === "Haitian Creole") {
-        welcome.textContent =
-          "Konekte. Pataje. Grandi Ansanm.";
-      }
+      if (!text) return;
 
-      else if (language === "English") {
-        welcome.textContent =
-          "Connect. Share. Grow Together.";
-      }
+      document.documentElement.lang = language;
 
-      else if (language === "French") {
-        welcome.textContent =
-          "Connectez-vous. Partagez. Grandissez ensemble.";
-      }
+      document.getElementById("languageLabel").textContent =
+        text.languageLabel;
 
-      else if (language === "Spanish") {
-        welcome.textContent =
-          "Conecta. Comparte. Crece Juntos.";
-      }
+      document.getElementById("navHome").textContent =
+        text.navHome;
+
+      document.getElementById("navDiscover").textContent =
+        text.navDiscover;
+
+      document.getElementById("navBusiness").textContent =
+        text.navBusiness;
+
+      document.getElementById("navMarket").textContent =
+        text.navMarket;
+
+      document.getElementById("welcomeText").textContent =
+        text.welcomeText;
+
+      document.getElementById("descriptionText").textContent =
+        text.descriptionText;
+
+      document.getElementById("createAccountButton").textContent =
+        text.createAccountButton;
+
+      document.getElementById("loginButton").textContent =
+        text.loginButton;
+
+      document.getElementById("languagesText").textContent =
+        text.languagesText;
+
+      document.getElementById("socialTitle").textContent =
+        text.socialTitle;
+
+      document.getElementById("socialDescription").textContent =
+        text.socialDescription;
+
+      document.getElementById("communityTitle").textContent =
+        text.communityTitle;
+
+      document.getElementById("communityDescription").textContent =
+        text.communityDescription;
+
+      document.getElementById("businessTitle").textContent =
+        text.businessTitle;
+
+      document.getElementById("businessDescription").textContent =
+        text.businessDescription;
+
+      document.getElementById("marketplaceTitle").textContent =
+        text.marketplaceTitle;
+
+      document.getElementById("marketplaceDescription").textContent =
+        text.marketplaceDescription;
+
+      document.getElementById("footerText").textContent =
+        text.footerText;
+
+      document.title = "EPHPHAVORA";
     }
+
+
+    document
+      .getElementById("language")
+      .addEventListener("change", function () {
+        changeLanguage(this.value);
+      });
+
+
+    // Default language: Haitian Creole
+    changeLanguage("ht");
+
   </script>
 
 </body>
