@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BERAKAH - Messages</title>
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>EPHPHAVORA - Messages</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
@@ -287,6 +293,7 @@ button.refresh:hover {
 }
 
 @media (max-width: 750px) {
+
     .messages-layout {
         grid-template-columns: 1fr;
     }
@@ -306,91 +313,172 @@ button.refresh:hover {
     header {
         align-items: flex-start;
     }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
 <header>
-    <div class="logo">BERAKAH</div>
+
+    <div class="logo">
+        EPHPHAVORA
+    </div>
 
     <nav>
-        <a href="index.html">Home</a>
-        <a href="feed.html">Feed</a>
-        <a href="people.html">👥 People</a>
-        <a href="marketplace.html">Market</a>
-        <a href="notifications.html">🔔 Notifications</a>
-        <a href="messages.html">💬 Messages</a>
-        <a href="#" onclick="logout()">Logout</a>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="feed.html">
+            Feed
+        </a>
+
+        <a href="people.html">
+            👥 People
+        </a>
+
+        <a href="marketplace.html">
+            Market
+        </a>
+
+        <a href="notifications.html">
+            🔔 Notifications
+        </a>
+
+        <a href="messages.html">
+            💬 Messages
+        </a>
+
+        <a href="#" onclick="logout()">
+            Logout
+        </a>
+
     </nav>
+
 </header>
+
 
 <div class="container">
 
-    <h1>💬 Messages</h1>
+    <h1>
+        💬 Messages
+    </h1>
 
-    <div id="status" class="status"></div>
+    <div
+        id="status"
+        class="status"
+    ></div>
+
 
     <div class="messages-layout">
 
+
         <!-- MEMBERS -->
+
         <div class="card members">
-            <h2>New Message</h2>
+
+            <h2>
+                New Message
+            </h2>
 
             <select id="memberSelect">
-                <option value="">Choose a member...</option>
+
+                <option value="">
+                    Choose a member...
+                </option>
+
             </select>
 
-            <div id="membersList" style="margin-top:15px;">
-                <div class="loading">Loading members...</div>
+
+            <div
+                id="membersList"
+                style="margin-top:15px;"
+            >
+
+                <div class="loading">
+                    Loading members...
+                </div>
+
             </div>
+
         </div>
 
+
         <!-- CONVERSATION -->
+
         <div class="card conversation">
 
             <div class="conversation-header">
-                <h2 id="conversationTitle">👋 Start the conversation</h2>
 
-                <a id="profileLink"
-                   href="#"
-                   style="display:none;">
+                <h2 id="conversationTitle">
+                    👋 Start the conversation
+                </h2>
+
+                <a
+                    id="profileLink"
+                    href="#"
+                    style="display:none;"
+                >
                     View Profile
                 </a>
+
             </div>
 
-            <div id="messagesBox" class="messages-box">
+
+            <div
+                id="messagesBox"
+                class="messages-box"
+            >
+
                 <div class="empty">
                     Select a member to start a conversation.
                 </div>
+
             </div>
 
+
             <div class="send-area">
+
                 <textarea
                     id="messageInput"
                     placeholder="Write a message..."
                     disabled
                 ></textarea>
 
-                <button id="sendButton"
-                        onclick="sendMessage()"
-                        disabled>
+
+                <button
+                    id="sendButton"
+                    onclick="sendMessage()"
+                    disabled
+                >
                     Send
                 </button>
+
             </div>
 
         </div>
 
     </div>
 
+
     <div style="margin-top:15px;">
-        <button class="refresh" onclick="loadMessages()">
+
+        <button
+            class="refresh"
+            onclick="loadMessages()"
+        >
             🔄 Refresh
         </button>
+
     </div>
 
 </div>
+
 
 <script>
 
@@ -400,12 +488,19 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
+
 let accessToken =
-    localStorage.getItem("berakah_access_token");
+    localStorage.getItem(
+        "berakah_access_token"
+    );
+
 
 let currentUser = null;
+
 let profiles = [];
+
 let allMessages = [];
+
 let selectedUserId = null;
 
 
@@ -413,42 +508,75 @@ let selectedUserId = null;
    SUPABASE REQUEST
 ========================= */
 
-async function supabaseFetch(path, options = {}) {
+async function supabaseFetch(
+    path,
+    options = {}
+) {
 
     const headers = {
-        "apikey": SUPABASE_KEY,
-        "Authorization": "Bearer " + accessToken,
-        "Content-Type": "application/json",
+
+        "apikey":
+            SUPABASE_KEY,
+
+        "Authorization":
+            "Bearer " + accessToken,
+
+        "Content-Type":
+            "application/json",
+
         ...(options.headers || {})
+
     };
 
-    const response = await fetch(
-        SUPABASE_URL + path,
-        {
-            ...options,
-            headers
-        }
-    );
 
-    const text = await response.text();
+    const response =
+        await fetch(
+            SUPABASE_URL + path,
+            {
+                ...options,
+                headers
+            }
+        );
+
+
+    const text =
+        await response.text();
+
 
     let data = null;
 
+
     try {
-        data = text ? JSON.parse(text) : null;
+
+        data =
+            text
+                ? JSON.parse(text)
+                : null;
+
     } catch {
+
         data = text;
+
     }
+
 
     if (!response.ok) {
+
         throw new Error(
+
             typeof data === "object"
+
                 ? JSON.stringify(data)
+
                 : data
+
         );
+
     }
 
+
     return data;
+
 }
 
 
@@ -456,19 +584,36 @@ async function supabaseFetch(path, options = {}) {
    STATUS
 ========================= */
 
-function showStatus(message, type = "error") {
+function showStatus(
+    message,
+    type = "error"
+) {
 
-    const box = document.getElementById("status");
+    const box =
+        document.getElementById(
+            "status"
+        );
 
-    box.textContent = message;
 
-    box.className = "status " + type;
+    box.textContent =
+        message;
 
-    box.style.display = "block";
+
+    box.className =
+        "status " + type;
+
+
+    box.style.display =
+        "block";
+
 
     setTimeout(() => {
-        box.style.display = "none";
+
+        box.style.display =
+            "none";
+
     }, 5000);
+
 }
 
 
@@ -479,15 +624,21 @@ function showStatus(message, type = "error") {
 async function checkLogin() {
 
     if (!accessToken) {
-        window.location.href = "login.html";
+
+        window.location.href =
+            "login.html";
+
         return false;
+
     }
+
 
     try {
 
-        currentUser = await supabaseFetch(
-            "/auth/v1/user"
-        );
+        currentUser =
+            await supabaseFetch(
+                "/auth/v1/user"
+            );
 
         return true;
 
@@ -495,13 +646,24 @@ async function checkLogin() {
 
         console.error(error);
 
-        localStorage.removeItem("berakah_access_token");
-        localStorage.removeItem("berakah_refresh_token");
 
-        window.location.href = "login.html";
+        localStorage.removeItem(
+            "berakah_access_token"
+        );
+
+        localStorage.removeItem(
+            "berakah_refresh_token"
+        );
+
+
+        window.location.href =
+            "login.html";
+
 
         return false;
+
     }
+
 }
 
 
@@ -511,95 +673,155 @@ async function checkLogin() {
 
 async function loadMembers() {
 
-    const data = await supabaseFetch(
-        "/rest/v1/profiles?select=id,user_id,%22Full%20name%22,username,language&order=id.asc"
-    );
+    const data =
+        await supabaseFetch(
 
-    profiles = data || [];
+            "/rest/v1/profiles" +
+            "?select=id,user_id,%22Full%20name%22,username,language" +
+            "&order=id.asc"
 
-    profiles = profiles.filter(
-        profile =>
-            profile.user_id !== currentUser.id
-    );
+        );
+
+
+    profiles =
+        data || [];
+
+
+    profiles =
+        profiles.filter(
+
+            profile =>
+                profile.user_id !==
+                currentUser.id
+
+        );
+
 
     const select =
-        document.getElementById("memberSelect");
+        document.getElementById(
+            "memberSelect"
+        );
+
 
     select.innerHTML =
         '<option value="">Choose a member...</option>';
 
+
     const list =
-        document.getElementById("membersList");
+        document.getElementById(
+            "membersList"
+        );
 
-    list.innerHTML = "";
 
-    if (profiles.length === 0) {
+    list.innerHTML =
+        "";
+
+
+    if (
+        profiles.length === 0
+    ) {
 
         list.innerHTML =
             '<div class="empty">No members found.</div>';
 
         return;
+
     }
 
-    profiles.forEach(profile => {
 
-        const name =
-            profile["Full name"] ||
-            profile.full_name ||
-            profile.name ||
-            profile.username ||
-            "Member";
+    profiles.forEach(
+        profile => {
 
-        const username =
-            profile.username
-                ? "@" + profile.username
-                : "";
-
-        /* SELECT OPTION */
-
-        const option =
-            document.createElement("option");
-
-        option.value = profile.user_id;
-
-        option.textContent =
-            name + " " + username;
-
-        select.appendChild(option);
+            const name =
+                profile["Full name"] ||
+                profile.full_name ||
+                profile.name ||
+                profile.username ||
+                "Member";
 
 
-        /* MEMBER LIST */
+            const username =
+                profile.username
+                    ? "@" + profile.username
+                    : "";
 
-        const div =
-            document.createElement("div");
 
-        div.className = "member";
+            /* SELECT OPTION */
 
-        div.dataset.userid =
-            profile.user_id;
+            const option =
+                document.createElement(
+                    "option"
+                );
 
-        div.innerHTML = `
-            <div class="member-name">
-                ${escapeHtml(name)}
-            </div>
 
-            <div class="member-username">
-                ${escapeHtml(username)}
-            </div>
-        `;
-
-        div.onclick = () => {
-
-            select.value =
+            option.value =
                 profile.user_id;
 
-            select.dispatchEvent(
-                new Event("change")
-            );
-        };
 
-        list.appendChild(div);
-    });
+            option.textContent =
+                name +
+                " " +
+                username;
+
+
+            select.appendChild(
+                option
+            );
+
+
+            /* MEMBER LIST */
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "member";
+
+
+            div.dataset.userid =
+                profile.user_id;
+
+
+            div.innerHTML = `
+
+                <div class="member-name">
+
+                    ${escapeHtml(name)}
+
+                </div>
+
+                <div class="member-username">
+
+                    ${escapeHtml(username)}
+
+                </div>
+
+            `;
+
+
+            div.onclick = () => {
+
+                select.value =
+                    profile.user_id;
+
+
+                select.dispatchEvent(
+                    new Event("change")
+                );
+
+            };
+
+
+            list.appendChild(
+                div
+            );
+
+        }
+    );
+
 }
 
 
@@ -609,91 +831,133 @@ async function loadMembers() {
 
 document
     .getElementById("memberSelect")
-    .addEventListener("change", function() {
+    .addEventListener(
+        "change",
+        function() {
 
-        selectedUserId = this.value || null;
+            selectedUserId =
+                this.value ||
+                null;
 
-        document
-            .querySelectorAll(".member")
-            .forEach(member => {
 
-                member.classList.toggle(
-                    "active",
-                    member.dataset.userid === selectedUserId
+            document
+                .querySelectorAll(".member")
+                .forEach(
+                    member => {
+
+                        member.classList.toggle(
+
+                            "active",
+
+                            member.dataset.userid ===
+                            selectedUserId
+
+                        );
+
+                    }
                 );
-            });
 
-        if (!selectedUserId) {
 
-            document.getElementById(
-                "conversationTitle"
-            ).textContent =
-                "👋 Start the conversation";
+            if (!selectedUserId) {
 
-            document.getElementById(
-                "profileLink"
-            ).style.display = "none";
+                document.getElementById(
+                    "conversationTitle"
+                ).textContent =
+                    "👋 Start the conversation";
 
-            document.getElementById(
-                "messagesBox"
-            ).innerHTML =
-                '<div class="empty">Select a member to start a conversation.</div>';
+
+                document.getElementById(
+                    "profileLink"
+                ).style.display =
+                    "none";
+
+
+                document.getElementById(
+                    "messagesBox"
+                ).innerHTML =
+                    '<div class="empty">Select a member to start a conversation.</div>';
+
+
+                document.getElementById(
+                    "messageInput"
+                ).disabled =
+                    true;
+
+
+                document.getElementById(
+                    "sendButton"
+                ).disabled =
+                    true;
+
+
+                return;
+
+            }
+
+
+            const profile =
+                profiles.find(
+                    p =>
+                        p.user_id ===
+                        selectedUserId
+                );
+
+
+            if (profile) {
+
+                const name =
+                    profile["Full name"] ||
+                    profile.full_name ||
+                    profile.name ||
+                    profile.username ||
+                    "Member";
+
+
+                document.getElementById(
+                    "conversationTitle"
+                ).textContent =
+                    "💬 " + name;
+
+
+                const profileLink =
+                    document.getElementById(
+                        "profileLink"
+                    );
+
+
+                profileLink.href =
+                    "profile.html?id=" +
+                    profile.id;
+
+
+                profileLink.textContent =
+                    "View " +
+                    name +
+                    "'s Profile";
+
+
+                profileLink.style.display =
+                    "inline-block";
+
+            }
+
 
             document.getElementById(
                 "messageInput"
-            ).disabled = true;
+            ).disabled =
+                false;
+
 
             document.getElementById(
                 "sendButton"
-            ).disabled = true;
+            ).disabled =
+                false;
 
-            return;
+
+            renderMessages();
+
         }
-
-        const profile =
-            profiles.find(
-                p => p.user_id === selectedUserId
-            );
-
-        if (profile) {
-
-            const name =
-                profile["Full name"] ||
-                profile.full_name ||
-                profile.name ||
-                profile.username ||
-                "Member";
-
-            document.getElementById(
-                "conversationTitle"
-            ).textContent =
-                "💬 " + name;
-
-            const profileLink =
-                document.getElementById(
-                    "profileLink"
-                );
-
-            profileLink.href =
-                "profile.html?id=" + profile.id;
-
-            profileLink.textContent =
-                "View " + name + "'s Profile";
-
-            profileLink.style.display =
-                "inline-block";
-        }
-
-        document.getElementById(
-            "messageInput"
-        ).disabled = false;
-
-        document.getElementById(
-            "sendButton"
-        ).disabled = false;
-
-        renderMessages();
-    });
+    );
 
 
 /* =========================
@@ -706,10 +970,17 @@ async function loadMessages() {
 
         const data =
             await supabaseFetch(
-                "/rest/v1/messages?select=*&order=created_at.asc"
+
+                "/rest/v1/messages" +
+                "?select=*" +
+                "&order=created_at.asc"
+
             );
 
-        allMessages = data || [];
+
+        allMessages =
+            data || [];
+
 
         renderMessages();
 
@@ -717,19 +988,25 @@ async function loadMessages() {
 
         console.error(error);
 
+
         showStatus(
             "Could not load messages: " +
             error.message
         );
 
+
         document.getElementById(
             "messagesBox"
         ).innerHTML = `
+
             <div class="empty">
                 Could not load messages.
             </div>
+
         `;
+
     }
+
 }
 
 
@@ -740,35 +1017,57 @@ async function loadMessages() {
 function renderMessages() {
 
     const box =
-        document.getElementById("messagesBox");
+        document.getElementById(
+            "messagesBox"
+        );
+
 
     if (!selectedUserId) {
         return;
     }
 
+
     const conversation =
-        allMessages.filter(message => {
+        allMessages.filter(
+            message => {
 
-            return (
-                (
-                    message.sender_id === currentUser.id &&
-                    message.receiver_id === selectedUserId
-                )
-                ||
-                (
-                    message.sender_id === selectedUserId &&
-                    message.receiver_id === currentUser.id
-                )
-            );
+                return (
 
-        });
+                    (
+                        message.sender_id ===
+                        currentUser.id &&
 
-    if (conversation.length === 0) {
+                        message.receiver_id ===
+                        selectedUserId
+                    )
+
+                    ||
+
+                    (
+                        message.sender_id ===
+                        selectedUserId &&
+
+                        message.receiver_id ===
+                        currentUser.id
+                    )
+
+                );
+
+            }
+        );
+
+
+    if (
+        conversation.length === 0
+    ) {
 
         const profile =
             profiles.find(
-                p => p.user_id === selectedUserId
+                p =>
+                    p.user_id ===
+                    selectedUserId
             );
+
 
         const name =
             profile
@@ -781,82 +1080,150 @@ function renderMessages() {
                 )
                 : "this member";
 
+
         box.innerHTML = `
+
             <div class="empty">
+
                 No messages yet.<br>
-                Send a message to ${escapeHtml(name)}.
+
+                Send a message to
+                ${escapeHtml(name)}.
+
             </div>
+
         `;
 
+
         return;
+
     }
 
-    box.innerHTML = "";
 
-    conversation.forEach(message => {
+    box.innerHTML =
+        "";
 
-        const mine =
-            message.sender_id === currentUser.id;
 
-        const wrapper =
-            document.createElement("div");
+    conversation.forEach(
+        message => {
 
-        wrapper.className =
-            "message " +
-            (mine ? "mine" : "theirs");
+            const mine =
+                message.sender_id ===
+                currentUser.id;
 
-        const bubble =
-            document.createElement("div");
 
-        bubble.className = "bubble";
+            const wrapper =
+                document.createElement(
+                    "div"
+                );
 
-        bubble.textContent =
-            message.content || "";
 
-        wrapper.appendChild(bubble);
+            wrapper.className =
+                "message " +
+                (
+                    mine
+                        ? "mine"
+                        : "theirs"
+                );
 
-        const time =
-            document.createElement("div");
 
-        time.className = "message-time";
+            const bubble =
+                document.createElement(
+                    "div"
+                );
 
-        time.textContent =
-            formatTime(message.created_at);
 
-        wrapper.appendChild(time);
+            bubble.className =
+                "bubble";
 
-        if (mine) {
 
-            const actions =
-                document.createElement("div");
+            bubble.textContent =
+                message.content ||
+                "";
 
-            actions.className =
-                "message-actions";
 
-            const deleteButton =
-                document.createElement("button");
-
-            deleteButton.className =
-                "delete";
-
-            deleteButton.textContent =
-                "Delete";
-
-            deleteButton.onclick =
-                () => deleteMessage(message.id);
-
-            actions.appendChild(
-                deleteButton
+            wrapper.appendChild(
+                bubble
             );
 
-            wrapper.appendChild(actions);
-        }
 
-        box.appendChild(wrapper);
-    });
+            const time =
+                document.createElement(
+                    "div"
+                );
+
+
+            time.className =
+                "message-time";
+
+
+            time.textContent =
+                formatTime(
+                    message.created_at
+                );
+
+
+            wrapper.appendChild(
+                time
+            );
+
+
+            if (mine) {
+
+                const actions =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                actions.className =
+                    "message-actions";
+
+
+                const deleteButton =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                deleteButton.className =
+                    "delete";
+
+
+                deleteButton.textContent =
+                    "Delete";
+
+
+                deleteButton.onclick =
+                    () =>
+                        deleteMessage(
+                            message.id
+                        );
+
+
+                actions.appendChild(
+                    deleteButton
+                );
+
+
+                wrapper.appendChild(
+                    actions
+                );
+
+            }
+
+
+            box.appendChild(
+                wrapper
+            );
+
+        }
+    );
+
 
     box.scrollTop =
         box.scrollHeight;
+
 }
 
 
@@ -867,51 +1234,81 @@ function renderMessages() {
 async function sendMessage() {
 
     if (!selectedUserId) {
+
         showStatus(
             "Please choose a member first."
         );
+
         return;
+
     }
+
 
     const input =
         document.getElementById(
             "messageInput"
         );
 
+
     const content =
         input.value.trim();
+
 
     if (!content) {
         return;
     }
+
 
     const button =
         document.getElementById(
             "sendButton"
         );
 
-    button.disabled = true;
+
+    button.disabled =
+        true;
+
 
     try {
 
         await supabaseFetch(
+
             "/rest/v1/messages",
+
             {
-                method: "POST",
+
+                method:
+                    "POST",
 
                 headers: {
-                    "Prefer": "return=minimal"
+
+                    "Prefer":
+                        "return=minimal"
+
                 },
 
-                body: JSON.stringify({
-                    sender_id: currentUser.id,
-                    receiver_id: selectedUserId,
-                    content: content
-                })
+                body:
+                    JSON.stringify({
+
+                        sender_id:
+                            currentUser.id,
+
+                        receiver_id:
+                            selectedUserId,
+
+                        content:
+                            content
+
+                    })
+
             }
+
         );
 
-        input.value = "";
+
+        input.value =
+            "";
+
 
         await loadMessages();
 
@@ -919,17 +1316,24 @@ async function sendMessage() {
 
         console.error(error);
 
+
         showStatus(
+
             "Could not send message: " +
             error.message
+
         );
 
     } finally {
 
-        button.disabled = false;
+        button.disabled =
+            false;
+
 
         input.focus();
+
     }
+
 }
 
 
@@ -937,25 +1341,40 @@ async function sendMessage() {
    DELETE MESSAGE
 ========================= */
 
-async function deleteMessage(messageId) {
+async function deleteMessage(
+    messageId
+) {
 
-    if (!confirm(
-        "Delete this message?"
-    )) {
+    if (
+        !confirm(
+            "Delete this message?"
+        )
+    ) {
+
         return;
+
     }
+
 
     try {
 
         await supabaseFetch(
+
             "/rest/v1/messages?id=eq." +
-            encodeURIComponent(messageId),
+            encodeURIComponent(
+                messageId
+            ),
+
             {
-                method: "DELETE"
+                method:
+                    "DELETE"
             }
+
         );
 
+
         await loadMessages();
+
 
         showStatus(
             "Message deleted.",
@@ -966,11 +1385,16 @@ async function deleteMessage(messageId) {
 
         console.error(error);
 
+
         showStatus(
+
             "Could not delete message: " +
             error.message
+
         );
+
     }
+
 }
 
 
@@ -978,26 +1402,43 @@ async function deleteMessage(messageId) {
    TIME
 ========================= */
 
-function formatTime(dateString) {
+function formatTime(
+    dateString
+) {
 
     if (!dateString) {
         return "";
     }
 
-    const date =
-        new Date(dateString);
 
-    if (isNaN(date.getTime())) {
+    const date =
+        new Date(
+            dateString
+        );
+
+
+    if (
+        isNaN(
+            date.getTime()
+        )
+    ) {
+
         return "";
+
     }
+
 
     return date.toLocaleString(
         [],
         {
-            dateStyle: "short",
-            timeStyle: "short"
+            dateStyle:
+                "short",
+
+            timeStyle:
+                "short"
         }
     );
+
 }
 
 
@@ -1005,14 +1446,34 @@ function formatTime(dateString) {
    ESCAPE HTML
 ========================= */
 
-function escapeHtml(value) {
+function escapeHtml(
+    value
+) {
 
-    return String(value || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    return String(
+        value || ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
 }
 
 
@@ -1021,7 +1482,9 @@ function escapeHtml(value) {
 ========================= */
 
 document
-    .getElementById("messageInput")
+    .getElementById(
+        "messageInput"
+    )
     .addEventListener(
         "keydown",
         function(event) {
@@ -1034,7 +1497,9 @@ document
                 event.preventDefault();
 
                 sendMessage();
+
             }
+
         }
     );
 
@@ -1053,8 +1518,10 @@ function logout() {
         "berakah_refresh_token"
     );
 
+
     window.location.href =
         "login.html";
+
 }
 
 
@@ -1062,13 +1529,16 @@ function logout() {
    AUTO REFRESH
 ========================= */
 
-setInterval(() => {
+setInterval(
+    () => {
 
-    if (currentUser) {
-        loadMessages();
-    }
+        if (currentUser) {
+            loadMessages();
+        }
 
-}, 5000);
+    },
+    5000
+);
 
 
 /* =========================
@@ -1080,9 +1550,11 @@ async function start() {
     const loggedIn =
         await checkLogin();
 
+
     if (!loggedIn) {
         return;
     }
+
 
     try {
 
@@ -1094,12 +1566,18 @@ async function start() {
 
         console.error(error);
 
+
         showStatus(
-            "Could not load Messages: " +
+
+            "Could not load EPHPHAVORA Messages: " +
             error.message
+
         );
+
     }
+
 }
+
 
 start();
 
