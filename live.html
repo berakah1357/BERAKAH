@@ -202,7 +202,9 @@ button:disabled {
   color: #ffb8bd;
 }
 
-/* LIVE CHAT */
+/* =========================
+   LIVE CHAT
+========================= */
 
 .chat-box {
   margin-top: 20px;
@@ -278,6 +280,90 @@ button:disabled {
   min-width: 90px;
 }
 
+/* =========================
+   LIVE REACTIONS
+========================= */
+
+.reaction-box {
+  margin-top: 20px;
+  background: #171720;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+}
+
+.reaction-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.reaction-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.reaction-btn {
+  background: #25252f;
+  color: white;
+  font-size: 28px;
+  width: 62px;
+  height: 52px;
+  padding: 0;
+  border-radius: 12px;
+  transition: transform .15s;
+}
+
+.reaction-btn:hover {
+  transform: scale(1.12);
+}
+
+.reaction-btn:active {
+  transform: scale(.92);
+}
+
+.reaction-btn:disabled {
+  opacity: .4;
+}
+
+#reactionArea {
+  position: fixed;
+  right: 20px;
+  bottom: 90px;
+  width: 100px;
+  height: 300px;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.floating-reaction {
+  position: absolute;
+  bottom: 0;
+  font-size: 38px;
+  animation: floatReaction 2.2s ease-out forwards;
+}
+
+@keyframes floatReaction {
+
+  0% {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translateY(-280px)
+      scale(1.5);
+  }
+
+}
+
 @media (max-width: 600px) {
 
   .container {
@@ -307,6 +393,16 @@ button:disabled {
 
   #sendChatBtn {
     width: 100%;
+  }
+
+  .reaction-btn {
+    width: 58px;
+    height: 50px;
+  }
+
+  #reactionArea {
+    right: 5px;
+    bottom: 70px;
   }
 }
 </style></head><body><header>  <div class="logo">
@@ -375,7 +471,9 @@ button:disabled {
 
 </div>
 
-  </div>  <div id="message"></div>  <!-- LIVE CHAT -->  <div class="chat-box"><div class="chat-title">
+  </div>  <div id="message"></div>  <!-- =========================
+       LIVE CHAT
+  ========================= -->  <div class="chat-box"><div class="chat-title">
   💬 LIVE CHAT
 </div>
 
@@ -406,7 +504,49 @@ button:disabled {
 
 </div>
 
-  </div></div><script>
+  </div>  <!-- =========================
+       LIVE REACTIONS
+  ========================= -->  <div class="reaction-box"><div class="reaction-title">
+  ❤️ LIVE REACTIONS
+</div>
+
+<div class="reaction-buttons">
+
+  <button
+    class="reaction-btn"
+    data-reaction="❤️"
+    disabled
+  >
+    ❤️
+  </button>
+
+  <button
+    class="reaction-btn"
+    data-reaction="👍"
+    disabled
+  >
+    👍
+  </button>
+
+  <button
+    class="reaction-btn"
+    data-reaction="🔥"
+    disabled
+  >
+    🔥
+  </button>
+
+  <button
+    class="reaction-btn"
+    data-reaction="😂"
+    disabled
+  >
+    😂
+  </button>
+
+</div>
+
+  </div></div><!-- Floating reactions --><div id="reactionArea"></div><script>
 
 const LIVEKIT_URL =
   "wss://ephphavora-wciizjcm.livekit.cloud";
@@ -471,6 +611,14 @@ const chatInput =
 
 const sendChatBtn =
   document.getElementById("sendChatBtn");
+
+const reactionArea =
+  document.getElementById("reactionArea");
+
+const reactionButtons =
+  document.querySelectorAll(
+    ".reaction-btn"
+  );
 
 
 function showMessage(text) {
@@ -576,6 +724,11 @@ async function getConnectionDetails(
 }
 
 
+/* =========================
+   VIDEO
+========================= */
+
+
 function addVideoTrack(
   track,
   participant,
@@ -674,6 +827,11 @@ function updateViewerCount() {
       room.remoteParticipants.size
     );
 }
+
+
+/* =========================
+   SHARE
+========================= */
 
 
 function showShareLink() {
@@ -801,10 +959,21 @@ function setupChat() {
 
         }
 
+        if (
+          data.type ===
+          "reaction"
+        ) {
+
+          showFloatingReaction(
+            data.reaction
+          );
+
+        }
+
       } catch (error) {
 
         console.error(
-          "LIVE CHAT RECEIVE ERROR:",
+          "LIVE DATA RECEIVE ERROR:",
           error
         );
 
@@ -908,6 +1077,146 @@ chatInput.addEventListener(
 
   }
 );
+
+
+/* =========================
+   LIVE REACTIONS
+========================= */
+
+
+function showFloatingReaction(
+  reaction
+) {
+
+  const element =
+    document.createElement(
+      "div"
+    );
+
+  element.className =
+    "floating-reaction";
+
+  element.textContent =
+    reaction;
+
+  const randomPosition =
+    Math.floor(
+      Math.random() * 70
+    );
+
+  element.style.left =
+    randomPosition + "px";
+
+  reactionArea.appendChild(
+    element
+  );
+
+  setTimeout(() => {
+
+    element.remove();
+
+  }, 2300);
+
+}
+
+
+async function sendReaction(
+  reaction
+) {
+
+  if (
+    !room ||
+    !room.localParticipant
+  ) {
+    return;
+  }
+
+  const reactionData =
+    JSON.stringify({
+
+      type:
+        "reaction",
+
+      reaction:
+        reaction
+
+    });
+
+  try {
+
+    await room.localParticipant
+      .publishData(
+        new TextEncoder().encode(
+          reactionData
+        ),
+        {
+          reliable: true
+        }
+      );
+
+    showFloatingReaction(
+      reaction
+    );
+
+  } catch (error) {
+
+    console.error(
+      "REACTION SEND ERROR:",
+      error
+    );
+
+  }
+
+}
+
+
+reactionButtons.forEach(
+  button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        const reaction =
+          button.dataset.reaction;
+
+        sendReaction(
+          reaction
+        );
+
+      }
+    );
+
+  }
+);
+
+
+function enableReactions() {
+
+  reactionButtons.forEach(
+    button => {
+
+      button.disabled =
+        false;
+
+    }
+  );
+
+}
+
+
+function disableReactions() {
+
+  reactionButtons.forEach(
+    button => {
+
+      button.disabled =
+        true;
+
+    }
+  );
+
+}
 
 
 /* =========================
@@ -1038,6 +1347,8 @@ async function startLive() {
         sendChatBtn.disabled =
           true;
 
+        disableReactions();
+
         goLiveBtn.disabled =
           false;
 
@@ -1103,6 +1414,8 @@ async function startLive() {
 
     sendChatBtn.disabled =
       false;
+
+    enableReactions();
 
     statusEl.textContent =
       "🔴 You are LIVE on EPHPHAVORA!";
@@ -1250,6 +1563,8 @@ async function joinLive(roomName) {
         sendChatBtn.disabled =
           true;
 
+        disableReactions();
+
         updateViewerCount();
 
       }
@@ -1287,6 +1602,8 @@ async function joinLive(roomName) {
 
     sendChatBtn.disabled =
       false;
+
+    enableReactions();
 
     statusEl.textContent =
       "👀 You are watching EPHPHAVORA LIVE";
@@ -1494,6 +1811,8 @@ async function endLive() {
 
   sendChatBtn.disabled =
     true;
+
+  disableReactions();
 
   goLiveBtn.disabled =
     false;
