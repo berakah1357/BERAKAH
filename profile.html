@@ -8,7 +8,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>BERAKAH - Profile</title>
+<title>EPHPHAVORA - Profile</title>
 
 <style>
 
@@ -477,16 +477,14 @@ h1 {
 
 </head>
 
-
 <body>
-
 
 <header>
 
 <div class="nav">
 
 <div class="logo">
-BERAKAH
+EPHPHAVORA
 </div>
 
 <div class="nav-links">
@@ -527,9 +525,7 @@ Logout
 
 </header>
 
-
 <main>
-
 
 <div
 id="loading"
@@ -539,23 +535,18 @@ Loading profile...
 
 </div>
 
-
 <div
 id="error"
 class="error">
 </div>
 
-
 <div
 id="profile"
 class="profile">
 
-
 <div class="cover"></div>
 
-
 <div class="profile-card">
-
 
 <div
 id="avatar"
@@ -563,18 +554,15 @@ class="avatar">
 👤
 </div>
 
-
 <h1 id="profileName">
-BERAKAH
+EPHPHAVORA
 </h1>
-
 
 <div
 id="profileUsername"
 class="username">
-@berakah1357
+@ephphavora
 </div>
-
 
 <div
 id="profileLanguage"
@@ -582,19 +570,16 @@ class="language">
 Language: —
 </div>
 
-
 <div
 id="profileBio"
 class="bio">
 
-Welcome to my BERAKAH profile.
+Welcome to my EPHPHAVORA profile.
 Connect, share, build, and grow together.
 
 </div>
 
-
 <div class="stats">
-
 
 <div
 class="stat"
@@ -608,7 +593,6 @@ Followers
 
 </div>
 
-
 <div
 class="stat"
 id="followingStat">
@@ -621,7 +605,6 @@ Following
 
 </div>
 
-
 <div class="stat">
 
 <strong id="postsCount">
@@ -632,12 +615,9 @@ Posts
 
 </div>
 
-
 </div>
 
-
 <div class="actions">
-
 
 <button
 id="followButton"
@@ -648,7 +628,6 @@ Follow
 
 </button>
 
-
 <button
 id="editButton"
 class="action primary"
@@ -658,7 +637,6 @@ EDIT PROFILE
 
 </button>
 
-
 <button
 class="action secondary"
 id="messagesButton">
@@ -666,7 +644,6 @@ id="messagesButton">
 💬 MESSAGES
 
 </button>
-
 
 <button
 class="action secondary"
@@ -676,22 +653,18 @@ id="notificationsButton">
 
 </button>
 
-
 <div
 id="status"
 class="status">
 </div>
 
-
 <div
 id="editBox"
 class="edit-box">
 
-
 <h3>
 Edit Your Profile
 </h3>
-
 
 <label for="editFullName">
 Full Name
@@ -703,7 +676,6 @@ type="text"
 maxlength="100"
 placeholder="Full name">
 
-
 <label for="editUsername">
 Username
 </label>
@@ -713,7 +685,6 @@ id="editUsername"
 type="text"
 maxlength="50"
 placeholder="Username">
-
 
 <label for="editLanguage">
 Language
@@ -739,7 +710,6 @@ Spanish
 
 </select>
 
-
 <label for="editBio">
 Bio
 </label>
@@ -749,7 +719,6 @@ id="editBio"
 maxlength="500"
 placeholder="Tell people about yourself"></textarea>
 
-
 <button
 id="saveButton"
 class="save">
@@ -757,7 +726,6 @@ class="save">
 SAVE PROFILE
 
 </button>
-
 
 <button
 id="cancelButton"
@@ -767,21 +735,16 @@ CANCEL
 
 </button>
 
-
 <div
 id="editStatus"
 class="status">
 </div>
 
+</div>
 
 </div>
 
-
 </div>
-
-
-</div>
-
 
 <div class="posts">
 
@@ -793,9 +756,7 @@ Posts
 
 </div>
 
-
 </div>
-
 
 </main>
 
@@ -808,9 +769,7 @@ Posts
 id="peopleModal"
 class="modal">
 
-
 <div class="modal-content">
-
 
 <div class="modal-header">
 
@@ -828,13 +787,10 @@ class="close-button">
 
 </div>
 
-
 <div
 id="peopleList"
 class="people-list">
-
 </div>
-
 
 </div>
 
@@ -843,9 +799,8 @@ class="people-list">
 
 <script>
 
-
 /* =====================================================
-   BERAKAH SUPABASE
+   EPHPHAVORA SUPABASE
    ===================================================== */
 
 const SUPABASE_URL =
@@ -864,10 +819,8 @@ localStorage.getItem(
 "berakah_access_token"
 );
 
-
 let currentUser =
 null;
-
 
 let profile =
 null;
@@ -999,7 +952,6 @@ throw new Error(
 
 }
 
-
 const response =
 await supabaseFetch(
 
@@ -1014,10 +966,8 @@ method: "GET"
 
 );
 
-
 const text =
 await response.text();
-
 
 if (!response.ok) {
 
@@ -1027,7 +977,6 @@ throw new Error(
 
 }
 
-
 if (!text) {
 
 throw new Error(
@@ -1035,7 +984,6 @@ throw new Error(
 );
 
 }
-
 
 return JSON.parse(text);
 
@@ -1051,7 +999,6 @@ async function loadOwnProfile() {
 const userId =
 currentUser.id;
 
-
 const url =
 SUPABASE_URL +
 "/rest/v1/profiles" +
@@ -1059,7 +1006,6 @@ SUPABASE_URL +
 "&user_id=eq." +
 encodeURIComponent(userId) +
 "&limit=1";
-
 
 const response =
 await supabaseFetch(
@@ -1069,10 +1015,8 @@ method: "GET"
 }
 );
 
-
 const text =
 await response.text();
-
 
 if (!response.ok) {
 
@@ -1083,22 +1027,19 @@ text
 
 }
 
-
 const rows =
 text ?
 JSON.parse(text) :
 [];
 
-
 if (!rows.length) {
 
 throw new Error(
-"Your BERAKAH profile was not found.\n\n" +
+"Your EPHPHAVORA profile was not found.\n\n" +
 "Auth account exists, but no matching profiles.user_id was found."
 );
 
 }
-
 
 profile =
 rows[0];
@@ -1120,7 +1061,6 @@ throw new Error(
 
 }
 
-
 const url =
 SUPABASE_URL +
 "/rest/v1/profiles" +
@@ -1128,7 +1068,6 @@ SUPABASE_URL +
 "&id=eq." +
 encodeURIComponent(id) +
 "&limit=1";
-
 
 const response =
 await supabaseFetch(
@@ -1138,10 +1077,8 @@ method: "GET"
 }
 );
 
-
 const text =
 await response.text();
-
 
 if (!response.ok) {
 
@@ -1152,12 +1089,10 @@ text
 
 }
 
-
 const rows =
 text ?
 JSON.parse(text) :
 [];
-
 
 if (!rows.length) {
 
@@ -1166,7 +1101,6 @@ throw new Error(
 );
 
 }
-
 
 profile =
 rows[0];
@@ -1182,9 +1116,8 @@ async function loadProfileByUsername(username) {
 
 username =
 String(username || "")
-replaceAtSymbol(username)
+.replace(/^@/, "")
 .trim();
-
 
 if (!username) {
 
@@ -1194,7 +1127,6 @@ throw new Error(
 
 }
 
-
 const url =
 SUPABASE_URL +
 "/rest/v1/profiles" +
@@ -1202,7 +1134,6 @@ SUPABASE_URL +
 "&username=eq." +
 encodeURIComponent(username) +
 "&limit=1";
-
 
 const response =
 await supabaseFetch(
@@ -1212,10 +1143,8 @@ method: "GET"
 }
 );
 
-
 const text =
 await response.text();
-
 
 if (!response.ok) {
 
@@ -1226,12 +1155,10 @@ text
 
 }
 
-
 const rows =
 text ?
 JSON.parse(text) :
 [];
-
 
 if (!rows.length) {
 
@@ -1243,21 +1170,8 @@ username +
 
 }
 
-
 profile =
 rows[0];
-
-}
-
-
-/* =====================================================
-   REMOVE @ FROM USERNAME
-   ===================================================== */
-
-function replaceAtSymbol(username) {
-
-return String(username || "")
-replace(/^@/, "");
 
 }
 
@@ -1273,29 +1187,24 @@ profile["Full name"] ||
 profile.full_name ||
 profile.name ||
 profile.username ||
-"BERAKAH";
-
+"EPHPHAVORA";
 
 const username =
 profile.username ||
-"berakah1357";
-
+"ephphavora";
 
 const language =
 profile.language ||
 "—";
 
-
 const bio =
 profile.bio ||
-"Welcome to my BERAKAH profile. Connect, share, build, and grow together.";
-
+"Welcome to my EPHPHAVORA profile. Connect, share, build, and grow together.";
 
 document.getElementById(
 "profileName"
 ).textContent =
 fullName;
-
 
 document.getElementById(
 "profileUsername"
@@ -1303,13 +1212,11 @@ document.getElementById(
 "@" +
 username;
 
-
 document.getElementById(
 "profileLanguage"
 ).textContent =
 "Language: " +
 String(language).toUpperCase();
-
 
 document.getElementById(
 "profileBio"
@@ -1323,7 +1230,6 @@ const avatar =
 document.getElementById(
 "avatar"
 );
-
 
 if (profile.avatar_url) {
 
@@ -1363,7 +1269,6 @@ return false;
 
 }
 
-
 if (
 profile.user_id &&
 String(profile.user_id).toLowerCase() ===
@@ -1373,7 +1278,6 @@ String(currentUser.id).toLowerCase()
 return true;
 
 }
-
 
 return false;
 
@@ -1395,7 +1299,6 @@ const followButton =
 document.getElementById(
 "followButton"
 );
-
 
 if (isOwnProfile()) {
 
@@ -1433,7 +1336,6 @@ return;
 
 }
 
-
 document.getElementById(
 "editFullName"
 ).value =
@@ -1442,13 +1344,11 @@ profile.full_name ||
 profile.name ||
 "";
 
-
 document.getElementById(
 "editUsername"
 ).value =
 profile.username ||
 "";
-
 
 document.getElementById(
 "editLanguage"
@@ -1456,19 +1356,16 @@ document.getElementById(
 profile.language ||
 "en";
 
-
 document.getElementById(
 "editBio"
 ).value =
 profile.bio ||
 "";
 
-
 document.getElementById(
 "editStatus"
 ).textContent =
 "";
-
 
 document.getElementById(
 "editBox"
@@ -1504,45 +1401,39 @@ return;
 
 }
 
-
 const fullName =
 document.getElementById(
 "editFullName"
 ).value.trim();
 
-
 const username =
-replaceAtSymbol(
+String(
 document.getElementById(
 "editUsername"
 ).value
-.trim()
-);
-
+)
+.replace(/^@/, "")
+.trim();
 
 const language =
 document.getElementById(
 "editLanguage"
 ).value;
 
-
 const bio =
 document.getElementById(
 "editBio"
 ).value.trim();
-
 
 const status =
 document.getElementById(
 "editStatus"
 );
 
-
 const button =
 document.getElementById(
 "saveButton"
 );
-
 
 if (!fullName) {
 
@@ -1553,7 +1444,6 @@ return;
 
 }
 
-
 if (!username) {
 
 status.textContent =
@@ -1562,7 +1452,6 @@ status.textContent =
 return;
 
 }
-
 
 if (!/^[a-zA-Z0-9_.-]+$/.test(username)) {
 
@@ -1573,13 +1462,11 @@ return;
 
 }
 
-
 button.disabled =
 true;
 
 status.textContent =
 "Saving...";
-
 
 try {
 
@@ -1599,7 +1486,6 @@ bio
 
 };
 
-
 const url =
 SUPABASE_URL +
 "/rest/v1/profiles" +
@@ -1607,7 +1493,6 @@ SUPABASE_URL +
 encodeURIComponent(
 profile.id
 );
-
 
 const response =
 await supabaseFetch(
@@ -1637,25 +1522,22 @@ updateData
 
 );
 
-
 const text =
 await response.text();
-
 
 if (!response.ok) {
 
 throw new Error(
-text || "Profile update failed."
+text ||
+"Profile update failed."
 );
 
 }
-
 
 const updatedRows =
 text ?
 JSON.parse(text) :
 [];
-
 
 if (updatedRows.length) {
 
@@ -1664,19 +1546,15 @@ updatedRows[0];
 
 }
 
-
 localStorage.setItem(
 "berakah_username",
 username
 );
 
-
 displayProfile();
-
 
 status.textContent =
 "Profile saved successfully!";
-
 
 setTimeout(
 function() {
@@ -1706,7 +1584,6 @@ status.textContent =
 
 }
 
-
 button.disabled =
 false;
 
@@ -1722,7 +1599,6 @@ async function loadPosts() {
 const userId =
 profile.user_id;
 
-
 if (!userId) {
 
 displayPosts([]);
@@ -1730,7 +1606,6 @@ displayPosts([]);
 return;
 
 }
-
 
 const url =
 SUPABASE_URL +
@@ -1740,7 +1615,6 @@ SUPABASE_URL +
 encodeURIComponent(userId) +
 "&order=created_at.desc";
 
-
 const response =
 await supabaseFetch(
 url,
@@ -1749,10 +1623,8 @@ method: "GET"
 }
 );
 
-
 const text =
 await response.text();
-
 
 if (!response.ok) {
 
@@ -1767,12 +1639,10 @@ return;
 
 }
 
-
 const posts =
 text ?
 JSON.parse(text) :
 [];
-
 
 displayPosts(posts);
 
@@ -1790,16 +1660,13 @@ document.getElementById(
 "postsList"
 );
 
-
 list.innerHTML =
 "";
-
 
 document.getElementById(
 "postsCount"
 ).textContent =
 posts.length;
-
 
 if (!posts.length) {
 
@@ -1810,7 +1677,6 @@ return;
 
 }
 
-
 posts.forEach(
 function(post) {
 
@@ -1819,14 +1685,11 @@ document.createElement(
 "div"
 );
 
-
 div.className =
 "post";
 
-
 let date =
 "";
-
 
 if (post.created_at) {
 
@@ -1846,10 +1709,8 @@ d.toLocaleString();
 
 }
 
-
 let image =
 "";
-
 
 if (post.image_url) {
 
@@ -1859,7 +1720,6 @@ escapeHTML(post.image_url) +
 "\" alt=\"Post image\">";
 
 }
-
 
 div.innerHTML =
 
@@ -1878,7 +1738,6 @@ image +
 "<button class=\"like-button\">" +
 "❤️ Like" +
 "</button>";
-
 
 list.appendChild(div);
 
@@ -1912,7 +1771,6 @@ encodeURIComponent(
 profile.user_id
 );
 
-
 const followersResponse =
 await supabaseFetch(
 followersURL,
@@ -1920,7 +1778,6 @@ followersURL,
 method: "GET"
 }
 );
-
 
 if (followersResponse.ok) {
 
@@ -1931,7 +1788,6 @@ const rows =
 text ?
 JSON.parse(text) :
 [];
-
 
 document.getElementById(
 "followersCount"
@@ -1952,7 +1808,6 @@ encodeURIComponent(
 profile.user_id
 );
 
-
 const followingResponse =
 await supabaseFetch(
 followingURL,
@@ -1960,7 +1815,6 @@ followingURL,
 method: "GET"
 }
 );
-
 
 if (followingResponse.ok) {
 
@@ -1971,7 +1825,6 @@ const rows =
 text ?
 JSON.parse(text) :
 [];
-
 
 document.getElementById(
 "followingCount"
@@ -1996,17 +1849,11 @@ return [];
 
 }
 
-
 let url = "";
 
 
 /*
-FOLLOWERS:
-
-People whose follower_id
-points TO this profile.
-
-following_id = profile.user_id
+FOLLOWERS
 */
 
 if (type === "followers") {
@@ -2024,11 +1871,7 @@ profile.user_id
 
 
 /*
-FOLLOWING:
-
-People this profile follows.
-
-follower_id = profile.user_id
+FOLLOWING
 */
 
 if (type === "following") {
@@ -2044,13 +1887,11 @@ profile.user_id
 
 }
 
-
 if (!url) {
 
 return [];
 
 }
-
 
 const response =
 await supabaseFetch(
@@ -2060,25 +1901,22 @@ method: "GET"
 }
 );
 
-
 const text =
 await response.text();
-
 
 if (!response.ok) {
 
 throw new Error(
-text || "Could not load follow records."
+text ||
+"Could not load follow records."
 );
 
 }
-
 
 const rows =
 text ?
 JSON.parse(text) :
 [];
-
 
 if (type === "followers") {
 
@@ -2089,7 +1927,6 @@ row => row.follower_id
 .filter(Boolean);
 
 }
-
 
 return rows
 .map(
@@ -2114,31 +1951,12 @@ return [];
 
 }
 
-
-/*
-IMPORTANT:
-
-The follows table stores Auth UUIDs.
-
-The profiles table also uses
-user_id for the Auth UUID.
-
-We therefore query:
-
-profiles.user_id IN (...)
-
-instead of assuming that
-profiles.id equals follows ID.
-*/
-
-
 const encodedIds =
 userIds
 .map(
 id => encodeURIComponent(id)
 )
 .join(",");
-
 
 const url =
 SUPABASE_URL +
@@ -2148,7 +1966,6 @@ SUPABASE_URL +
 encodedIds +
 ")";
 
-
 const response =
 await supabaseFetch(
 url,
@@ -2157,34 +1974,25 @@ method: "GET"
 }
 );
 
-
 const text =
 await response.text();
-
 
 if (!response.ok) {
 
 throw new Error(
-text || "Could not load profiles."
+text ||
+"Could not load profiles."
 );
 
 }
-
 
 const rows =
 text ?
 JSON.parse(text) :
 [];
 
-
-/*
-Keep the same order as the
-follow records.
-*/
-
 const profileMap =
 new Map();
-
 
 rows.forEach(
 row => {
@@ -2199,7 +2007,6 @@ row
 }
 
 });
-
 
 return userIds
 .map(
@@ -2250,41 +2057,33 @@ document.getElementById(
 "peopleModal"
 );
 
-
 const title =
 document.getElementById(
 "modalTitle"
 );
-
 
 const list =
 document.getElementById(
 "peopleList"
 );
 
-
 title.textContent =
 type === "followers"
 ? "Followers"
 : "Following";
 
-
 modal.style.display =
 "block";
-
 
 list.innerHTML =
 "<div class=\"modal-loading\">" +
 "Loading..." +
 "</div>";
 
-
 try {
-
 
 const userIds =
 await getFollowIds(type);
-
 
 if (!userIds.length) {
 
@@ -2297,12 +2096,10 @@ return;
 
 }
 
-
 const profiles =
 await loadProfilesByUserIds(
 userIds
 );
-
 
 if (!profiles.length) {
 
@@ -2314,7 +2111,6 @@ list.innerHTML =
 return;
 
 }
-
 
 displayPeople(
 profiles
@@ -2351,10 +2147,8 @@ document.getElementById(
 "peopleList"
 );
 
-
 list.innerHTML =
 "";
-
 
 people.forEach(
 function(person) {
@@ -2364,33 +2158,27 @@ person["Full name"] ||
 person.full_name ||
 person.name ||
 person.username ||
-"BERAKAH";
-
+"EPHPHAVORA";
 
 const username =
 person.username ||
-"berakah1357";
-
+"ephphavora";
 
 const personDiv =
 document.createElement(
 "div"
 );
 
-
 personDiv.className =
 "person";
-
 
 const avatarDiv =
 document.createElement(
 "div"
 );
 
-
 avatarDiv.className =
 "person-avatar";
-
 
 if (person.avatar_url) {
 
@@ -2409,16 +2197,13 @@ fullName
 
 }
 
-
 const infoDiv =
 document.createElement(
 "div"
 );
 
-
 infoDiv.className =
 "person-info";
-
 
 infoDiv.innerHTML =
 
@@ -2431,20 +2216,16 @@ escapeHTML(fullName) +
 escapeHTML(username) +
 "</div>";
 
-
 const viewButton =
 document.createElement(
 "button"
 );
 
-
 viewButton.className =
 "view-button";
 
-
 viewButton.textContent =
 "View";
-
 
 viewButton.addEventListener(
 "click",
@@ -2457,7 +2238,6 @@ username
 );
 
 });
-
 
 personDiv.appendChild(
 avatarDiv
@@ -2508,13 +2288,11 @@ return;
 
 }
 
-
 if (isOwnProfile()) {
 
 return;
 
 }
-
 
 const url =
 SUPABASE_URL +
@@ -2529,7 +2307,6 @@ encodeURIComponent(
 profile.user_id
 );
 
-
 try {
 
 const response =
@@ -2540,10 +2317,8 @@ method: "GET"
 }
 );
 
-
 const text =
 await response.text();
-
 
 if (!response.ok) {
 
@@ -2551,18 +2326,15 @@ return;
 
 }
 
-
 const rows =
 text ?
 JSON.parse(text) :
 [];
 
-
 const button =
 document.getElementById(
 "followButton"
 );
-
 
 if (rows.length) {
 
@@ -2610,34 +2382,26 @@ return;
 
 }
 
-
 if (isOwnProfile()) {
 
 return;
 
 }
 
-
 const button =
 document.getElementById(
 "followButton"
 );
-
 
 const status =
 document.getElementById(
 "status"
 );
 
-
 button.disabled =
 true;
 
-
 try {
-
-
-/* CHECK EXISTING */
 
 const checkURL =
 SUPABASE_URL +
@@ -2652,7 +2416,6 @@ encodeURIComponent(
 profile.user_id
 );
 
-
 const checkResponse =
 await supabaseFetch(
 checkURL,
@@ -2661,10 +2424,8 @@ method: "GET"
 }
 );
 
-
 const checkText =
 await checkResponse.text();
-
 
 if (!checkResponse.ok) {
 
@@ -2674,16 +2435,13 @@ throw new Error(
 
 }
 
-
 const existing =
 checkText ?
 JSON.parse(checkText) :
 [];
 
 
-/* =================================
-   UNFOLLOW
-   ================================= */
+/* UNFOLLOW */
 
 if (existing.length) {
 
@@ -2699,7 +2457,6 @@ encodeURIComponent(
 profile.user_id
 );
 
-
 const deleteResponse =
 await supabaseFetch(
 
@@ -2713,7 +2470,6 @@ method: "DELETE"
 
 );
 
-
 if (!deleteResponse.ok) {
 
 const deleteText =
@@ -2725,7 +2481,6 @@ deleteText ||
 );
 
 }
-
 
 button.textContent =
 "Follow";
@@ -2739,9 +2494,7 @@ status.textContent =
 }
 
 
-/* =================================
-   FOLLOW
-   ================================= */
+/* FOLLOW */
 
 else {
 
@@ -2780,7 +2533,6 @@ profile.user_id
 
 );
 
-
 if (!followResponse.ok) {
 
 const text =
@@ -2793,7 +2545,6 @@ text ||
 
 }
 
-
 button.textContent =
 "Following";
 
@@ -2805,9 +2556,7 @@ status.textContent =
 
 }
 
-
 await loadFollowCounts();
-
 
 setTimeout(
 function() {
@@ -2831,7 +2580,6 @@ status.textContent =
 "Follow error.";
 
 }
-
 
 button.disabled =
 false;
@@ -2882,14 +2630,12 @@ document.getElementById(
 logout
 );
 
-
 document.getElementById(
 "editButton"
 ).addEventListener(
 "click",
 openEdit
 );
-
 
 document.getElementById(
 "cancelButton"
@@ -2898,14 +2644,12 @@ document.getElementById(
 cancelEdit
 );
 
-
 document.getElementById(
 "saveButton"
 ).addEventListener(
 "click",
 saveProfile
 );
-
 
 document.getElementById(
 "followButton"
@@ -2914,14 +2658,12 @@ document.getElementById(
 followUser
 );
 
-
 document.getElementById(
 "followersStat"
 ).addEventListener(
 "click",
 openFollowers
 );
-
 
 document.getElementById(
 "followingStat"
@@ -2930,14 +2672,12 @@ document.getElementById(
 openFollowing
 );
 
-
 document.getElementById(
 "closeModal"
 ).addEventListener(
 "click",
 closePeopleModal
 );
-
 
 document.getElementById(
 "messagesButton"
@@ -2950,7 +2690,6 @@ window.location.href =
 
 }
 );
-
 
 document.getElementById(
 "notificationsButton"
@@ -2965,7 +2704,7 @@ window.location.href =
 );
 
 
-/* Close modal when clicking outside */
+/* CLOSE MODAL OUTSIDE */
 
 document.getElementById(
 "peopleModal"
@@ -2996,11 +2735,6 @@ async function start() {
 
 try {
 
-
-/* =================================
-   TOKEN CHECK
-   ================================= */
-
 if (!accessToken) {
 
 window.location.href =
@@ -3011,9 +2745,7 @@ return;
 }
 
 
-/* =================================
-   VERIFY AUTH SESSION
-   ================================= */
+/* VERIFY AUTH SESSION */
 
 try {
 
@@ -3022,13 +2754,6 @@ await getCurrentUser();
 
 }
 catch(error) {
-
-/*
-The browser may have an old
-expired Supabase token.
-
-Clear it and return to login.
-*/
 
 localStorage.removeItem(
 "berakah_access_token"
@@ -3058,15 +2783,12 @@ return;
 }
 
 
-/* =================================
-   URL OPTIONS
-   ================================= */
+/* URL OPTIONS */
 
 const requestedId =
 getURLParameter(
 "id"
 );
-
 
 const requestedUsername =
 getURLParameter(
@@ -3074,9 +2796,7 @@ getURLParameter(
 );
 
 
-/* =================================
-   LOAD REQUESTED PROFILE
-   ================================= */
+/* LOAD PROFILE */
 
 if (requestedId) {
 
@@ -3099,48 +2819,38 @@ await loadOwnProfile();
 }
 
 
-/* =================================
-   DISPLAY
-   ================================= */
+/* DISPLAY */
 
 displayProfile();
 
 
-/* =================================
-   LOAD POSTS
-   ================================= */
+/* POSTS */
 
 await loadPosts();
 
 
-/* =================================
-   LOAD FOLLOW COUNTS
-   ================================= */
+/* FOLLOW COUNTS */
 
 await loadFollowCounts();
 
 
-/* =================================
-   SHOW PROFILE
-   ================================= */
+/* SHOW */
 
 document.getElementById(
 "loading"
 ).style.display =
 "none";
 
-
 document.getElementById(
 "profile"
 ).style.display =
 "block";
 
-
 }
 catch(error) {
 
 console.error(
-"BERAKAH PROFILE ERROR:",
+"EPHPHAVORA PROFILE ERROR:",
 error
 );
 
