@@ -135,6 +135,11 @@ button {
   color: white;
 }
 
+#shareBtn {
+  background: #2563eb;
+  color: white;
+}
+
 #endBtn {
   background: #8b111b;
   color: white;
@@ -172,6 +177,29 @@ button:disabled {
   margin-top: 5px;
 }
 
+.share-box {
+  display: none;
+  margin-top: 18px;
+  background: #171720;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.share-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+#shareLink {
+  width: 100%;
+  padding: 11px;
+  border: 0;
+  border-radius: 7px;
+  background: #25252f;
+  color: white;
+  margin-bottom: 10px;
+}
+
 #message {
   margin-top: 18px;
   padding: 14px;
@@ -182,6 +210,7 @@ button:disabled {
 }
 
 @media (max-width: 600px) {
+
   .container {
     padding: 10px;
   }
@@ -209,11 +238,16 @@ button:disabled {
 <body>
 
 <header>
+
   <div class="logo">
-    EPHPHAVORA <span class="live-title">🔴 LIVE</span>
+    EPHPHAVORA
+    <span class="live-title">🔴 LIVE</span>
   </div>
 
-  <a class="back" href="feed.html">← Feed</a>
+  <a class="back" href="feed.html">
+    ← Feed
+  </a>
+
 </header>
 
 <div class="container">
@@ -240,8 +274,29 @@ button:disabled {
       🎤 Mic ON
     </button>
 
+    <button id="shareBtn" class="control" disabled>
+      🔗 SHARE LIVE
+    </button>
+
     <button id="endBtn" disabled>
       🛑 END LIVE
+    </button>
+
+  </div>
+
+  <div id="shareBox" class="share-box">
+
+    <div class="share-title">
+      🔗 Share this LIVE
+    </div>
+
+    <input
+      id="shareLink"
+      readonly
+    >
+
+    <button id="copyBtn" class="control">
+      📋 COPY LINK
     </button>
 
   </div>
@@ -249,13 +304,27 @@ button:disabled {
   <div class="info">
 
     <div class="card">
-      <div id="viewerCount" class="card-number">0</div>
-      <div class="card-label">Viewers</div>
+
+      <div id="viewerCount" class="card-number">
+        0
+      </div>
+
+      <div class="card-label">
+        Viewers
+      </div>
+
     </div>
 
     <div class="card">
-      <div id="liveStatus" class="card-number">OFF</div>
-      <div class="card-label">Live Status</div>
+
+      <div id="liveStatus" class="card-number">
+        OFF
+      </div>
+
+      <div class="card-label">
+        Live Status
+      </div>
+
     </div>
 
   </div>
@@ -265,6 +334,7 @@ button:disabled {
 </div>
 
 <script>
+
 const LIVEKIT_URL =
   "wss://ephphavora-wciizjcm.livekit.cloud";
 
@@ -272,77 +342,168 @@ const LIVEKIT_TOKEN_SERVER_ID =
   "ephphavora-16wbwu";
 
 let room = null;
+
 let cameraOn = true;
 let micOn = true;
 
-const statusEl = document.getElementById("status");
-const messageEl = document.getElementById("message");
-const videoGrid = document.getElementById("videoGrid");
+let currentRoomName = null;
 
-const goLiveBtn = document.getElementById("goLiveBtn");
-const cameraBtn = document.getElementById("cameraBtn");
-const micBtn = document.getElementById("micBtn");
-const endBtn = document.getElementById("endBtn");
+const statusEl =
+  document.getElementById("status");
 
-const viewerCount = document.getElementById("viewerCount");
-const liveStatus = document.getElementById("liveStatus");
+const messageEl =
+  document.getElementById("message");
+
+const videoGrid =
+  document.getElementById("videoGrid");
+
+const goLiveBtn =
+  document.getElementById("goLiveBtn");
+
+const cameraBtn =
+  document.getElementById("cameraBtn");
+
+const micBtn =
+  document.getElementById("micBtn");
+
+const shareBtn =
+  document.getElementById("shareBtn");
+
+const endBtn =
+  document.getElementById("endBtn");
+
+const viewerCount =
+  document.getElementById("viewerCount");
+
+const liveStatus =
+  document.getElementById("liveStatus");
+
+const shareBox =
+  document.getElementById("shareBox");
+
+const shareLink =
+  document.getElementById("shareLink");
+
+const copyBtn =
+  document.getElementById("copyBtn");
+
 
 function showMessage(text) {
-  messageEl.style.display = "block";
-  messageEl.textContent = text;
+
+  messageEl.style.display =
+    "block";
+
+  messageEl.textContent =
+    text;
 }
 
+
 function clearMessage() {
-  messageEl.style.display = "none";
-  messageEl.textContent = "";
+
+  messageEl.style.display =
+    "none";
+
+  messageEl.textContent =
+    "";
 }
+
 
 function getUserInfo() {
 
-  let username =
-    localStorage.getItem("berakah_username") ||
-    localStorage.getItem("berakah_user");
+  const username =
+    localStorage.getItem(
+      "berakah_username"
+    ) ||
+    localStorage.getItem(
+      "berakah_user"
+    );
 
-  let userId =
-    localStorage.getItem("berakah_auth_user_id");
+  const userId =
+    localStorage.getItem(
+      "berakah_auth_user_id"
+    );
 
   return {
-    username: username || "EPHPHAVORA User",
-    userId: userId || crypto.randomUUID()
+
+    username:
+      username ||
+      "EPHPHAVORA User",
+
+    userId:
+      userId ||
+      crypto.randomUUID()
+
   };
 }
 
-function makeRoomName() {
 
-  const user = getUserInfo();
+function createHostRoomName() {
 
-  return "ephphavora-live-" + user.userId;
+  const user =
+    getUserInfo();
+
+  return (
+    "ephphavora-live-" +
+    user.userId
+  );
 }
 
-async function getLiveKitConnectionDetails(roomName) {
 
-  const user = getUserInfo();
+function getRoomFromURL() {
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  return params.get("room");
+}
+
+
+async function getConnectionDetails(
+  roomName
+) {
+
+  const user =
+    getUserInfo();
 
   const tokenSource =
-    LivekitClient.TokenSource.developmentTokenServer(
-      LIVEKIT_TOKEN_SERVER_ID
-    );
+    LivekitClient.TokenSource
+      .developmentTokenServer(
+        LIVEKIT_TOKEN_SERVER_ID
+      );
 
   const connectionDetails =
     await tokenSource.fetch({
-      roomName: roomName,
-      participantName: user.username,
-      participantIdentity: user.userId
+
+      roomName:
+        roomName,
+
+      participantName:
+        user.username,
+
+      participantIdentity:
+        user.userId
+
     });
 
   return connectionDetails;
 }
 
-function addVideoTrack(track, participant, isLocal) {
 
-  const tile = document.createElement("div");
+function addVideoTrack(
+  track,
+  participant,
+  isLocal
+) {
 
-  tile.className = "video-tile";
+  const tile =
+    document.createElement(
+      "div"
+    );
+
+  tile.className =
+    "video-tile";
 
   tile.dataset.identity =
     participant.identity;
@@ -350,28 +511,48 @@ function addVideoTrack(track, participant, isLocal) {
   const videoElement =
     track.attach();
 
-  videoElement.autoplay = true;
-  videoElement.playsInline = true;
+  videoElement.autoplay =
+    true;
 
-  tile.appendChild(videoElement);
+  videoElement.playsInline =
+    true;
+
+  videoElement.muted =
+    isLocal;
+
+  tile.appendChild(
+    videoElement
+  );
 
   const name =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
-  name.className = "name-label";
+  name.className =
+    "name-label";
 
   name.textContent =
     isLocal
       ? "You"
-      : (participant.name ||
-         participant.identity);
+      : (
+          participant.name ||
+          participant.identity
+        );
 
-  tile.appendChild(name);
+  tile.appendChild(
+    name
+  );
 
-  videoGrid.appendChild(tile);
+  videoGrid.appendChild(
+    tile
+  );
 }
 
-function removeParticipant(participant) {
+
+function removeParticipant(
+  participant
+) {
 
   const tiles =
     videoGrid.querySelectorAll(
@@ -384,11 +565,14 @@ function removeParticipant(participant) {
       tile.dataset.identity ===
       participant.identity
     ) {
+
       tile.remove();
+
     }
 
   });
 }
+
 
 function updateViewerCount() {
 
@@ -406,6 +590,32 @@ function updateViewerCount() {
     );
 }
 
+
+function showShareLink() {
+
+  if (!currentRoomName) {
+    return;
+  }
+
+  const url =
+    window.location.origin +
+    window.location.pathname +
+    "?room=" +
+    encodeURIComponent(
+      currentRoomName
+    );
+
+  shareLink.value =
+    url;
+
+  shareBox.style.display =
+    "block";
+
+  shareBtn.disabled =
+    false;
+}
+
+
 async function startLive() {
 
   try {
@@ -415,13 +625,17 @@ async function startLive() {
     statusEl.textContent =
       "Connecting to EPHPHAVORA LIVE...";
 
-    goLiveBtn.disabled = true;
+    goLiveBtn.disabled =
+      true;
 
     const roomName =
-      makeRoomName();
+      createHostRoomName();
+
+    currentRoomName =
+      roomName;
 
     const connectionDetails =
-      await getLiveKitConnectionDetails(
+      await getConnectionDetails(
         roomName
       );
 
@@ -433,7 +647,11 @@ async function startLive() {
 
     room.on(
       LivekitClient.RoomEvent.TrackSubscribed,
-      (track, publication, participant) => {
+      (
+        track,
+        publication,
+        participant
+      ) => {
 
         if (
           track.kind ===
@@ -449,12 +667,17 @@ async function startLive() {
         }
 
         updateViewerCount();
+
       }
     );
 
     room.on(
       LivekitClient.RoomEvent.TrackUnsubscribed,
-      (track, publication, participant) => {
+      (
+        track,
+        publication,
+        participant
+      ) => {
 
         track.detach();
 
@@ -463,6 +686,7 @@ async function startLive() {
         );
 
         updateViewerCount();
+
       }
     );
 
@@ -477,7 +701,7 @@ async function startLive() {
 
     room.on(
       LivekitClient.RoomEvent.ParticipantDisconnected,
-      (participant) => {
+      participant => {
 
         removeParticipant(
           participant
@@ -504,11 +728,17 @@ async function startLive() {
         micBtn.disabled =
           true;
 
+        shareBtn.disabled =
+          true;
+
         endBtn.disabled =
           true;
 
         goLiveBtn.disabled =
           false;
+
+        shareBox.style.display =
+          "none";
 
         updateViewerCount();
 
@@ -534,7 +764,9 @@ async function startLive() {
     publications.forEach(
       publication => {
 
-        if (publication.track) {
+        if (
+          publication.track
+        ) {
 
           addVideoTrack(
             publication.track,
@@ -547,13 +779,19 @@ async function startLive() {
       }
     );
 
-    cameraOn = true;
-    micOn = true;
+    cameraOn =
+      true;
+
+    micOn =
+      true;
 
     cameraBtn.disabled =
       false;
 
     micBtn.disabled =
+      false;
+
+    shareBtn.disabled =
       false;
 
     endBtn.disabled =
@@ -564,6 +802,8 @@ async function startLive() {
 
     liveStatus.textContent =
       "LIVE";
+
+    showShareLink();
 
     updateViewerCount();
 
@@ -589,6 +829,178 @@ async function startLive() {
 
 }
 
+
+async function joinLive(roomName) {
+
+  try {
+
+    clearMessage();
+
+    statusEl.textContent =
+      "Joining EPHPHAVORA LIVE...";
+
+    goLiveBtn.disabled =
+      true;
+
+    const connectionDetails =
+      await getConnectionDetails(
+        roomName
+      );
+
+    currentRoomName =
+      roomName;
+
+    room =
+      new LivekitClient.Room({
+        adaptiveStream: true,
+        dynacast: true
+      });
+
+    room.on(
+      LivekitClient.RoomEvent.TrackSubscribed,
+      (
+        track,
+        publication,
+        participant
+      ) => {
+
+        if (
+          track.kind ===
+          LivekitClient.Track.Kind.Video
+        ) {
+
+          addVideoTrack(
+            track,
+            participant,
+            false
+          );
+
+        }
+
+        updateViewerCount();
+
+      }
+    );
+
+    room.on(
+      LivekitClient.RoomEvent.TrackUnsubscribed,
+      (
+        track,
+        publication,
+        participant
+      ) => {
+
+        track.detach();
+
+        removeParticipant(
+          participant
+        );
+
+        updateViewerCount();
+
+      }
+    );
+
+    room.on(
+      LivekitClient.RoomEvent.ParticipantConnected,
+      () => {
+
+        updateViewerCount();
+
+      }
+    );
+
+    room.on(
+      LivekitClient.RoomEvent.ParticipantDisconnected,
+      participant => {
+
+        removeParticipant(
+          participant
+        );
+
+        updateViewerCount();
+
+      }
+    );
+
+    room.on(
+      LivekitClient.RoomEvent.Disconnected,
+      () => {
+
+        statusEl.textContent =
+          "LIVE ended.";
+
+        liveStatus.textContent =
+          "OFF";
+
+        updateViewerCount();
+
+      }
+    );
+
+    await room.connect(
+      connectionDetails.serverUrl ||
+      LIVEKIT_URL,
+      connectionDetails.participantToken
+    );
+
+    await room.localParticipant
+      .setCameraEnabled(false);
+
+    await room.localParticipant
+      .setMicrophoneEnabled(false);
+
+    cameraOn =
+      false;
+
+    micOn =
+      false;
+
+    cameraBtn.disabled =
+      true;
+
+    micBtn.disabled =
+      true;
+
+    shareBtn.disabled =
+      false;
+
+    endBtn.disabled =
+      false;
+
+    statusEl.textContent =
+      "👀 You are watching EPHPHAVORA LIVE";
+
+    liveStatus.textContent =
+      "LIVE";
+
+    showShareLink();
+
+    updateViewerCount();
+
+  } catch (error) {
+
+    console.error(
+      "EPHPHAVORA VIEWER ERROR:",
+      error
+    );
+
+    statusEl.textContent =
+      "Unable to join LIVE.";
+
+    showMessage(
+      error.message ||
+      "This LIVE may have ended."
+    );
+
+    goLiveBtn.disabled =
+      false;
+
+  }
+
+}
+
+
 async function toggleCamera() {
 
   if (!room) return;
@@ -606,6 +1018,7 @@ async function toggleCamera() {
       ? "📷 Camera ON"
       : "📷 Camera OFF";
 }
+
 
 async function toggleMic() {
 
@@ -625,16 +1038,91 @@ async function toggleMic() {
       : "🎤 Mic OFF";
 }
 
+
+async function shareLive() {
+
+  if (!shareLink.value) {
+    return;
+  }
+
+  try {
+
+    await navigator.clipboard.writeText(
+      shareLink.value
+    );
+
+    shareBtn.textContent =
+      "✅ LINK COPIED";
+
+    setTimeout(() => {
+
+      shareBtn.textContent =
+        "🔗 SHARE LIVE";
+
+    }, 2000);
+
+  } catch {
+
+    shareLink.select();
+
+    showMessage(
+      "Copy the LIVE link manually."
+    );
+
+  }
+}
+
+
+async function copyLink() {
+
+  if (!shareLink.value) {
+    return;
+  }
+
+  try {
+
+    await navigator.clipboard.writeText(
+      shareLink.value
+    );
+
+    copyBtn.textContent =
+      "✅ COPIED";
+
+    setTimeout(() => {
+
+      copyBtn.textContent =
+        "📋 COPY LINK";
+
+    }, 2000);
+
+  } catch {
+
+    shareLink.select();
+
+    document.execCommand(
+      "copy"
+    );
+
+  }
+}
+
+
 async function endLive() {
 
-  if (!room) return;
+  if (!room) {
+    return;
+  }
 
   await room.disconnect();
 
   videoGrid.innerHTML =
     "";
 
-  room = null;
+  room =
+    null;
+
+  currentRoomName =
+    null;
 
   statusEl.textContent =
     "LIVE ended.";
@@ -651,11 +1139,17 @@ async function endLive() {
   micBtn.disabled =
     true;
 
+  shareBtn.disabled =
+    true;
+
   endBtn.disabled =
     true;
 
   goLiveBtn.disabled =
     false;
+
+  shareBox.style.display =
+    "none";
 
   cameraBtn.textContent =
     "📷 Camera ON";
@@ -663,9 +1157,14 @@ async function endLive() {
   micBtn.textContent =
     "🎤 Mic ON";
 
-  cameraOn = true;
-  micOn = true;
+  cameraOn =
+    true;
+
+  micOn =
+    true;
+
 }
+
 
 goLiveBtn.addEventListener(
   "click",
@@ -682,10 +1181,37 @@ micBtn.addEventListener(
   toggleMic
 );
 
+shareBtn.addEventListener(
+  "click",
+  shareLive
+);
+
+copyBtn.addEventListener(
+  "click",
+  copyLink
+);
+
 endBtn.addEventListener(
   "click",
   endLive
 );
+
+
+const roomFromURL =
+  getRoomFromURL();
+
+if (roomFromURL) {
+
+  goLiveBtn.textContent =
+    "👀 JOIN LIVE";
+
+  statusEl.textContent =
+    "A LIVE was shared with you.";
+
+  goLiveBtn.onclick =
+    () => joinLive(roomFromURL);
+
+}
 </script>
 
 </body>
