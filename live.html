@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>EPHPHAVORA LIVE</title>
-
-<script src="https://cdn.jsdelivr.net/npm/livekit-client/dist/livekit-client.umd.min.js"></script>
-
-<style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>EPHPHAVORA LIVE</title><script src="https://cdn.jsdelivr.net/npm/livekit-client/dist/livekit-client.umd.min.js"></script><style>
 * {
   box-sizing: border-box;
 }
@@ -209,6 +202,82 @@ button:disabled {
   color: #ffb8bd;
 }
 
+/* LIVE CHAT */
+
+.chat-box {
+  margin-top: 20px;
+  background: #171720;
+  border-radius: 12px;
+  padding: 15px;
+}
+
+.chat-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.chat-messages {
+  height: 260px;
+  overflow-y: auto;
+  background: #0f0f15;
+  border-radius: 9px;
+  padding: 10px;
+}
+
+.chat-empty {
+  color: #777;
+  text-align: center;
+  padding: 30px 10px;
+}
+
+.chat-message {
+  margin-bottom: 10px;
+  padding: 9px 11px;
+  background: #25252f;
+  border-radius: 9px;
+  word-wrap: break-word;
+}
+
+.chat-name {
+  font-weight: bold;
+  color: #8db8ff;
+  margin-bottom: 3px;
+}
+
+.chat-text {
+  color: white;
+  line-height: 1.4;
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+#chatInput {
+  flex: 1;
+  min-width: 0;
+  padding: 12px;
+  border: 0;
+  border-radius: 8px;
+  background: #25252f;
+  color: white;
+  font-size: 15px;
+  outline: none;
+}
+
+#chatInput::placeholder {
+  color: #888;
+}
+
+#sendChatBtn {
+  background: #2563eb;
+  color: white;
+  min-width: 90px;
+}
+
 @media (max-width: 600px) {
 
   .container {
@@ -231,109 +300,113 @@ button:disabled {
   button {
     flex: 1 1 140px;
   }
+
+  .chat-input-row {
+    flex-direction: column;
+  }
+
+  #sendChatBtn {
+    width: 100%;
+  }
 }
-</style>
-</head>
-
-<body>
-
-<header>
-
-  <div class="logo">
+</style></head><body><header>  <div class="logo">
     EPHPHAVORA
     <span class="live-title">🔴 LIVE</span>
-  </div>
-
-  <a class="back" href="feed.html">
+  </div>  <a class="back" href="feed.html">
     ← Feed
-  </a>
-
-</header>
-
-<div class="container">
-
-  <div id="status" class="status">
+  </a></header><div class="container">  <div id="status" class="status">
     Ready to go live.
-  </div>
-
-  <div class="video-area">
+  </div>  <div class="video-area">
     <div id="videoGrid"></div>
+  </div>  <div class="controls"><button id="goLiveBtn">
+  🔴 GO LIVE
+</button>
+
+<button id="cameraBtn" class="control" disabled>
+  📷 Camera ON
+</button>
+
+<button id="micBtn" class="control" disabled>
+  🎤 Mic ON
+</button>
+
+<button id="shareBtn" class="control" disabled>
+  🔗 SHARE LIVE
+</button>
+
+<button id="endBtn" disabled>
+  🛑 END LIVE
+</button>
+
+  </div>  <div id="shareBox" class="share-box"><div class="share-title">
+  🔗 Share this LIVE
+</div>
+
+<input
+  id="shareLink"
+  readonly
+>
+
+<button id="copyBtn" class="control">
+  📋 COPY LINK
+</button>
+
+  </div>  <div class="info"><div class="card">
+
+  <div id="viewerCount" class="card-number">
+    0
   </div>
 
-  <div class="controls">
-
-    <button id="goLiveBtn">
-      🔴 GO LIVE
-    </button>
-
-    <button id="cameraBtn" class="control" disabled>
-      📷 Camera ON
-    </button>
-
-    <button id="micBtn" class="control" disabled>
-      🎤 Mic ON
-    </button>
-
-    <button id="shareBtn" class="control" disabled>
-      🔗 SHARE LIVE
-    </button>
-
-    <button id="endBtn" disabled>
-      🛑 END LIVE
-    </button>
-
+  <div class="card-label">
+    Viewers
   </div>
-
-  <div id="shareBox" class="share-box">
-
-    <div class="share-title">
-      🔗 Share this LIVE
-    </div>
-
-    <input
-      id="shareLink"
-      readonly
-    >
-
-    <button id="copyBtn" class="control">
-      📋 COPY LINK
-    </button>
-
-  </div>
-
-  <div class="info">
-
-    <div class="card">
-
-      <div id="viewerCount" class="card-number">
-        0
-      </div>
-
-      <div class="card-label">
-        Viewers
-      </div>
-
-    </div>
-
-    <div class="card">
-
-      <div id="liveStatus" class="card-number">
-        OFF
-      </div>
-
-      <div class="card-label">
-        Live Status
-      </div>
-
-    </div>
-
-  </div>
-
-  <div id="message"></div>
 
 </div>
 
-<script>
+<div class="card">
+
+  <div id="liveStatus" class="card-number">
+    OFF
+  </div>
+
+  <div class="card-label">
+    Live Status
+  </div>
+
+</div>
+
+  </div>  <div id="message"></div>  <!-- LIVE CHAT -->  <div class="chat-box"><div class="chat-title">
+  💬 LIVE CHAT
+</div>
+
+<div id="chatMessages" class="chat-messages">
+
+  <div class="chat-empty" id="chatEmpty">
+    No comments yet.
+  </div>
+
+</div>
+
+<div class="chat-input-row">
+
+  <input
+    id="chatInput"
+    type="text"
+    maxlength="200"
+    placeholder="Write a comment..."
+  >
+
+  <button
+    id="sendChatBtn"
+    class="control"
+    disabled
+  >
+    SEND
+  </button>
+
+</div>
+
+  </div></div><script>
 
 const LIVEKIT_URL =
   "wss://ephphavora-wciizjcm.livekit.cloud";
@@ -386,6 +459,18 @@ const shareLink =
 
 const copyBtn =
   document.getElementById("copyBtn");
+
+const chatMessages =
+  document.getElementById("chatMessages");
+
+const chatEmpty =
+  document.getElementById("chatEmpty");
+
+const chatInput =
+  document.getElementById("chatInput");
+
+const sendChatBtn =
+  document.getElementById("sendChatBtn");
 
 
 function showMessage(text) {
@@ -616,6 +701,220 @@ function showShareLink() {
 }
 
 
+/* =========================
+   LIVE CHAT
+========================= */
+
+
+function addChatMessage(
+  username,
+  text
+) {
+
+  if (chatEmpty) {
+    chatEmpty.remove();
+  }
+
+  const message =
+    document.createElement(
+      "div"
+    );
+
+  message.className =
+    "chat-message";
+
+  const name =
+    document.createElement(
+      "div"
+    );
+
+  name.className =
+    "chat-name";
+
+  name.textContent =
+    username;
+
+  const messageText =
+    document.createElement(
+      "div"
+    );
+
+  messageText.className =
+    "chat-text";
+
+  messageText.textContent =
+    text;
+
+  message.appendChild(
+    name
+  );
+
+  message.appendChild(
+    messageText
+  );
+
+  chatMessages.appendChild(
+    message
+  );
+
+  chatMessages.scrollTop =
+    chatMessages.scrollHeight;
+}
+
+
+function setupChat() {
+
+  if (!room) {
+    return;
+  }
+
+  room.on(
+    LivekitClient.RoomEvent.DataReceived,
+    (
+      payload,
+      participant
+    ) => {
+
+      try {
+
+        const decoder =
+          new TextDecoder();
+
+        const data =
+          JSON.parse(
+            decoder.decode(
+              payload
+            )
+          );
+
+        if (
+          data.type ===
+          "chat"
+        ) {
+
+          addChatMessage(
+            data.username ||
+            participant?.name ||
+            "EPHPHAVORA User",
+            data.text
+          );
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          "LIVE CHAT RECEIVE ERROR:",
+          error
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+async function sendChatMessage() {
+
+  if (
+    !room ||
+    !room.localParticipant
+  ) {
+    return;
+  }
+
+  const text =
+    chatInput.value.trim();
+
+  if (!text) {
+    return;
+  }
+
+  const user =
+    getUserInfo();
+
+  const chatData =
+    JSON.stringify({
+
+      type:
+        "chat",
+
+      username:
+        user.username,
+
+      text:
+        text
+
+    });
+
+  try {
+
+    await room.localParticipant
+      .publishData(
+        new TextEncoder().encode(
+          chatData
+        ),
+        {
+          reliable: true
+        }
+      );
+
+    addChatMessage(
+      user.username,
+      text
+    );
+
+    chatInput.value =
+      "";
+
+  } catch (error) {
+
+    console.error(
+      "LIVE CHAT SEND ERROR:",
+      error
+    );
+
+    showMessage(
+      "Unable to send comment."
+    );
+
+  }
+
+}
+
+
+sendChatBtn.addEventListener(
+  "click",
+  sendChatMessage
+);
+
+
+chatInput.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key ===
+      "Enter"
+    ) {
+
+      event.preventDefault();
+
+      sendChatMessage();
+
+    }
+
+  }
+);
+
+
+/* =========================
+   START HOST LIVE
+========================= */
+
+
 async function startLive() {
 
   try {
@@ -644,6 +943,8 @@ async function startLive() {
         adaptiveStream: true,
         dynacast: true
       });
+
+    setupChat();
 
     room.on(
       LivekitClient.RoomEvent.TrackSubscribed,
@@ -734,6 +1035,9 @@ async function startLive() {
         endBtn.disabled =
           true;
 
+        sendChatBtn.disabled =
+          true;
+
         goLiveBtn.disabled =
           false;
 
@@ -797,6 +1101,9 @@ async function startLive() {
     endBtn.disabled =
       false;
 
+    sendChatBtn.disabled =
+      false;
+
     statusEl.textContent =
       "🔴 You are LIVE on EPHPHAVORA!";
 
@@ -830,6 +1137,11 @@ async function startLive() {
 }
 
 
+/* =========================
+   JOIN VIEWER LIVE
+========================= */
+
+
 async function joinLive(roomName) {
 
   try {
@@ -855,6 +1167,8 @@ async function joinLive(roomName) {
         adaptiveStream: true,
         dynacast: true
       });
+
+    setupChat();
 
     room.on(
       LivekitClient.RoomEvent.TrackSubscribed,
@@ -933,6 +1247,9 @@ async function joinLive(roomName) {
         liveStatus.textContent =
           "OFF";
 
+        sendChatBtn.disabled =
+          true;
+
         updateViewerCount();
 
       }
@@ -968,6 +1285,9 @@ async function joinLive(roomName) {
     endBtn.disabled =
       false;
 
+    sendChatBtn.disabled =
+      false;
+
     statusEl.textContent =
       "👀 You are watching EPHPHAVORA LIVE";
 
@@ -1001,6 +1321,11 @@ async function joinLive(roomName) {
 }
 
 
+/* =========================
+   CAMERA
+========================= */
+
+
 async function toggleCamera() {
 
   if (!room) return;
@@ -1020,6 +1345,11 @@ async function toggleCamera() {
 }
 
 
+/* =========================
+   MICROPHONE
+========================= */
+
+
 async function toggleMic() {
 
   if (!room) return;
@@ -1037,6 +1367,11 @@ async function toggleMic() {
       ? "🎤 Mic ON"
       : "🎤 Mic OFF";
 }
+
+
+/* =========================
+   SHARE LIVE
+========================= */
 
 
 async function shareLive() {
@@ -1070,7 +1405,13 @@ async function shareLive() {
     );
 
   }
+
 }
+
+
+/* =========================
+   COPY LINK
+========================= */
 
 
 async function copyLink() {
@@ -1104,7 +1445,13 @@ async function copyLink() {
     );
 
   }
+
 }
+
+
+/* =========================
+   END LIVE
+========================= */
 
 
 async function endLive() {
@@ -1145,6 +1492,9 @@ async function endLive() {
   endBtn.disabled =
     true;
 
+  sendChatBtn.disabled =
+    true;
+
   goLiveBtn.disabled =
     false;
 
@@ -1164,6 +1514,11 @@ async function endLive() {
     true;
 
 }
+
+
+/* =========================
+   BUTTON EVENTS
+========================= */
 
 
 goLiveBtn.addEventListener(
@@ -1197,6 +1552,11 @@ endBtn.addEventListener(
 );
 
 
+/* =========================
+   VIEWER MODE
+========================= */
+
+
 const roomFromURL =
   getRoomFromURL();
 
@@ -1212,7 +1572,6 @@ if (roomFromURL) {
     () => joinLive(roomFromURL);
 
 }
-</script>
 
-</body>
+</script></body>
 </html>
