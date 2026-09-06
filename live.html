@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EPHPHAVORA LIVE</title>
+
+<script src="https://cdn.jsdelivr.net/npm/livekit-client/dist/livekit-client.umd.min.js"></script>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b0b0f;
+  color: white;
+}
+
+header {
+  height: 64px;
+  background: #111118;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  border-bottom: 1px solid #25252f;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.live-title {
+  color: #ff3040;
+}
+
+.back {
+  color: white;
+  text-decoration: none;
+  background: #24242d;
+  padding: 9px 14px;
+  border-radius: 8px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+.status {
+  text-align: center;
+  padding: 12px;
+  margin-bottom: 15px;
+  background: #171720;
+  border-radius: 10px;
+  color: #bbb;
+}
+
+.video-area {
+  position: relative;
+  width: 100%;
+  background: #000;
+  border-radius: 14px;
+  overflow: hidden;
+  min-height: 420px;
+}
+
+#videoGrid {
+  width: 100%;
+  min-height: 420px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 4px;
+  background: #000;
+}
+
+.video-tile {
+  position: relative;
+  min-height: 300px;
+  background: #111;
+  overflow: hidden;
+}
+
+.video-tile video {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  object-fit: cover;
+  display: block;
+}
+
+.name-label {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(0,0,0,.65);
+  padding: 6px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+button {
+  border: 0;
+  padding: 12px 18px;
+  border-radius: 9px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+#goLiveBtn {
+  background: #ff3040;
+  color: white;
+}
+
+.control {
+  background: #292933;
+  color: white;
+}
+
+#endBtn {
+  background: #8b111b;
+  color: white;
+}
+
+button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1;
+  min-width: 140px;
+  background: #171720;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+}
+
+.card-number {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.card-label {
+  color: #aaa;
+  margin-top: 5px;
+}
+
+#message {
+  margin-top: 18px;
+  padding: 14px;
+  background: #171720;
+  border-radius: 10px;
+  display: none;
+  color: #ffb8bd;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
+  }
+
+  .video-area,
+  #videoGrid {
+    min-height: 330px;
+  }
+
+  .video-tile {
+    min-height: 280px;
+  }
+
+  .video-tile video {
+    min-height: 280px;
+  }
+
+  button {
+    flex: 1 1 140px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    EPHPHAVORA <span class="live-title">🔴 LIVE</span>
+  </div>
+
+  <a class="back" href="feed.html">← Feed</a>
+</header>
+
+<div class="container">
+
+  <div id="status" class="status">
+    Ready to go live.
+  </div>
+
+  <div class="video-area">
+    <div id="videoGrid"></div>
+  </div>
+
+  <div class="controls">
+
+    <button id="goLiveBtn">
+      🔴 GO LIVE
+    </button>
+
+    <button id="cameraBtn" class="control" disabled>
+      📷 Camera ON
+    </button>
+
+    <button id="micBtn" class="control" disabled>
+      🎤 Mic ON
+    </button>
+
+    <button id="endBtn" disabled>
+      🛑 END LIVE
+    </button>
+
+  </div>
+
+  <div class="info">
+
+    <div class="card">
+      <div id="viewerCount" class="card-number">0</div>
+      <div class="card-label">Viewers</div>
+    </div>
+
+    <div class="card">
+      <div id="liveStatus" class="card-number">OFF</div>
+      <div class="card-label">Live Status</div>
+    </div>
+
+  </div>
+
+  <div id="message"></div>
+
+</div>
+
+<script>
+const LIVEKIT_URL =
+  "wss://ephphavora-wciizjcm.livekit.cloud";
+
+const TOKEN_FUNCTION_URL =
+  "https://utoyoglycqjmqznczfxa.supabase.co/functions/v1/livekit-token";
+
+let room = null;
+let cameraOn = true;
+let micOn = true;
+
+const statusEl = document.getElementById("status");
+const messageEl = document.getElementById("message");
+const videoGrid = document.getElementById("videoGrid");
+
+const goLiveBtn = document.getElementById("goLiveBtn");
+const cameraBtn = document.getElementById("cameraBtn");
+const micBtn = document.getElementById("micBtn");
+const endBtn = document.getElementById("endBtn");
+
+const viewerCount = document.getElementById("viewerCount");
+const liveStatus = document.getElementById("liveStatus");
+
+function showMessage(text) {
+  messageEl.style.display = "block";
+  messageEl.textContent = text;
+}
+
+function clearMessage() {
+  messageEl.style.display = "none";
+  messageEl.textContent = "";
+}
+
+function getUserInfo() {
+  let username =
+    localStorage.getItem("berakah_username") ||
+    localStorage.getItem("berakah_user");
+
+  let userId =
+    localStorage.getItem("berakah_auth_user_id");
+
+  return {
+    username: username || "EPHPHAVORA User",
+    userId: userId || crypto.randomUUID()
+  };
+}
+
+function makeRoomName() {
+  const user = getUserInfo();
+
+  return "ephphavora-live-" + user.userId;
+}
+
+async function getLiveKitToken(roomName) {
+
+  const user = getUserInfo();
+
+  const supabaseToken =
+    localStorage.getItem("berakah_access_token");
+
+  if (!supabaseToken) {
+    throw new Error(
+      "You must be logged in to start a LIVE."
+    );
+  }
+
+  const response = await fetch(
+    TOKEN_FUNCTION_URL,
+    {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization":
+          "Bearer " + supabaseToken,
+        "apikey":
+          "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA"
+      },
+
+      body: JSON.stringify({
+        roomName: roomName,
+        participantName: user.username,
+        participantIdentity: user.userId
+      })
+    }
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      data.error || "Could not create LiveKit token."
+    );
+  }
+
+  if (!data.token) {
+    throw new Error(
+      "LiveKit token was not returned."
+    );
+  }
+
+  return data.token;
+}
+
+function addVideoTrack(track, participant, isLocal) {
+
+  const tile = document.createElement("div");
+  tile.className = "video-tile";
+
+  tile.dataset.identity = participant.identity;
+
+  const videoElement = track.attach();
+
+  videoElement.autoplay = true;
+  videoElement.playsInline = true;
+
+  tile.appendChild(videoElement);
+
+  const name = document.createElement("div");
+  name.className = "name-label";
+
+  name.textContent =
+    isLocal
+      ? "You"
+      : (participant.name || participant.identity);
+
+  tile.appendChild(name);
+
+  videoGrid.appendChild(tile);
+}
+
+function removeParticipant(participant) {
+
+  const tiles =
+    videoGrid.querySelectorAll(".video-tile");
+
+  tiles.forEach(tile => {
+
+    if (
+      tile.dataset.identity === participant.identity
+    ) {
+      tile.remove();
+    }
+
+  });
+}
+
+function updateViewerCount() {
+
+  if (!room) {
+    viewerCount.textContent = "0";
+    return;
+  }
+
+  viewerCount.textContent =
+    String(room.remoteParticipants.size);
+}
+
+async function startLive() {
+
+  try {
+
+    clearMessage();
+
+    statusEl.textContent =
+      "Connecting to EPHPHAVORA LIVE...";
+
+    goLiveBtn.disabled = true;
+
+    const roomName = makeRoomName();
+
+    const token =
+      await getLiveKitToken(roomName);
+
+    room = new LivekitClient.Room({
+      adaptiveStream: true,
+      dynacast: true
+    });
+
+    room.on(
+      LivekitClient.RoomEvent.TrackSubscribed,
+      (track, publication, participant) => {
+
+        if (
+          track.kind ===
+          LivekitClient.Track.Kind.Video
+        ) {
+          addVideoTrack(
+            track,
+            participant,
+            false
+          );
+        }
+
+        updateViewerCount();
+      }
+    );
+
+    room.on(
+      LivekitClient.RoomEvent.TrackUnsubscribed,
+      (track, publication, participant) => {
+
+        track.detach();
+
+        removeParticipant(participant);
+
+        updateViewerCount();
+      }
+    );
+
+    room.on(
+      LivekitClient.RoomEvent.ParticipantConnected,
+      () => {
+        updateViewerCount();
+      }
+    );
+
+    room.on(
+      LivekitClient.RoomEvent.ParticipantDisconnected,
+      (participant) => {
+
+        removeParticipant(participant);
+
+        updateViewerCount();
+      }
+    );
+
+    room.on(
+      LivekitClient.RoomEvent.Disconnected,
+      () => {
+
+        statusEl.textContent =
+          "Disconnected from LIVE.";
+
+        liveStatus.textContent = "OFF";
+
+        cameraBtn.disabled = true;
+        micBtn.disabled = true;
+        endBtn.disabled = true;
+
+        goLiveBtn.disabled = false;
+
+        updateViewerCount();
+      }
+    );
+
+    await room.connect(
+      LIVEKIT_URL,
+      token
+    );
+
+    await room.localParticipant.setCameraEnabled(true);
+
+    await room.localParticipant.setMicrophoneEnabled(true);
+
+    const publications =
+      room.localParticipant.videoTrackPublications;
+
+    publications.forEach(publication => {
+
+      if (publication.track) {
+
+        addVideoTrack(
+          publication.track,
+          room.localParticipant,
+          true
+        );
+
+      }
+
+    });
+
+    cameraOn = true;
+    micOn = true;
+
+    cameraBtn.disabled = false;
+    micBtn.disabled = false;
+    endBtn.disabled = false;
+
+    statusEl.textContent =
+      "🔴 You are LIVE on EPHPHAVORA!";
+
+    liveStatus.textContent = "LIVE";
+
+    updateViewerCount();
+
+  } catch (error) {
+
+    console.error(error);
+
+    statusEl.textContent =
+      "Unable to start LIVE.";
+
+    showMessage(
+      error.message ||
+      "Something went wrong."
+    );
+
+    goLiveBtn.disabled = false;
+
+  }
+
+}
+
+async function toggleCamera() {
+
+  if (!room) return;
+
+  cameraOn = !cameraOn;
+
+  await room.localParticipant
+    .setCameraEnabled(cameraOn);
+
+  cameraBtn.textContent =
+    cameraOn
+      ? "📷 Camera ON"
+      : "📷 Camera OFF";
+}
+
+async function toggleMic() {
+
+  if (!room) return;
+
+  micOn = !micOn;
+
+  await room.localParticipant
+    .setMicrophoneEnabled(micOn);
+
+  micBtn.textContent =
+    micOn
+      ? "🎤 Mic ON"
+      : "🎤 Mic OFF";
+}
+
+async function endLive() {
+
+  if (!room) return;
+
+  await room.disconnect();
+
+  videoGrid.innerHTML = "";
+
+  room = null;
+
+  statusEl.textContent =
+    "LIVE ended.";
+
+  liveStatus.textContent =
+    "OFF";
+
+  viewerCount.textContent =
+    "0";
+
+  cameraBtn.disabled = true;
+  micBtn.disabled = true;
+  endBtn.disabled = true;
+
+  goLiveBtn.disabled = false;
+
+  cameraBtn.textContent =
+    "📷 Camera ON";
+
+  micBtn.textContent =
+    "🎤 Mic ON";
+
+  cameraOn = true;
+  micOn = true;
+}
+
+goLiveBtn.addEventListener(
+  "click",
+  startLive
+);
+
+cameraBtn.addEventListener(
+  "click",
+  toggleCamera
+);
+
+micBtn.addEventListener(
+  "click",
+  toggleMic
+);
+
+endBtn.addEventListener(
+  "click",
+  endLive
+);
+</script>
+
+</body>
+</html>
