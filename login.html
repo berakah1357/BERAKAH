@@ -9,7 +9,7 @@
 name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>BERAKAH - Login</title>
+<title>EPHPHAVORA - Login</title>
 
 <style>
 
@@ -55,8 +55,27 @@ header {
   background: white;
 }
 
+.language-bar {
+  max-width: 1000px;
+  margin: 15px auto 0;
+  padding: 0 20px;
+  text-align: right;
+}
+
+.language-bar label {
+  font-weight: bold;
+}
+
+.language-bar select {
+  padding: 7px 10px;
+  margin-left: 5px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  background: white;
+}
+
 main {
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 120px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -206,6 +225,10 @@ input:focus {
     font-size: 27px;
   }
 
+  .language-bar {
+    text-align: center;
+  }
+
 }
 
 </style>
@@ -221,12 +244,13 @@ input:focus {
 <div class="header-inner">
 
 <div class="logo">
-BERAKAH
+EPHPHAVORA
 </div>
 
 <a
 class="home-link"
-href="index.html">
+href="index.html"
+id="homeLink">
 
 Home
 
@@ -237,21 +261,52 @@ Home
 </header>
 
 
+<div class="language-bar">
+
+<label for="language" id="languageLabel">
+🌎 Language:
+</label>
+
+<select id="language">
+
+<option value="ht">
+Haitian Creole
+</option>
+
+<option value="en">
+English
+</option>
+
+<option value="fr">
+French
+</option>
+
+<option value="es">
+Spanish
+</option>
+
+</select>
+
+</div>
+
+
 <main>
 
 
 <div class="login-card">
 
 
-<h1>
-Welcome Back
+<h1 id="pageTitle">
+Byenveni ankò
 </h1>
 
 
-<div class="subtitle">
+<div
+class="subtitle"
+id="pageSubtitle">
 
-Log in to your BERAKAH account and
-connect, share, and grow together.
+Konekte nan kont EPHPHAVORA ou
+epi konekte, pataje, epi grandi ansanm.
 
 </div>
 
@@ -259,20 +314,29 @@ connect, share, and grow together.
 <form id="loginForm">
 
 
-<label for="email">
-Email
+<label
+for="email"
+id="emailLabel">
+
+Imèl
+
 </label>
+
 
 <input
 id="email"
 type="email"
 autocomplete="email"
-placeholder="Enter your email"
+placeholder="Antre imèl ou"
 required>
 
 
-<label for="password">
-Password
+<label
+for="password"
+id="passwordLabel">
+
+Modpas
+
 </label>
 
 
@@ -282,15 +346,16 @@ Password
 id="password"
 type="password"
 autocomplete="current-password"
-placeholder="Enter your password"
+placeholder="Antre modpas ou"
 required>
+
 
 <button
 type="button"
 class="show-password"
 id="showPassword">
 
-Show
+Montre
 
 </button>
 
@@ -302,7 +367,7 @@ href="#"
 class="forgot"
 id="forgotPassword">
 
-Forgot password?
+Ou bliye modpas ou?
 
 </a>
 
@@ -312,7 +377,7 @@ type="submit"
 class="login-button"
 id="loginButton">
 
-LOG IN
+KONEKTE
 
 </button>
 
@@ -328,18 +393,26 @@ class="status">
 
 <div class="signup">
 
-Don't have an account?
+<span id="noAccount">
+Ou poko gen kont?
+</span>
 
-<a href="signup.html">
-CREATE ACCOUNT
+<a
+href="signup.html"
+id="createAccount">
+
+KREYE KONT
+
 </a>
 
 </div>
 
 
-<div class="languages">
+<div
+class="languages"
+id="languagesText">
 
-Haitian Creole • English • French • Spanish
+Kreyòl Ayisyen • Anglè • Franse • Panyòl
 
 </div>
 
@@ -353,7 +426,463 @@ Haitian Creole • English • French • Spanish
 <script>
 
 /* =====================================================
-   BERAKAH SUPABASE CONFIGURATION
+   EPHPHAVORA MULTILINGUAL TRANSLATIONS
+   ===================================================== */
+
+const translations = {
+
+ht: {
+
+pageTitle:
+"Byenveni ankò",
+
+pageSubtitle:
+"Konekte nan kont EPHPHAVORA ou epi konekte, pataje, epi grandi ansanm.",
+
+home:
+"Akèy",
+
+languageLabel:
+"🌎 Lang:",
+
+emailLabel:
+"Imèl",
+
+emailPlaceholder:
+"Antre imèl ou",
+
+passwordLabel:
+"Modpas",
+
+passwordPlaceholder:
+"Antre modpas ou",
+
+show:
+"Montre",
+
+hide:
+"Fèmen",
+
+forgot:
+"Ou bliye modpas ou?",
+
+login:
+"KONEKTE",
+
+loggingIn:
+"AP KONEKTE...",
+
+noAccount:
+"Ou poko gen kont?",
+
+createAccount:
+"KREYE KONT",
+
+languages:
+"Kreyòl Ayisyen • Anglè • Franse • Panyòl",
+
+connecting:
+"Ap konekte ak EPHPHAVORA...",
+
+success:
+"Koneksyon reyisi! N ap redirije ou...",
+
+emailRequired:
+"Tanpri antre imèl ou.",
+
+passwordRequired:
+"Tanpri antre modpas ou.",
+
+loginFailed:
+"Koneksyon echwe. Tanpri verifye imèl ak modpas ou.",
+
+incorrectCredentials:
+"Imèl oswa modpas la pa kòrèk.",
+
+sessionError:
+"Koneksyon an pa t kapab verifye. Tanpri eseye ankò.",
+
+forgotSending:
+"Ap voye imèl pou rekipere modpas la...",
+
+forgotSuccess:
+"Enstriksyon pou chanje modpas la te voye si imèl sa a asosye ak yon kont EPHPHAVORA."
+
+},
+
+en: {
+
+pageTitle:
+"Welcome Back",
+
+pageSubtitle:
+"Log in to your EPHPHAVORA account and connect, share, and grow together.",
+
+home:
+"Home",
+
+languageLabel:
+"🌎 Language:",
+
+emailLabel:
+"Email",
+
+emailPlaceholder:
+"Enter your email",
+
+passwordLabel:
+"Password",
+
+passwordPlaceholder:
+"Enter your password",
+
+show:
+"Show",
+
+hide:
+"Hide",
+
+forgot:
+"Forgot password?",
+
+login:
+"LOG IN",
+
+loggingIn:
+"LOGGING IN...",
+
+noAccount:
+"Don't have an account?",
+
+createAccount:
+"CREATE ACCOUNT",
+
+languages:
+"Haitian Creole • English • French • Spanish",
+
+connecting:
+"Connecting to EPHPHAVORA...",
+
+success:
+"Login successful! Redirecting...",
+
+emailRequired:
+"Please enter your email.",
+
+passwordRequired:
+"Please enter your password.",
+
+loginFailed:
+"Login failed. Please check your email and password.",
+
+incorrectCredentials:
+"Incorrect email or password.",
+
+sessionError:
+"Your login session could not be verified. Please try again.",
+
+forgotSending:
+"Sending password reset email...",
+
+forgotSuccess:
+"Password reset instructions have been sent if this email belongs to an EPHPHAVORA account."
+
+},
+
+fr: {
+
+pageTitle:
+"Bon retour",
+
+pageSubtitle:
+"Connectez-vous à votre compte EPHPHAVORA et connectez-vous, partagez et grandissez ensemble.",
+
+home:
+"Accueil",
+
+languageLabel:
+"🌎 Langue:",
+
+emailLabel:
+"E-mail",
+
+emailPlaceholder:
+"Entrez votre e-mail",
+
+passwordLabel:
+"Mot de passe",
+
+passwordPlaceholder:
+"Entrez votre mot de passe",
+
+show:
+"Afficher",
+
+hide:
+"Masquer",
+
+forgot:
+"Mot de passe oublié ?",
+
+login:
+"SE CONNECTER",
+
+loggingIn:
+"CONNEXION...",
+
+noAccount:
+"Vous n'avez pas de compte ?",
+
+createAccount:
+"CRÉER UN COMPTE",
+
+languages:
+"Créole haïtien • Anglais • Français • Espagnol",
+
+connecting:
+"Connexion à EPHPHAVORA...",
+
+success:
+"Connexion réussie ! Redirection...",
+
+emailRequired:
+"Veuillez entrer votre e-mail.",
+
+passwordRequired:
+"Veuillez entrer votre mot de passe.",
+
+loginFailed:
+"Échec de la connexion. Vérifiez votre e-mail et votre mot de passe.",
+
+incorrectCredentials:
+"E-mail ou mot de passe incorrect.",
+
+sessionError:
+"Votre session de connexion n'a pas pu être vérifiée. Veuillez réessayer.",
+
+forgotSending:
+"Envoi de l'e-mail de réinitialisation du mot de passe...",
+
+forgotSuccess:
+"Les instructions de réinitialisation ont été envoyées si cet e-mail appartient à un compte EPHPHAVORA."
+
+},
+
+es: {
+
+pageTitle:
+"Bienvenido de nuevo",
+
+pageSubtitle:
+"Inicia sesión en tu cuenta de EPHPHAVORA y conecta, comparte y crece juntos.",
+
+home:
+"Inicio",
+
+languageLabel:
+"🌎 Idioma:",
+
+emailLabel:
+"Correo electrónico",
+
+emailPlaceholder:
+"Ingresa tu correo electrónico",
+
+passwordLabel:
+"Contraseña",
+
+passwordPlaceholder:
+"Ingresa tu contraseña",
+
+show:
+"Mostrar",
+
+hide:
+"Ocultar",
+
+forgot:
+"¿Olvidaste tu contraseña?",
+
+login:
+"INICIAR SESIÓN",
+
+loggingIn:
+"INICIANDO SESIÓN...",
+
+noAccount:
+"¿No tienes una cuenta?",
+
+createAccount:
+"CREAR CUENTA",
+
+languages:
+"Criollo haitiano • Inglés • Francés • Español",
+
+connecting:
+"Conectando a EPHPHAVORA...",
+
+success:
+"¡Inicio de sesión exitoso! Redirigiendo...",
+
+emailRequired:
+"Por favor, ingresa tu correo electrónico.",
+
+passwordRequired:
+"Por favor, ingresa tu contraseña.",
+
+loginFailed:
+"Error al iniciar sesión. Verifica tu correo y contraseña.",
+
+incorrectCredentials:
+"Correo electrónico o contraseña incorrectos.",
+
+sessionError:
+"No se pudo verificar tu sesión. Inténtalo de nuevo.",
+
+forgotSending:
+"Enviando correo para restablecer la contraseña...",
+
+forgotSuccess:
+"Las instrucciones para restablecer la contraseña se han enviado si este correo pertenece a una cuenta de EPHPHAVORA."
+
+}
+
+};
+
+
+/* =====================================================
+   LANGUAGE SYSTEM
+   ===================================================== */
+
+let currentLanguage = "ht";
+
+
+function t(key) {
+
+return translations[currentLanguage][key];
+
+}
+
+
+function changeLanguage(language) {
+
+if (!translations[language]) {
+return;
+}
+
+currentLanguage = language;
+
+document.documentElement.lang =
+language === "ht" ? "ht" : language;
+
+
+/* Header */
+
+document.getElementById("homeLink").textContent =
+t("home");
+
+document.getElementById("languageLabel").textContent =
+t("languageLabel");
+
+
+/* Login */
+
+document.getElementById("pageTitle").textContent =
+t("pageTitle");
+
+document.getElementById("pageSubtitle").textContent =
+t("pageSubtitle");
+
+document.getElementById("emailLabel").textContent =
+t("emailLabel");
+
+document.getElementById("passwordLabel").textContent =
+t("passwordLabel");
+
+document.getElementById("email").placeholder =
+t("emailPlaceholder");
+
+document.getElementById("password").placeholder =
+t("passwordPlaceholder");
+
+document.getElementById("forgotPassword").textContent =
+t("forgot");
+
+document.getElementById("loginButton").textContent =
+t("login");
+
+document.getElementById("noAccount").textContent =
+t("noAccount");
+
+document.getElementById("createAccount").textContent =
+t("createAccount");
+
+document.getElementById("languagesText").textContent =
+t("languages");
+
+
+/* Password button */
+
+if (passwordInput.type === "password") {
+
+showPasswordButton.textContent =
+t("show");
+
+} else {
+
+showPasswordButton.textContent =
+t("hide");
+
+}
+
+
+/* Save language */
+
+localStorage.setItem(
+"ephphavora_language",
+language
+);
+
+}
+
+
+/* =====================================================
+   LOAD SAVED LANGUAGE
+   ===================================================== */
+
+const savedLanguage =
+localStorage.getItem(
+"ephphavora_language"
+);
+
+if (savedLanguage &&
+translations[savedLanguage]) {
+
+currentLanguage =
+savedLanguage;
+
+document.getElementById("language").value =
+savedLanguage;
+
+}
+
+changeLanguage(currentLanguage);
+
+
+document
+.getElementById("language")
+.addEventListener(
+"change",
+function() {
+
+changeLanguage(this.value);
+
+}
+);
+
+
+/* =====================================================
+   SUPABASE CONFIGURATION
    ===================================================== */
 
 const SUPABASE_URL =
@@ -405,7 +934,10 @@ statusBox.className =
 
 
 /* =====================================================
-   CLEAR OLD / BROKEN SESSION
+   CLEAR OLD SESSION
+   IMPORTANT:
+   Keep these existing storage keys because
+   other EPHPHAVORA pages may use them.
    ===================================================== */
 
 function clearBERAKAHSession() {
@@ -429,12 +961,6 @@ localStorage.removeItem(
 localStorage.removeItem(
 "berakah_auth_user_id"
 );
-
-
-/*
-Also remove older possible keys
-from previous versions.
-*/
 
 localStorage.removeItem(
 "access_token"
@@ -466,21 +992,10 @@ throw new Error(
 
 }
 
-
-/*
-Save the new access token.
-*/
-
 localStorage.setItem(
 "berakah_access_token",
 data.access_token
 );
-
-
-/*
-Save refresh token when Supabase
-provides one.
-*/
 
 if (data.refresh_token) {
 
@@ -491,22 +1006,12 @@ data.refresh_token
 
 }
 
-
-/*
-Save the complete user object.
-*/
-
 if (data.user) {
 
 localStorage.setItem(
 "berakah_user",
 JSON.stringify(data.user)
 );
-
-
-/*
-Save Auth UUID separately.
-*/
 
 if (data.user.id) {
 
@@ -517,12 +1022,6 @@ data.user.id
 
 }
 
-
-/*
-Try to get username from
-Supabase user metadata.
-*/
-
 const metadata =
 data.user.user_metadata || {};
 
@@ -531,7 +1030,6 @@ metadata.username ||
 metadata.user_name ||
 metadata.userName ||
 "";
-
 
 if (username) {
 
@@ -555,15 +1053,7 @@ String(username)
 
 async function loginUser(email, password) {
 
-/*
-IMPORTANT:
-
-Delete any broken/stale session
-BEFORE creating a new login.
-*/
-
 clearBERAKAHSession();
-
 
 const response =
 await fetch(
@@ -616,6 +1106,7 @@ JSON.parse(text) :
 null;
 
 }
+
 catch(error) {
 
 throw new Error(
@@ -625,14 +1116,12 @@ throw new Error(
 }
 
 
-/*
-Login failed.
-*/
+/* Login failed */
 
 if (!response.ok) {
 
 console.error(
-"BERAKAH LOGIN ERROR:",
+"EPHPHAVORA LOGIN ERROR:",
 data
 );
 
@@ -644,7 +1133,7 @@ data.error_code ===
 ) {
 
 throw new Error(
-"Incorrect email or password."
+t("incorrectCredentials")
 );
 
 }
@@ -675,16 +1164,13 @@ data.error_description
 
 
 throw new Error(
-"Login failed. Please check your email and password."
+t("loginFailed")
 );
 
 }
 
 
-/*
-Make absolutely sure an
-access token exists.
-*/
+/* Verify token exists */
 
 if (!data.access_token) {
 
@@ -695,16 +1181,9 @@ throw new Error(
 }
 
 
-/*
-Save fresh session.
-*/
+/* Save fresh session */
 
 saveBERAKAHSession(data);
-
-
-/*
-Return session data.
-*/
 
 return data;
 
@@ -771,6 +1250,7 @@ try {
 return JSON.parse(text);
 
 }
+
 catch(error) {
 
 return null;
@@ -858,8 +1338,8 @@ return rows[0].username;
 
 }
 
-
 }
+
 catch(error) {
 
 console.warn(
@@ -899,7 +1379,7 @@ passwordInput.value;
 if (!email) {
 
 showStatus(
-"Please enter your email.",
+t("emailRequired"),
 "error"
 );
 
@@ -911,7 +1391,7 @@ return;
 if (!password) {
 
 showStatus(
-"Please enter your password.",
+t("passwordRequired"),
 "error"
 );
 
@@ -924,11 +1404,11 @@ loginButton.disabled =
 true;
 
 loginButton.textContent =
-"LOGGING IN...";
+t("loggingIn");
 
 
 showStatus(
-"Connecting to BERAKAH...",
+t("connecting"),
 "success"
 );
 
@@ -936,9 +1416,7 @@ showStatus(
 try {
 
 
-/*
-LOGIN
-*/
+/* LOGIN */
 
 const session =
 await loginUser(
@@ -947,9 +1425,7 @@ password
 );
 
 
-/*
-VERIFY THE FRESH TOKEN
-*/
+/* VERIFY FRESH TOKEN */
 
 const verifiedUser =
 await verifyNewSession(
@@ -959,25 +1435,16 @@ session.access_token
 
 if (!verifiedUser) {
 
-/*
-If the new token cannot be
-verified, destroy it immediately.
-*/
-
 clearBERAKAHSession();
 
-
 throw new Error(
-"Your login session could not be verified. Please try again."
+t("sessionError")
 );
 
 }
 
 
-/*
-Use the verified Supabase
-Auth user.
-*/
+/* Save verified user */
 
 localStorage.setItem(
 "berakah_user",
@@ -992,11 +1459,7 @@ verifiedUser.id
 );
 
 
-/*
-Get username from profile
-if it was not already stored
-in user metadata.
-*/
+/* Get username */
 
 let username =
 localStorage.getItem(
@@ -1024,20 +1487,15 @@ username
 }
 
 
-/*
-SUCCESS
-*/
+/* SUCCESS */
 
 showStatus(
-"Login successful! Redirecting...",
+t("success"),
 "success"
 );
 
 
-/*
-Give localStorage a moment
-to finish before navigation.
-*/
+/* Redirect */
 
 setTimeout(
 function() {
@@ -1051,10 +1509,11 @@ window.location.href =
 
 
 }
+
 catch(error) {
 
 console.error(
-"BERAKAH LOGIN ERROR:",
+"EPHPHAVORA LOGIN ERROR:",
 error
 );
 
@@ -1064,7 +1523,7 @@ clearBERAKAHSession();
 
 showStatus(
 error.message ||
-"Unable to log in. Please try again.",
+t("loginFailed"),
 "error"
 );
 
@@ -1073,7 +1532,7 @@ loginButton.disabled =
 false;
 
 loginButton.textContent =
-"LOG IN";
+t("login");
 
 }
 
@@ -1097,16 +1556,17 @@ passwordInput.type =
 "text";
 
 showPasswordButton.textContent =
-"Hide";
+t("hide");
 
 }
+
 else {
 
 passwordInput.type =
 "password";
 
 showPasswordButton.textContent =
-"Show";
+t("show");
 
 }
 
@@ -1133,7 +1593,7 @@ emailInput.value
 if (!email) {
 
 showStatus(
-"Enter your email address first, then select Forgot password.",
+t("emailRequired"),
 "error"
 );
 
@@ -1147,7 +1607,7 @@ return;
 try {
 
 showStatus(
-"Sending password reset email...",
+t("forgotSending"),
 "success"
 );
 
@@ -1199,7 +1659,9 @@ data =
 JSON.parse(text);
 
 }
+
 catch(error) {}
+
 
 throw new Error(
 data?.msg ||
@@ -1211,19 +1673,18 @@ data?.message ||
 
 
 showStatus(
-"Password reset instructions have been sent if this email belongs to a BERAKAH account.",
+t("forgotSuccess"),
 "success"
 );
 
-
 }
+
 catch(error) {
 
 console.error(
 "PASSWORD RESET ERROR:",
 error
 );
-
 
 showStatus(
 error.message,
@@ -1242,11 +1703,10 @@ error.message,
 function prepareLoginPage() {
 
 /*
-We intentionally do NOT trust an old
-access token on the login page.
-
-The user can always perform a fresh
-login.
+Fresh login is always available.
+Existing session keys are preserved
+for compatibility with the rest of
+the EPHPHAVORA platform.
 */
 
 }
