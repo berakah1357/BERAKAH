@@ -1,1171 +1,809 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EPHPHAVORA - Seller Orders</title>
 
-<title>EPHPHAVORA - Seller Orders</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-<style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #111827;
+    }
 
-* {
-  box-sizing: border-box;
-}
+    header {
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
-  color: #111827;
-}
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
+    }
 
-header {
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 16px 20px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      color: #111827;
+      margin-bottom: 4px;
+    }
 
-.header-inner {
-  max-width: 1100px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-}
+    .subtitle {
+      color: #6b7280;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
 
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-}
+    nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-.logo span {
-  display: block;
-  font-size: 13px;
-  color: #6b7280;
-  margin-top: 3px;
-}
+    nav a {
+      text-decoration: none;
+      color: #374151;
+      background: #f3f4f6;
+      padding: 9px 13px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
 
-.nav {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
+    nav a:hover {
+      background: #e5e7eb;
+    }
 
-.nav a {
-  text-decoration: none;
-  color: #111827;
-  background: #f3f4f6;
-  padding: 9px 12px;
-  border-radius: 7px;
-  font-size: 13px;
-}
+    main {
+      max-width: 1100px;
+      margin: 25px auto;
+      padding: 0 16px;
+    }
 
-main {
-  max-width: 1100px;
-  margin: 25px auto;
-  padding: 0 15px 50px;
-}
+    .page-title {
+      font-size: 26px;
+      margin: 0 0 6px;
+    }
 
-h1 {
-  margin-bottom: 5px;
-}
+    .description {
+      color: #6b7280;
+      margin: 0 0 18px;
+    }
 
-.subtitle {
-  color: #6b7280;
-  margin-top: 0;
-}
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 18px;
+    }
 
-.refresh {
-  margin: 15px 0;
-  border: 0;
-  background: #111827;
-  color: white;
-  padding: 11px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
+    button {
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      border-radius: 8px;
+      padding: 10px 15px;
+      font-size: 14px;
+    }
 
-.message {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 18px;
-  margin-top: 15px;
-}
+    .refresh-btn {
+      background: #111827;
+      color: white;
+    }
 
-.error {
-  color: #b91c1c;
-}
+    .refresh-btn:hover {
+      background: #1f2937;
+    }
 
-.empty {
-  text-align: center;
-  padding: 40px 20px;
-  color: #6b7280;
-}
+    .status {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 18px;
+      color: #374151;
+      display: none;
+    }
 
-.order-card {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 20px;
-  margin-top: 18px;
-  box-shadow: 0 2px 7px rgba(0,0,0,0.04);
-}
+    .orders-container {
+      display: grid;
+      gap: 18px;
+    }
 
-.order-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  flex-wrap: wrap;
-  border-bottom: 1px solid #e5e7eb;
-  padding-bottom: 15px;
-}
+    .order-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
 
-.order-number {
-  font-weight: bold;
-  font-size: 17px;
-}
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
 
-.date {
-  color: #6b7280;
-  font-size: 13px;
-  margin-top: 5px;
-}
+    .order-id {
+      font-size: 17px;
+      font-weight: 800;
+      word-break: break-word;
+    }
 
-.status {
-  padding: 7px 12px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
+    .order-date {
+      color: #6b7280;
+      font-size: 13px;
+      margin-top: 4px;
+    }
 
-.status.pending {
-  background: #fef3c7;
-  color: #92400e;
-}
+    .status-badge {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      color: #374151;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
 
-.status.confirmed {
-  background: #dcfce7;
-  color: #166534;
-}
+    .order-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
 
-.status.processing {
-  background: #dbeafe;
-  color: #1e40af;
-}
+    .info-box {
+      background: #f9fafb;
+      border-radius: 10px;
+      padding: 12px;
+    }
 
-.status.shipped {
-  background: #e0e7ff;
-  color: #3730a3;
-}
+    .info-label {
+      color: #6b7280;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
 
-.status.delivered {
-  background: #d1fae5;
-  color: #065f46;
-}
+    .info-value {
+      font-weight: 700;
+      word-break: break-word;
+    }
 
-.status.cancelled {
-  background: #fee2e2;
-  color: #991b1b;
-}
+    .order-total {
+      font-size: 20px;
+      font-weight: 800;
+    }
 
-.status.unknown {
-  background: #e5e7eb;
-  color: #374151;
-}
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-top: 14px;
+      border-top: 1px solid #e5e7eb;
+    }
 
-.order-body {
-  padding-top: 18px;
-}
+    .actions label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #374151;
+    }
 
-.product-name {
-  font-size: 19px;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
+    .status-select {
+      padding: 9px 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      background: white;
+      font-size: 14px;
+    }
 
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 12px;
-}
+    .save-btn {
+      background: #2563eb;
+      color: white;
+    }
 
-.info {
-  background: #f9fafb;
-  padding: 12px;
-  border-radius: 8px;
-}
+    .save-btn:hover {
+      background: #1d4ed8;
+    }
 
-.label {
-  display: block;
-  color: #6b7280;
-  font-size: 12px;
-  margin-bottom: 5px;
-}
+    .save-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
 
-.value {
-  font-weight: 600;
-  word-break: break-word;
-}
+    .payment-paid {
+      color: #15803d;
+      font-weight: 800;
+    }
 
-.customer-box {
-  margin-top: 18px;
-  background: #f9fafb;
-  padding: 15px;
-  border-radius: 9px;
-}
+    .payment-unpaid {
+      color: #b91c1c;
+      font-weight: 800;
+    }
 
-.customer-box h3 {
-  margin-top: 0;
-  margin-bottom: 12px;
-}
+    .empty {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 35px 20px;
+      text-align: center;
+      color: #6b7280;
+    }
 
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 18px;
-}
+    .error {
+      color: #b91c1c;
+      background: #fef2f2;
+      border-color: #fecaca;
+    }
 
-.action-btn {
-  border: 0;
-  border-radius: 8px;
-  padding: 10px 14px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 13px;
-}
+    .success {
+      color: #166534;
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
 
-.process-btn {
-  background: #2563eb;
-  color: white;
-}
+    @media (max-width: 650px) {
+      header {
+        padding: 14px;
+      }
 
-.ship-btn {
-  background: #4f46e5;
-  color: white;
-}
+      .logo {
+        font-size: 24px;
+      }
 
-.deliver-btn {
-  background: #059669;
-  color: white;
-}
+      .order-header {
+        flex-direction: column;
+      }
 
-.cancel-btn {
-  background: #dc2626;
-  color: white;
-}
+      .order-grid {
+        grid-template-columns: 1fr;
+      }
 
-.action-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
+      .top-bar {
+        justify-content: stretch;
+      }
 
-.payment-paid {
-  color: #047857;
-  font-weight: bold;
-}
+      .refresh-btn {
+        width: 100%;
+      }
 
-.payment-pending {
-  color: #92400e;
-  font-weight: bold;
-}
+      .actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
 
-.loading {
-  text-align: center;
-  padding: 30px;
-  color: #6b7280;
-}
-
-@media (max-width: 700px) {
-
-  .header-inner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .nav {
-    width: 100%;
-  }
-
-}
-
-</style>
-
+      .status-select,
+      .save-btn {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-
   <div class="header-inner">
 
-    <div class="logo">
-      EPHPHAVORA
-      <span>Seller Dashboard</span>
+    <div class="logo">EPHPHAVORA</div>
+
+    <div class="subtitle">
+      Seller Dashboard
     </div>
 
-    <nav class="nav">
-
+    <nav>
       <a href="index.html">Home</a>
-
       <a href="marketplace.html">Market</a>
-
       <a href="orders.html">My Orders</a>
-
       <a href="profile.html">Profile</a>
-
     </nav>
 
   </div>
-
 </header>
 
 <main>
 
-  <h1>📦 SELLER ORDERS</h1>
+  <h1 class="page-title">📦 SELLER ORDERS</h1>
 
-  <p class="subtitle">
+  <p class="description">
     Manage orders for your products.
   </p>
 
-  <button
-    class="refresh"
-    onclick="loadSellerOrders()"
-  >
-    🔄 REFRESH ORDERS
-  </button>
-
-  <div id="message" class="message">
-    Loading orders...
+  <div class="top-bar">
+    <button class="refresh-btn" id="refreshBtn">
+      🔄 REFRESH ORDERS
+    </button>
   </div>
 
-  <div id="orders"></div>
+  <div id="status" class="status"></div>
+
+  <div id="ordersContainer" class="orders-container">
+    <div class="empty">
+      Loading your orders...
+    </div>
+  </div>
 
 </main>
 
 <script>
+  const SUPABASE_URL = "https://utoyoglycqjmqznczfxa.supabase.co";
 
-const SUPABASE_URL =
-  "https://utoyoglycqjmqznczfxa.supabase.co";
+  const SUPABASE_KEY =
+    "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
-const SUPABASE_KEY =
-  "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
+  const accessToken =
+    localStorage.getItem("berakah_access_token");
 
-const ACCESS_KEY =
-  "berakah_access_token";
+  const refreshToken =
+    localStorage.getItem("berakah_refresh_token");
+
+  const ordersContainer =
+    document.getElementById("ordersContainer");
+
+  const statusBox =
+    document.getElementById("status");
+
+  const refreshBtn =
+    document.getElementById("refreshBtn");
 
 
-function getAccessToken() {
+  function showStatus(message, type = "") {
+    statusBox.textContent = message;
+    statusBox.className = "status";
 
-  return localStorage.getItem(
-    ACCESS_KEY
-  );
+    if (type) {
+      statusBox.classList.add(type);
+    }
 
-}
-
-
-async function getCurrentUser() {
-
-  const token =
-    getAccessToken();
-
-  if (!token) {
-
-    throw new Error(
-      "You are not logged in."
-    );
-
+    statusBox.style.display = "block";
   }
 
-  const response =
-    await fetch(
+
+  function hideStatus() {
+    statusBox.style.display = "none";
+  }
+
+
+  function escapeHTML(value) {
+    if (value === null || value === undefined) {
+      return "";
+    }
+
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+
+  function formatDate(dateValue) {
+    if (!dateValue) {
+      return "—";
+    }
+
+    const date = new Date(dateValue);
+
+    if (Number.isNaN(date.getTime())) {
+      return escapeHTML(dateValue);
+    }
+
+    return date.toLocaleString();
+  }
+
+
+  function formatMoney(value) {
+    const number = Number(value || 0);
+
+    return "$" + number.toFixed(2);
+  }
+
+
+  async function getCurrentUser() {
+
+    if (!accessToken) {
+      throw new Error(
+        "You are not logged in. Please log in first."
+      );
+    }
+
+    const response = await fetch(
       `${SUPABASE_URL}/auth/v1/user`,
       {
+        method: "GET",
         headers: {
-          "apikey":
-            SUPABASE_KEY,
-
-          "Authorization":
-            `Bearer ${token}`
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${accessToken}`
         }
       }
     );
 
-  if (!response.ok) {
-
-    throw new Error(
-      "Your login session has expired."
-    );
-
-  }
-
-  return await response.json();
-
-}
-
-
-function escapeHtml(value) {
-
-  return String(value ?? "")
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
-
-
-function formatMoney(value) {
-
-  return Number(
-    value || 0
-  ).toLocaleString(
-    "en-US",
-    {
-      style: "currency",
-      currency: "USD"
-    }
-  );
-
-}
-
-
-function formatDate(value) {
-
-  if (!value) return "—";
-
-  const date =
-    new Date(value);
-
-  if (
-    isNaN(
-      date.getTime()
-    )
-  ) {
-
-    return value;
-
-  }
-
-  return date.toLocaleString();
-
-}
-
-
-function getStatus(status) {
-
-  const allowed = [
-
-    "pending",
-    "confirmed",
-    "processing",
-    "shipped",
-    "delivered",
-    "cancelled"
-
-  ];
-
-  const clean =
-    String(
-      status || ""
-    )
-    .toLowerCase()
-    .trim();
-
-  if (
-    !allowed.includes(clean)
-  ) {
-
-    return {
-      text: "Unknown",
-      className: "unknown"
-    };
-
-  }
-
-  return {
-    text: clean,
-    className: clean
-  };
-
-}
-
-
-function createActionButton(
-  text,
-  className,
-  orderId,
-  newStatus
-) {
-
-  const button =
-    document.createElement(
-      "button"
-    );
-
-  button.className =
-    `action-btn ${className}`;
-
-  button.textContent =
-    text;
-
-  button.onclick = () =>
-    updateOrderStatus(
-      orderId,
-      newStatus,
-      button
-    );
-
-  return button;
-
-}
-
-
-function buildActions(order) {
-
-  const actions =
-    document.createElement(
-      "div"
-    );
-
-  actions.className =
-    "actions";
-
-  const status =
-    String(
-      order.status || ""
-    )
-    .toLowerCase()
-    .trim();
-
-  if (
-    status === "pending" ||
-    status === "confirmed"
-  ) {
-
-    actions.appendChild(
-      createActionButton(
-        "START PROCESSING",
-        "process-btn",
-        order.id,
-        "processing"
-      )
-    );
-
-    actions.appendChild(
-      createActionButton(
-        "CANCEL ORDER",
-        "cancel-btn",
-        order.id,
-        "cancelled"
-      )
-    );
-
-  }
-
-  else if (
-    status === "processing"
-  ) {
-
-    actions.appendChild(
-      createActionButton(
-        "MARK SHIPPED",
-        "ship-btn",
-        order.id,
-        "shipped"
-      )
-    );
-
-    actions.appendChild(
-      createActionButton(
-        "CANCEL ORDER",
-        "cancel-btn",
-        order.id,
-        "cancelled"
-      )
-    );
-
-  }
-
-  else if (
-    status === "shipped"
-  ) {
-
-    actions.appendChild(
-      createActionButton(
-        "MARK DELIVERED",
-        "deliver-btn",
-        order.id,
-        "delivered"
-      )
-    );
-
-  }
-
-  return actions;
-
-}
-
-
-async function updateOrderStatus(
-  orderId,
-  newStatus,
-  button
-) {
-
-  const token =
-    getAccessToken();
-
-  if (!token) {
-
-    alert(
-      "Please log in again."
-    );
-
-    return;
-
-  }
-
-  let confirmation = true;
-
-  if (
-    newStatus === "cancelled"
-  ) {
-
-    confirmation =
-      confirm(
-        "Are you sure you want to cancel this order?"
-      );
-
-  }
-
-  if (!confirmation) {
-    return;
-  }
-
-  button.disabled = true;
-
-  const oldText =
-    button.textContent;
-
-  button.textContent =
-    "UPDATING...";
-
-  try {
-
-    const response =
-      await fetch(
-
-        `${SUPABASE_URL}/rest/v1/orders?id=eq.${encodeURIComponent(orderId)}`,
-
-        {
-          method: "PATCH",
-
-          headers: {
-
-            "apikey":
-              SUPABASE_KEY,
-
-            "Authorization":
-              `Bearer ${token}`,
-
-            "Content-Type":
-              "application/json",
-
-            "Prefer":
-              "return=minimal"
-
-          },
-
-          body: JSON.stringify({
-
-            status:
-              newStatus,
-
-            updated_at:
-              new Date().toISOString()
-
-          })
-
-        }
-
-      );
-
-    const result =
-      await response.text();
-
     if (!response.ok) {
-
-      console.error(
-        "STATUS UPDATE ERROR:",
-        result
-      );
-
       throw new Error(
-        result ||
-        `Unable to change order to ${newStatus}.`
+        "Your login session has expired. Please log in again."
       );
-
     }
 
-    alert(
-      `Order updated to ${newStatus.toUpperCase()}.`
-    );
-
-    await loadSellerOrders();
-
+    return await response.json();
   }
 
-  catch (error) {
 
-    console.error(error);
+  async function loadOrders() {
 
-    alert(
-      "Could not update the order.\n\n" +
-      error.message
-    );
+    ordersContainer.innerHTML = `
+      <div class="empty">
+        Loading your orders...
+      </div>
+    `;
 
-    button.disabled =
-      false;
+    hideStatus();
 
-    button.textContent =
-      oldText;
+    try {
 
-  }
+      const user = await getCurrentUser();
 
-}
+      if (!user || !user.id) {
+        throw new Error("Unable to identify your account.");
+      }
 
-
-async function loadSellerOrders() {
-
-  const message =
-    document.getElementById(
-      "message"
-    );
-
-  const ordersContainer =
-    document.getElementById(
-      "orders"
-    );
-
-  message.style.display =
-    "block";
-
-  message.className =
-    "message";
-
-  message.textContent =
-    "Loading seller orders...";
-
-  ordersContainer.innerHTML =
-    "";
-
-  try {
-
-    const user =
-      await getCurrentUser();
-
-    const token =
-      getAccessToken();
-
-    const url =
-      `${SUPABASE_URL}/rest/v1/orders` +
-      `?select=*` +
-      `&seller_id=eq.${encodeURIComponent(user.id)}` +
-      `&order=created_at.desc`;
-
-    const response =
-      await fetch(
-        url,
+      const response = await fetch(
+        `${SUPABASE_URL}/rest/v1/orders?seller_id=eq.${encodeURIComponent(user.id)}&order=created_at.desc`,
         {
+          method: "GET",
           headers: {
-
-            "apikey":
-              SUPABASE_KEY,
-
-            "Authorization":
-              `Bearer ${token}`,
-
-            "Content-Type":
-              "application/json"
-
+            "apikey": SUPABASE_KEY,
+            "Authorization": `Bearer ${accessToken}`,
+            "Accept": "application/json"
           }
         }
       );
 
-    const data =
-      await response.json();
+      if (!response.ok) {
 
-    if (!response.ok) {
+        const errorText = await response.text();
 
-      console.error(
-        "SELLER ORDERS ERROR:",
-        data
-      );
+        throw new Error(
+          "Could not load your orders. " + errorText
+        );
+      }
 
-      throw new Error(
-        data.message ||
-        data.hint ||
-        "Could not load seller orders."
-      );
+      const orders = await response.json();
 
-    }
+      renderOrders(orders);
 
-    message.style.display =
-      "none";
+    } catch (error) {
 
-    if (
-      !Array.isArray(data) ||
-      data.length === 0
-    ) {
+      console.error("EPHPHAVORA SELLER ORDERS ERROR:", error);
 
       ordersContainer.innerHTML = `
-
-        <div class="message empty">
-
-          <h2>
-            No seller orders yet
-          </h2>
-
-          <p>
-            When a customer purchases
-            one of your products,
-            the order will appear here.
-          </p>
-
+        <div class="empty error">
+          ${escapeHTML(error.message)}
         </div>
+      `;
 
+    }
+  }
+
+
+  function renderOrders(orders) {
+
+    if (!Array.isArray(orders) || orders.length === 0) {
+
+      ordersContainer.innerHTML = `
+        <div class="empty">
+          <h3>No seller orders yet.</h3>
+          <p>
+            Orders for your products will appear here after customers make purchases.
+          </p>
+        </div>
       `;
 
       return;
-
     }
 
-    data.forEach(
-      order => {
 
-        const status =
-          getStatus(
-            order.status
-          );
+    ordersContainer.innerHTML = orders.map(order => {
 
-        const productName =
-          order.product_name ||
-          "Product";
+      const paymentStatus =
+        String(order.payment_status || "unknown").toLowerCase();
 
-        const quantity =
-          order.quantity ?? 0;
+      const paymentHTML =
+        paymentStatus === "paid"
+          ? `<span class="payment-paid">PAID</span>`
+          : `<span class="payment-unpaid">${escapeHTML(paymentStatus.toUpperCase())}</span>`;
 
-        const price =
-          order.price ?? 0;
 
-        const total =
-          order.total ?? 0;
+      const currentStatus =
+        String(order.status || "pending").toLowerCase();
 
-        const customerName =
-          order.customer_name ||
-          order.shipping_name ||
-          "Customer";
 
-        const customerEmail =
-          order.customer_email ||
-          "—";
+      return `
+        <div class="order-card">
 
-        const customerPhone =
-          order.customer_phone ||
-          "—";
-
-        const shippingAddress =
-          order.shipping_address ||
-          order.customer_address ||
-          "—";
-
-        const card =
-          document.createElement(
-            "div"
-          );
-
-        card.className =
-          "order-card";
-
-        const paymentStatus =
-          String(
-            order.payment_status ||
-            "pending"
-          )
-          .toLowerCase();
-
-        const paymentClass =
-          paymentStatus === "paid"
-            ? "payment-paid"
-            : "payment-pending";
-
-        card.innerHTML = `
-
-          <div class="order-top">
+          <div class="order-header">
 
             <div>
-
-              <div class="order-number">
-
-                Order #
-
-                ${escapeHtml(
+              <div class="order-id">
+                Order: ${escapeHTML(
                   order.order_number ||
+                  order.order_id ||
                   order.id ||
                   "—"
                 )}
-
               </div>
 
-              <div class="date">
-
-                ${formatDate(
-                  order.created_at
-                )}
-
+              <div class="order-date">
+                ${formatDate(order.created_at)}
               </div>
-
             </div>
 
-            <div
-              class="status ${status.className}"
+            <div class="status-badge">
+              ${escapeHTML(currentStatus.toUpperCase())}
+            </div>
+
+          </div>
+
+
+          <div class="order-grid">
+
+            <div class="info-box">
+              <div class="info-label">
+                Product
+              </div>
+
+              <div class="info-value">
+                ${escapeHTML(
+                  order.product_name ||
+                  order.name ||
+                  order.product ||
+                  "Product"
+                )}
+              </div>
+            </div>
+
+
+            <div class="info-box">
+              <div class="info-label">
+                Quantity
+              </div>
+
+              <div class="info-value">
+                ${escapeHTML(order.quantity || 1)}
+              </div>
+            </div>
+
+
+            <div class="info-box">
+              <div class="info-label">
+                Total
+              </div>
+
+              <div class="info-value order-total">
+                ${formatMoney(
+                  order.total ||
+                  order.amount ||
+                  order.price ||
+                  0
+                )}
+              </div>
+            </div>
+
+
+            <div class="info-box">
+              <div class="info-label">
+                Payment
+              </div>
+
+              <div class="info-value">
+                ${paymentHTML}
+              </div>
+            </div>
+
+
+            <div class="info-box">
+              <div class="info-label">
+                Customer
+              </div>
+
+              <div class="info-value">
+                ${escapeHTML(
+                  order.customer_name ||
+                  order.customer_email ||
+                  order.buyer_email ||
+                  "Customer"
+                )}
+              </div>
+            </div>
+
+
+            <div class="info-box">
+              <div class="info-label">
+                Customer Email
+              </div>
+
+              <div class="info-value">
+                ${escapeHTML(
+                  order.customer_email ||
+                  order.buyer_email ||
+                  "—"
+                )}
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="actions">
+
+            <label>
+              Order Status:
+            </label>
+
+            <select
+              class="status-select"
+              data-order-id="${escapeHTML(order.id)}"
             >
 
-              ${escapeHtml(
-                status.text
-              )}
+              <option value="pending"
+                ${currentStatus === "pending" ? "selected" : ""}>
+                Pending
+              </option>
 
-            </div>
+              <option value="confirmed"
+                ${currentStatus === "confirmed" ? "selected" : ""}>
+                Confirmed
+              </option>
 
-          </div>
+              <option value="processing"
+                ${currentStatus === "processing" ? "selected" : ""}>
+                Processing
+              </option>
 
-          <div class="order-body">
+              <option value="shipped"
+                ${currentStatus === "shipped" ? "selected" : ""}>
+                Shipped
+              </option>
 
-            <div class="product-name">
+              <option value="delivered"
+                ${currentStatus === "delivered" ? "selected" : ""}>
+                Delivered
+              </option>
 
-              ${escapeHtml(
-                productName
-              )}
+              <option value="cancelled"
+                ${currentStatus === "cancelled" ? "selected" : ""}>
+                Cancelled
+              </option>
 
-            </div>
+            </select>
 
-            <div class="info-grid">
 
-              <div class="info">
-
-                <span class="label">
-                  Quantity
-                </span>
-
-                <span class="value">
-                  ${escapeHtml(quantity)}
-                </span>
-
-              </div>
-
-              <div class="info">
-
-                <span class="label">
-                  Price
-                </span>
-
-                <span class="value">
-                  ${formatMoney(price)}
-                </span>
-
-              </div>
-
-              <div class="info">
-
-                <span class="label">
-                  Order Total
-                </span>
-
-                <span class="value">
-                  ${formatMoney(total)}
-                </span>
-
-              </div>
-
-              <div class="info">
-
-                <span class="label">
-                  Payment
-                </span>
-
-                <span
-                  class="value ${paymentClass}"
-                >
-
-                  ${escapeHtml(
-                    paymentStatus
-                  )}
-
-                </span>
-
-              </div>
-
-            </div>
-
-            <div class="customer-box">
-
-              <h3>
-                Customer
-              </h3>
-
-              <div class="info-grid">
-
-                <div class="info">
-
-                  <span class="label">
-                    Name
-                  </span>
-
-                  <span class="value">
-                    ${escapeHtml(
-                      customerName
-                    )}
-                  </span>
-
-                </div>
-
-                <div class="info">
-
-                  <span class="label">
-                    Email
-                  </span>
-
-                  <span class="value">
-                    ${escapeHtml(
-                      customerEmail
-                    )}
-                  </span>
-
-                </div>
-
-                <div class="info">
-
-                  <span class="label">
-                    Phone
-                  </span>
-
-                  <span class="value">
-                    ${escapeHtml(
-                      customerPhone
-                    )}
-                  </span>
-
-                </div>
-
-                <div class="info">
-
-                  <span class="label">
-                    Shipping Address
-                  </span>
-
-                  <span class="value">
-                    ${escapeHtml(
-                      shippingAddress
-                    )}
-                  </span>
-
-                </div>
-
-              </div>
-
-            </div>
+            <button
+              class="save-btn"
+              onclick="updateOrderStatus('${escapeHTML(order.id)}', this)"
+            >
+              SAVE STATUS
+            </button>
 
           </div>
 
-        `;
+        </div>
+      `;
 
-        const actions =
-          buildActions(order);
+    }).join("");
+  }
 
-        if (
-          actions.children.length > 0
-        ) {
 
-          card
-            .querySelector(
-              ".order-body"
-            )
-            .appendChild(
-              actions
-            );
+  async function updateOrderStatus(orderId, button) {
 
-        }
+    const select =
+      document.querySelector(
+        `.status-select[data-order-id="${CSS.escape(String(orderId))}"]`
+      );
 
-        ordersContainer
-          .appendChild(
-            card
-          );
+    if (!select) {
+      alert("Could not find the order status selector.");
+      return;
+    }
 
+
+    const newStatus = select.value;
+
+
+    button.disabled = true;
+    button.textContent = "SAVING...";
+
+
+    try {
+
+      if (!accessToken) {
+        throw new Error(
+          "Your login session has expired. Please log in again."
+        );
       }
-    );
 
+
+      const response = await fetch(
+        `${SUPABASE_URL}/rest/v1/orders?id=eq.${encodeURIComponent(orderId)}`,
+        {
+          method: "PATCH",
+
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal"
+          },
+
+          body: JSON.stringify({
+            status: newStatus
+          })
+        }
+      );
+
+
+      if (!response.ok) {
+
+        const errorText = await response.text();
+
+        throw new Error(
+          "Could not update order status. " + errorText
+        );
+      }
+
+
+      showStatus(
+        "Order status updated successfully.",
+        "success"
+      );
+
+
+      await loadOrders();
+
+
+    } catch (error) {
+
+      console.error(
+        "EPHPHAVORA STATUS UPDATE ERROR:",
+        error
+      );
+
+      showStatus(
+        error.message,
+        "error"
+      );
+
+    } finally {
+
+      button.disabled = false;
+      button.textContent = "SAVE STATUS";
+
+    }
   }
 
-  catch (error) {
 
-    console.error(error);
-
-    message.style.display =
-      "block";
-
-    message.className =
-      "message error";
-
-    message.innerHTML = `
-
-      <strong>
-        Error:
-      </strong>
-
-      <br>
-
-      ${escapeHtml(
-        error.message
-      )}
-
-    `;
-
-  }
-
-}
+  refreshBtn.addEventListener(
+    "click",
+    loadOrders
+  );
 
 
-loadSellerOrders();
+  loadOrders();
 
 </script>
 
 </body>
-
 </html>
