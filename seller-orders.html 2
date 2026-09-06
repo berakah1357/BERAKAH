@@ -1,7 +1,15 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>EPHPHAVORA - Seller Orders</title><style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EPHPHAVORA - Seller Orders</title>
+
+<style>
+
 * {
   box-sizing: border-box;
 }
@@ -277,31 +285,75 @@ h1 {
   padding: 30px;
   color: #6b7280;
 }
-</style></head><body><header>  <div class="header-inner"><div class="logo">
-  EPHPHAVORA
-  <span>Seller Dashboard</span>
-</div>
 
-<nav class="nav">
-  <a href="index.html">Home</a>
-  <a href="marketplace.html">Market</a>
-  <a href="orders.html">My Orders</a>
-  <a href="profile.html">Profile</a>
-</nav>
+@media (max-width: 700px) {
 
-  </div></header><main>  <h1>📦 SELLER ORDERS</h1>  <p class="subtitle">
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav {
+    width: 100%;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+  <div class="header-inner">
+
+    <div class="logo">
+      EPHPHAVORA
+      <span>Seller Dashboard</span>
+    </div>
+
+    <nav class="nav">
+
+      <a href="index.html">Home</a>
+
+      <a href="marketplace.html">Market</a>
+
+      <a href="orders.html">My Orders</a>
+
+      <a href="profile.html">Profile</a>
+
+    </nav>
+
+  </div>
+
+</header>
+
+<main>
+
+  <h1>📦 SELLER ORDERS</h1>
+
+  <p class="subtitle">
     Manage orders for your products.
-  </p><button
-class="refresh"
-onclick="loadSellerOrders()"
+  </p>
 
-«»
+  <button
+    class="refresh"
+    onclick="loadSellerOrders()"
+  >
+    🔄 REFRESH ORDERS
+  </button>
 
-🔄 REFRESH ORDERS
-
-  </button>  <div id="message" class="message">
+  <div id="message" class="message">
     Loading orders...
-  </div>  <div id="orders"></div></main><script>
+  </div>
+
+  <div id="orders"></div>
+
+</main>
+
+<script>
 
 const SUPABASE_URL =
   "https://utoyoglycqjmqznczfxa.supabase.co";
@@ -309,99 +361,161 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
   "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
-const ACCESS_KEY = "berakah_access_token";
+const ACCESS_KEY =
+  "berakah_access_token";
+
 
 function getAccessToken() {
-  return localStorage.getItem(ACCESS_KEY);
+
+  return localStorage.getItem(
+    ACCESS_KEY
+  );
+
 }
+
 
 async function getCurrentUser() {
 
-  const token = getAccessToken();
+  const token =
+    getAccessToken();
 
   if (!token) {
-    throw new Error("You are not logged in.");
+
+    throw new Error(
+      "You are not logged in."
+    );
+
   }
 
-  const response = await fetch(
-    `${SUPABASE_URL}/auth/v1/user`,
-    {
-      headers: {
-        "apikey": SUPABASE_KEY,
-        "Authorization": `Bearer ${token}`
+  const response =
+    await fetch(
+      `${SUPABASE_URL}/auth/v1/user`,
+      {
+        headers: {
+          "apikey":
+            SUPABASE_KEY,
+
+          "Authorization":
+            `Bearer ${token}`
+        }
       }
-    }
-  );
+    );
 
   if (!response.ok) {
-    throw new Error("Your login session has expired.");
+
+    throw new Error(
+      "Your login session has expired."
+    );
+
   }
 
   return await response.json();
+
 }
+
 
 function escapeHtml(value) {
 
   return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
 }
+
 
 function formatMoney(value) {
 
-  return Number(value || 0).toLocaleString(
+  return Number(
+    value || 0
+  ).toLocaleString(
     "en-US",
     {
       style: "currency",
       currency: "USD"
     }
   );
+
 }
+
 
 function formatDate(value) {
 
   if (!value) return "—";
 
-  const date = new Date(value);
+  const date =
+    new Date(value);
 
-  if (isNaN(date.getTime())) {
+  if (
+    isNaN(
+      date.getTime()
+    )
+  ) {
+
     return value;
+
   }
 
   return date.toLocaleString();
+
 }
+
 
 function getStatus(status) {
 
   const allowed = [
+
     "pending",
     "confirmed",
     "processing",
     "shipped",
     "delivered",
     "cancelled"
+
   ];
 
-  const clean = String(status || "")
+  const clean =
+    String(
+      status || ""
+    )
     .toLowerCase()
     .trim();
 
-  if (!allowed.includes(clean)) {
+  if (
+    !allowed.includes(clean)
+  ) {
 
     return {
       text: "Unknown",
       className: "unknown"
     };
+
   }
 
   return {
     text: clean,
     className: clean
   };
+
 }
+
 
 function createActionButton(
   text,
@@ -410,12 +524,16 @@ function createActionButton(
   newStatus
 ) {
 
-  const button = document.createElement("button");
+  const button =
+    document.createElement(
+      "button"
+    );
 
   button.className =
     `action-btn ${className}`;
 
-  button.textContent = text;
+  button.textContent =
+    text;
 
   button.onclick = () =>
     updateOrderStatus(
@@ -425,18 +543,26 @@ function createActionButton(
     );
 
   return button;
+
 }
+
 
 function buildActions(order) {
 
-  const actions = document.createElement("div");
+  const actions =
+    document.createElement(
+      "div"
+    );
 
-  actions.className = "actions";
+  actions.className =
+    "actions";
 
   const status =
-    String(order.status || "")
-      .toLowerCase()
-      .trim();
+    String(
+      order.status || ""
+    )
+    .toLowerCase()
+    .trim();
 
   if (
     status === "pending" ||
@@ -460,9 +586,12 @@ function buildActions(order) {
         "cancelled"
       )
     );
+
   }
 
-  else if (status === "processing") {
+  else if (
+    status === "processing"
+  ) {
 
     actions.appendChild(
       createActionButton(
@@ -481,9 +610,12 @@ function buildActions(order) {
         "cancelled"
       )
     );
+
   }
 
-  else if (status === "shipped") {
+  else if (
+    status === "shipped"
+  ) {
 
     actions.appendChild(
       createActionButton(
@@ -493,10 +625,13 @@ function buildActions(order) {
         "delivered"
       )
     );
+
   }
 
   return actions;
+
 }
+
 
 async function updateOrderStatus(
   orderId,
@@ -504,22 +639,30 @@ async function updateOrderStatus(
   button
 ) {
 
-  const token = getAccessToken();
+  const token =
+    getAccessToken();
 
   if (!token) {
 
-    alert("Please log in again.");
+    alert(
+      "Please log in again."
+    );
 
     return;
+
   }
 
   let confirmation = true;
 
-  if (newStatus === "cancelled") {
+  if (
+    newStatus === "cancelled"
+  ) {
 
-    confirmation = confirm(
-      "Are you sure you want to cancel this order?"
-    );
+    confirmation =
+      confirm(
+        "Are you sure you want to cancel this order?"
+      );
+
   }
 
   if (!confirmation) {
@@ -528,36 +671,51 @@ async function updateOrderStatus(
 
   button.disabled = true;
 
-  const oldText = button.textContent;
+  const oldText =
+    button.textContent;
 
-  button.textContent = "UPDATING...";
+  button.textContent =
+    "UPDATING...";
 
   try {
 
-    /*
-      The seller can only update the order
-      if Supabase RLS allows this seller
-      to modify their own order.
-    */
+    const response =
+      await fetch(
 
-    const response = await fetch(
-      `${SUPABASE_URL}/rest/v1/orders?id=eq.${encodeURIComponent(orderId)}`,
-      {
-        method: "PATCH",
+        `${SUPABASE_URL}/rest/v1/orders?id=eq.${encodeURIComponent(orderId)}`,
 
-        headers: {
-          "apikey": SUPABASE_KEY,
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json",
-          "Prefer": "return=minimal"
-        },
+        {
+          method: "PATCH",
 
-        body: JSON.stringify({
-          status: newStatus,
-          updated_at: new Date().toISOString()
-        })
-      }
-    );
+          headers: {
+
+            "apikey":
+              SUPABASE_KEY,
+
+            "Authorization":
+              `Bearer ${token}`,
+
+            "Content-Type":
+              "application/json",
+
+            "Prefer":
+              "return=minimal"
+
+          },
+
+          body: JSON.stringify({
+
+            status:
+              newStatus,
+
+            updated_at:
+              new Date().toISOString()
+
+          })
+
+        }
+
+      );
 
     const result =
       await response.text();
@@ -573,6 +731,7 @@ async function updateOrderStatus(
         result ||
         `Unable to change order to ${newStatus}.`
       );
+
     }
 
     alert(
@@ -581,7 +740,9 @@ async function updateOrderStatus(
 
     await loadSellerOrders();
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     console.error(error);
 
@@ -590,25 +751,40 @@ async function updateOrderStatus(
       error.message
     );
 
-    button.disabled = false;
-    button.textContent = oldText;
+    button.disabled =
+      false;
+
+    button.textContent =
+      oldText;
+
   }
+
 }
+
 
 async function loadSellerOrders() {
 
   const message =
-    document.getElementById("message");
+    document.getElementById(
+      "message"
+    );
 
   const ordersContainer =
-    document.getElementById("orders");
+    document.getElementById(
+      "orders"
+    );
 
-  message.style.display = "block";
-  message.className = "message";
+  message.style.display =
+    "block";
+
+  message.className =
+    "message";
+
   message.textContent =
     "Loading seller orders...";
 
-  ordersContainer.innerHTML = "";
+  ordersContainer.innerHTML =
+    "";
 
   try {
 
@@ -629,11 +805,16 @@ async function loadSellerOrders() {
         url,
         {
           headers: {
-            "apikey": SUPABASE_KEY,
+
+            "apikey":
+              SUPABASE_KEY,
+
             "Authorization":
               `Bearer ${token}`,
+
             "Content-Type":
               "application/json"
+
           }
         }
       );
@@ -653,9 +834,11 @@ async function loadSellerOrders() {
         data.hint ||
         "Could not load seller orders."
       );
+
     }
 
-    message.style.display = "none";
+    message.style.display =
+      "none";
 
     if (
       !Array.isArray(data) ||
@@ -663,175 +846,146 @@ async function loadSellerOrders() {
     ) {
 
       ordersContainer.innerHTML = `
+
         <div class="message empty">
 
-          <h2>No seller orders yet</h2>
+          <h2>
+            No seller orders yet
+          </h2>
 
           <p>
-            When a customer purchases one
-            of your products, the order
-            will appear here.
+            When a customer purchases
+            one of your products,
+            the order will appear here.
           </p>
 
         </div>
+
       `;
 
       return;
+
     }
 
-    data.forEach(order => {
+    data.forEach(
+      order => {
 
-      const status =
-        getStatus(order.status);
+        const status =
+          getStatus(
+            order.status
+          );
 
-      const productName =
-        order.product_name ||
-        "Product";
+        const productName =
+          order.product_name ||
+          "Product";
 
-      const quantity =
-        order.quantity ?? 0;
+        const quantity =
+          order.quantity ?? 0;
 
-      const price =
-        order.price ?? 0;
+        const price =
+          order.price ?? 0;
 
-      const total =
-        order.total ?? 0;
+        const total =
+          order.total ?? 0;
 
-      const customerName =
-        order.customer_name ||
-        order.shipping_name ||
-        "Customer";
+        const customerName =
+          order.customer_name ||
+          order.shipping_name ||
+          "Customer";
 
-      const customerEmail =
-        order.customer_email ||
-        "—";
+        const customerEmail =
+          order.customer_email ||
+          "—";
 
-      const customerPhone =
-        order.customer_phone ||
-        "—";
+        const customerPhone =
+          order.customer_phone ||
+          "—";
 
-      const shippingAddress =
-        order.shipping_address ||
-        order.customer_address ||
-        "—";
+        const shippingAddress =
+          order.shipping_address ||
+          order.customer_address ||
+          "—";
 
-      const card =
-        document.createElement("div");
+        const card =
+          document.createElement(
+            "div"
+          );
 
-      card.className =
-        "order-card";
+        card.className =
+          "order-card";
 
-      const paymentStatus =
-        String(
-          order.payment_status || "pending"
-        ).toLowerCase();
+        const paymentStatus =
+          String(
+            order.payment_status ||
+            "pending"
+          )
+          .toLowerCase();
 
-      const paymentClass =
-        paymentStatus === "paid"
-          ? "payment-paid"
-          : "payment-pending";
+        const paymentClass =
+          paymentStatus === "paid"
+            ? "payment-paid"
+            : "payment-pending";
 
-      card.innerHTML = `
+        card.innerHTML = `
 
-        <div class="order-top">
+          <div class="order-top">
 
-          <div>
+            <div>
 
-            <div class="order-number">
-              Order #
+              <div class="order-number">
+
+                Order #
+
+                ${escapeHtml(
+                  order.order_number ||
+                  order.id ||
+                  "—"
+                )}
+
+              </div>
+
+              <div class="date">
+
+                ${formatDate(
+                  order.created_at
+                )}
+
+              </div>
+
+            </div>
+
+            <div
+              class="status ${status.className}"
+            >
+
               ${escapeHtml(
-                order.order_number ||
-                order.id ||
-                "—"
+                status.text
               )}
+
             </div>
 
-            <div class="date">
-              ${formatDate(
-                order.created_at
+          </div>
+
+          <div class="order-body">
+
+            <div class="product-name">
+
+              ${escapeHtml(
+                productName
               )}
-            </div>
-
-          </div>
-
-          <div class="status ${status.className}">
-            ${escapeHtml(status.text)}
-          </div>
-
-        </div>
-
-        <div class="order-body">
-
-          <div class="product-name">
-            ${escapeHtml(productName)}
-          </div>
-
-          <div class="info-grid">
-
-            <div class="info">
-
-              <span class="label">
-                Quantity
-              </span>
-
-              <span class="value">
-                ${escapeHtml(quantity)}
-              </span>
 
             </div>
-
-            <div class="info">
-
-              <span class="label">
-                Price
-              </span>
-
-              <span class="value">
-                ${formatMoney(price)}
-              </span>
-
-            </div>
-
-            <div class="info">
-
-              <span class="label">
-                Order Total
-              </span>
-
-              <span class="value">
-                ${formatMoney(total)}
-              </span>
-
-            </div>
-
-            <div class="info">
-
-              <span class="label">
-                Payment
-              </span>
-
-              <span class="value ${paymentClass}">
-                ${escapeHtml(paymentStatus)}
-              </span>
-
-            </div>
-
-          </div>
-
-          <div class="customer-box">
-
-            <h3>Customer</h3>
 
             <div class="info-grid">
 
               <div class="info">
 
                 <span class="label">
-                  Name
+                  Quantity
                 </span>
 
                 <span class="value">
-                  ${escapeHtml(customerName)}
+                  ${escapeHtml(quantity)}
                 </span>
 
               </div>
@@ -839,11 +993,11 @@ async function loadSellerOrders() {
               <div class="info">
 
                 <span class="label">
-                  Email
+                  Price
                 </span>
 
                 <span class="value">
-                  ${escapeHtml(customerEmail)}
+                  ${formatMoney(price)}
                 </span>
 
               </div>
@@ -851,11 +1005,11 @@ async function loadSellerOrders() {
               <div class="info">
 
                 <span class="label">
-                  Phone
+                  Order Total
                 </span>
 
                 <span class="value">
-                  ${escapeHtml(customerPhone)}
+                  ${formatMoney(total)}
                 </span>
 
               </div>
@@ -863,12 +1017,86 @@ async function loadSellerOrders() {
               <div class="info">
 
                 <span class="label">
-                  Shipping Address
+                  Payment
                 </span>
 
-                <span class="value">
-                  ${escapeHtml(shippingAddress)}
+                <span
+                  class="value ${paymentClass}"
+                >
+
+                  ${escapeHtml(
+                    paymentStatus
+                  )}
+
                 </span>
+
+              </div>
+
+            </div>
+
+            <div class="customer-box">
+
+              <h3>
+                Customer
+              </h3>
+
+              <div class="info-grid">
+
+                <div class="info">
+
+                  <span class="label">
+                    Name
+                  </span>
+
+                  <span class="value">
+                    ${escapeHtml(
+                      customerName
+                    )}
+                  </span>
+
+                </div>
+
+                <div class="info">
+
+                  <span class="label">
+                    Email
+                  </span>
+
+                  <span class="value">
+                    ${escapeHtml(
+                      customerEmail
+                    )}
+                  </span>
+
+                </div>
+
+                <div class="info">
+
+                  <span class="label">
+                    Phone
+                  </span>
+
+                  <span class="value">
+                    ${escapeHtml(
+                      customerPhone
+                    )}
+                  </span>
+
+                </div>
+
+                <div class="info">
+
+                  <span class="label">
+                    Shipping Address
+                  </span>
+
+                  <span class="value">
+                    ${escapeHtml(
+                      shippingAddress
+                    )}
+                  </span>
+
+                </div>
 
               </div>
 
@@ -876,39 +1104,68 @@ async function loadSellerOrders() {
 
           </div>
 
-        </div>
-      `;
+        `;
 
-      const actions =
-        buildActions(order);
+        const actions =
+          buildActions(order);
 
-      if (actions.children.length > 0) {
-        card
-          .querySelector(".order-body")
-          .appendChild(actions);
+        if (
+          actions.children.length > 0
+        ) {
+
+          card
+            .querySelector(
+              ".order-body"
+            )
+            .appendChild(
+              actions
+            );
+
+        }
+
+        ordersContainer
+          .appendChild(
+            card
+          );
+
       }
+    );
 
-      ordersContainer.appendChild(card);
+  }
 
-    });
-
-  } catch (error) {
+  catch (error) {
 
     console.error(error);
 
-    message.style.display = "block";
+    message.style.display =
+      "block";
 
     message.className =
       "message error";
 
     message.innerHTML = `
-      <strong>Error:</strong><br>
-      ${escapeHtml(error.message)}
+
+      <strong>
+        Error:
+      </strong>
+
+      <br>
+
+      ${escapeHtml(
+        error.message
+      )}
+
     `;
+
   }
+
 }
+
 
 loadSellerOrders();
 
-</script></body>
+</script>
+
+</body>
+
 </html>
