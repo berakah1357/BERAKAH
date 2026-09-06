@@ -2,13 +2,8 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>EPHPHAVORA - Feed</title>
 
@@ -25,18 +20,20 @@ body {
     color: #111827;
 }
 
+/* HEADER */
+
 header {
     background: white;
     border-bottom: 1px solid #e5e7eb;
+    padding: 14px 20px;
     position: sticky;
     top: 0;
     z-index: 100;
 }
 
-.nav {
+.header-inner {
     max-width: 1100px;
     margin: auto;
-    padding: 14px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -47,27 +44,24 @@ header {
     font-size: 24px;
     font-weight: bold;
     color: #111827;
-    text-decoration: none;
 }
 
-.nav-links {
+nav {
     display: flex;
-    align-items: center;
     gap: 8px;
     flex-wrap: wrap;
 }
 
-.nav-links a,
+nav a,
 .logout-btn {
     text-decoration: none;
     color: #374151;
+    font-size: 14px;
     padding: 8px 10px;
     border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
 }
 
-.nav-links a:hover,
+nav a:hover,
 .logout-btn:hover {
     background: #f3f4f6;
 }
@@ -75,87 +69,47 @@ header {
 .logout-btn {
     border: none;
     background: transparent;
-    font-family: inherit;
+    cursor: pointer;
 }
 
+/* MAIN */
+
 .container {
-    max-width: 760px;
+    max-width: 700px;
     margin: 25px auto;
     padding: 0 15px;
 }
 
-.page-title {
-    font-size: 28px;
-    margin: 0 0 18px;
-}
+/* CREATE POST */
 
 .create-post {
     background: white;
-    border: 1px solid #e5e7eb;
     border-radius: 14px;
     padding: 18px;
     margin-bottom: 22px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    box-shadow: 0 2px 10px rgba(0,0,0,.05);
 }
 
 .create-post h2 {
-    margin: 0 0 14px;
-    font-size: 18px;
+    margin-top: 0;
+    font-size: 20px;
 }
 
 textarea {
     width: 100%;
-    min-height: 110px;
-    resize: vertical;
+    min-height: 90px;
     border: 1px solid #d1d5db;
     border-radius: 10px;
     padding: 12px;
+    resize: vertical;
     font-family: Arial, sans-serif;
     font-size: 15px;
-    outline: none;
-}
-
-textarea:focus {
-    border-color: #2563eb;
-}
-
-.create-bottom {
-    margin-top: 12px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.file-label {
-    display: inline-block;
-    background: #f3f4f6;
-    padding: 10px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.file-label:hover {
-    background: #e5e7eb;
-}
-
-#postImage,
-#postVideo {
-    display: none;
-}
-
-#imageName,
-#videoName {
-    font-size: 12px;
-    color: #6b7280;
-    margin-top: 7px;
 }
 
 .media-type {
     display: flex;
     gap: 8px;
-    margin-top: 12px;
+    margin: 12px 0;
     flex-wrap: wrap;
 }
 
@@ -165,12 +119,7 @@ textarea:focus {
     padding: 9px 13px;
     border-radius: 8px;
     cursor: pointer;
-    font-weight: bold;
-    color: #374151;
-}
-
-.media-type button:hover {
-    background: #f3f4f6;
+    font-size: 14px;
 }
 
 .media-type button.active {
@@ -179,121 +128,91 @@ textarea:focus {
     border-color: #111827;
 }
 
-.post-btn {
-    background: #2563eb;
-    color: white;
+.file-area {
+    margin: 10px 0;
+}
+
+.file-area input {
+    width: 100%;
+}
+
+.upload-note {
+    color: #6b7280;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.publish-btn {
+    width: 100%;
     border: none;
-    padding: 11px 18px;
-    border-radius: 8px;
+    background: #111827;
+    color: white;
+    padding: 12px;
+    border-radius: 9px;
     cursor: pointer;
     font-weight: bold;
-    margin-left: auto;
+    margin-top: 8px;
 }
 
-.post-btn:hover {
-    background: #1d4ed8;
-}
-
-.post-btn:disabled {
-    opacity: 0.6;
+.publish-btn:disabled {
+    opacity: .6;
     cursor: not-allowed;
 }
 
-.status {
-    text-align: center;
-    margin: 15px 0;
-    color: #6b7280;
-    font-size: 14px;
-}
-
-.error {
-    color: #dc2626;
-}
-
-.success {
-    color: #16a34a;
-}
+/* POST */
 
 .post {
     background: white;
-    border: 1px solid #e5e7eb;
     border-radius: 14px;
-    margin-bottom: 18px;
+    margin-bottom: 22px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    box-shadow: 0 2px 10px rgba(0,0,0,.05);
 }
 
 .post-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 15px 16px 10px;
-}
-
-.author {
-    display: flex;
-    align-items: center;
     gap: 10px;
-    text-decoration: none;
-    color: inherit;
+    padding: 14px 16px;
 }
 
 .avatar {
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     object-fit: cover;
     background: #e5e7eb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+}
+
+.post-user {
     font-weight: bold;
-    color: #374151;
-    overflow: hidden;
-    flex-shrink: 0;
-}
-
-.avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.author-name {
-    font-weight: bold;
-    font-size: 15px;
-}
-
-.username {
-    color: #6b7280;
-    font-size: 13px;
-    margin-top: 2px;
 }
 
 .post-date {
-    color: #9ca3af;
+    color: #6b7280;
     font-size: 12px;
+    margin-top: 3px;
 }
 
 .post-content {
-    padding: 5px 16px 15px;
+    padding: 0 16px 14px;
     white-space: pre-wrap;
     word-break: break-word;
-    line-height: 1.5;
-    font-size: 15px;
 }
 
 .post-image {
     width: 100%;
     max-height: 600px;
-    object-fit: cover;
+    object-fit: contain;
+    background: #000;
     display: block;
 }
+
+/* VIDEO */
 
 .video-wrapper {
     width: 100%;
     background: #000;
-    position: relative;
 }
 
 .post-video {
@@ -301,30 +220,32 @@ textarea:focus {
     max-height: 650px;
     display: block;
     background: #000;
-    object-fit: contain;
 }
+
+/* REELS */
 
 .reel-wrapper {
     width: 100%;
+    max-height: 800px;
     background: #000;
     display: flex;
     justify-content: center;
+    position: relative;
 }
 
 .reel-video {
     width: 100%;
-    max-width: 450px;
-    height: min(75vh, 720px);
-    display: block;
-    background: #000;
+    max-width: 430px;
+    max-height: 800px;
     object-fit: contain;
+    background: #000;
 }
 
 .reel-label {
     position: absolute;
     top: 12px;
     left: 12px;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0,0,0,.7);
     color: white;
     padding: 7px 11px;
     border-radius: 20px;
@@ -332,306 +253,220 @@ textarea:focus {
     font-weight: bold;
 }
 
+/* ACTIONS */
+
 .post-actions {
-    border-top: 1px solid #f0f0f0;
-    padding: 10px 16px;
     display: flex;
-    align-items: center;
     gap: 10px;
+    padding: 12px 16px 16px;
+    border-top: 1px solid #f0f0f0;
 }
 
 .action-btn {
-    background: transparent;
     border: none;
-    cursor: pointer;
-    color: #4b5563;
-    padding: 7px 10px;
-    border-radius: 7px;
-    font-size: 14px;
-}
-
-.action-btn:hover {
     background: #f3f4f6;
-}
-
-.like-btn {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.like-btn.liked {
-    color: #dc2626;
-    font-weight: bold;
-}
-
-.like-count {
-    color: #6b7280;
-    font-size: 13px;
-    min-width: 10px;
-}
-
-.delete-btn {
-    margin-left: auto;
-    color: #dc2626;
-}
-
-.delete-btn:hover {
-    background: #fef2f2;
-}
-
-.empty {
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
-    padding: 40px 20px;
-    text-align: center;
-    color: #6b7280;
-}
-
-.refresh-btn {
-    margin-top: 15px;
-    background: #111827;
-    color: white;
-    border: none;
-    padding: 10px 16px;
+    padding: 8px 12px;
     border-radius: 8px;
     cursor: pointer;
 }
 
+.action-btn:hover {
+    background: #e5e7eb;
+}
+
+.delete-btn {
+    margin-left: auto;
+    color: #b91c1c;
+}
+
+/* EMPTY */
+
+.empty {
+    text-align: center;
+    color: #6b7280;
+    padding: 30px;
+}
+
+/* STATUS */
+
+.status {
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    display: none;
+    font-size: 14px;
+}
+
+.status.success {
+    display: block;
+    background: #ecfdf5;
+    color: #065f46;
+}
+
+.status.error {
+    display: block;
+    background: #fef2f2;
+    color: #991b1b;
+}
+
+/* MOBILE */
+
 @media (max-width: 700px) {
 
-    .nav {
+    header {
         padding: 12px;
+    }
+
+    .header-inner {
         align-items: flex-start;
         flex-direction: column;
     }
 
-    .nav-links {
+    nav {
         width: 100%;
-        overflow-x: auto;
-        flex-wrap: nowrap;
     }
 
-    .nav-links a,
+    nav a,
     .logout-btn {
-        white-space: nowrap;
+        font-size: 13px;
     }
 
     .container {
-        margin-top: 18px;
-        padding: 0 10px;
-    }
-
-    .page-title {
-        font-size: 24px;
-    }
-
-    .create-bottom {
-        align-items: stretch;
-        flex-direction: column;
-    }
-
-    .post-btn {
-        width: 100%;
-        margin-left: 0;
-    }
-
-    .post-header {
-        gap: 10px;
-    }
-
-    .post-date {
-        text-align: right;
-    }
-
-    .reel-video {
-        height: 75vh;
-        max-width: 100%;
+        margin-top: 15px;
     }
 
 }
 
 </style>
-
 </head>
 
 <body>
 
 <header>
 
-    <div class="nav">
+<div class="header-inner">
 
-        <a
-            class="logo"
-            href="index.html"
-        >
-            EPHPHAVORA
-        </a>
+<div class="logo">
+EPHPHAVORA
+</div>
 
-        <nav class="nav-links">
+<nav>
+<a href="index.html">Home</a>
+<a href="feed.html">Feed</a>
+<a href="people.html">People</a>
+<a href="marketplace.html">Market</a>
+<a href="notifications.html">Notifications</a>
+<a href="messages.html">Messages</a>
+<a href="profile.html">Profile</a>
+<a href="seller-dashboard.html">Dashboard</a>
+<button class="logout-btn" onclick="logout()">Logout</button>
+</nav>
 
-            <a href="index.html">
-                Home
-            </a>
-
-            <a href="feed.html">
-                Feed
-            </a>
-
-            <a href="people.html">
-                👥 People
-            </a>
-
-            <a href="marketplace.html">
-                Market
-            </a>
-
-            <a href="notifications.html">
-                🔔
-            </a>
-
-            <a href="messages.html">
-                💬
-            </a>
-
-            <button
-                class="logout-btn"
-                onclick="logout()"
-            >
-                Logout
-            </button>
-
-        </nav>
-
-    </div>
+</div>
 
 </header>
 
+
 <main class="container">
 
-    <h1 class="page-title">
-        Feed
-    </h1>
+<div id="status" class="status"></div>
 
-    <section class="create-post">
 
-        <h2>
-            Create a post
-        </h2>
+<!-- CREATE POST -->
 
-        <textarea
-            id="postContent"
-            placeholder="What's on your mind?"
-        ></textarea>
+<section class="create-post">
 
-        <div class="media-type">
+<h2>Create a Post</h2>
 
-            <button
-                type="button"
-                id="imageModeBtn"
-                class="active"
-                onclick="selectMediaMode('image')"
-            >
-                📷 Image
-            </button>
+<textarea
+id="postContent"
+placeholder="What's on your mind?"
+></textarea>
 
-            <button
-                type="button"
-                id="videoModeBtn"
-                onclick="selectMediaMode('video')"
-            >
-                🎥 Video
-            </button>
 
-            <button
-                type="button"
-                id="reelModeBtn"
-                onclick="selectMediaMode('reel')"
-            >
-                🎬 Reel
-            </button>
+<div class="media-type">
 
-        </div>
+<button
+id="imageModeBtn"
+class="active"
+onclick="selectMediaMode('image')"
+>
+📷 Image
+</button>
 
-        <div
-            id="imageUploadArea"
-            style="margin-top:12px;"
-        >
+<button
+id="videoModeBtn"
+onclick="selectMediaMode('video')"
+>
+🎥 Video
+</button>
 
-            <label class="file-label">
+<button
+id="reelModeBtn"
+onclick="selectMediaMode('reel')"
+>
+🎬 Reel
+</button>
 
-                📷 Add Image
+</div>
 
-                <input
-                    type="file"
-                    id="postImage"
-                    accept="image/*"
-                >
 
-            </label>
+<div
+id="imageArea"
+class="file-area"
+>
 
-            <div id="imageName"></div>
+<input
+type="file"
+id="postImage"
+accept="image/*"
+>
 
-        </div>
+</div>
 
-        <div
-            id="videoUploadArea"
-            style="display:none;margin-top:12px;"
-        >
 
-            <label class="file-label">
+<div
+id="videoArea"
+class="file-area"
+style="display:none;"
+>
 
-                🎥 Choose Video
+<input
+type="file"
+id="postVideo"
+accept="video/mp4,video/webm,video/quicktime"
+>
 
-                <input
-                    type="file"
-                    id="postVideo"
-                    accept="video/mp4,video/webm,video/quicktime"
-                >
+<div class="upload-note">
+Maximum video size: 50 MB
+</div>
 
-            </label>
+</div>
 
-            <div id="videoName"></div>
 
-            <div
-                style="
-                    margin-top:7px;
-                    font-size:12px;
-                    color:#6b7280;
-                "
-            >
-                MP4, WEBM, or MOV. Maximum 50 MB.
-            </div>
+<button
+id="publishBtn"
+class="publish-btn"
+onclick="createPost()"
+>
+Publish
+</button>
 
-        </div>
+</section>
 
-        <div class="create-bottom">
 
-            <div></div>
+<!-- FEED -->
 
-            <button
-                class="post-btn"
-                id="publishBtn"
-                onclick="createPost()"
-            >
-                POST
-            </button>
-
-        </div>
-
-    </section>
-
-    <div
-        id="status"
-        class="status"
-    ></div>
-
-    <section id="feed"></section>
+<section id="feed"></section>
 
 </main>
 
+
 <script>
+
+/* =========================
+   SUPABASE
+========================= */
 
 const SUPABASE_URL =
     "https://utoyoglycqjmqznczfxa.supabase.co";
@@ -639,112 +474,160 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
-const VIDEO_BUCKET =
-    "videos";
+const VIDEO_BUCKET = "videos";
 
 const MAX_VIDEO_SIZE =
     50 * 1024 * 1024;
 
 
-let accessToken =
-    localStorage.getItem(
-        "berakah_access_token"
-    );
-
+/* =========================
+   STATE
+========================= */
 
 let currentUser = null;
 
-let selectedMediaMode =
-    "image";
+let selectedMediaMode = "image";
 
 
-function supabaseHeaders(extra = {}) {
+/* =========================
+   ELEMENTS
+========================= */
 
-    return {
+const statusBox =
+    document.getElementById("status");
 
-        "apikey":
-            SUPABASE_KEY,
+const feed =
+    document.getElementById("feed");
 
-        "Authorization":
-            "Bearer " + accessToken,
-
-        ...extra
-
-    };
-
-}
+const publishBtn =
+    document.getElementById("publishBtn");
 
 
-function showStatus(
-    message,
-    type = ""
-) {
+/* =========================
+   STATUS
+========================= */
 
-    const status =
-        document.getElementById(
-            "status"
-        );
+function showStatus(message, type = "success") {
 
-    status.textContent =
-        message;
+    statusBox.textContent = message;
 
-    status.className =
+    statusBox.className =
         "status " + type;
 
+    setTimeout(() => {
+
+        statusBox.className =
+            "status";
+
+    }, 5000);
 }
 
 
-function selectMediaMode(
-    mode
-) {
+/* =========================
+   AUTH
+========================= */
 
-    selectedMediaMode =
-        mode;
+async function getCurrentUser() {
 
-    const imageButton =
+    const token =
+        localStorage.getItem(
+            "berakah_access_token"
+        );
+
+    if (!token) {
+
+        window.location.href =
+            "login.html";
+
+        return null;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                `${SUPABASE_URL}/auth/v1/user`,
+                {
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization":
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+        if (!response.ok) {
+
+            localStorage.removeItem(
+                "berakah_access_token"
+            );
+
+            window.location.href =
+                "login.html";
+
+            return null;
+        }
+
+        return await response.json();
+
+    } catch (error) {
+
+        console.error(error);
+
+        showStatus(
+            "Unable to verify login.",
+            "error"
+        );
+
+        return null;
+    }
+}
+
+
+/* =========================
+   MEDIA MODE
+========================= */
+
+function selectMediaMode(mode) {
+
+    selectedMediaMode = mode;
+
+    const imageBtn =
         document.getElementById(
             "imageModeBtn"
         );
 
-    const videoButton =
+    const videoBtn =
         document.getElementById(
             "videoModeBtn"
         );
 
-    const reelButton =
+    const reelBtn =
         document.getElementById(
             "reelModeBtn"
         );
 
     const imageArea =
         document.getElementById(
-            "imageUploadArea"
+            "imageArea"
         );
 
     const videoArea =
         document.getElementById(
-            "videoUploadArea"
+            "videoArea"
         );
 
 
-    imageButton.classList.remove(
-        "active"
-    );
+    imageBtn.classList.remove("active");
 
-    videoButton.classList.remove(
-        "active"
-    );
+    videoBtn.classList.remove("active");
 
-    reelButton.classList.remove(
-        "active"
-    );
+    reelBtn.classList.remove("active");
 
 
     if (mode === "image") {
 
-        imageButton.classList.add(
-            "active"
-        );
+        imageBtn.classList.add("active");
 
         imageArea.style.display =
             "block";
@@ -754,790 +637,327 @@ function selectMediaMode(
 
     } else {
 
-        videoArea.style.display =
-            "block";
-
-        imageArea.style.display =
-            "none";
-
-
         if (mode === "video") {
 
-            videoButton.classList.add(
-                "active"
-            );
-
-        } else {
-
-            reelButton.classList.add(
+            videoBtn.classList.add(
                 "active"
             );
 
         }
 
-    }
+        if (mode === "reel") {
 
+            reelBtn.classList.add(
+                "active"
+            );
+
+        }
+
+        imageArea.style.display =
+            "none";
+
+        videoArea.style.display =
+            "block";
+    }
 }
 
 
-async function getCurrentUser() {
-
-    if (!accessToken) {
-
-        window.location.href =
-            "login.html";
-
-        return null;
-
-    }
-
-
-    const response =
-        await fetch(
-
-            SUPABASE_URL +
-            "/auth/v1/user",
-
-            {
-                method: "GET",
-
-                headers:
-                    supabaseHeaders()
-            }
-
-        );
-
-
-    if (!response.ok) {
-
-        localStorage.removeItem(
-            "berakah_access_token"
-        );
-
-        localStorage.removeItem(
-            "berakah_refresh_token"
-        );
-
-        window.location.href =
-            "login.html";
-
-        return null;
-
-    }
-
-
-    currentUser =
-        await response.json();
-
-
-    return currentUser;
-
-}
-
+/* =========================
+   LOAD FEED
+========================= */
 
 async function loadFeed() {
 
-    const feed =
-        document.getElementById(
-            "feed"
-        );
-
-
-    feed.innerHTML = "";
-
-
-    showStatus(
-        "Loading posts..."
-    );
-
+    feed.innerHTML =
+        `<div class="empty">Loading feed...</div>`;
 
     try {
 
-        const postsUrl =
-            SUPABASE_URL +
-            "/rest/v1/posts" +
-            "?select=*" +
-            "&order=created_at.desc";
-
-
-        const postsResponse =
-            await fetch(
-
-                postsUrl,
-
-                {
-                    method: "GET",
-
-                    headers:
-                        supabaseHeaders()
-                }
-
+        const token =
+            localStorage.getItem(
+                "berakah_access_token"
             );
 
 
-        if (!postsResponse.ok) {
+        const response =
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/posts?select=*,profiles(username,avatar_url),likes(user_id)&order=created_at.desc`,
+                {
+                    headers: {
+                        "apikey": SUPABASE_KEY,
+                        "Authorization":
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+
+        if (!response.ok) {
+
+            const errorText =
+                await response.text();
+
+            console.error(
+                "Feed error:",
+                errorText
+            );
 
             throw new Error(
-                await postsResponse.text()
+                "Could not load feed."
             );
-
         }
 
 
         const posts =
-            await postsResponse.json();
+            await response.json();
 
 
-        if (
-            !posts ||
-            posts.length === 0
-        ) {
+        if (!posts.length) {
 
-            showEmpty();
+            feed.innerHTML =
+                `<div class="empty">
+                    No posts yet.
+                </div>`;
 
             return;
-
         }
 
 
-        const userIds = [
-            ...new Set(
+        feed.innerHTML = "";
 
-                posts
-                    .map(
-                        post =>
-                            post.user_id
-                    )
-                    .filter(Boolean)
 
-            )
-        ];
+        posts.forEach(post => {
 
+            feed.appendChild(
+                createPostCard(post)
+            );
 
-        let profiles = [];
-
-
-        if (
-            userIds.length > 0
-        ) {
-
-            const encodedIds =
-                userIds
-                    .map(
-                        id =>
-                            `"${id}"`
-                    )
-                    .join(",");
-
-
-            const profilesUrl =
-                SUPABASE_URL +
-                "/rest/v1/profiles" +
-                "?select=*" +
-                "&user_id=in.(" +
-                encodedIds +
-                ")";
-
-
-            const profilesResponse =
-                await fetch(
-
-                    profilesUrl,
-
-                    {
-                        method: "GET",
-
-                        headers:
-                            supabaseHeaders()
-                    }
-
-                );
-
-
-            if (
-                profilesResponse.ok
-            ) {
-
-                profiles =
-                    await profilesResponse.json();
-
-            }
-
-        }
-
-
-        const profileMap = {};
-
-
-        profiles.forEach(
-            profile => {
-
-                profileMap[
-                    profile.user_id
-                ] = profile;
-
-            }
-        );
-
-
-        const postIds =
-            posts
-                .map(
-                    post =>
-                        post.id
-                )
-                .filter(
-                    id =>
-                        id !== null &&
-                        id !== undefined
-                );
-
-
-        let likes = [];
-
-
-        if (
-            postIds.length > 0
-        ) {
-
-            const encodedPostIds =
-                postIds.join(",");
-
-
-            const likesUrl =
-                SUPABASE_URL +
-                "/rest/v1/post_likes" +
-                "?select=post_id,user_id" +
-                "&post_id=in.(" +
-                encodedPostIds +
-                ")";
-
-
-            const likesResponse =
-                await fetch(
-
-                    likesUrl,
-
-                    {
-                        method: "GET",
-
-                        headers:
-                            supabaseHeaders()
-                    }
-
-                );
-
-
-            if (
-                likesResponse.ok
-            ) {
-
-                likes =
-                    await likesResponse.json();
-
-            } else {
-
-                console.error(
-                    "Likes loading error:",
-                    await likesResponse.text()
-                );
-
-            }
-
-        }
-
-
-        const likeMap = {};
-
-
-        likes.forEach(
-            like => {
-
-                const postId =
-                    String(
-                        like.post_id
-                    );
-
-
-                if (
-                    !likeMap[postId]
-                ) {
-
-                    likeMap[postId] = {
-                        count: 0,
-                        liked: false
-                    };
-
-                }
-
-
-                likeMap[
-                    postId
-                ].count++;
-
-
-                if (
-                    currentUser &&
-                    like.user_id ===
-                        currentUser.id
-                ) {
-
-                    likeMap[
-                        postId
-                    ].liked = true;
-
-                }
-
-            }
-        );
-
-
-        posts.forEach(
-            post => {
-
-                const profile =
-                    profileMap[
-                        post.user_id
-                    ] || null;
-
-
-                const postLikes =
-                    likeMap[
-                        String(post.id)
-                    ] || {
-                        count: 0,
-                        liked: false
-                    };
-
-
-                feed.appendChild(
-
-                    createPostCard(
-                        post,
-                        profile,
-                        postLikes
-                    )
-
-                );
-
-            }
-        );
-
-
-        showStatus(
-            posts.length +
-            (
-                posts.length === 1
-                ? " post"
-                : " posts"
-            )
-        );
-
+        });
 
     } catch (error) {
 
-        console.error(
-            "Feed error:",
-            error
-        );
+        console.error(error);
 
-
-        showStatus(
-            "Could not load the feed.",
-            "error"
-        );
-
-
-        feed.innerHTML = `
-
-            <div class="empty">
-
-                <strong>
-                    Something went wrong.
-                </strong>
-
-                <br><br>
-
-                Please refresh the page.
-
-                <br>
-
-                <button
-                    class="refresh-btn"
-                    onclick="loadFeed()"
-                >
-                    Refresh Feed
-                </button>
-
-            </div>
-
-        `;
-
+        feed.innerHTML =
+            `<div class="empty">
+                Unable to load feed.
+            </div>`;
     }
-
 }
 
 
-function createPostCard(
-    post,
-    profile,
-    likes
-) {
+/* =========================
+   CREATE POST CARD
+========================= */
+
+function createPostCard(post) {
 
     const article =
-        document.createElement(
-            "article"
-        );
+        document.createElement("article");
+
+    article.className = "post";
 
 
-    article.className =
-        "post";
-
-
-    const fullName =
-        profile
-        ? (
-            profile["Full name"] ||
-            profile.full_name ||
-            profile.name ||
-            profile.username ||
-            "EPHPHAVORA Member"
-        )
-        : "EPHPHAVORA Member";
-
+    const profile =
+        post.profiles || {};
 
     const username =
-        profile &&
-        profile.username
-        ? profile.username
-        : "";
+        profile.username ||
+        "EPHPHAVORA User";
 
 
-    const avatarUrl =
-        profile &&
-        profile.avatar_url
-        ? profile.avatar_url
-        : "";
+    const avatar =
+        profile.avatar_url ||
+        "https://via.placeholder.com/100";
 
 
-    const profileId =
-        profile &&
-        profile.id
-        ? profile.id
-        : null;
+    const createdDate =
+        post.created_at
+            ? new Date(
+                post.created_at
+              ).toLocaleString()
+            : "";
 
 
-    const isOwnPost =
+    const likes =
+        Array.isArray(post.likes)
+            ? post.likes
+            : [];
+
+
+    const userLiked =
         currentUser &&
-        post.user_id ===
-            currentUser.id;
-
-
-    const formattedDate =
-        formatDate(
-            post.created_at
+        likes.some(
+            like =>
+                like.user_id ===
+                currentUser.id
         );
 
 
-    let avatarHTML;
+    let mediaHTML = "";
 
 
-    if (avatarUrl) {
-
-        avatarHTML = `
-
-            <div class="avatar">
-
-                <img
-                    src="${escapeAttribute(avatarUrl)}"
-                    alt="Profile"
-                >
-
-            </div>
-
-        `;
-
-    } else {
-
-        const firstLetter =
-            escapeHTML(
-                fullName
-                    .charAt(0)
-                    .toUpperCase()
-            );
-
-
-        avatarHTML = `
-
-            <div class="avatar">
-
-                ${firstLetter}
-
-            </div>
-
-        `;
-
-    }
-
-
-    let authorHTML;
-
-
-    if (profileId) {
-
-        authorHTML = `
-
-            <a
-                class="author"
-                href="profile.html?id=${encodeURIComponent(profileId)}"
-            >
-
-                ${avatarHTML}
-
-                <div>
-
-                    <div class="author-name">
-
-                        ${escapeHTML(
-                            fullName
-                        )}
-
-                    </div>
-
-                    ${
-                        username
-                        ? `
-
-                            <div class="username">
-
-                                @${escapeHTML(
-                                    username.replace(
-                                        /^@/,
-                                        ""
-                                    )
-                                )}
-
-                            </div>
-
-                          `
-                        : ""
-                    }
-
-                </div>
-
-            </a>
-
-        `;
-
-    } else {
-
-        authorHTML = `
-
-            <div class="author">
-
-                ${avatarHTML}
-
-                <div>
-
-                    <div class="author-name">
-
-                        ${escapeHTML(
-                            fullName
-                        )}
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        `;
-
-    }
-
-
-    const imageUrl =
-        post.image_url ||
-        post.image ||
-        null;
-
-
-    let imageHTML = "";
-
+    /* IMAGE */
 
     if (
-        imageUrl &&
+        post.image_url &&
         !post.video_url
     ) {
 
-        imageHTML = `
-
+        mediaHTML = `
             <img
                 class="post-image"
-                src="${escapeAttribute(imageUrl)}"
+                src="${escapeHtml(
+                    post.image_url
+                )}"
                 alt="Post image"
-                loading="lazy"
             >
-
         `;
 
     }
 
 
-    let videoHTML = "";
+    /* VIDEO */
 
+    if (
+        post.video_url &&
+        !post.is_reel
+    ) {
 
-    if (post.video_url) {
+        mediaHTML = `
+            <div class="video-wrapper">
 
-        const safeVideoUrl =
-            escapeAttribute(
-                post.video_url
-            );
-
-
-        if (post.is_reel) {
-
-            videoHTML = `
-
-                <div
-                    class="reel-wrapper"
-                    style="position:relative;"
+                <video
+                    class="post-video"
+                    controls
+                    playsinline
+                    preload="metadata"
                 >
 
-                    <video
-                        class="reel-video"
-                        src="${safeVideoUrl}"
-                        controls
-                        playsinline
-                        preload="metadata"
-                    ></video>
+                    <source
+                        src="${escapeHtml(
+                            post.video_url
+                        )}"
+                    >
 
-                    <div class="reel-label">
-                        🎬 REEL
-                    </div>
+                    Your browser does not
+                    support video playback.
 
-                </div>
+                </video>
 
-            `;
-
-        } else {
-
-            videoHTML = `
-
-                <div class="video-wrapper">
-
-                    <video
-                        class="post-video"
-                        src="${safeVideoUrl}"
-                        controls
-                        playsinline
-                        preload="metadata"
-                    ></video>
-
-                </div>
-
-            `;
-
-        }
-
-    }
-
-
-    let deleteButton = "";
-
-
-    if (isOwnPost) {
-
-        deleteButton = `
-
-            <button
-                class="action-btn delete-btn"
-                onclick="deletePost('${escapeAttribute(post.id)}')"
-            >
-                🗑 Delete
-            </button>
-
+            </div>
         `;
 
     }
 
 
-    const likedClass =
-        likes.liked
-        ? "liked"
-        : "";
+    /* REEL */
 
+    if (
+        post.video_url &&
+        post.is_reel
+    ) {
 
-    const likeIcon =
-        likes.liked
-        ? "❤️"
-        : "🤍";
+        mediaHTML = `
+            <div class="reel-wrapper">
+
+                <div class="reel-label">
+                    🎬 REEL
+                </div>
+
+                <video
+                    class="reel-video"
+                    controls
+                    playsinline
+                    preload="metadata"
+                >
+
+                    <source
+                        src="${escapeHtml(
+                            post.video_url
+                        )}"
+                    >
+
+                    Your browser does not
+                    support video playback.
+
+                </video>
+
+            </div>
+        `;
+
+    }
 
 
     article.innerHTML = `
 
         <div class="post-header">
 
-            ${authorHTML}
+            <img
+                class="avatar"
+                src="${escapeHtml(avatar)}"
+                alt="Profile"
+                onerror="this.src='https://via.placeholder.com/100'"
+            >
 
-            <div class="post-date">
+            <div>
 
-                ${formattedDate}
+                <div class="post-user">
+                    ${escapeHtml(username)}
+                </div>
+
+                <div class="post-date">
+                    ${escapeHtml(createdDate)}
+                </div>
 
             </div>
 
         </div>
 
+
         ${
             post.content
-            ? `
-
-                <div class="post-content">
-
-                    ${escapeHTML(
-                        post.content
-                    )}
-
-                </div>
-
-              `
-            : ""
+                ? `
+                    <div class="post-content">
+                        ${escapeHtml(
+                            post.content
+                        )}
+                    </div>
+                `
+                : ""
         }
 
-        ${imageHTML}
 
-        ${videoHTML}
+        ${mediaHTML}
+
 
         <div class="post-actions">
 
             <button
-                class="action-btn like-btn ${likedClass}"
-                id="like-${escapeAttribute(post.id)}"
-                onclick="toggleLike('${escapeAttribute(post.id)}', ${likes.liked})"
+                class="action-btn"
+                onclick="toggleLike('${post.id}')"
             >
 
-                <span class="like-icon">
-                    ${likeIcon}
-                </span>
+                ${userLiked ? "❤️" : "🤍"}
 
-                <span>
-                    Like
-                </span>
-
-                <span
-                    class="like-count"
-                    id="count-${escapeAttribute(post.id)}"
-                >
-                    ${
-                        likes.count > 0
-                        ? likes.count
-                        : ""
-                    }
-                </span>
+                ${likes.length}
 
             </button>
 
-            ${deleteButton}
+
+            ${
+                currentUser &&
+                post.user_id === currentUser.id
+                    ? `
+                        <button
+                            class="action-btn delete-btn"
+                            onclick="deletePost('${post.id}')"
+                        >
+                            🗑 Delete
+                        </button>
+                    `
+                    : ""
+            }
 
         </div>
 
@@ -1545,233 +965,67 @@ function createPostCard(
 
 
     return article;
-
 }
 
 
-async function toggleLike(
-    postId,
-    currentlyLiked
-) {
+/* =========================
+   ESCAPE HTML
+========================= */
 
-    const button =
-        document.getElementById(
-            "like-" + postId
-        );
+function escapeHtml(value) {
 
+    if (value === null ||
+        value === undefined) {
 
-    const countElement =
-        document.getElementById(
-            "count-" + postId
-        );
-
-
-    if (!button) {
-        return;
+        return "";
     }
 
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
-    button.disabled = true;
 
+/* =========================
+   IMAGE TO DATA URL
+========================= */
 
-    try {
+function imageToDataURL(file) {
 
-        if (currentlyLiked) {
+    return new Promise(
+        (resolve, reject) => {
 
-            const deleteUrl =
-                SUPABASE_URL +
-                "/rest/v1/post_likes" +
-                "?post_id=eq." +
-                encodeURIComponent(postId) +
-                "&user_id=eq." +
-                encodeURIComponent(
-                    currentUser.id
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                () => resolve(
+                    reader.result
                 );
 
+            reader.onerror =
+                reject;
 
-            const response =
-                await fetch(
-
-                    deleteUrl,
-
-                    {
-                        method: "DELETE",
-
-                        headers:
-                            supabaseHeaders()
-                    }
-
-                );
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    await response.text()
-                );
-
-            }
-
-
-            button.classList.remove(
-                "liked"
-            );
-
-
-            button.querySelector(
-                ".like-icon"
-            ).textContent =
-                "🤍";
-
-
-            let count =
-                parseInt(
-                    countElement.textContent
-                ) || 0;
-
-
-            count =
-                Math.max(
-                    0,
-                    count - 1
-                );
-
-
-            countElement.textContent =
-                count > 0
-                ? count
-                : "";
-
-
-            button.setAttribute(
-                "onclick",
-                `toggleLike('${escapeAttribute(postId)}', false)`
-            );
-
-
-        } else {
-
-            const response =
-                await fetch(
-
-                    SUPABASE_URL +
-                    "/rest/v1/post_likes",
-
-                    {
-                        method: "POST",
-
-                        headers:
-                            supabaseHeaders({
-                                "Content-Type":
-                                    "application/json",
-
-                                "Prefer":
-                                    "return=minimal"
-                            }),
-
-                        body:
-                            JSON.stringify({
-
-                                post_id:
-                                    postId,
-
-                                user_id:
-                                    currentUser.id
-
-                            })
-                    }
-
-                );
-
-
-            if (!response.ok) {
-
-                const error =
-                    await response.text();
-
-
-                if (
-                    response.status === 409
-                ) {
-
-                    await loadFeed();
-
-                    return;
-
-                }
-
-
-                throw new Error(
-                    error
-                );
-
-            }
-
-
-            button.classList.add(
-                "liked"
-            );
-
-
-            button.querySelector(
-                ".like-icon"
-            ).textContent =
-                "❤️";
-
-
-            let count =
-                parseInt(
-                    countElement.textContent
-                ) || 0;
-
-
-            count++;
-
-
-            countElement.textContent =
-                count;
-
-
-            button.setAttribute(
-                "onclick",
-                `toggleLike('${escapeAttribute(postId)}', true)`
-            );
-
+            reader.readAsDataURL(file);
         }
-
-
-    } catch (error) {
-
-        console.error(
-            "Like error:",
-            error
-        );
-
-
-        showStatus(
-            "Could not update like.",
-            "error"
-        );
-
-    } finally {
-
-        button.disabled = false;
-
-    }
-
+    );
 }
 
 
-async function uploadVideo(
-    file
-) {
+/* =========================
+   UPLOAD VIDEO
+========================= */
+
+async function uploadVideo(file) {
 
     if (!file) {
 
         throw new Error(
-            "Please choose a video."
+            "Please select a video."
         );
-
     }
 
 
@@ -1782,9 +1036,8 @@ async function uploadVideo(
     ) {
 
         throw new Error(
-            "Please select a video file."
+            "Please select a valid video file."
         );
-
     }
 
 
@@ -1794,125 +1047,96 @@ async function uploadVideo(
     ) {
 
         throw new Error(
-            "Video must be smaller than 50 MB."
+            "Video is too large. Maximum size is 50 MB."
         );
-
     }
 
 
-    const extension =
-        getFileExtension(
-            file.name
+    const token =
+        localStorage.getItem(
+            "berakah_access_token"
         );
 
 
+    const extension =
+        file.name.includes(".")
+            ? file.name
+                .split(".")
+                .pop()
+                .toLowerCase()
+            : "mp4";
+
+
     const filePath =
-        currentUser.id +
-        "/video-" +
-        Date.now() +
-        "-" +
-        Math.random()
+        `${currentUser.id}/${Date.now()}-${Math.random()
             .toString(36)
-            .substring(2, 8) +
-        "." +
-        extension;
+            .substring(2)}.${extension}`;
 
 
-    const uploadUrl =
-        SUPABASE_URL +
-        "/storage/v1/object/" +
-        VIDEO_BUCKET +
-        "/" +
-        filePath;
-
-
-    const response =
+    const uploadResponse =
         await fetch(
-            uploadUrl,
+            `${SUPABASE_URL}/storage/v1/object/${VIDEO_BUCKET}/${filePath}`,
             {
                 method: "POST",
 
-                headers:
-                    supabaseHeaders({
-                        "Content-Type":
-                            file.type,
+                headers: {
+                    "apikey": SUPABASE_KEY,
+                    "Authorization":
+                        `Bearer ${token}`,
+                    "Content-Type":
+                        file.type ||
+                        "video/mp4"
+                },
 
-                        "x-upsert":
-                            "false"
-                    }),
-
-                body:
-                    file
+                body: file
             }
         );
 
 
-    if (!response.ok) {
+    if (!uploadResponse.ok) {
 
         const errorText =
-            await response.text();
-
+            await uploadResponse.text();
 
         console.error(
             "Video upload error:",
             errorText
         );
 
-
         throw new Error(
-            "Could not upload video. " +
-            errorText
+            "Video upload failed."
         );
-
     }
 
 
-    return (
-        SUPABASE_URL +
-        "/storage/v1/object/public/" +
-        VIDEO_BUCKET +
-        "/" +
-        filePath
-    );
-
+    return `${SUPABASE_URL}/storage/v1/object/public/${VIDEO_BUCKET}/${filePath}`;
 }
 
 
-function getFileExtension(
-    fileName
-) {
-
-    const parts =
-        fileName.split(".");
-
-
-    if (
-        parts.length < 2
-    ) {
-
-        return "mp4";
-
-    }
-
-
-    return parts[
-        parts.length - 1
-    ]
-        .toLowerCase()
-        .replace(
-            /[^a-z0-9]/g,
-            ""
-        ) || "mp4";
-
-}
-
+/* =========================
+   CREATE POST
+========================= */
 
 async function createPost() {
 
-    const contentInput =
-        document.getElementById(
-            "postContent"
+    if (!currentUser) {
+
+        showStatus(
+            "Please log in first.",
+            "error"
         );
+
+        return;
+    }
+
+
+    const content =
+        document
+            .getElementById(
+                "postContent"
+            )
+            .value
+            .trim();
 
 
     const imageInput =
@@ -1927,66 +1151,60 @@ async function createPost() {
         );
 
 
-    const publishBtn =
-        document.getElementById(
-            "publishBtn"
-        );
-
-
-    const content =
-        contentInput.value.trim();
-
-
     const imageFile =
-        imageInput.files[0] ||
-        null;
+        imageInput.files[0];
 
 
     const videoFile =
-        videoInput.files[0] ||
-        null;
+        videoInput.files[0];
 
+
+    const publishedMode =
+        selectedMediaMode;
+
+
+    /* IMAGE VALIDATION */
 
     if (
-        selectedMediaMode === "image" &&
+        publishedMode === "image" &&
         !content &&
         !imageFile
     ) {
 
         showStatus(
-            "Write something or choose an image.",
+            "Write something or select an image.",
             "error"
         );
 
         return;
-
     }
 
 
+    /* VIDEO / REEL VALIDATION */
+
     if (
         (
-            selectedMediaMode === "video" ||
-            selectedMediaMode === "reel"
+            publishedMode === "video" ||
+            publishedMode === "reel"
         ) &&
         !videoFile
     ) {
 
         showStatus(
-            selectedMediaMode === "reel"
-            ? "Choose a video for your Reel."
-            : "Choose a video.",
+            publishedMode === "reel"
+                ? "Please select a Reel video."
+                : "Please select a video.",
             "error"
         );
 
         return;
-
     }
 
 
     publishBtn.disabled = true;
 
     publishBtn.textContent =
-        "POSTING...";
+        "Publishing...";
 
 
     try {
@@ -1996,8 +1214,10 @@ async function createPost() {
         let videoUrl = null;
 
 
+        /* IMAGE */
+
         if (
-            selectedMediaMode === "image" &&
+            publishedMode === "image" &&
             imageFile
         ) {
 
@@ -2008,47 +1228,68 @@ async function createPost() {
             ) {
 
                 throw new Error(
-                    "Please select an image file."
+                    "Please select a valid image."
                 );
-
-            }
-
-
-            if (
-                imageFile.size >
-                5 * 1024 * 1024
-            ) {
-
-                throw new Error(
-                    "Image must be smaller than 5 MB."
-                );
-
             }
 
 
             imageUrl =
-                await fileToDataURL(
+                await imageToDataURL(
                     imageFile
                 );
-
         }
 
 
+        /* VIDEO */
+
         if (
-            selectedMediaMode === "video" ||
-            selectedMediaMode === "reel"
+            publishedMode === "video" ||
+            publishedMode === "reel"
         ) {
-
-            showStatus(
-                "Uploading video..."
-            );
-
 
             videoUrl =
                 await uploadVideo(
                     videoFile
                 );
+        }
 
+
+        /*
+           IMPORTANT:
+
+           posts.content is currently
+           NOT NULL in Supabase.
+
+           Therefore video/Reel posts
+           without captions receive
+           a default caption.
+        */
+
+        let finalContent =
+            content;
+
+
+        if (!finalContent) {
+
+            if (
+                publishedMode === "reel"
+            ) {
+
+                finalContent =
+                    "🎬 Reel";
+
+            } else if (
+                publishedMode === "video"
+            ) {
+
+                finalContent =
+                    "🎥 Video";
+
+            } else {
+
+                finalContent =
+                    "📷 Image";
+            }
         }
 
 
@@ -2058,7 +1299,7 @@ async function createPost() {
                 currentUser.id,
 
             content:
-                content || null,
+                finalContent,
 
             image_url:
                 imageUrl,
@@ -2067,85 +1308,223 @@ async function createPost() {
                 videoUrl,
 
             is_reel:
-                selectedMediaMode === "reel"
-
+                publishedMode === "reel"
         };
+
+
+        const token =
+            localStorage.getItem(
+                "berakah_access_token"
+            );
 
 
         const response =
             await fetch(
-
-                SUPABASE_URL +
-                "/rest/v1/posts",
-
+                `${SUPABASE_URL}/rest/v1/posts`,
                 {
                     method: "POST",
 
-                    headers:
-                        supabaseHeaders({
+                    headers: {
 
-                            "Content-Type":
-                                "application/json",
+                        "apikey":
+                            SUPABASE_KEY,
 
-                            "Prefer":
-                                "return=representation"
+                        "Authorization":
+                            `Bearer ${token}`,
 
-                        }),
+                        "Content-Type":
+                            "application/json",
+
+                        "Prefer":
+                            "return=minimal"
+                    },
 
                     body:
                         JSON.stringify(
                             postData
                         )
-
                 }
-
             );
 
 
         if (!response.ok) {
 
-            throw new Error(
-                await response.text()
+            const errorText =
+                await response.text();
+
+            console.error(
+                "Create post error:",
+                errorText
             );
 
+            throw new Error(
+                errorText ||
+                "Failed to create post."
+            );
         }
 
 
-        contentInput.value =
-            "";
+        /*
+           RESET FORM
+        */
+
+        document
+            .getElementById(
+                "postContent"
+            )
+            .value = "";
 
 
-        imageInput.value =
-            "";
+        imageInput.value = "";
+
+        videoInput.value = "";
 
 
-        videoInput.value =
-            "";
+        selectMediaMode("image");
 
 
-        document.getElementById(
-            "imageName"
-        ).textContent =
-            "";
+        /* SUCCESS MESSAGE */
+
+        if (
+            publishedMode === "reel"
+        ) {
+
+            showStatus(
+                "🎬 Reel published successfully!"
+            );
+
+        } else if (
+            publishedMode === "video"
+        ) {
+
+            showStatus(
+                "🎥 Video published successfully!"
+            );
+
+        } else {
+
+            showStatus(
+                "📷 Post published successfully!"
+            );
+        }
 
 
-        document.getElementById(
-            "videoName"
-        ).textContent =
-            "";
+        await loadFeed();
 
 
-        selectMediaMode(
-            "image"
-        );
+    } catch (error) {
 
+        console.error(error);
 
         showStatus(
-            selectedMediaMode === "reel"
-            ? "Reel published successfully! 🎬"
-            : "Post published successfully! 🎉",
-            "success"
+            error.message ||
+            "Something went wrong while publishing.",
+            "error"
         );
+
+    } finally {
+
+        publishBtn.disabled = false;
+
+        publishBtn.textContent =
+            "Publish";
+    }
+}
+
+
+/* =========================
+   LIKE / UNLIKE
+========================= */
+
+async function toggleLike(postId) {
+
+    if (!currentUser) {
+
+        return;
+    }
+
+
+    const token =
+        localStorage.getItem(
+            "berakah_access_token"
+        );
+
+
+    try {
+
+        const checkResponse =
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/likes?select=*&post_id=eq.${encodeURIComponent(postId)}&user_id=eq.${encodeURIComponent(currentUser.id)}`,
+                {
+                    headers: {
+
+                        "apikey":
+                            SUPABASE_KEY,
+
+                        "Authorization":
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+
+        const existingLikes =
+            await checkResponse.json();
+
+
+        if (
+            existingLikes.length > 0
+        ) {
+
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/likes?post_id=eq.${encodeURIComponent(postId)}&user_id=eq.${encodeURIComponent(currentUser.id)}`,
+                {
+                    method: "DELETE",
+
+                    headers: {
+
+                        "apikey":
+                            SUPABASE_KEY,
+
+                        "Authorization":
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+        } else {
+
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/likes`,
+                {
+                    method: "POST",
+
+                    headers: {
+
+                        "apikey":
+                            SUPABASE_KEY,
+
+                        "Authorization":
+                            `Bearer ${token}`,
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Prefer":
+                            "return=minimal"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            post_id:
+                                postId,
+
+                            user_id:
+                                currentUser.id
+                        })
+                }
+            );
+        }
 
 
         await loadFeed();
@@ -2154,37 +1533,26 @@ async function createPost() {
     } catch (error) {
 
         console.error(
-            "Create post error:",
+            "Like error:",
             error
         );
 
-
         showStatus(
-            error.message ||
-            "Could not publish post.",
+            "Unable to update like.",
             "error"
         );
-
-
-    } finally {
-
-        publishBtn.disabled =
-            false;
-
-
-        publishBtn.textContent =
-            "POST";
-
     }
-
 }
 
 
-async function deletePost(
-    postId
-) {
+/* =========================
+   DELETE POST
+========================= */
 
-    if (!postId) {
+async function deletePost(postId) {
+
+    if (!currentUser) {
+
         return;
     }
 
@@ -2196,48 +1564,55 @@ async function deletePost(
 
 
     if (!confirmed) {
+
         return;
     }
+
+
+    const token =
+        localStorage.getItem(
+            "berakah_access_token"
+        );
 
 
     try {
 
         const response =
             await fetch(
-
-                SUPABASE_URL +
-                "/rest/v1/posts" +
-                "?id=eq." +
-                encodeURIComponent(
-                    postId
-                ) +
-                "&user_id=eq." +
-                encodeURIComponent(
-                    currentUser.id
-                ),
-
+                `${SUPABASE_URL}/rest/v1/posts?id=eq.${encodeURIComponent(postId)}&user_id=eq.${encodeURIComponent(currentUser.id)}`,
                 {
                     method: "DELETE",
 
-                    headers:
-                        supabaseHeaders()
-                }
+                    headers: {
 
+                        "apikey":
+                            SUPABASE_KEY,
+
+                        "Authorization":
+                            `Bearer ${token}`
+                    }
+                }
             );
 
 
         if (!response.ok) {
 
-            throw new Error(
-                await response.text()
+            const errorText =
+                await response.text();
+
+            console.error(
+                "Delete error:",
+                errorText
             );
 
+            throw new Error(
+                "Failed to delete post."
+            );
         }
 
 
         showStatus(
-            "Post deleted.",
-            "success"
+            "Post deleted successfully."
         );
 
 
@@ -2246,331 +1621,70 @@ async function deletePost(
 
     } catch (error) {
 
-        console.error(
-            "Delete error:",
-            error
-        );
-
+        console.error(error);
 
         showStatus(
-            "Could not delete the post.",
+            error.message ||
+            "Unable to delete post.",
             "error"
         );
-
     }
-
 }
 
 
-function fileToDataURL(
-    file
-) {
-
-    return new Promise(
-        (
-            resolve,
-            reject
-        ) => {
-
-            const reader =
-                new FileReader();
-
-
-            reader.onload =
-                () =>
-                    resolve(
-                        reader.result
-                    );
-
-
-            reader.onerror =
-                () =>
-                    reject(
-                        new Error(
-                            "Could not read image."
-                        )
-                    );
-
-
-            reader.readAsDataURL(
-                file
-            );
-
-        }
-    );
-
-}
-
-
-document
-    .getElementById(
-        "postImage"
-    )
-    .addEventListener(
-        "change",
-        function () {
-
-            const imageName =
-                document.getElementById(
-                    "imageName"
-                );
-
-
-            if (
-                this.files.length > 0
-            ) {
-
-                imageName.textContent =
-                    "Selected: " +
-                    this.files[0].name;
-
-            } else {
-
-                imageName.textContent =
-                    "";
-
-            }
-
-        }
-    );
-
-
-document
-    .getElementById(
-        "postVideo"
-    )
-    .addEventListener(
-        "change",
-        function () {
-
-            const videoName =
-                document.getElementById(
-                    "videoName"
-                );
-
-
-            if (
-                this.files.length > 0
-            ) {
-
-                const file =
-                    this.files[0];
-
-
-                const sizeMB =
-                    (
-                        file.size /
-                        (1024 * 1024)
-                    ).toFixed(1);
-
-
-                videoName.textContent =
-                    "Selected: " +
-                    file.name +
-                    " (" +
-                    sizeMB +
-                    " MB)";
-
-            } else {
-
-                videoName.textContent =
-                    "";
-
-            }
-
-        }
-    );
-
-
-function formatDate(
-    dateString
-) {
-
-    if (!dateString) {
-        return "";
-    }
-
-
-    const date =
-        new Date(
-            dateString
-        );
-
-
-    if (
-        isNaN(
-            date.getTime()
-        )
-    ) {
-
-        return "";
-    }
-
-
-    return date.toLocaleString(
-        undefined,
-        {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-            hour: "numeric",
-            minute: "2-digit"
-        }
-    );
-
-}
-
-
-function showEmpty() {
-
-    showStatus("");
-
-
-    document.getElementById(
-        "feed"
-    ).innerHTML = `
-
-        <div class="empty">
-
-            <h3>
-                No posts yet
-            </h3>
-
-            <p>
-                Be the first person to
-                post something on EPHPHAVORA.
-            </p>
-
-        </div>
-
-    `;
-
-}
-
-
-function escapeHTML(
-    value
-) {
-
-    if (
-        value === null ||
-        value === undefined
-    ) {
-
-        return "";
-
-    }
-
-
-    return String(value)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-function escapeAttribute(
-    value
-) {
-
-    return escapeHTML(
-        value
-    );
-
-}
-
-
-async function logout() {
-
-    try {
-
-        if (accessToken) {
-
-            await fetch(
-
-                SUPABASE_URL +
-                "/auth/v1/logout",
-
-                {
-                    method: "POST",
-
-                    headers:
-                        supabaseHeaders()
-                }
-
-            );
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Logout error:",
-            error
-        );
-
-    }
-
+/* =========================
+   LOGOUT
+========================= */
+
+function logout() {
 
     localStorage.removeItem(
         "berakah_access_token"
     );
 
-
     localStorage.removeItem(
         "berakah_refresh_token"
+    );
+
+    localStorage.removeItem(
+        "berakah_user"
+    );
+
+    localStorage.removeItem(
+        "berakah_username"
+    );
+
+    localStorage.removeItem(
+        "berakah_auth_user_id"
     );
 
 
     window.location.href =
         "login.html";
-
 }
 
 
-async function startFeed() {
+/* =========================
+   START
+========================= */
 
-    const user =
+(async function init() {
+
+    currentUser =
         await getCurrentUser();
 
 
-    if (!user) {
+    if (!currentUser) {
+
         return;
     }
 
 
     await loadFeed();
 
-}
-
-
-startFeed();
+})();
 
 </script>
 
 </body>
-
 </html>
