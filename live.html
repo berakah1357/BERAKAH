@@ -268,8 +268,8 @@ button:disabled {
 const LIVEKIT_URL =
   "wss://ephphavora-wciizjcm.livekit.cloud";
 
-const TOKEN_FUNCTION_URL =
-  "https://utoyoglycqjmqznczfxa.supabase.co/functions/v1/livekit-token";
+const LIVEKIT_TOKEN_SERVER_ID =
+  "ephphavora-16wbwu";
 
 let room = null;
 let cameraOn = true;
@@ -298,6 +298,7 @@ function clearMessage() {
 }
 
 function getUserInfo() {
+
   let username =
     localStorage.getItem("berakah_username") ||
     localStorage.getItem("berakah_user");
@@ -312,83 +313,58 @@ function getUserInfo() {
 }
 
 function makeRoomName() {
+
   const user = getUserInfo();
 
   return "ephphavora-live-" + user.userId;
 }
 
-async function getLiveKitToken(roomName) {
+async function getLiveKitConnectionDetails(roomName) {
 
   const user = getUserInfo();
 
-  const supabaseToken =
-    localStorage.getItem("berakah_access_token");
-
-  if (!supabaseToken) {
-    throw new Error(
-      "You must be logged in to start a LIVE."
+  const tokenSource =
+    LivekitClient.TokenSource.developmentTokenServer(
+      LIVEKIT_TOKEN_SERVER_ID
     );
-  }
 
-  const response = await fetch(
-    TOKEN_FUNCTION_URL,
-    {
-      method: "POST",
+  const connectionDetails =
+    await tokenSource.fetch({
+      roomName: roomName,
+      participantName: user.username,
+      participantIdentity: user.userId
+    });
 
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization":
-          "Bearer " + supabaseToken,
-        "apikey":
-          "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA"
-      },
-
-      body: JSON.stringify({
-        roomName: roomName,
-        participantName: user.username,
-        participantIdentity: user.userId
-      })
-    }
-  );
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(
-      data.error || "Could not create LiveKit token."
-    );
-  }
-
-  if (!data.token) {
-    throw new Error(
-      "LiveKit token was not returned."
-    );
-  }
-
-  return data.token;
+  return connectionDetails;
 }
 
 function addVideoTrack(track, participant, isLocal) {
 
   const tile = document.createElement("div");
+
   tile.className = "video-tile";
 
-  tile.dataset.identity = participant.identity;
+  tile.dataset.identity =
+    participant.identity;
 
-  const videoElement = track.attach();
+  const videoElement =
+    track.attach();
 
   videoElement.autoplay = true;
   videoElement.playsInline = true;
 
   tile.appendChild(videoElement);
 
-  const name = document.createElement("div");
+  const name =
+    document.createElement("div");
+
   name.className = "name-label";
 
   name.textContent =
     isLocal
       ? "You"
-      : (participant.name || participant.identity);
+      : (participant.name ||
+         participant.identity);
 
   tile.appendChild(name);
 
@@ -398,12 +374,15 @@ function addVideoTrack(track, participant, isLocal) {
 function removeParticipant(participant) {
 
   const tiles =
-    videoGrid.querySelectorAll(".video-tile");
+    videoGrid.querySelectorAll(
+      ".video-tile"
+    );
 
   tiles.forEach(tile => {
 
     if (
-      tile.dataset.identity === participant.identity
+      tile.dataset.identity ===
+      participant.identity
     ) {
       tile.remove();
     }
@@ -414,12 +393,17 @@ function removeParticipant(participant) {
 function updateViewerCount() {
 
   if (!room) {
-    viewerCount.textContent = "0";
+
+    viewerCount.textContent =
+      "0";
+
     return;
   }
 
   viewerCount.textContent =
-    String(room.remoteParticipants.size);
+    String(
+      room.remoteParticipants.size
+    );
 }
 
 async function startLive() {
@@ -433,15 +417,19 @@ async function startLive() {
 
     goLiveBtn.disabled = true;
 
-    const roomName = makeRoomName();
+    const roomName =
+      makeRoomName();
 
-    const token =
-      await getLiveKitToken(roomName);
+    const connectionDetails =
+      await getLiveKitConnectionDetails(
+        roomName
+      );
 
-    room = new LivekitClient.Room({
-      adaptiveStream: true,
-      dynacast: true
-    });
+    room =
+      new LivekitClient.Room({
+        adaptiveStream: true,
+        dynacast: true
+      });
 
     room.on(
       LivekitClient.RoomEvent.TrackSubscribed,
@@ -451,11 +439,13 @@ async function startLive() {
           track.kind ===
           LivekitClient.Track.Kind.Video
         ) {
+
           addVideoTrack(
             track,
             participant,
             false
           );
+
         }
 
         updateViewerCount();
@@ -468,7 +458,9 @@ async function startLive() {
 
         track.detach();
 
-        removeParticipant(participant);
+        removeParticipant(
+          participant
+        );
 
         updateViewerCount();
       }
@@ -477,7 +469,9 @@ async function startLive() {
     room.on(
       LivekitClient.RoomEvent.ParticipantConnected,
       () => {
+
         updateViewerCount();
+
       }
     );
 
@@ -485,9 +479,12 @@ async function startLive() {
       LivekitClient.RoomEvent.ParticipantDisconnected,
       (participant) => {
 
-        removeParticipant(participant);
+        removeParticipant(
+          participant
+        );
 
         updateViewerCount();
+
       }
     );
 
@@ -498,61 +495,84 @@ async function startLive() {
         statusEl.textContent =
           "Disconnected from LIVE.";
 
-        liveStatus.textContent = "OFF";
+        liveStatus.textContent =
+          "OFF";
 
-        cameraBtn.disabled = true;
-        micBtn.disabled = true;
-        endBtn.disabled = true;
+        cameraBtn.disabled =
+          true;
 
-        goLiveBtn.disabled = false;
+        micBtn.disabled =
+          true;
+
+        endBtn.disabled =
+          true;
+
+        goLiveBtn.disabled =
+          false;
 
         updateViewerCount();
+
       }
     );
 
     await room.connect(
+      connectionDetails.serverUrl ||
       LIVEKIT_URL,
-      token
+      connectionDetails.participantToken
     );
 
-    await room.localParticipant.setCameraEnabled(true);
+    await room.localParticipant
+      .setCameraEnabled(true);
 
-    await room.localParticipant.setMicrophoneEnabled(true);
+    await room.localParticipant
+      .setMicrophoneEnabled(true);
 
     const publications =
-      room.localParticipant.videoTrackPublications;
+      room.localParticipant
+        .videoTrackPublications;
 
-    publications.forEach(publication => {
+    publications.forEach(
+      publication => {
 
-      if (publication.track) {
+        if (publication.track) {
 
-        addVideoTrack(
-          publication.track,
-          room.localParticipant,
-          true
-        );
+          addVideoTrack(
+            publication.track,
+            room.localParticipant,
+            true
+          );
+
+        }
 
       }
-
-    });
+    );
 
     cameraOn = true;
     micOn = true;
 
-    cameraBtn.disabled = false;
-    micBtn.disabled = false;
-    endBtn.disabled = false;
+    cameraBtn.disabled =
+      false;
+
+    micBtn.disabled =
+      false;
+
+    endBtn.disabled =
+      false;
 
     statusEl.textContent =
       "🔴 You are LIVE on EPHPHAVORA!";
 
-    liveStatus.textContent = "LIVE";
+    liveStatus.textContent =
+      "LIVE";
 
     updateViewerCount();
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "EPHPHAVORA LIVE ERROR:",
+      error
+    );
 
     statusEl.textContent =
       "Unable to start LIVE.";
@@ -562,7 +582,8 @@ async function startLive() {
       "Something went wrong."
     );
 
-    goLiveBtn.disabled = false;
+    goLiveBtn.disabled =
+      false;
 
   }
 
@@ -572,10 +593,13 @@ async function toggleCamera() {
 
   if (!room) return;
 
-  cameraOn = !cameraOn;
+  cameraOn =
+    !cameraOn;
 
   await room.localParticipant
-    .setCameraEnabled(cameraOn);
+    .setCameraEnabled(
+      cameraOn
+    );
 
   cameraBtn.textContent =
     cameraOn
@@ -587,10 +611,13 @@ async function toggleMic() {
 
   if (!room) return;
 
-  micOn = !micOn;
+  micOn =
+    !micOn;
 
   await room.localParticipant
-    .setMicrophoneEnabled(micOn);
+    .setMicrophoneEnabled(
+      micOn
+    );
 
   micBtn.textContent =
     micOn
@@ -604,7 +631,8 @@ async function endLive() {
 
   await room.disconnect();
 
-  videoGrid.innerHTML = "";
+  videoGrid.innerHTML =
+    "";
 
   room = null;
 
@@ -617,11 +645,17 @@ async function endLive() {
   viewerCount.textContent =
     "0";
 
-  cameraBtn.disabled = true;
-  micBtn.disabled = true;
-  endBtn.disabled = true;
+  cameraBtn.disabled =
+    true;
 
-  goLiveBtn.disabled = false;
+  micBtn.disabled =
+    true;
+
+  endBtn.disabled =
+    true;
+
+  goLiveBtn.disabled =
+    false;
 
   cameraBtn.textContent =
     "📷 Camera ON";
