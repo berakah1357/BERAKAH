@@ -35,11 +35,36 @@
       color: #111827;
     }
 
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
     nav a {
-      margin-left: 25px;
       text-decoration: none;
       color: #333;
       font-weight: 600;
+    }
+
+    /* =========================
+       LIVE BUTTON
+       ========================= */
+
+    nav a.live-button {
+      background: #dc2626;
+      color: white;
+      padding: 11px 17px;
+      border-radius: 999px;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+
+    nav a.live-button:hover {
+      transform: scale(1.06);
+      box-shadow: 0 6px 18px rgba(220, 38, 38, 0.35);
     }
 
     .language-bar {
@@ -110,6 +135,27 @@
       color: #111827;
     }
 
+    /* HERO LIVE BUTTON */
+
+    .live-main-button {
+      display: inline-block;
+      margin: 8px;
+      padding: 14px 25px;
+      background: #dc2626;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      box-shadow: 0 5px 15px rgba(220, 38, 38, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .live-main-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(220, 38, 38, 0.35);
+    }
+
     .languages {
       margin-top: 30px;
       font-weight: bold;
@@ -161,23 +207,68 @@
       color: #6b7280;
     }
 
+    /* =========================
+       TABLET
+       ========================= */
+
     @media (max-width: 800px) {
+
       .features {
         grid-template-columns: 1fr 1fr;
       }
-    }
 
-    @media (max-width: 500px) {
       header {
         padding: 18px 5%;
       }
 
       .logo {
-        font-size: 24px;
+        font-size: 25px;
       }
 
       nav {
+        gap: 12px;
+      }
+
+      nav a {
+        font-size: 14px;
+      }
+
+      nav a.live-button {
+        padding: 9px 13px;
+      }
+    }
+
+    /* =========================
+       MOBILE
+       ========================= */
+
+    @media (max-width: 600px) {
+
+      header {
+        padding: 15px 4%;
+      }
+
+      .logo {
+        font-size: 21px;
+        letter-spacing: 1px;
+      }
+
+      nav {
+        gap: 8px;
+      }
+
+      nav a:not(.live-button) {
         display: none;
+      }
+
+      nav a.live-button {
+        display: inline-block;
+        font-size: 13px;
+        padding: 9px 13px;
+      }
+
+      .language-bar {
+        padding: 10px 4%;
       }
 
       .hero {
@@ -185,15 +276,37 @@
       }
 
       .hero h1 {
-        font-size: 45px;
+        font-size: 42px;
+        letter-spacing: 3px;
       }
 
       .hero h2 {
         font-size: 24px;
       }
 
+      .hero p {
+        font-size: 16px;
+      }
+
       .features {
         grid-template-columns: 1fr;
+        margin: 40px auto;
+      }
+    }
+
+    @media (max-width: 380px) {
+
+      .logo {
+        font-size: 18px;
+      }
+
+      nav a.live-button {
+        font-size: 12px;
+        padding: 8px 11px;
+      }
+
+      .hero h1 {
+        font-size: 34px;
       }
     }
   </style>
@@ -201,40 +314,94 @@
 
 <body>
 
-  <!-- HEADER -->
+  <!-- =========================
+       HEADER
+       ========================= -->
+
   <header>
-    <div class="logo">EPHPHAVORA</div>
+
+    <div class="logo">
+      EPHPHAVORA
+    </div>
 
     <nav>
-      <a href="#" id="navHome">Home</a>
-      <a href="#" id="navDiscover">Discover</a>
-      <a href="business.html" id="navBusiness">Business</a>
-      <a href="marketplace.html" id="navMarket">Market</a>
+
+      <a href="#" id="navHome">
+        Home
+      </a>
+
+      <a href="#" id="navDiscover">
+        Discover
+      </a>
+
+      <!-- LIVE BUTTON -->
+      <a href="live.html"
+         id="navLive"
+         class="live-button">
+        🔴 LIVE
+      </a>
+
+      <a href="business.html"
+         id="navBusiness">
+        Business
+      </a>
+
+      <a href="marketplace.html"
+         id="navMarket">
+        Market
+      </a>
+
     </nav>
+
   </header>
 
 
-  <!-- LANGUAGE SELECTOR -->
+  <!-- =========================
+       LANGUAGE SELECTOR
+       ========================= -->
+
   <div class="language-bar">
-    <label for="language" id="languageLabel">
+
+    <label for="language"
+           id="languageLabel">
       🌎 Language:
     </label>
 
     <select id="language">
-      <option value="ht">Haitian Creole</option>
-      <option value="en">English</option>
-      <option value="fr">French</option>
-      <option value="es">Spanish</option>
+
+      <option value="ht">
+        Haitian Creole
+      </option>
+
+      <option value="en">
+        English
+      </option>
+
+      <option value="fr">
+        French
+      </option>
+
+      <option value="es">
+        Spanish
+      </option>
+
     </select>
+
   </div>
 
 
-  <!-- HERO -->
+  <!-- =========================
+       HERO
+       ========================= -->
+
   <section class="hero">
 
-    <h1>EPHPHAVORA</h1>
+    <h1>
+      EPHPHAVORA
+    </h1>
 
-    <h2 id="welcomeText" class="welcome-text">
+    <h2 id="welcomeText"
+        class="welcome-text">
       Konekte. Pataje. Grandi Ansanm.
     </h2>
 
@@ -244,35 +411,66 @@
       epi kreye opòtinite.
     </p>
 
+
     <div class="buttons">
 
-      <a href="signup.html" style="text-decoration: none;">
-        <button class="primary" type="button" id="createAccountButton">
+      <a href="signup.html"
+         style="text-decoration: none;">
+
+        <button class="primary"
+                type="button"
+                id="createAccountButton">
           KREYE KONT
         </button>
+
       </a>
 
-      <a href="login.html" style="text-decoration: none;">
-        <button class="secondary" type="button" id="loginButton">
+
+      <a href="login.html"
+         style="text-decoration: none;">
+
+        <button class="secondary"
+                type="button"
+                id="loginButton">
           KONEKTE
         </button>
+
+      </a>
+
+
+      <!-- HERO LIVE BUTTON -->
+
+      <a href="live.html"
+         class="live-main-button"
+         id="heroLiveButton">
+        🔴 LIVE
       </a>
 
     </div>
 
-    <div class="languages" id="languagesText">
+
+    <div class="languages"
+         id="languagesText">
       Kreyòl Ayisyen • Anglè • Franse • Panyòl
     </div>
 
   </section>
 
 
-  <!-- FEATURES -->
+  <!-- =========================
+       FEATURES
+       ========================= -->
+
   <section class="features">
 
+
     <!-- SOCIAL -->
+
     <div class="card">
-      <div class="card-icon">👥</div>
+
+      <div class="card-icon">
+        👥
+      </div>
 
       <h3 id="socialTitle">
         Sosyal
@@ -281,12 +479,17 @@
       <p id="socialDescription">
         Konekte ak moun epi pataje mond ou.
       </p>
+
     </div>
 
 
     <!-- COMMUNITY -->
+
     <div class="card">
-      <div class="card-icon">💬</div>
+
+      <div class="card-icon">
+        💬
+      </div>
 
       <h3 id="communityTitle">
         Kominote
@@ -295,12 +498,17 @@
       <p id="communityDescription">
         Antre nan gwoup epi konstwi kominote ki gen sans.
       </p>
+
     </div>
 
 
     <!-- BUSINESS -->
+
     <div class="card">
-      <div class="card-icon">🏪</div>
+
+      <div class="card-icon">
+        🏪
+      </div>
 
       <h3 id="businessTitle">
         Biznis
@@ -309,12 +517,17 @@
       <p id="businessDescription">
         Devlope biznis ou epi jwenn nouvo kliyan.
       </p>
+
     </div>
 
 
     <!-- MARKETPLACE -->
+
     <div class="card">
-      <div class="card-icon">🛍️</div>
+
+      <div class="card-icon">
+        🛍️
+      </div>
 
       <a href="marketplace.html"
          class="card-link"
@@ -325,71 +538,124 @@
       <p id="marketplaceDescription">
         Achte epi vann pwodwi ak sèvis.
       </p>
+
     </div>
 
   </section>
 
 
-  <!-- FOOTER -->
+  <!-- =========================
+       FOOTER
+       ========================= -->
+
   <footer id="footerText">
     © 2026 EPHPHAVORA — Konekte. Pataje. Grandi Ansanm.
   </footer>
 
 
-  <!-- TRANSLATION SCRIPT -->
+  <!-- =========================
+       TRANSLATIONS
+       ========================= -->
+
   <script>
 
     const translations = {
 
-      ht: {
-        languageLabel: "🌎 Lang:",
-        navHome: "Akèy",
-        navDiscover: "Dekouvri",
-        navBusiness: "Biznis",
-        navMarket: "Mache",
+      /* =====================
+         HAITIAN CREOLE
+         ===================== */
 
-        welcomeText: "Konekte. Pataje. Grandi Ansanm.",
+      ht: {
+
+        languageLabel:
+          "🌎 Lang:",
+
+        navHome:
+          "Akèy",
+
+        navDiscover:
+          "Dekouvri",
+
+        navLive:
+          "🔴 LIVE",
+
+        navBusiness:
+          "Biznis",
+
+        navMarket:
+          "Mache",
+
+        welcomeText:
+          "Konekte. Pataje. Grandi Ansanm.",
 
         descriptionText:
           "Yon platfòm sosyal ak biznis kote moun, kominote ak biznis konekte, kominike, epi kreye opòtinite.",
 
-        createAccountButton: "KREYE KONT",
-        loginButton: "KONEKTE",
+        createAccountButton:
+          "KREYE KONT",
+
+        loginButton:
+          "KONEKTE",
+
+        heroLiveButton:
+          "🔴 LIVE",
 
         languagesText:
           "Kreyòl Ayisyen • Anglè • Franse • Panyòl",
 
-        socialTitle: "Sosyal",
+        socialTitle:
+          "Sosyal",
 
         socialDescription:
           "Konekte ak moun epi pataje mond ou.",
 
-        communityTitle: "Kominote",
+        communityTitle:
+          "Kominote",
 
         communityDescription:
           "Antre nan gwoup epi konstwi kominote ki gen sans.",
 
-        businessTitle: "Biznis",
+        businessTitle:
+          "Biznis",
 
         businessDescription:
           "Devlope biznis ou epi jwenn nouvo kliyan.",
 
-        marketplaceTitle: "Mache",
+        marketplaceTitle:
+          "Mache",
 
         marketplaceDescription:
           "Achte epi vann pwodwi ak sèvis.",
 
         footerText:
           "© 2026 EPHPHAVORA — Konekte. Pataje. Grandi Ansanm."
+
       },
 
 
+      /* =====================
+         ENGLISH
+         ===================== */
+
       en: {
-        languageLabel: "🌎 Language:",
-        navHome: "Home",
-        navDiscover: "Discover",
-        navBusiness: "Business",
-        navMarket: "Market",
+
+        languageLabel:
+          "🌎 Language:",
+
+        navHome:
+          "Home",
+
+        navDiscover:
+          "Discover",
+
+        navLive:
+          "🔴 LIVE",
+
+        navBusiness:
+          "Business",
+
+        navMarket:
+          "Market",
 
         welcomeText:
           "Connect. Share. Grow Together.",
@@ -402,6 +668,9 @@
 
         loginButton:
           "LOG IN",
+
+        heroLiveButton:
+          "🔴 LIVE",
 
         languagesText:
           "Haitian Creole • English • French • Spanish",
@@ -432,15 +701,33 @@
 
         footerText:
           "© 2026 EPHPHAVORA — Connect. Share. Grow Together."
+
       },
 
 
+      /* =====================
+         FRENCH
+         ===================== */
+
       fr: {
-        languageLabel: "🌎 Langue:",
-        navHome: "Accueil",
-        navDiscover: "Découvrir",
-        navBusiness: "Entreprise",
-        navMarket: "Marché",
+
+        languageLabel:
+          "🌎 Langue:",
+
+        navHome:
+          "Accueil",
+
+        navDiscover:
+          "Découvrir",
+
+        navLive:
+          "🔴 EN DIRECT",
+
+        navBusiness:
+          "Entreprise",
+
+        navMarket:
+          "Marché",
 
         welcomeText:
           "Connectez-vous. Partagez. Grandissez ensemble.",
@@ -453,6 +740,9 @@
 
         loginButton:
           "SE CONNECTER",
+
+        heroLiveButton:
+          "🔴 EN DIRECT",
 
         languagesText:
           "Créole haïtien • Anglais • Français • Espagnol",
@@ -483,15 +773,33 @@
 
         footerText:
           "© 2026 EPHPHAVORA — Connectez-vous. Partagez. Grandissez ensemble."
+
       },
 
 
+      /* =====================
+         SPANISH
+         ===================== */
+
       es: {
-        languageLabel: "🌎 Idioma:",
-        navHome: "Inicio",
-        navDiscover: "Descubrir",
-        navBusiness: "Negocios",
-        navMarket: "Mercado",
+
+        languageLabel:
+          "🌎 Idioma:",
+
+        navHome:
+          "Inicio",
+
+        navDiscover:
+          "Descubrir",
+
+        navLive:
+          "🔴 EN VIVO",
+
+        navBusiness:
+          "Negocios",
+
+        navMarket:
+          "Mercado",
 
         welcomeText:
           "Conecta. Comparte. Crece Juntos.",
@@ -504,6 +812,9 @@
 
         loginButton:
           "INICIAR SESIÓN",
+
+        heroLiveButton:
+          "🔴 EN VIVO",
 
         languagesText:
           "Criollo haitiano • Inglés • Francés • Español",
@@ -534,10 +845,15 @@
 
         footerText:
           "© 2026 EPHPHAVORA — Conecta. Comparte. Crece Juntos."
+
       }
 
     };
 
+
+    /* =========================
+       LANGUAGE FUNCTION
+       ========================= */
 
     function changeLanguage(language) {
 
@@ -545,77 +861,164 @@
 
       if (!text) return;
 
-      document.documentElement.lang = language;
 
-      document.getElementById("languageLabel").textContent =
+      document.documentElement.lang =
+        language;
+
+
+      document.getElementById(
+        "languageLabel"
+      ).textContent =
         text.languageLabel;
 
-      document.getElementById("navHome").textContent =
+
+      document.getElementById(
+        "navHome"
+      ).textContent =
         text.navHome;
 
-      document.getElementById("navDiscover").textContent =
+
+      document.getElementById(
+        "navDiscover"
+      ).textContent =
         text.navDiscover;
 
-      document.getElementById("navBusiness").textContent =
+
+      document.getElementById(
+        "navLive"
+      ).textContent =
+        text.navLive;
+
+
+      document.getElementById(
+        "navBusiness"
+      ).textContent =
         text.navBusiness;
 
-      document.getElementById("navMarket").textContent =
+
+      document.getElementById(
+        "navMarket"
+      ).textContent =
         text.navMarket;
 
-      document.getElementById("welcomeText").textContent =
+
+      document.getElementById(
+        "welcomeText"
+      ).textContent =
         text.welcomeText;
 
-      document.getElementById("descriptionText").textContent =
+
+      document.getElementById(
+        "descriptionText"
+      ).textContent =
         text.descriptionText;
 
-      document.getElementById("createAccountButton").textContent =
+
+      document.getElementById(
+        "createAccountButton"
+      ).textContent =
         text.createAccountButton;
 
-      document.getElementById("loginButton").textContent =
+
+      document.getElementById(
+        "loginButton"
+      ).textContent =
         text.loginButton;
 
-      document.getElementById("languagesText").textContent =
+
+      document.getElementById(
+        "heroLiveButton"
+      ).textContent =
+        text.heroLiveButton;
+
+
+      document.getElementById(
+        "languagesText"
+      ).textContent =
         text.languagesText;
 
-      document.getElementById("socialTitle").textContent =
+
+      document.getElementById(
+        "socialTitle"
+      ).textContent =
         text.socialTitle;
 
-      document.getElementById("socialDescription").textContent =
+
+      document.getElementById(
+        "socialDescription"
+      ).textContent =
         text.socialDescription;
 
-      document.getElementById("communityTitle").textContent =
+
+      document.getElementById(
+        "communityTitle"
+      ).textContent =
         text.communityTitle;
 
-      document.getElementById("communityDescription").textContent =
+
+      document.getElementById(
+        "communityDescription"
+      ).textContent =
         text.communityDescription;
 
-      document.getElementById("businessTitle").textContent =
+
+      document.getElementById(
+        "businessTitle"
+      ).textContent =
         text.businessTitle;
 
-      document.getElementById("businessDescription").textContent =
+
+      document.getElementById(
+        "businessDescription"
+      ).textContent =
         text.businessDescription;
 
-      document.getElementById("marketplaceTitle").textContent =
+
+      document.getElementById(
+        "marketplaceTitle"
+      ).textContent =
         text.marketplaceTitle;
 
-      document.getElementById("marketplaceDescription").textContent =
+
+      document.getElementById(
+        "marketplaceDescription"
+      ).textContent =
         text.marketplaceDescription;
 
-      document.getElementById("footerText").textContent =
+
+      document.getElementById(
+        "footerText"
+      ).textContent =
         text.footerText;
 
-      document.title = "EPHPHAVORA";
+
+      document.title =
+        "EPHPHAVORA";
     }
 
 
+    /* =========================
+       LANGUAGE SELECTOR
+       ========================= */
+
     document
       .getElementById("language")
-      .addEventListener("change", function () {
-        changeLanguage(this.value);
-      });
+      .addEventListener(
+        "change",
+        function () {
+
+          changeLanguage(
+            this.value
+          );
+
+        }
+      );
 
 
-    // Default language: Haitian Creole
+    /* =========================
+       DEFAULT LANGUAGE
+       ========================= */
+
     changeLanguage("ht");
 
   </script>
