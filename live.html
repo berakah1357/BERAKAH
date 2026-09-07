@@ -16,25 +16,28 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #0b1020;
+  background: #050505;
   color: white;
 }
 
 header {
-  background: #111827;
-  padding: 15px 20px;
+  height: 64px;
+  background: #111;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  border-bottom: 1px solid #293244;
+  justify-content: space-between;
+  padding: 0 18px;
+  border-bottom: 1px solid #292929;
 }
 
 .logo {
   font-size: 22px;
   font-weight: bold;
+  color: white;
+}
+
+.logo span {
+  color: #ff1744;
 }
 
 .back {
@@ -43,227 +46,229 @@ header {
   font-size: 14px;
 }
 
-.container {
-  width: 100%;
-  max-width: 1000px;
+main {
+  max-width: 1100px;
   margin: auto;
   padding: 20px;
 }
 
-.title {
-  text-align: center;
-  margin: 10px 0 5px;
-  font-size: 30px;
+.live-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
-.subtitle {
-  text-align: center;
-  color: #9ca3af;
-  margin-bottom: 20px;
+.live-title {
+  font-size: 22px;
+  font-weight: bold;
 }
 
-.status {
-  text-align: center;
-  margin: 15px auto;
-  padding: 10px 15px;
-  border-radius: 10px;
-  background: #172033;
-  max-width: 500px;
+.live-badge {
+  display: none;
+  background: #ff1744;
+  padding: 7px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
 }
 
-.status.live {
-  background: #3b1118;
-}
-
-.video-box {
-  background: #000;
-  border-radius: 15px;
-  overflow: hidden;
-  min-height: 350px;
+.video-area {
   position: relative;
-  border: 1px solid #293244;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #111;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #292929;
 }
 
-video {
+#remoteVideo,
+#localVideo {
   width: 100%;
   height: 100%;
-  min-height: 350px;
   object-fit: cover;
-  display: block;
   background: #000;
+}
+
+#localVideo {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  width: 180px;
+  height: 110px;
+  border-radius: 10px;
+  border: 2px solid white;
+  display: none;
+  z-index: 5;
+}
+
+.empty-message {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #aaa;
+  padding: 20px;
 }
 
 .controls {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  justify-content: center;
-  margin: 20px 0;
+  margin-top: 15px;
 }
 
 button {
   border: none;
-  border-radius: 10px;
-  padding: 12px 18px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  background: #2563eb;
+  border-radius: 9px;
+  padding: 12px 17px;
+  background: #242424;
   color: white;
+  font-size: 14px;
+  cursor: pointer;
 }
 
 button:hover {
-  opacity: .9;
+  opacity: .85;
 }
 
 button:disabled {
-  opacity: .5;
+  opacity: .45;
   cursor: not-allowed;
 }
 
-.danger {
-  background: #dc2626;
+.go-live {
+  background: #ff1744;
+  font-weight: bold;
 }
 
-.secondary {
-  background: #374151;
+.end-live {
+  background: #b00020;
+  display: none;
 }
 
-.success {
-  background: #16a34a;
+.join-live {
+  background: #1976d2;
 }
 
-.info-card {
-  background: #111827;
-  border: 1px solid #293244;
-  border-radius: 15px;
-  padding: 18px;
+.status {
+  margin-top: 12px;
+  color: #aaa;
+  font-size: 14px;
+  min-height: 20px;
+}
+
+.room-info {
+  margin-top: 15px;
+  background: #111;
+  padding: 15px;
+  border-radius: 12px;
+  display: none;
+}
+
+.room-info strong {
+  color: #fff;
+}
+
+.viewer-count {
+  margin-top: 5px;
+  color: #aaa;
+}
+
+.chat-section {
   margin-top: 20px;
-}
-
-.info-card h3 {
-  margin-top: 0;
-}
-
-.share-box {
-  display: flex;
-  gap: 8px;
-  margin-top: 10px;
-}
-
-.share-box input {
-  flex: 1;
-  min-width: 0;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #374151;
-  background: #0b1020;
-  color: white;
-}
-
-.chat {
-  margin-top: 20px;
-  background: #111827;
-  border: 1px solid #293244;
-  border-radius: 15px;
+  background: #111;
+  border-radius: 12px;
   padding: 15px;
 }
 
-.chat-messages {
-  height: 220px;
+.chat-section h3 {
+  margin-top: 0;
+}
+
+#messages {
+  height: 180px;
   overflow-y: auto;
-  background: #0b1020;
-  border-radius: 10px;
+  background: #080808;
+  border-radius: 9px;
   padding: 10px;
-  margin-bottom: 10px;
 }
 
-.chat-message {
-  padding: 7px 5px;
-  border-bottom: 1px solid #1f2937;
-  word-break: break-word;
+.message {
+  padding: 7px 0;
+  border-bottom: 1px solid #202020;
 }
 
-.chat-message strong {
-  color: #60a5fa;
+.message strong {
+  color: #ff1744;
 }
 
 .chat-input {
   display: flex;
   gap: 8px;
+  margin-top: 10px;
 }
 
 .chat-input input {
   flex: 1;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #374151;
-  background: #0b1020;
+  background: #222;
   color: white;
+  border: 1px solid #333;
+  border-radius: 9px;
+  padding: 12px;
+  outline: none;
 }
 
 .reactions {
+  margin-top: 15px;
   display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 15px 0;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
-.reaction {
-  font-size: 24px;
+.reactions button {
+  font-size: 20px;
   padding: 8px 12px;
-  background: #1f2937;
-}
-
-.viewer-count {
-  text-align: center;
-  margin: 10px;
-  color: #d1d5db;
-}
-
-#floatingReactions {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 999;
-}
-
-.float-reaction {
-  position: absolute;
-  bottom: 80px;
-  font-size: 35px;
-  animation: floatUp 2.5s ease-out forwards;
-}
-
-@keyframes floatUp {
-  0% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(-500px) scale(1.7);
-  }
-}
-
-.hidden {
-  display: none !important;
 }
 
 .notice {
+  position: fixed;
+  left: 50%;
+  bottom: 25px;
+  transform: translateX(-50%);
+  background: #222;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 10px;
+  display: none;
+  z-index: 100;
+  max-width: 90%;
   text-align: center;
-  color: #fbbf24;
-  margin: 10px;
 }
 
-footer {
-  text-align: center;
-  color: #6b7280;
-  padding: 30px 10px;
-  font-size: 13px;
+@media (max-width: 600px) {
+  main {
+    padding: 10px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  #localVideo {
+    width: 120px;
+    height: 80px;
+    right: 8px;
+    bottom: 8px;
+  }
+
+  button {
+    padding: 10px 13px;
+  }
 }
 </style>
 </head>
@@ -271,82 +276,112 @@ footer {
 <body>
 
 <header>
-  <div class="logo">EPHPHAVORA</div>
-  <a class="back" href="index.html">← Home</a>
+  <div class="logo">
+    EPHPHAVORA <span>LIVE</span>
+  </div>
+
+  <a class="back" href="index.html">← Back</a>
 </header>
 
-<div class="container">
+<main>
 
-  <h1 class="title">🔴 EPHPHAVORA LIVE</h1>
-
-  <div class="subtitle">
-    Go live, connect with people, and build your community.
+  <div class="live-header">
+    <div class="live-title">Live Stream</div>
+    <div id="liveBadge" class="live-badge">🔴 LIVE</div>
   </div>
 
-  <div id="status" class="status">
-    Ready
-  </div>
+  <div class="video-area">
 
-  <div id="notice" class="notice"></div>
+    <video
+      id="remoteVideo"
+      autoplay
+      playsinline
+      controls
+    ></video>
 
-  <div class="video-box">
-    <video id="video" autoplay playsinline></video>
-  </div>
+    <video
+      id="localVideo"
+      autoplay
+      muted
+      playsinline
+    ></video>
 
-  <div id="viewerCount" class="viewer-count">
-    👥 Viewers: 0
-  </div>
-
-  <div class="controls">
-
-    <button id="goLiveBtn">
-      🔴 GO LIVE
-    </button>
-
-    <button id="cameraBtn" class="secondary" disabled>
-      📷 Camera
-    </button>
-
-    <button id="micBtn" class="secondary" disabled>
-      🎤 Microphone
-    </button>
-
-    <button id="shareBtn" class="success" disabled>
-      🔗 SHARE LIVE
-    </button>
-
-    <button id="endBtn" class="danger" disabled>
-      END LIVE
-    </button>
-
-  </div>
-
-  <div id="shareSection" class="info-card hidden">
-
-    <h3>🔗 Share this LIVE</h3>
-
-    <div class="share-box">
-      <input id="shareUrl" readonly>
-      <button id="copyBtn">COPY</button>
+    <div id="emptyMessage" class="empty-message">
+      Ready to go LIVE
     </div>
 
   </div>
 
-  <div class="reactions">
+  <div class="controls">
 
-    <button class="reaction" data-reaction="❤️">❤️</button>
-    <button class="reaction" data-reaction="🔥">🔥</button>
-    <button class="reaction" data-reaction="👏">👏</button>
-    <button class="reaction" data-reaction="😍">😍</button>
-    <button class="reaction" data-reaction="🎉">🎉</button>
+    <button
+      id="goLiveBtn"
+      class="go-live"
+    >
+      🔴 GO LIVE
+    </button>
+
+    <button
+      id="joinBtn"
+      class="join-live"
+      style="display:none;"
+    >
+      ▶ JOIN LIVE
+    </button>
+
+    <button
+      id="cameraBtn"
+      style="display:none;"
+    >
+      📷 Camera
+    </button>
+
+    <button
+      id="micBtn"
+      style="display:none;"
+    >
+      🎤 Mic
+    </button>
+
+    <button
+      id="shareBtn"
+      style="display:none;"
+    >
+      🔗 Share LIVE
+    </button>
+
+    <button
+      id="endBtn"
+      class="end-live"
+    >
+      ⛔ END LIVE
+    </button>
 
   </div>
 
-  <div class="chat">
+  <div id="status" class="status">
+    Checking login...
+  </div>
+
+  <div id="roomInfo" class="room-info">
+
+    <div>
+      Room:
+      <strong id="roomNameDisplay"></strong>
+    </div>
+
+    <div class="viewer-count">
+      👥 Viewers:
+      <span id="viewerCount">0</span>
+    </div>
+
+  </div>
+
+  <div class="chat-section">
 
     <h3>💬 LIVE Chat</h3>
 
-    <div id="chatMessages" class="chat-messages"></div>
+    <div id="messages"></div>
 
     <div class="chat-input">
 
@@ -354,39 +389,36 @@ footer {
         id="chatInput"
         type="text"
         placeholder="Write a message..."
-        maxlength="500"
+        maxlength="300"
       >
 
       <button id="sendChatBtn">
-        SEND
+        Send
       </button>
 
     </div>
 
   </div>
 
-</div>
+  <div class="reactions">
 
-<div id="floatingReactions"></div>
+    <button onclick="sendReaction('❤️')">❤️</button>
+    <button onclick="sendReaction('🔥')">🔥</button>
+    <button onclick="sendReaction('👏')">👏</button>
+    <button onclick="sendReaction('🙏')">🙏</button>
+    <button onclick="sendReaction('🎉')">🎉</button>
 
-<footer>
-  © 2026 EPHPHAVORA
-</footer>
+  </div>
 
+</main>
+
+<div id="notice" class="notice"></div>
 
 <script>
+
 /* =========================================================
    EPHPHAVORA LIVE
    ========================================================= */
-
-/*
-  IMPORTANT:
-  This browser code does NOT contain a LiveKit API secret.
-
-  The development token server is used for the current MVP.
-  For production, replace this with your own secure token
-  endpoint/serverless function.
-*/
 
 const SUPABASE_URL =
   "https://utoyoglycqjmqznczfxa.supabase.co";
@@ -394,16 +426,27 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
   "sb_publishable_OypM4-7GHnq_n8-HRhw-dA_Ehzak_CA";
 
+const LIVEKIT_URL =
+  "wss://ephphavora-wciizjcm.livekit.cloud";
 
-const LIVEKIT_TOKEN_SERVER_ID =
+/*
+  IMPORTANT:
+  Development token server only.
+  Do NOT put LiveKit API secret in this file.
+*/
+const TOKEN_SERVER_ID =
   "ephphavora-16wbwu";
 
 
-const video =
-  document.getElementById("video");
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
 
 const goLiveBtn =
   document.getElementById("goLiveBtn");
+
+const joinBtn =
+  document.getElementById("joinBtn");
 
 const cameraBtn =
   document.getElementById("cameraBtn");
@@ -417,26 +460,32 @@ const shareBtn =
 const endBtn =
   document.getElementById("endBtn");
 
-const shareSection =
-  document.getElementById("shareSection");
+const localVideo =
+  document.getElementById("localVideo");
 
-const shareUrl =
-  document.getElementById("shareUrl");
+const remoteVideo =
+  document.getElementById("remoteVideo");
 
-const copyBtn =
-  document.getElementById("copyBtn");
+const emptyMessage =
+  document.getElementById("emptyMessage");
 
-const statusBox =
+const statusEl =
   document.getElementById("status");
 
-const notice =
-  document.getElementById("notice");
+const liveBadge =
+  document.getElementById("liveBadge");
+
+const roomInfo =
+  document.getElementById("roomInfo");
+
+const roomNameDisplay =
+  document.getElementById("roomNameDisplay");
 
 const viewerCount =
   document.getElementById("viewerCount");
 
-const chatMessages =
-  document.getElementById("chatMessages");
+const messages =
+  document.getElementById("messages");
 
 const chatInput =
   document.getElementById("chatInput");
@@ -444,17 +493,21 @@ const chatInput =
 const sendChatBtn =
   document.getElementById("sendChatBtn");
 
-const floatingReactions =
-  document.getElementById("floatingReactions");
+const notice =
+  document.getElementById("notice");
 
+
+/* =========================================================
+   STATE
+   ========================================================= */
 
 let room = null;
 
 let currentUser = null;
 
-let currentStreamId = null;
-
 let currentRoomName = null;
+
+let currentStreamId = null;
 
 let isHost = false;
 
@@ -464,127 +517,191 @@ let micEnabled = false;
 
 
 /* =========================================================
+   NOTICE
+   ========================================================= */
+
+function showNotice(message) {
+
+  notice.textContent = message;
+
+  notice.style.display = "block";
+
+  setTimeout(() => {
+
+    notice.style.display = "none";
+
+  }, 3500);
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+function setStatus(message) {
+
+  statusEl.textContent = message;
+
+  console.log("[EPHPHAVORA LIVE]", message);
+}
+
+
+/* =========================================================
    AUTH
    ========================================================= */
 
-function getAccessToken() {
-
-  return localStorage.getItem(
-    "berakah_access_token"
-  );
-
-}
-
-
 async function loadCurrentUser() {
 
-  const token = getAccessToken();
+  const accessToken =
+    localStorage.getItem("berakah_access_token");
 
-  if (!token) {
-    return null;
-  }
+  if (!accessToken) {
 
-  try {
+    currentUser = null;
 
-    const response = await fetch(
-      SUPABASE_URL + "/auth/v1/user",
-      {
-        headers: {
-          "apikey": SUPABASE_KEY,
-          "Authorization": "Bearer " + token
-        }
-      }
+    setStatus(
+      "Please log in before starting or joining LIVE."
     );
 
-    if (!response.ok) {
-      return null;
-    }
-
-    const user = await response.json();
-
-    return {
-      userId: user.id,
-      email: user.email || "",
-      username:
-        localStorage.getItem("berakah_username") ||
-        localStorage.getItem("berakah_user") ||
-        user.email ||
-        "EPHPHAVORA User"
-    };
-
-  } catch (error) {
-
-    console.error(
-      "User loading error:",
-      error
-    );
+    goLiveBtn.disabled = true;
 
     return null;
   }
-
-}
-
-
-/* =========================================================
-   SUPABASE HELPERS
-   ========================================================= */
-
-async function supabaseRequest(
-  endpoint,
-  options = {}
-) {
-
-  const token = getAccessToken();
-
-  const headers = {
-    "apikey": SUPABASE_KEY,
-    "Content-Type": "application/json",
-    ...(options.headers || {})
-  };
-
-  if (token) {
-    headers["Authorization"] =
-      "Bearer " + token;
-  }
-
-  return fetch(
-    SUPABASE_URL + endpoint,
-    {
-      ...options,
-      headers
-    }
-  );
-
-}
-
-
-/* =========================================================
-   LIVE STREAM DATABASE
-   ========================================================= */
-
-async function createLiveStream(
-  hostUserId,
-  roomName
-) {
 
   try {
 
     const response =
-      await supabaseRequest(
+      await fetch(
+        SUPABASE_URL + "/auth/v1/user",
+        {
+          method: "GET",
+
+          headers: {
+            apikey: SUPABASE_KEY,
+            Authorization:
+              "Bearer " + accessToken
+          }
+        }
+      );
+
+    if (!response.ok) {
+
+      throw new Error(
+        "Authentication failed"
+      );
+    }
+
+    const authUser =
+      await response.json();
+
+    const username =
+      localStorage.getItem(
+        "berakah_username"
+      ) ||
+      authUser.email ||
+      "EPHPHAVORA User";
+
+    currentUser = {
+
+      userId: authUser.id,
+
+      username: username,
+
+      email: authUser.email || ""
+
+    };
+
+    setStatus(
+      "Logged in as " +
+      currentUser.username
+    );
+
+    goLiveBtn.disabled = false;
+
+    return currentUser;
+
+  } catch (error) {
+
+    console.error(error);
+
+    currentUser = null;
+
+    setStatus(
+      "Login session expired. Please log in again."
+    );
+
+    goLiveBtn.disabled = true;
+
+    return null;
+  }
+}
+
+
+/* =========================================================
+   SUPABASE HEADERS
+   ========================================================= */
+
+function supabaseHeaders() {
+
+  const token =
+    localStorage.getItem(
+      "berakah_access_token"
+    );
+
+  return {
+
+    apikey: SUPABASE_KEY,
+
+    Authorization:
+      "Bearer " + token,
+
+    "Content-Type":
+      "application/json"
+
+  };
+}
+
+
+/* =========================================================
+   CREATE LIVE STREAM
+   ========================================================= */
+
+async function createLiveStream() {
+
+  if (!currentUser) return null;
+
+  try {
+
+    const response =
+      await fetch(
+        SUPABASE_URL +
         "/rest/v1/live_streams",
         {
           method: "POST",
 
           headers: {
-            "Prefer": "return=representation"
+            ...supabaseHeaders(),
+
+            Prefer:
+              "return=representation"
           },
 
           body: JSON.stringify({
-            host_user_id: hostUserId,
-            room_name: roomName,
-            title: "EPHPHAVORA LIVE",
-            status: "live"
+
+            host_user_id:
+              currentUser.userId,
+
+            room_name:
+              currentRoomName,
+
+            title:
+              "EPHPHAVORA LIVE",
+
+            status:
+              "live"
+
           })
+
         }
       );
 
@@ -594,7 +711,7 @@ async function createLiveStream(
         await response.text();
 
       console.error(
-        "Live stream database error:",
+        "Supabase live_streams error:",
         errorText
       );
 
@@ -604,340 +721,167 @@ async function createLiveStream(
     const data =
       await response.json();
 
-    return data[0] || null;
+    if (data && data.length > 0) {
+
+      currentStreamId =
+        data[0].id;
+
+      return data[0];
+    }
+
+    return null;
 
   } catch (error) {
 
     console.error(
-      "Create live stream error:",
+      "createLiveStream error:",
       error
     );
 
     return null;
   }
-
-}
-
-
-async function endLiveStream() {
-
-  if (!currentStreamId) {
-    return;
-  }
-
-  try {
-
-    const response =
-      await supabaseRequest(
-        "/rest/v1/live_streams?id=eq." +
-        encodeURIComponent(currentStreamId),
-        {
-          method: "PATCH",
-
-          body: JSON.stringify({
-            status: "ended",
-            ended_at: new Date().toISOString()
-          })
-        }
-      );
-
-    if (!response.ok) {
-
-      console.error(
-        "Could not update live stream."
-      );
-
-    }
-
-  } catch (error) {
-
-    console.error(
-      "End stream database error:",
-      error
-    );
-
-  }
-
 }
 
 
 /* =========================================================
-   FIND ACTIVE STREAM
+   END LIVE STREAM
    ========================================================= */
 
-async function findLiveStream(
-  roomName
-) {
+async function endLiveStream() {
+
+  if (!currentStreamId) return;
+
+  try {
+
+    await fetch(
+
+      SUPABASE_URL +
+      "/rest/v1/live_streams?id=eq." +
+      encodeURIComponent(
+        currentStreamId
+      ),
+
+      {
+
+        method: "PATCH",
+
+        headers: {
+          ...supabaseHeaders(),
+
+          Prefer:
+            "return=minimal"
+        },
+
+        body: JSON.stringify({
+
+          status:
+            "ended",
+
+          ended_at:
+            new Date().toISOString()
+
+        })
+
+      }
+
+    );
+
+  } catch (error) {
+
+    console.error(
+      "endLiveStream error:",
+      error
+    );
+  }
+}
+
+
+/* =========================================================
+   FIND LIVE STREAM
+   ========================================================= */
+
+async function findLiveStream() {
 
   try {
 
     const response =
-      await supabaseRequest(
+      await fetch(
+
+        SUPABASE_URL +
         "/rest/v1/live_streams" +
-        "?room_name=eq." +
-        encodeURIComponent(roomName) +
-        "&status=eq.live" +
-        "&select=*"
+        "?status=eq.live" +
+        "&order=started_at.desc" +
+        "&limit=1",
+
+        {
+
+          method: "GET",
+
+          headers: {
+
+            apikey:
+              SUPABASE_KEY,
+
+            Authorization:
+              "Bearer " +
+              (
+                localStorage.getItem(
+                  "berakah_access_token"
+                ) || ""
+              )
+
+          }
+
+        }
+
       );
 
     if (!response.ok) {
-      return null;
+
+      throw new Error(
+        "Could not find LIVE"
+      );
     }
 
     const data =
       await response.json();
 
-    return data[0] || null;
+    if (!data || !data.length) {
+
+      return null;
+    }
+
+    return data[0];
 
   } catch (error) {
 
-    console.error(
-      "Find live stream error:",
-      error
-    );
+    console.error(error);
 
     return null;
   }
-
 }
 
 
 /* =========================================================
-   UI
+   LIVEKIT TOKEN SOURCE
    ========================================================= */
 
-function setStatus(
-  text,
-  live = false
-) {
+function getTokenSource() {
 
-  statusBox.textContent = text;
+  if (
+    !window.LivekitClient ||
+    !LivekitClient.TokenSource
+  ) {
 
-  statusBox.classList.toggle(
-    "live",
-    live
-  );
-
-}
-
-
-function setNotice(text) {
-
-  notice.textContent = text;
-
-}
-
-
-function updateViewerCount() {
-
-  if (!room) {
-
-    viewerCount.textContent =
-      "👥 Viewers: 0";
-
-    return;
-  }
-
-  const count =
-    room.remoteParticipants.size;
-
-  viewerCount.textContent =
-    "👥 Viewers: " + count;
-
-}
-
-
-/* =========================================================
-   VIDEO TRACK
-   ========================================================= */
-
-function attachTrack(
-  track
-) {
-
-  if (!track) {
-    return;
-  }
-
-  try {
-
-    track.attach(video);
-
-  } catch (error) {
-
-    console.error(
-      "Track attach error:",
-      error
+    throw new Error(
+      "LiveKit SDK did not load."
     );
-
   }
 
-}
-
-
-/* =========================================================
-   REMOTE PARTICIPANTS
-   ========================================================= */
-
-function handleParticipant(
-  participant
-) {
-
-  participant.trackPublications.forEach(
-    publication => {
-
-      if (
-        publication.track
-      ) {
-
-        attachTrack(
-          publication.track
-        );
-
-      }
-
-    }
-  );
-
-  participant.on(
-    "trackSubscribed",
-    track => {
-
-      attachTrack(track);
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   LIVEKIT ROOM EVENTS
-   ========================================================= */
-
-function setupRoomEvents() {
-
-  if (!room) {
-    return;
-  }
-
-
-  room.on(
-    "participantConnected",
-    participant => {
-
-      handleParticipant(
-        participant
-      );
-
-      updateViewerCount();
-
-    }
-  );
-
-
-  room.on(
-    "participantDisconnected",
-    () => {
-
-      updateViewerCount();
-
-    }
-  );
-
-
-  room.on(
-    "trackSubscribed",
-    track => {
-
-      attachTrack(track);
-
-    }
-  );
-
-
-  room.on(
-    "disconnected",
-    () => {
-
-      setStatus(
-        "Disconnected"
-      );
-
-      updateViewerCount();
-
-    }
-  );
-
-
-  room.on(
-    "dataReceived",
-    (
-      payload,
-      participant
-    ) => {
-
-      try {
-
-        const data =
-          JSON.parse(
-            new TextDecoder().decode(
-              payload
-            )
-          );
-
-        if (
-          data.type === "chat"
-        ) {
-
-          addChatMessage(
-            data.username ||
-            participant?.identity ||
-            "User",
-            data.text
-          );
-
-        }
-
-        if (
-          data.type === "reaction"
-        ) {
-
-          showFloatingReaction(
-            data.reaction
-          );
-
-        }
-
-      } catch (error) {
-
-        console.error(
-          "Data packet error:",
-          error
-        );
-
-      }
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   CREATE ROOM
-   ========================================================= */
-
-function createRoom() {
-
-  room =
-    new LivekitClient.Room({
-      adaptiveStream: true,
-      dynacast: true
-    });
-
-  setupRoomEvents();
-
+  return LivekitClient.TokenSource
+    .developmentTokenServer(
+      TOKEN_SERVER_ID
+    );
 }
 
 
@@ -947,187 +891,150 @@ function createRoom() {
 
 async function startLive() {
 
-  if (isHost) {
-    return;
-  }
-
   if (!currentUser) {
 
-    setNotice(
-      "Please log in before going LIVE."
+    showNotice(
+      "Please log in first."
     );
 
     return;
   }
-
 
   try {
 
+    setStatus(
+      "Preparing your LIVE room..."
+    );
+
+    goLiveBtn.disabled = true;
+
     isHost = true;
 
-    setNotice(
-      "Starting your LIVE..."
-    );
-
-    setStatus(
-      "Connecting..."
-    );
-
     currentRoomName =
-      "ephphavora-live-" +
-      currentUser.userId;
+      "ephphavora-" +
+      crypto.randomUUID();
 
+    roomNameDisplay.textContent =
+      currentRoomName;
+
+    /*
+      CORRECT LIVEKIT SDK 2.x FORMAT
+    */
 
     const tokenSource =
-      LivekitClient.TokenSource
-        .developmentTokenServer(
-          LIVEKIT_TOKEN_SERVER_ID
-        );
-
+      getTokenSource();
 
     const token =
-      await tokenSource.fetch(
-        currentRoomName,
-        currentUser.username
-      );
+      await tokenSource.fetch({
 
+        roomName:
+          currentRoomName,
 
-    createRoom();
+        participantName:
+          currentUser.username,
 
+        participantIdentity:
+          currentUser.userId
 
-    await room.connect(
-      token.serverUrl,
-      token.participantToken
+      });
+
+    console.log(
+      "LiveKit token received."
     );
 
+    room =
+      new LivekitClient.Room({
+
+        adaptiveStream: true,
+
+        dynacast: true
+
+      });
+
+    setupRoomListeners();
+
+    setStatus(
+      "Connecting to LiveKit..."
+    );
+
+    await room.connect(
+      LIVEKIT_URL,
+      token.participantToken ||
+      token
+    );
+
+    console.log(
+      "Connected to LiveKit."
+    );
 
     await room.localParticipant
       .setCameraEnabled(true);
 
-
     await room.localParticipant
       .setMicrophoneEnabled(true);
-
 
     cameraEnabled = true;
 
     micEnabled = true;
 
+    attachLocalVideo();
 
-    const publications =
-      room.localParticipant
-        .trackPublications;
-
-
-    publications.forEach(
-      publication => {
-
-        if (publication.track) {
-
-          attachTrack(
-            publication.track
-          );
-
-        }
-
-      }
-    );
-
-
-    currentStreamId = null;
+    updateControls();
 
     const stream =
-      await createLiveStream(
-        currentUser.userId,
-        currentRoomName
+      await createLiveStream();
+
+    if (!stream) {
+
+      console.warn(
+        "LIVE connected, but Supabase stream record was not created."
       );
 
-
-    if (stream) {
-
-      currentStreamId =
-        stream.id;
-
-    } else {
-
-      setNotice(
-        "LIVE started, but the stream database record could not be created."
+      showNotice(
+        "LIVE is connected. Database record needs attention."
       );
 
     }
 
+    liveBadge.style.display =
+      "block";
 
-    const url =
-      window.location.origin +
-      window.location.pathname +
-      "?room=" +
-      encodeURIComponent(
-        currentRoomName
-      );
+    roomInfo.style.display =
+      "block";
 
-
-    shareUrl.value = url;
-
-    shareSection.classList.remove(
-      "hidden"
-    );
-
+    emptyMessage.style.display =
+      "none";
 
     setStatus(
-      "🔴 LIVE",
-      true
+      "🔴 You are LIVE!"
     );
 
-
-    setNotice(
-      "You are LIVE now!"
+    showNotice(
+      "🔴 EPHPHAVORA LIVE started!"
     );
-
-
-    goLiveBtn.disabled = true;
-
-    cameraBtn.disabled = false;
-
-    micBtn.disabled = false;
-
-    shareBtn.disabled = false;
-
-    endBtn.disabled = false;
-
-    goLiveBtn.textContent =
-      "🔴 LIVE";
-
-
-    updateViewerCount();
-
 
   } catch (error) {
 
     console.error(
-      "Start LIVE error:",
+      "START LIVE ERROR:",
       error
     );
+
+    goLiveBtn.disabled = false;
 
     isHost = false;
 
     setStatus(
-      "Could not start LIVE"
+      "LIVE error: " +
+      (
+        error.message ||
+        error
+      )
     );
 
-    setNotice(
-      error.message ||
-      "Unable to start LIVE."
+    showNotice(
+      "Could not start LIVE. Check the error message."
     );
-
-    if (room) {
-
-      try {
-        await room.disconnect();
-      } catch (e) {}
-
-      room = null;
-
-    }
 
   }
 
@@ -1138,174 +1045,337 @@ async function startLive() {
    JOIN LIVE
    ========================================================= */
 
-async function joinLive(
-  roomName
-) {
+async function joinLive(roomName) {
 
-  if (!roomName) {
+  if (!currentUser) {
+
+    showNotice(
+      "Please log in first."
+    );
+
     return;
   }
 
-
   try {
 
-    setNotice(
+    setStatus(
       "Joining LIVE..."
     );
 
-    setStatus(
-      "Connecting..."
-    );
+    joinBtn.disabled = true;
 
-
-    const stream =
-      await findLiveStream(
-        roomName
-      );
-
-
-    if (!stream) {
-
-      setNotice(
-        "This LIVE is not active or could not be found."
-      );
-
-      setStatus(
-        "LIVE unavailable"
-      );
-
-      return;
-    }
-
-
-    currentStreamId =
-      stream.id;
+    isHost = false;
 
     currentRoomName =
       roomName;
 
-    isHost = false;
-
-
-    const username =
-      currentUser?.username ||
-      "EPHPHAVORA Viewer";
-
-
-    const tokenSource =
-      LivekitClient.TokenSource
-        .developmentTokenServer(
-          LIVEKIT_TOKEN_SERVER_ID
-        );
-
-
-    const token =
-      await tokenSource.fetch(
-        roomName,
-        username
-      );
-
-
-    createRoom();
-
-
-    await room.connect(
-      token.serverUrl,
-      token.participantToken
-    );
-
+    roomNameDisplay.textContent =
+      currentRoomName;
 
     /*
-      Viewer does NOT publish camera or microphone.
+      CORRECT LIVEKIT SDK 2.x FORMAT
     */
 
-    await room.localParticipant
-      .setCameraEnabled(false);
+    const tokenSource =
+      getTokenSource();
 
-    await room.localParticipant
-      .setMicrophoneEnabled(false);
+    const token =
+      await tokenSource.fetch({
 
+        roomName:
+          roomName,
 
-    room.remoteParticipants.forEach(
-      participant => {
+        participantName:
+          currentUser.username,
 
-        handleParticipant(
-          participant
-        );
+        participantIdentity:
+          currentUser.userId ||
+          (
+            "viewer-" +
+            crypto.randomUUID()
+          )
 
-      }
+      });
+
+    room =
+      new LivekitClient.Room({
+
+        adaptiveStream: true,
+
+        dynacast: true
+
+      });
+
+    setupRoomListeners();
+
+    await room.connect(
+
+      LIVEKIT_URL,
+
+      token.participantToken ||
+      token
+
     );
 
+    roomInfo.style.display =
+      "block";
 
-    const url =
-      window.location.href;
-
-
-    shareUrl.value = url;
-
-    shareSection.classList.remove(
-      "hidden"
-    );
-
+    emptyMessage.style.display =
+      "none";
 
     setStatus(
-      "🔴 WATCHING LIVE",
-      true
+      "🟢 Joined LIVE."
     );
 
-
-    setNotice(
+    showNotice(
       "You joined the LIVE."
     );
 
-
-    goLiveBtn.textContent =
-      "JOINED LIVE";
-
-    goLiveBtn.disabled = true;
-
-
-    cameraBtn.disabled = true;
-
-    micBtn.disabled = true;
-
-    shareBtn.disabled = false;
-
-    endBtn.disabled = false;
-
-    endBtn.textContent =
-      "LEAVE LIVE";
-
-
-    updateViewerCount();
-
+    updateControls();
 
   } catch (error) {
 
     console.error(
-      "Join LIVE error:",
+      "JOIN LIVE ERROR:",
       error
     );
 
+    joinBtn.disabled = false;
+
     setStatus(
-      "Could not join LIVE"
+      "Join error: " +
+      (
+        error.message ||
+        error
+      )
     );
 
-    setNotice(
-      error.message ||
-      "Unable to join LIVE."
-    );
+  }
+
+}
 
 
-    if (room) {
+/* =========================================================
+   ROOM LISTENERS
+   ========================================================= */
 
-      try {
-        await room.disconnect();
-      } catch (e) {}
+function setupRoomListeners() {
 
-      room = null;
+  if (!room) return;
+
+  room.on(
+
+    LivekitClient.RoomEvent
+      .TrackSubscribed,
+
+    (
+      track,
+      publication,
+      participant
+    ) => {
+
+      console.log(
+        "Track subscribed:",
+        track.kind,
+        participant.identity
+      );
+
+      if (
+        track.kind ===
+        LivekitClient.Track.Kind.Video
+      ) {
+
+        track.attach(
+          remoteVideo
+        );
+
+        remoteVideo.style.display =
+          "block";
+
+        emptyMessage.style.display =
+          "none";
+
+      }
+
+      if (
+        track.kind ===
+        LivekitClient.Track.Kind.Audio
+      ) {
+
+        track.attach();
+      }
 
     }
+
+  );
+
+
+  room.on(
+
+    LivekitClient.RoomEvent
+      .TrackUnsubscribed,
+
+    track => {
+
+      track.detach();
+    }
+
+  );
+
+
+  room.on(
+
+    LivekitClient.RoomEvent
+      .ParticipantConnected,
+
+    participant => {
+
+      console.log(
+        "Participant joined:",
+        participant.identity
+      );
+
+      updateViewerCount();
+
+    }
+
+  );
+
+
+  room.on(
+
+    LivekitClient.RoomEvent
+      .ParticipantDisconnected,
+
+    participant => {
+
+      console.log(
+        "Participant left:",
+        participant.identity
+      );
+
+      updateViewerCount();
+
+    }
+
+  );
+
+
+  room.on(
+
+    LivekitClient.RoomEvent
+      .Disconnected,
+
+    () => {
+
+      console.log(
+        "Disconnected from LiveKit."
+      );
+
+      updateViewerCount();
+
+    }
+
+  );
+
+
+  room.on(
+
+    LivekitClient.RoomEvent
+      .DataReceived,
+
+    (
+      payload,
+      participant
+    ) => {
+
+      try {
+
+        const message =
+          new TextDecoder()
+            .decode(payload);
+
+        const data =
+          JSON.parse(message);
+
+        if (
+          data.type ===
+          "chat"
+        ) {
+
+          addMessage(
+
+            data.username ||
+            "User",
+
+            data.message
+
+          );
+
+        }
+
+        if (
+          data.type ===
+          "reaction"
+        ) {
+
+          showNotice(
+
+            (
+              data.emoji ||
+              "❤️"
+            ) +
+            " " +
+            (
+              data.username ||
+              "User"
+            )
+
+          );
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          "Data error:",
+          error
+        );
+
+      }
+
+    }
+
+  );
+
+}
+
+
+/* =========================================================
+   LOCAL VIDEO
+   ========================================================= */
+
+function attachLocalVideo() {
+
+  if (!room) return;
+
+  const publication =
+    room.localParticipant
+      .getTrackPublication(
+        LivekitClient.Track.Source.Camera
+      );
+
+  if (
+    publication &&
+    publication.track
+  ) {
+
+    publication.track.attach(
+      localVideo
+    );
+
+    localVideo.style.display =
+      "block";
 
   }
 
@@ -1318,36 +1388,28 @@ async function joinLive(
 
 async function toggleCamera() {
 
-  if (!room || !isHost) {
-    return;
-  }
+  if (!room) return;
 
-  try {
+  cameraEnabled =
+    !cameraEnabled;
 
-    cameraEnabled =
-      !cameraEnabled;
-
-
-    await room.localParticipant
-      .setCameraEnabled(
-        cameraEnabled
-      );
-
-
-    cameraBtn.textContent =
+  await room.localParticipant
+    .setCameraEnabled(
       cameraEnabled
-        ? "📷 Camera ON"
-        : "📷 Camera OFF";
-
-
-  } catch (error) {
-
-    console.error(
-      "Camera error:",
-      error
     );
 
+  if (cameraEnabled) {
+
+    attachLocalVideo();
+
+  } else {
+
+    localVideo.style.display =
+      "none";
+
   }
+
+  updateControls();
 
 }
 
@@ -1358,249 +1420,157 @@ async function toggleCamera() {
 
 async function toggleMic() {
 
-  if (!room || !isHost) {
-    return;
-  }
+  if (!room) return;
 
-  try {
+  micEnabled =
+    !micEnabled;
 
-    micEnabled =
-      !micEnabled;
-
-
-    await room.localParticipant
-      .setMicrophoneEnabled(
-        micEnabled
-      );
-
-
-    micBtn.textContent =
+  await room.localParticipant
+    .setMicrophoneEnabled(
       micEnabled
-        ? "🎤 Microphone ON"
-        : "🔇 Microphone OFF";
-
-
-  } catch (error) {
-
-    console.error(
-      "Microphone error:",
-      error
     );
 
-  }
+  updateControls();
 
 }
 
 
 /* =========================================================
-   SHARE
+   CONTROLS
+   ========================================================= */
+
+function updateControls() {
+
+  if (!room) {
+
+    cameraBtn.style.display =
+      "none";
+
+    micBtn.style.display =
+      "none";
+
+    shareBtn.style.display =
+      "none";
+
+    endBtn.style.display =
+      "none";
+
+    return;
+
+  }
+
+  cameraBtn.style.display =
+    "inline-block";
+
+  micBtn.style.display =
+    "inline-block";
+
+  shareBtn.style.display =
+    "inline-block";
+
+  endBtn.style.display =
+    "inline-block";
+
+  cameraBtn.textContent =
+    cameraEnabled
+      ? "📷 Camera ON"
+      : "📷 Camera OFF";
+
+  micBtn.textContent =
+    micEnabled
+      ? "🎤 Mic ON"
+      : "🎤 Mic OFF";
+
+}
+
+
+/* =========================================================
+   VIEWER COUNT
+   ========================================================= */
+
+function updateViewerCount() {
+
+  if (!room) {
+
+    viewerCount.textContent =
+      "0";
+
+    return;
+  }
+
+  let count =
+    room.remoteParticipants.size;
+
+  /*
+    Host does not count as viewer.
+  */
+
+  viewerCount.textContent =
+    String(count);
+
+}
+
+
+/* =========================================================
+   SHARE LIVE
    ========================================================= */
 
 async function shareLive() {
 
-  const url =
-    shareUrl.value;
+  if (!currentRoomName) {
 
+    showNotice(
+      "No LIVE room available."
+    );
 
-  if (!url) {
     return;
   }
 
+  const url =
+    window.location.origin +
+    window.location.pathname +
+    "?room=" +
+    encodeURIComponent(
+      currentRoomName
+    );
 
-  if (
-    navigator.share
-  ) {
+  try {
 
-    try {
+    if (
+      navigator.share
+    ) {
 
       await navigator.share({
+
         title:
           "EPHPHAVORA LIVE",
+
         text:
-          "Join my EPHPHAVORA LIVE!",
-        url: url
+          "Join my EPHPHAVORA LIVE",
+
+        url:
+          url
+
       });
 
-      return;
+    } else {
 
-    } catch (error) {}
+      await navigator.clipboard
+        .writeText(url);
 
-  }
+      showNotice(
+        "LIVE link copied!"
+      );
 
-
-  try {
-
-    await navigator.clipboard
-      .writeText(url);
-
-    setNotice(
-      "LIVE link copied!"
-    );
+    }
 
   } catch (error) {
 
-    shareUrl.select();
-
-    document.execCommand(
-      "copy"
-    );
-
-    setNotice(
-      "LIVE link copied!"
+    console.log(
+      "Share cancelled."
     );
 
   }
-
-}
-
-
-async function copyShareUrl() {
-
-  const url =
-    shareUrl.value;
-
-
-  if (!url) {
-    return;
-  }
-
-
-  try {
-
-    await navigator.clipboard
-      .writeText(url);
-
-    copyBtn.textContent =
-      "COPIED!";
-
-    setTimeout(
-      () => {
-        copyBtn.textContent =
-          "COPY";
-      },
-      1500
-    );
-
-  } catch (error) {
-
-    shareUrl.select();
-
-    document.execCommand(
-      "copy"
-    );
-
-    copyBtn.textContent =
-      "COPIED!";
-
-  }
-
-}
-
-
-/* =========================================================
-   END / LEAVE LIVE
-   ========================================================= */
-
-async function endLive() {
-
-  if (!room) {
-    return;
-  }
-
-
-  const hostEnding =
-    isHost;
-
-
-  if (hostEnding) {
-
-    await endLiveStream();
-
-  }
-
-
-  try {
-
-    await room.disconnect();
-
-  } catch (error) {
-
-    console.error(
-      "Disconnect error:",
-      error
-    );
-
-  }
-
-
-  room = null;
-
-  currentStreamId = null;
-
-  currentRoomName = null;
-
-  cameraEnabled = false;
-
-  micEnabled = false;
-
-
-  video.srcObject = null;
-
-
-  setStatus(
-    hostEnding
-      ? "LIVE ended"
-      : "Left LIVE"
-  );
-
-
-  setNotice(
-    hostEnding
-      ? "Your LIVE has ended."
-      : "You left the LIVE."
-  );
-
-
-  if (hostEnding) {
-
-    goLiveBtn.disabled = false;
-
-    goLiveBtn.textContent =
-      "🔴 GO LIVE";
-
-  } else {
-
-    goLiveBtn.disabled = false;
-
-    goLiveBtn.textContent =
-      "🔴 GO LIVE";
-
-  }
-
-
-  cameraBtn.disabled = true;
-
-  micBtn.disabled = true;
-
-  shareBtn.disabled = true;
-
-  endBtn.disabled = true;
-
-
-  endBtn.textContent =
-    "END LIVE";
-
-
-  shareSection.classList.add(
-    "hidden"
-  );
-
-
-  viewerCount.textContent =
-    "👥 Viewers: 0";
-
-
-  isHost = false;
 
 }
 
@@ -1609,128 +1579,61 @@ async function endLive() {
    CHAT
    ========================================================= */
 
-function addChatMessage(
-  username,
-  text
-) {
-
-  if (!text) {
-    return;
-  }
-
-
-  const div =
-    document.createElement(
-      "div"
-    );
-
-
-  div.className =
-    "chat-message";
-
-
-  const strong =
-    document.createElement(
-      "strong"
-    );
-
-
-  strong.textContent =
-    username + ": ";
-
-
-  const span =
-    document.createElement(
-      "span"
-    );
-
-
-  span.textContent =
-    text;
-
-
-  div.appendChild(
-    strong
-  );
-
-  div.appendChild(
-    span
-  );
-
-
-  chatMessages.appendChild(
-    div
-  );
-
-
-  chatMessages.scrollTop =
-    chatMessages.scrollHeight;
-
-}
-
-
 async function sendChat() {
 
-  const text =
+  const message =
     chatInput.value.trim();
 
-
-  if (!text) {
-    return;
-  }
-
+  if (!message) return;
 
   if (!room) {
 
-    setNotice(
+    showNotice(
       "Join a LIVE first."
     );
 
     return;
   }
 
+  const data = {
 
-  const username =
-    currentUser?.username ||
-    "EPHPHAVORA User";
+    type:
+      "chat",
 
+    username:
+      currentUser?.username ||
+      "User",
 
-  const payload = {
-
-    type: "chat",
-
-    username: username,
-
-    text: text
+    message:
+      message
 
   };
-
 
   try {
 
     const encoder =
       new TextEncoder();
 
+    const payload =
+      encoder.encode(
+        JSON.stringify(data)
+      );
 
     await room.localParticipant
       .publishData(
-        encoder.encode(
-          JSON.stringify(payload)
-        ),
+        payload,
         {
           reliable: true
         }
       );
 
-
-    addChatMessage(
-      username,
-      text
+    addMessage(
+      data.username,
+      data.message
     );
 
-
-    chatInput.value = "";
-
+    chatInput.value =
+      "";
 
   } catch (error) {
 
@@ -1744,48 +1647,100 @@ async function sendChat() {
 }
 
 
+function addMessage(
+  username,
+  message
+) {
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+  div.className =
+    "message";
+
+  const strong =
+    document.createElement(
+      "strong"
+    );
+
+  strong.textContent =
+    username + ":";
+
+  const text =
+    document.createTextNode(
+      " " + message
+    );
+
+  div.appendChild(
+    strong
+  );
+
+  div.appendChild(
+    text
+  );
+
+  messages.appendChild(
+    div
+  );
+
+  messages.scrollTop =
+    messages.scrollHeight;
+
+}
+
+
 /* =========================================================
    REACTIONS
    ========================================================= */
 
 async function sendReaction(
-  reaction
+  emoji
 ) {
 
   if (!room) {
+
+    showNotice(
+      "Join a LIVE first."
+    );
+
     return;
   }
 
+  const data = {
 
-  showFloatingReaction(
-    reaction
-  );
+    type:
+      "reaction",
 
+    username:
+      currentUser?.username ||
+      "User",
 
-  const payload = {
-
-    type: "reaction",
-
-    reaction: reaction
+    emoji:
+      emoji
 
   };
 
-
   try {
 
-    const encoder =
-      new TextEncoder();
-
+    const payload =
+      new TextEncoder()
+        .encode(
+          JSON.stringify(data)
+        );
 
     await room.localParticipant
       .publishData(
-        encoder.encode(
-          JSON.stringify(payload)
-        ),
+        payload,
         {
           reliable: true
         }
       );
+
+    showNotice(
+      emoji
+    );
 
   } catch (error) {
 
@@ -1799,130 +1754,160 @@ async function sendReaction(
 }
 
 
-function showFloatingReaction(
-  reaction
-) {
+/* =========================================================
+   END LIVE
+   ========================================================= */
 
-  const div =
-    document.createElement(
-      "div"
+async function endLive() {
+
+  try {
+
+    setStatus(
+      "Ending LIVE..."
     );
 
+    await endLiveStream();
 
-  div.className =
-    "float-reaction";
+    if (room) {
 
+      await room.disconnect();
 
-  div.textContent =
-    reaction;
+      room = null;
 
+    }
 
-  div.style.left =
-    Math.random() * 90 + "%";
+    currentStreamId =
+      null;
 
+    currentRoomName =
+      null;
 
-  floatingReactions.appendChild(
-    div
-  );
+    isHost =
+      false;
 
+    cameraEnabled =
+      false;
 
-  setTimeout(
-    () => {
-      div.remove();
-    },
-    2500
-  );
+    micEnabled =
+      false;
+
+    localVideo.srcObject =
+      null;
+
+    remoteVideo.srcObject =
+      null;
+
+    localVideo.style.display =
+      "none";
+
+    liveBadge.style.display =
+      "none";
+
+    roomInfo.style.display =
+      "none";
+
+    emptyMessage.style.display =
+      "flex";
+
+    setStatus(
+      "LIVE ended."
+    );
+
+    showNotice(
+      "LIVE ended successfully."
+    );
+
+    goLiveBtn.style.display =
+      "inline-block";
+
+    goLiveBtn.disabled =
+      false;
+
+    joinBtn.style.display =
+      "none";
+
+    updateControls();
+
+  } catch (error) {
+
+    console.error(
+      "End LIVE error:",
+      error
+    );
+
+    setStatus(
+      "LIVE ended."
+    );
+
+  }
 
 }
 
 
 /* =========================================================
-   BUTTON EVENTS
+   EVENT LISTENERS
    ========================================================= */
-
-/*
-  IMPORTANT FIX:
-
-  There is ONLY ONE click listener for goLiveBtn.
-
-  The previous version could run startLive()
-  and joinLive() at the same time because it used
-  addEventListener() plus onclick.
-
-  This version branches correctly.
-*/
 
 goLiveBtn.addEventListener(
   "click",
+  startLive
+);
+
+joinBtn.addEventListener(
+  "click",
   async () => {
 
-    const params =
-      new URLSearchParams(
-        window.location.search
+    const stream =
+      await findLiveStream();
+
+    if (!stream) {
+
+      showNotice(
+        "No LIVE stream is currently available."
       );
 
-    const roomFromURL =
-      params.get("room");
-
-
-    if (roomFromURL) {
-
-      await joinLive(
-        roomFromURL
-      );
-
-    } else {
-
-      await startLive();
-
+      return;
     }
+
+    joinLive(
+      stream.room_name
+    );
 
   }
 );
-
 
 cameraBtn.addEventListener(
   "click",
   toggleCamera
 );
 
-
 micBtn.addEventListener(
   "click",
   toggleMic
 );
-
 
 shareBtn.addEventListener(
   "click",
   shareLive
 );
 
-
-copyBtn.addEventListener(
-  "click",
-  copyShareUrl
-);
-
-
 endBtn.addEventListener(
   "click",
   endLive
 );
-
 
 sendChatBtn.addEventListener(
   "click",
   sendChat
 );
 
-
 chatInput.addEventListener(
   "keydown",
   event => {
 
     if (
-      event.key === "Enter"
+      event.key ===
+      "Enter"
     ) {
 
       sendChat();
@@ -1933,110 +1918,54 @@ chatInput.addEventListener(
 );
 
 
-document
-  .querySelectorAll(
-    ".reaction"
-  )
-  .forEach(
-    button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          sendReaction(
-            button.dataset.reaction
-          );
-
-        }
-      );
-
-    }
-  );
-
-
 /* =========================================================
-   INITIALIZATION
+   PAGE START
    ========================================================= */
 
-async function initialize() {
+async function initializePage() {
 
-  currentUser =
-    await loadCurrentUser();
+  await loadCurrentUser();
 
+  /*
+    If URL contains ?room=ROOMNAME,
+    automatically prepare JOIN LIVE.
+  */
 
   const params =
     new URLSearchParams(
       window.location.search
     );
 
-
-  const roomFromURL =
+  const roomFromUrl =
     params.get("room");
 
+  if (roomFromUrl) {
 
-  if (roomFromURL) {
+    joinBtn.style.display =
+      "inline-block";
 
-    /*
-      We are viewing an existing LIVE.
-    */
+    goLiveBtn.style.display =
+      "none";
 
-    goLiveBtn.textContent =
-      "🔴 JOIN LIVE";
-
-
-    if (!currentUser) {
-
-      setNotice(
-        "You can watch as a viewer. Log in to participate in chat."
-      );
-
-    }
-
+    setStatus(
+      "LIVE link detected. Tap JOIN LIVE."
+    );
 
   } else {
 
-    /*
-      We are on the host page.
-    */
+    joinBtn.style.display =
+      "none";
 
-    if (!currentUser) {
-
-      setNotice(
-        "Log in to EPHPHAVORA before going LIVE."
-      );
-
-      goLiveBtn.disabled =
-        false;
-
-    }
+    goLiveBtn.style.display =
+      "inline-block";
 
   }
+
+  updateControls();
 
 }
 
-
-initialize();
-
-
-/* =========================================================
-   CLEANUP
-   ========================================================= */
-
-window.addEventListener(
-  "beforeunload",
-  () => {
-
-    if (room) {
-
-      try {
-        room.disconnect();
-      } catch (error) {}
-
-    }
-
-  }
-);
+initializePage();
 
 </script>
 
