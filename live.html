@@ -33,7 +33,6 @@ header {
 .logo {
   font-size: 22px;
   font-weight: bold;
-  color: white;
 }
 
 .logo span {
@@ -43,7 +42,6 @@ header {
 .back {
   color: white;
   text-decoration: none;
-  font-size: 14px;
 }
 
 main {
@@ -54,9 +52,8 @@ main {
 
 .live-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  align-items: center;
   margin-bottom: 15px;
 }
 
@@ -84,8 +81,7 @@ main {
   border: 1px solid #292929;
 }
 
-#remoteVideo,
-#localVideo {
+#remoteVideo {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -98,6 +94,7 @@ main {
   bottom: 15px;
   width: 180px;
   height: 110px;
+  object-fit: cover;
   border-radius: 10px;
   border: 2px solid white;
   display: none;
@@ -110,8 +107,8 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
   color: #aaa;
+  text-align: center;
   padding: 20px;
 }
 
@@ -138,7 +135,6 @@ button:hover {
 
 button:disabled {
   opacity: .45;
-  cursor: not-allowed;
 }
 
 .go-live {
@@ -146,20 +142,20 @@ button:disabled {
   font-weight: bold;
 }
 
+.join-live {
+  background: #1976d2;
+}
+
 .end-live {
   background: #b00020;
   display: none;
 }
 
-.join-live {
-  background: #1976d2;
-}
-
 .status {
   margin-top: 12px;
   color: #aaa;
-  font-size: 14px;
   min-height: 20px;
+  font-size: 14px;
 }
 
 .room-info {
@@ -168,10 +164,6 @@ button:disabled {
   padding: 15px;
   border-radius: 12px;
   display: none;
-}
-
-.room-info strong {
-  color: #fff;
 }
 
 .viewer-count {
@@ -251,6 +243,7 @@ button:disabled {
 }
 
 @media (max-width: 600px) {
+
   main {
     padding: 10px;
   }
@@ -266,9 +259,6 @@ button:disabled {
     bottom: 8px;
   }
 
-  button {
-    padding: 10px 13px;
-  }
 }
 </style>
 </head>
@@ -276,18 +266,32 @@ button:disabled {
 <body>
 
 <header>
+
   <div class="logo">
     EPHPHAVORA <span>LIVE</span>
   </div>
 
-  <a class="back" href="index.html">← Back</a>
+  <a class="back" href="index.html">
+    ← Back
+  </a>
+
 </header>
 
 <main>
 
   <div class="live-header">
-    <div class="live-title">Live Stream</div>
-    <div id="liveBadge" class="live-badge">🔴 LIVE</div>
+
+    <div class="live-title">
+      Live Stream
+    </div>
+
+    <div
+      id="liveBadge"
+      class="live-badge"
+    >
+      🔴 LIVE
+    </div>
+
   </div>
 
   <div class="video-area">
@@ -306,7 +310,10 @@ button:disabled {
       playsinline
     ></video>
 
-    <div id="emptyMessage" class="empty-message">
+    <div
+      id="emptyMessage"
+      class="empty-message"
+    >
       Ready to go LIVE
     </div>
 
@@ -324,28 +331,28 @@ button:disabled {
     <button
       id="joinBtn"
       class="join-live"
-      style="display:none;"
+      style="display:none"
     >
       ▶ JOIN LIVE
     </button>
 
     <button
       id="cameraBtn"
-      style="display:none;"
+      style="display:none"
     >
       📷 Camera
     </button>
 
     <button
       id="micBtn"
-      style="display:none;"
+      style="display:none"
     >
       🎤 Mic
     </button>
 
     <button
       id="shareBtn"
-      style="display:none;"
+      style="display:none"
     >
       🔗 Share LIVE
     </button>
@@ -359,11 +366,17 @@ button:disabled {
 
   </div>
 
-  <div id="status" class="status">
-    Checking login...
+  <div
+    id="status"
+    class="status"
+  >
+    Loading...
   </div>
 
-  <div id="roomInfo" class="room-info">
+  <div
+    id="roomInfo"
+    class="room-info"
+  >
 
     <div>
       Room:
@@ -388,8 +401,8 @@ button:disabled {
       <input
         id="chatInput"
         type="text"
-        placeholder="Write a message..."
         maxlength="300"
+        placeholder="Write a message..."
       >
 
       <button id="sendChatBtn">
@@ -402,23 +415,41 @@ button:disabled {
 
   <div class="reactions">
 
-    <button onclick="sendReaction('❤️')">❤️</button>
-    <button onclick="sendReaction('🔥')">🔥</button>
-    <button onclick="sendReaction('👏')">👏</button>
-    <button onclick="sendReaction('🙏')">🙏</button>
-    <button onclick="sendReaction('🎉')">🎉</button>
+    <button onclick="sendReaction('❤️')">
+      ❤️
+    </button>
+
+    <button onclick="sendReaction('🔥')">
+      🔥
+    </button>
+
+    <button onclick="sendReaction('👏')">
+      👏
+    </button>
+
+    <button onclick="sendReaction('🙏')">
+      🙏
+    </button>
+
+    <button onclick="sendReaction('🎉')">
+      🎉
+    </button>
 
   </div>
 
 </main>
 
-<div id="notice" class="notice"></div>
+<div
+  id="notice"
+  class="notice"
+></div>
+
 
 <script>
 
 /* =========================================================
-   EPHPHAVORA LIVE
-   ========================================================= */
+   CONFIG
+========================================================= */
 
 const SUPABASE_URL =
   "https://utoyoglycqjmqznczfxa.supabase.co";
@@ -430,9 +461,7 @@ const LIVEKIT_URL =
   "wss://ephphavora-wciizjcm.livekit.cloud";
 
 /*
-  IMPORTANT:
-  Development token server only.
-  Do NOT put LiveKit API secret in this file.
+  KEEP YOUR CURRENT WORKING TOKEN SERVER ID.
 */
 const TOKEN_SERVER_ID =
   "ephphavora-16wbwu";
@@ -440,7 +469,7 @@ const TOKEN_SERVER_ID =
 
 /* =========================================================
    ELEMENTS
-   ========================================================= */
+========================================================= */
 
 const goLiveBtn =
   document.getElementById("goLiveBtn");
@@ -499,7 +528,7 @@ const notice =
 
 /* =========================================================
    STATE
-   ========================================================= */
+========================================================= */
 
 let room = null;
 
@@ -517,288 +546,386 @@ let micEnabled = false;
 
 
 /* =========================================================
-   NOTICE
-   ========================================================= */
-
-function showNotice(message) {
-
-  notice.textContent = message;
-
-  notice.style.display = "block";
-
-  setTimeout(() => {
-
-    notice.style.display = "none";
-
-  }, 3500);
-}
-
-
-/* =========================================================
-   STATUS
-   ========================================================= */
+   HELPERS
+========================================================= */
 
 function setStatus(message) {
 
-  statusEl.textContent = message;
+  statusEl.textContent =
+    message;
 
-  console.log("[EPHPHAVORA LIVE]", message);
+  console.log(
+    "[EPHPHAVORA LIVE]",
+    message
+  );
+
+}
+
+
+function showNotice(message) {
+
+  notice.textContent =
+    message;
+
+  notice.style.display =
+    "block";
+
+  setTimeout(() => {
+
+    notice.style.display =
+      "none";
+
+  }, 3500);
+
 }
 
 
 /* =========================================================
-   AUTH
-   ========================================================= */
+   HOST AUTH
+========================================================= */
 
-async function loadCurrentUser() {
+async function loadHostUser() {
 
   const accessToken =
-    localStorage.getItem("berakah_access_token");
+    localStorage.getItem(
+      "berakah_access_token"
+    );
 
   if (!accessToken) {
 
-    currentUser = null;
-
-    setStatus(
-      "Please log in before starting or joining LIVE."
-    );
-
-    goLiveBtn.disabled = true;
-
     return null;
+
   }
 
   try {
 
     const response =
       await fetch(
-        SUPABASE_URL + "/auth/v1/user",
+
+        SUPABASE_URL +
+        "/auth/v1/user",
+
         {
-          method: "GET",
 
           headers: {
-            apikey: SUPABASE_KEY,
+
+            apikey:
+              SUPABASE_KEY,
+
             Authorization:
-              "Bearer " + accessToken
+              "Bearer " +
+              accessToken
+
           }
+
         }
+
       );
 
     if (!response.ok) {
 
-      throw new Error(
-        "Authentication failed"
-      );
+      return null;
+
     }
 
     const authUser =
       await response.json();
 
-    const username =
-      localStorage.getItem(
-        "berakah_username"
-      ) ||
-      authUser.email ||
-      "EPHPHAVORA User";
+    return {
 
-    currentUser = {
+      userId:
+        authUser.id,
 
-      userId: authUser.id,
+      username:
+        localStorage.getItem(
+          "berakah_username"
+        ) ||
+        authUser.email ||
+        "EPHPHAVORA User",
 
-      username: username,
-
-      email: authUser.email || ""
+      email:
+        authUser.email || ""
 
     };
 
-    setStatus(
-      "Logged in as " +
-      currentUser.username
+  } catch (error) {
+
+    console.error(
+      error
     );
 
-    goLiveBtn.disabled = false;
+    return null;
 
-    return currentUser;
+  }
+
+}
+
+
+/* =========================================================
+   TOKEN SOURCE
+========================================================= */
+
+function getTokenSource() {
+
+  return LivekitClient
+    .TokenSource
+    .developmentTokenServer(
+      TOKEN_SERVER_ID
+    );
+
+}
+
+
+/* =========================================================
+   GET LIVEKIT TOKEN
+========================================================= */
+
+async function getLiveKitToken(
+  roomName,
+  participantName,
+  participantIdentity
+) {
+
+  const tokenSource =
+    getTokenSource();
+
+  const result =
+    await tokenSource.fetch({
+
+      roomName:
+        roomName,
+
+      participantName:
+        participantName,
+
+      participantIdentity:
+        participantIdentity
+
+    });
+
+  return result;
+
+}
+
+
+/* =========================================================
+   START HOST LIVE
+========================================================= */
+
+async function startLive() {
+
+  currentUser =
+    await loadHostUser();
+
+  if (!currentUser) {
+
+    showNotice(
+      "Please log in to start a LIVE."
+    );
+
+    setStatus(
+      "Login required to host."
+    );
+
+    return;
+
+  }
+
+  try {
+
+    isHost = true;
+
+    goLiveBtn.disabled =
+      true;
+
+    setStatus(
+      "Creating LIVE room..."
+    );
+
+    currentRoomName =
+      "ephphavora-" +
+      crypto.randomUUID();
+
+    roomNameDisplay.textContent =
+      currentRoomName;
+
+    const credentials =
+      await getLiveKitToken(
+
+        currentRoomName,
+
+        currentUser.username,
+
+        currentUser.userId
+
+      );
+
+    room =
+      new LivekitClient.Room({
+        adaptiveStream: true,
+        dynacast: true
+      });
+
+    setupRoomListeners();
+
+    await room.connect(
+
+      credentials.serverUrl ||
+      LIVEKIT_URL,
+
+      credentials.participantToken
+
+    );
+
+    await room.localParticipant
+      .setCameraEnabled(true);
+
+    await room.localParticipant
+      .setMicrophoneEnabled(true);
+
+    cameraEnabled = true;
+
+    micEnabled = true;
+
+    attachLocalVideo();
+
+    await createLiveStream();
+
+    showHostUI();
+
+    setStatus(
+      "🔴 You are LIVE!"
+    );
+
+    showNotice(
+      "EPHPHAVORA LIVE started!"
+    );
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "START LIVE ERROR:",
+      error
+    );
 
-    currentUser = null;
+    goLiveBtn.disabled =
+      false;
+
+    isHost = false;
 
     setStatus(
-      "Login session expired. Please log in again."
+      "LIVE error: " +
+      (
+        error.message ||
+        error
+      )
     );
 
-    goLiveBtn.disabled = true;
-
-    return null;
   }
+
 }
 
 
 /* =========================================================
-   SUPABASE HEADERS
-   ========================================================= */
-
-function supabaseHeaders() {
-
-  const token =
-    localStorage.getItem(
-      "berakah_access_token"
-    );
-
-  return {
-
-    apikey: SUPABASE_KEY,
-
-    Authorization:
-      "Bearer " + token,
-
-    "Content-Type":
-      "application/json"
-
-  };
-}
-
-
-/* =========================================================
-   CREATE LIVE STREAM
-   ========================================================= */
+   CREATE SUPABASE STREAM
+========================================================= */
 
 async function createLiveStream() {
 
-  if (!currentUser) return null;
+  if (!currentUser) return;
+
+  const accessToken =
+    localStorage.getItem(
+      "berakah_access_token"
+    );
 
   try {
 
     const response =
       await fetch(
+
         SUPABASE_URL +
         "/rest/v1/live_streams",
+
         {
+
           method: "POST",
 
           headers: {
-            ...supabaseHeaders(),
+
+            apikey:
+              SUPABASE_KEY,
+
+            Authorization:
+              "Bearer " +
+              accessToken,
+
+            "Content-Type":
+              "application/json",
 
             Prefer:
               "return=representation"
+
           },
 
-          body: JSON.stringify({
+          body:
+            JSON.stringify({
 
-            host_user_id:
-              currentUser.userId,
+              host_user_id:
+                currentUser.userId,
 
-            room_name:
-              currentRoomName,
+              room_name:
+                currentRoomName,
 
-            title:
-              "EPHPHAVORA LIVE",
+              title:
+                "EPHPHAVORA LIVE",
 
-            status:
-              "live"
+              status:
+                "live"
 
-          })
+            })
 
         }
+
       );
 
     if (!response.ok) {
 
-      const errorText =
-        await response.text();
-
       console.error(
-        "Supabase live_streams error:",
-        errorText
+        await response.text()
       );
 
-      return null;
+      return;
+
     }
 
     const data =
       await response.json();
 
-    if (data && data.length > 0) {
+    if (
+      data &&
+      data.length
+    ) {
 
       currentStreamId =
         data[0].id;
 
-      return data[0];
     }
 
-    return null;
-
   } catch (error) {
 
     console.error(
-      "createLiveStream error:",
       error
     );
 
-    return null;
   }
-}
 
-
-/* =========================================================
-   END LIVE STREAM
-   ========================================================= */
-
-async function endLiveStream() {
-
-  if (!currentStreamId) return;
-
-  try {
-
-    await fetch(
-
-      SUPABASE_URL +
-      "/rest/v1/live_streams?id=eq." +
-      encodeURIComponent(
-        currentStreamId
-      ),
-
-      {
-
-        method: "PATCH",
-
-        headers: {
-          ...supabaseHeaders(),
-
-          Prefer:
-            "return=minimal"
-        },
-
-        body: JSON.stringify({
-
-          status:
-            "ended",
-
-          ended_at:
-            new Date().toISOString()
-
-        })
-
-      }
-
-    );
-
-  } catch (error) {
-
-    console.error(
-      "endLiveStream error:",
-      error
-    );
-  }
 }
 
 
 /* =========================================================
    FIND LIVE STREAM
-   ========================================================= */
+========================================================= */
 
 async function findLiveStream() {
 
@@ -815,20 +942,10 @@ async function findLiveStream() {
 
         {
 
-          method: "GET",
-
           headers: {
 
             apikey:
-              SUPABASE_KEY,
-
-            Authorization:
-              "Bearer " +
-              (
-                localStorage.getItem(
-                  "berakah_access_token"
-                ) || ""
-              )
+              SUPABASE_KEY
 
           }
 
@@ -839,202 +956,32 @@ async function findLiveStream() {
     if (!response.ok) {
 
       throw new Error(
-        "Could not find LIVE"
+        "Could not find LIVE."
       );
+
     }
 
     const data =
       await response.json();
 
-    if (!data || !data.length) {
+    if (
+      !data ||
+      !data.length
+    ) {
 
       return null;
+
     }
 
     return data[0];
 
   } catch (error) {
 
-    console.error(error);
-
-    return null;
-  }
-}
-
-
-/* =========================================================
-   LIVEKIT TOKEN SOURCE
-   ========================================================= */
-
-function getTokenSource() {
-
-  if (
-    !window.LivekitClient ||
-    !LivekitClient.TokenSource
-  ) {
-
-    throw new Error(
-      "LiveKit SDK did not load."
-    );
-  }
-
-  return LivekitClient.TokenSource
-    .developmentTokenServer(
-      TOKEN_SERVER_ID
-    );
-}
-
-
-/* =========================================================
-   START LIVE
-   ========================================================= */
-
-async function startLive() {
-
-  if (!currentUser) {
-
-    showNotice(
-      "Please log in first."
-    );
-
-    return;
-  }
-
-  try {
-
-    setStatus(
-      "Preparing your LIVE room..."
-    );
-
-    goLiveBtn.disabled = true;
-
-    isHost = true;
-
-    currentRoomName =
-      "ephphavora-" +
-      crypto.randomUUID();
-
-    roomNameDisplay.textContent =
-      currentRoomName;
-
-    /*
-      CORRECT LIVEKIT SDK 2.x FORMAT
-    */
-
-    const tokenSource =
-      getTokenSource();
-
-    const token =
-      await tokenSource.fetch({
-
-        roomName:
-          currentRoomName,
-
-        participantName:
-          currentUser.username,
-
-        participantIdentity:
-          currentUser.userId
-
-      });
-
-    console.log(
-      "LiveKit token received."
-    );
-
-    room =
-      new LivekitClient.Room({
-
-        adaptiveStream: true,
-
-        dynacast: true
-
-      });
-
-    setupRoomListeners();
-
-    setStatus(
-      "Connecting to LiveKit..."
-    );
-
-    await room.connect(
-      LIVEKIT_URL,
-      token.participantToken ||
-      token
-    );
-
-    console.log(
-      "Connected to LiveKit."
-    );
-
-    await room.localParticipant
-      .setCameraEnabled(true);
-
-    await room.localParticipant
-      .setMicrophoneEnabled(true);
-
-    cameraEnabled = true;
-
-    micEnabled = true;
-
-    attachLocalVideo();
-
-    updateControls();
-
-    const stream =
-      await createLiveStream();
-
-    if (!stream) {
-
-      console.warn(
-        "LIVE connected, but Supabase stream record was not created."
-      );
-
-      showNotice(
-        "LIVE is connected. Database record needs attention."
-      );
-
-    }
-
-    liveBadge.style.display =
-      "block";
-
-    roomInfo.style.display =
-      "block";
-
-    emptyMessage.style.display =
-      "none";
-
-    setStatus(
-      "🔴 You are LIVE!"
-    );
-
-    showNotice(
-      "🔴 EPHPHAVORA LIVE started!"
-    );
-
-  } catch (error) {
-
     console.error(
-      "START LIVE ERROR:",
       error
     );
 
-    goLiveBtn.disabled = false;
-
-    isHost = false;
-
-    setStatus(
-      "LIVE error: " +
-      (
-        error.message ||
-        error
-      )
-    );
-
-    showNotice(
-      "Could not start LIVE. Check the error message."
-    );
+    return null;
 
   }
 
@@ -1042,60 +989,52 @@ async function startLive() {
 
 
 /* =========================================================
-   JOIN LIVE
-   ========================================================= */
+   VIEWER JOIN
+========================================================= */
 
-async function joinLive(roomName) {
-
-  if (!currentUser) {
-
-    showNotice(
-      "Please log in first."
-    );
-
-    return;
-  }
+async function joinLive(
+  roomName
+) {
 
   try {
 
-    setStatus(
-      "Joining LIVE..."
-    );
-
-    joinBtn.disabled = true;
-
     isHost = false;
+
+    /*
+      VIEWERS DO NOT NEED
+      TO BE LOGGED IN.
+    */
+
+    const viewerIdentity =
+      "viewer-" +
+      crypto.randomUUID();
+
+    const viewerName =
+      "Viewer-" +
+      Math.floor(
+        Math.random() * 100000
+      );
 
     currentRoomName =
       roomName;
 
     roomNameDisplay.textContent =
-      currentRoomName;
+      roomName;
 
-    /*
-      CORRECT LIVEKIT SDK 2.x FORMAT
-    */
+    setStatus(
+      "Joining EPHPHAVORA LIVE..."
+    );
 
-    const tokenSource =
-      getTokenSource();
+    const credentials =
+      await getLiveKitToken(
 
-    const token =
-      await tokenSource.fetch({
+        roomName,
 
-        roomName:
-          roomName,
+        viewerName,
 
-        participantName:
-          currentUser.username,
+        viewerIdentity
 
-        participantIdentity:
-          currentUser.userId ||
-          (
-            "viewer-" +
-            crypto.randomUUID()
-          )
-
-      });
+      );
 
     room =
       new LivekitClient.Room({
@@ -1110,10 +1049,10 @@ async function joinLive(roomName) {
 
     await room.connect(
 
+      credentials.serverUrl ||
       LIVEKIT_URL,
 
-      token.participantToken ||
-      token
+      credentials.participantToken
 
     );
 
@@ -1123,31 +1062,34 @@ async function joinLive(roomName) {
     emptyMessage.style.display =
       "none";
 
+    liveBadge.style.display =
+      "block";
+
     setStatus(
-      "🟢 Joined LIVE."
+      "🟢 You are watching LIVE."
     );
 
-    showNotice(
-      "You joined the LIVE."
-    );
+    showViewerUI();
 
-    updateControls();
+    updateViewerCount();
 
   } catch (error) {
 
     console.error(
-      "JOIN LIVE ERROR:",
+      "VIEWER JOIN ERROR:",
       error
     );
 
-    joinBtn.disabled = false;
-
     setStatus(
-      "Join error: " +
+      "Viewer error: " +
       (
         error.message ||
         error
       )
+    );
+
+    showNotice(
+      "Could not join this LIVE."
     );
 
   }
@@ -1156,12 +1098,10 @@ async function joinLive(roomName) {
 
 
 /* =========================================================
-   ROOM LISTENERS
-   ========================================================= */
+   ROOM EVENTS
+========================================================= */
 
 function setupRoomListeners() {
-
-  if (!room) return;
 
   room.on(
 
@@ -1175,7 +1115,7 @@ function setupRoomListeners() {
     ) => {
 
       console.log(
-        "Track subscribed:",
+        "HOST TRACK RECEIVED:",
         track.kind,
         participant.identity
       );
@@ -1203,6 +1143,7 @@ function setupRoomListeners() {
       ) {
 
         track.attach();
+
       }
 
     }
@@ -1218,6 +1159,7 @@ function setupRoomListeners() {
     track => {
 
       track.detach();
+
     }
 
   );
@@ -1231,7 +1173,7 @@ function setupRoomListeners() {
     participant => {
 
       console.log(
-        "Participant joined:",
+        "Participant connected:",
         participant.identity
       );
 
@@ -1250,26 +1192,8 @@ function setupRoomListeners() {
     participant => {
 
       console.log(
-        "Participant left:",
+        "Participant disconnected:",
         participant.identity
-      );
-
-      updateViewerCount();
-
-    }
-
-  );
-
-
-  room.on(
-
-    LivekitClient.RoomEvent
-      .Disconnected,
-
-    () => {
-
-      console.log(
-        "Disconnected from LiveKit."
       );
 
       updateViewerCount();
@@ -1284,19 +1208,16 @@ function setupRoomListeners() {
     LivekitClient.RoomEvent
       .DataReceived,
 
-    (
-      payload,
-      participant
-    ) => {
+    payload => {
 
       try {
 
-        const message =
+        const text =
           new TextDecoder()
             .decode(payload);
 
         const data =
-          JSON.parse(message);
+          JSON.parse(text);
 
         if (
           data.type ===
@@ -1305,8 +1226,7 @@ function setupRoomListeners() {
 
           addMessage(
 
-            data.username ||
-            "User",
+            data.username,
 
             data.message
 
@@ -1321,15 +1241,9 @@ function setupRoomListeners() {
 
           showNotice(
 
-            (
-              data.emoji ||
-              "❤️"
-            ) +
+            data.emoji +
             " " +
-            (
-              data.username ||
-              "User"
-            )
+            data.username
 
           );
 
@@ -1338,7 +1252,6 @@ function setupRoomListeners() {
       } catch (error) {
 
         console.error(
-          "Data error:",
           error
         );
 
@@ -1348,12 +1261,97 @@ function setupRoomListeners() {
 
   );
 
+
+  room.on(
+
+    LivekitClient.RoomEvent
+      .Disconnected,
+
+    () => {
+
+      updateViewerCount();
+
+    }
+
+  );
+
+}
+
+
+/* =========================================================
+   HOST UI
+========================================================= */
+
+function showHostUI() {
+
+  goLiveBtn.style.display =
+    "none";
+
+  joinBtn.style.display =
+    "none";
+
+  cameraBtn.style.display =
+    "inline-block";
+
+  micBtn.style.display =
+    "inline-block";
+
+  shareBtn.style.display =
+    "inline-block";
+
+  endBtn.style.display =
+    "inline-block";
+
+  liveBadge.style.display =
+    "block";
+
+  roomInfo.style.display =
+    "block";
+
+  emptyMessage.style.display =
+    "none";
+
+  updateControls();
+
+}
+
+
+/* =========================================================
+   VIEWER UI
+========================================================= */
+
+function showViewerUI() {
+
+  goLiveBtn.style.display =
+    "none";
+
+  joinBtn.style.display =
+    "none";
+
+  cameraBtn.style.display =
+    "none";
+
+  micBtn.style.display =
+    "none";
+
+  shareBtn.style.display =
+    "inline-block";
+
+  endBtn.style.display =
+    "none";
+
+  liveBadge.style.display =
+    "block";
+
+  roomInfo.style.display =
+    "block";
+
 }
 
 
 /* =========================================================
    LOCAL VIDEO
-   ========================================================= */
+========================================================= */
 
 function attachLocalVideo() {
 
@@ -1384,11 +1382,12 @@ function attachLocalVideo() {
 
 /* =========================================================
    CAMERA
-   ========================================================= */
+========================================================= */
 
 async function toggleCamera() {
 
-  if (!room) return;
+  if (!room || !isHost)
+    return;
 
   cameraEnabled =
     !cameraEnabled;
@@ -1415,12 +1414,13 @@ async function toggleCamera() {
 
 
 /* =========================================================
-   MICROPHONE
-   ========================================================= */
+   MIC
+========================================================= */
 
 async function toggleMic() {
 
-  if (!room) return;
+  if (!room || !isHost)
+    return;
 
   micEnabled =
     !micEnabled;
@@ -1437,39 +1437,9 @@ async function toggleMic() {
 
 /* =========================================================
    CONTROLS
-   ========================================================= */
+========================================================= */
 
 function updateControls() {
-
-  if (!room) {
-
-    cameraBtn.style.display =
-      "none";
-
-    micBtn.style.display =
-      "none";
-
-    shareBtn.style.display =
-      "none";
-
-    endBtn.style.display =
-      "none";
-
-    return;
-
-  }
-
-  cameraBtn.style.display =
-    "inline-block";
-
-  micBtn.style.display =
-    "inline-block";
-
-  shareBtn.style.display =
-    "inline-block";
-
-  endBtn.style.display =
-    "inline-block";
 
   cameraBtn.textContent =
     cameraEnabled
@@ -1486,7 +1456,7 @@ function updateControls() {
 
 /* =========================================================
    VIEWER COUNT
-   ========================================================= */
+========================================================= */
 
 function updateViewerCount() {
 
@@ -1496,34 +1466,31 @@ function updateViewerCount() {
       "0";
 
     return;
+
   }
 
-  let count =
-    room.remoteParticipants.size;
-
-  /*
-    Host does not count as viewer.
-  */
-
   viewerCount.textContent =
-    String(count);
+    String(
+      room.remoteParticipants.size
+    );
 
 }
 
 
 /* =========================================================
-   SHARE LIVE
-   ========================================================= */
+   SHARE
+========================================================= */
 
 async function shareLive() {
 
   if (!currentRoomName) {
 
     showNotice(
-      "No LIVE room available."
+      "No LIVE available."
     );
 
     return;
+
   }
 
   const url =
@@ -1577,14 +1544,15 @@ async function shareLive() {
 
 /* =========================================================
    CHAT
-   ========================================================= */
+========================================================= */
 
 async function sendChat() {
 
   const message =
     chatInput.value.trim();
 
-  if (!message) return;
+  if (!message)
+    return;
 
   if (!room) {
 
@@ -1593,7 +1561,12 @@ async function sendChat() {
     );
 
     return;
+
   }
+
+  const username =
+    currentUser?.username ||
+    "Viewer";
 
   const data = {
 
@@ -1601,8 +1574,7 @@ async function sendChat() {
       "chat",
 
     username:
-      currentUser?.username ||
-      "User",
+      username,
 
     message:
       message
@@ -1611,25 +1583,26 @@ async function sendChat() {
 
   try {
 
-    const encoder =
-      new TextEncoder();
-
     const payload =
-      encoder.encode(
-        JSON.stringify(data)
-      );
+      new TextEncoder()
+        .encode(
+          JSON.stringify(data)
+        );
 
     await room.localParticipant
       .publishData(
+
         payload,
+
         {
           reliable: true
         }
+
       );
 
     addMessage(
-      data.username,
-      data.message
+      username,
+      message
     );
 
     chatInput.value =
@@ -1638,7 +1611,6 @@ async function sendChat() {
   } catch (error) {
 
     console.error(
-      "Chat error:",
       error
     );
 
@@ -1668,17 +1640,14 @@ function addMessage(
   strong.textContent =
     username + ":";
 
-  const text =
-    document.createTextNode(
-      " " + message
-    );
-
   div.appendChild(
     strong
   );
 
   div.appendChild(
-    text
+    document.createTextNode(
+      " " + message
+    )
   );
 
   messages.appendChild(
@@ -1692,8 +1661,8 @@ function addMessage(
 
 
 /* =========================================================
-   REACTIONS
-   ========================================================= */
+   REACTION
+========================================================= */
 
 async function sendReaction(
   emoji
@@ -1706,6 +1675,7 @@ async function sendReaction(
     );
 
     return;
+
   }
 
   const data = {
@@ -1715,7 +1685,7 @@ async function sendReaction(
 
     username:
       currentUser?.username ||
-      "User",
+      "Viewer",
 
     emoji:
       emoji
@@ -1732,10 +1702,13 @@ async function sendReaction(
 
     await room.localParticipant
       .publishData(
+
         payload,
+
         {
           reliable: true
         }
+
       );
 
     showNotice(
@@ -1745,7 +1718,6 @@ async function sendReaction(
   } catch (error) {
 
     console.error(
-      "Reaction error:",
       error
     );
 
@@ -1756,25 +1728,77 @@ async function sendReaction(
 
 /* =========================================================
    END LIVE
-   ========================================================= */
+========================================================= */
 
 async function endLive() {
 
+  if (!isHost)
+    return;
+
   try {
 
-    setStatus(
-      "Ending LIVE..."
-    );
+    if (currentStreamId) {
 
-    await endLiveStream();
+      const accessToken =
+        localStorage.getItem(
+          "berakah_access_token"
+        );
+
+      await fetch(
+
+        SUPABASE_URL +
+        "/rest/v1/live_streams?id=eq." +
+        encodeURIComponent(
+          currentStreamId
+        ),
+
+        {
+
+          method:
+            "PATCH",
+
+          headers: {
+
+            apikey:
+              SUPABASE_KEY,
+
+            Authorization:
+              "Bearer " +
+              accessToken,
+
+            "Content-Type":
+              "application/json",
+
+            Prefer:
+              "return=minimal"
+
+          },
+
+          body:
+            JSON.stringify({
+
+              status:
+                "ended",
+
+              ended_at:
+                new Date()
+                  .toISOString()
+
+            })
+
+        }
+
+      );
+
+    }
 
     if (room) {
 
       await room.disconnect();
 
-      room = null;
-
     }
+
+    room = null;
 
     currentStreamId =
       null;
@@ -1785,37 +1809,20 @@ async function endLive() {
     isHost =
       false;
 
-    cameraEnabled =
-      false;
-
-    micEnabled =
-      false;
-
-    localVideo.srcObject =
-      null;
-
-    remoteVideo.srcObject =
-      null;
-
-    localVideo.style.display =
-      "none";
-
     liveBadge.style.display =
       "none";
 
     roomInfo.style.display =
       "none";
 
+    localVideo.style.display =
+      "none";
+
+    remoteVideo.srcObject =
+      null;
+
     emptyMessage.style.display =
       "flex";
-
-    setStatus(
-      "LIVE ended."
-    );
-
-    showNotice(
-      "LIVE ended successfully."
-    );
 
     goLiveBtn.style.display =
       "inline-block";
@@ -1823,20 +1830,30 @@ async function endLive() {
     goLiveBtn.disabled =
       false;
 
-    joinBtn.style.display =
+    cameraBtn.style.display =
       "none";
 
-    updateControls();
+    micBtn.style.display =
+      "none";
+
+    shareBtn.style.display =
+      "none";
+
+    endBtn.style.display =
+      "none";
+
+    setStatus(
+      "LIVE ended."
+    );
+
+    showNotice(
+      "LIVE ended."
+    );
 
   } catch (error) {
 
     console.error(
-      "End LIVE error:",
       error
-    );
-
-    setStatus(
-      "LIVE ended."
     );
 
   }
@@ -1845,8 +1862,8 @@ async function endLive() {
 
 
 /* =========================================================
-   EVENT LISTENERS
-   ========================================================= */
+   BUTTONS
+========================================================= */
 
 goLiveBtn.addEventListener(
   "click",
@@ -1867,9 +1884,10 @@ joinBtn.addEventListener(
       );
 
       return;
+
     }
 
-    joinLive(
+    await joinLive(
       stream.room_name
     );
 
@@ -1919,53 +1937,73 @@ chatInput.addEventListener(
 
 
 /* =========================================================
-   PAGE START
-   ========================================================= */
+   INITIALIZE
+========================================================= */
 
-async function initializePage() {
-
-  await loadCurrentUser();
-
-  /*
-    If URL contains ?room=ROOMNAME,
-    automatically prepare JOIN LIVE.
-  */
+async function initialize() {
 
   const params =
     new URLSearchParams(
       window.location.search
     );
 
-  const roomFromUrl =
+  const sharedRoom =
     params.get("room");
 
-  if (roomFromUrl) {
+  /*
+    SHARED LINK:
+    NO LOGIN REQUIRED.
+  */
 
-    joinBtn.style.display =
-      "inline-block";
+  if (sharedRoom) {
 
     goLiveBtn.style.display =
       "none";
 
+    joinBtn.style.display =
+      "inline-block";
+
     setStatus(
-      "LIVE link detected. Tap JOIN LIVE."
+      "LIVE link detected. Joining..."
+    );
+
+    /*
+      Automatically join.
+    */
+
+    await joinLive(
+      sharedRoom
+    );
+
+    return;
+
+  }
+
+  /*
+    NORMAL HOST PAGE.
+  */
+
+  currentUser =
+    await loadHostUser();
+
+  if (currentUser) {
+
+    setStatus(
+      "Logged in as " +
+      currentUser.username
     );
 
   } else {
 
-    joinBtn.style.display =
-      "none";
-
-    goLiveBtn.style.display =
-      "inline-block";
+    setStatus(
+      "Log in to start a LIVE."
+    );
 
   }
 
-  updateControls();
-
 }
 
-initializePage();
+initialize();
 
 </script>
 
